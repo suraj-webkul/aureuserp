@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('name')->comment('Job Position Name');
             $table->text('description')->nullable()->comment('Job Description');
             $table->text('requirements')->nullable()->comment('Requirements');
-            $table->boolean('is_active')->default(false)->comment('Active Status');
+            $table->boolean('status')->default(false)->nullable()->comment('Status');
 
             $table->foreign('department_id')->references('id')->on('employees_departments')->onDelete('set null');
             $table->foreign('creator_id')->references('id')->on('users')->onDelete('set null');
