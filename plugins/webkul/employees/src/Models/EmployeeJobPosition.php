@@ -37,11 +37,11 @@ class EmployeeJobPosition extends Model implements Sortable
         'name',
         'description',
         'requirements',
-        'is_active',
+        'status',
     ];
 
     protected $casts = [
-        'is_active' => 'boolean',
+        'status' => 'boolean',
     ];
 
     public $sortable = [

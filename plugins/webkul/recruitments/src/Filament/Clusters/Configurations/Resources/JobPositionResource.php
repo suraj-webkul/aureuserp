@@ -204,6 +204,9 @@ class JobPositionResource extends Resource
                                             ->relationship('employmentType', 'name')
                                             ->searchable()
                                             ->preload(),
+                                        Forms\Components\Toggle::make('status')
+                                            ->inline(false)
+                                            ->label(__('recruitments::filament/clusters/configurations/resources/job-position.form.sections.workforce-planning.fields.status')),
                                     ]),
                             ])
                             ->columnSpan(['lg' => 1]),
@@ -244,7 +247,7 @@ class JobPositionResource extends Resource
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\IconColumn::make('is_active')
+                Tables\Columns\IconColumn::make('status')
                     ->sortable()
                     ->label(__('recruitments::filament/clusters/configurations/resources/job-position.table.columns.status'))
                     ->boolean(),
@@ -274,7 +277,7 @@ class JobPositionResource extends Resource
                 Tables\Filters\SelectFilter::make('company')
                     ->relationship('company', 'name')
                     ->label(__('recruitments::filament/clusters/configurations/resources/job-position.table.filters.company')),
-                Tables\Filters\TernaryFilter::make('is_active')
+                Tables\Filters\TernaryFilter::make('status')
                     ->label(__('recruitments::filament/clusters/configurations/resources/job-position.table.filters.status')),
                 Tables\Filters\QueryBuilder::make()
                     ->constraintPickerColumns(2)
@@ -506,7 +509,7 @@ class JobPositionResource extends Resource
                                         ->placeholder('—')
                                         ->icon('heroicon-o-briefcase')
                                         ->label(__('recruitments::filament/clusters/configurations/resources/job-position.infolist.sections.employment-information.entries.employment-type')),
-                                    Infolists\Components\IconEntry::make('is_active')
+                                    Infolists\Components\IconEntry::make('status')
                                         ->label(__('recruitments::filament/clusters/configurations/resources/job-position.infolist.sections.position-status.entries.status')),
                                     Infolists\Components\TextEntry::make('skills.name')
                                         ->listWithLineBreaks()

@@ -149,7 +149,8 @@ class JobPositionResource extends Resource
                                             ->relationship('employmentType', 'name')
                                             ->searchable()
                                             ->preload(),
-                                        Forms\Components\Toggle::make('is_active')
+                                        Forms\Components\Toggle::make('status')
+                                            ->inline(false)
                                             ->label(__('employees::filament/clusters/configurations/resources/job-position.form.sections.workforce-planning.fields.status')),
                                     ]),
                             ])
