@@ -26,7 +26,7 @@ return new class extends Migration
         Schema::table('employees_job_positions', function (Blueprint $table) {
             $table->dropColumn('status');
 
-            $table->boolean('is_active')->default(false)->nullable()->comment('Is Active');
+            $table->boolean('is_active')->default(false)->nullable()->comment('Is Active')->after('requirements');
         });
     }
 };
