@@ -71,7 +71,8 @@ class ProductResource extends Resource
                                         Forms\Components\TextInput::make('weight')
                                             ->label(__('products::filament/resources/product.form.sections.inventory.fieldsets.logistics.fields.weight'))
                                             ->numeric()
-                                            ->minValue(0),
+                                            ->minValue(0)
+                                            ->regex('/^\d{1,11}(\.\d{1,4})?$/'),
                                         Forms\Components\TextInput::make('volume')
                                             ->label(__('products::filament/resources/product.form.sections.inventory.fieldsets.logistics.fields.volume'))
                                             ->numeric()
