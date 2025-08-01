@@ -15,6 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Webkul\Employee\Models\Department;
 use Webkul\Employee\Models\Employee;
 use Webkul\Partner\Models\Partner;
+use Webkul\Security\Enums\PermissionType;
 use Webkul\Support\Models\Company;
 
 class User extends BaseUser implements FilamentUser
@@ -112,6 +113,10 @@ class User extends BaseUser implements FilamentUser
                 $user->handlePartnerCreation($user);
             } else {
                 $user->handlePartnerUpdation($user);
+            }
+
+            if ($user->resource_permission !== PermissionType::GROUP->value) {
+                $user->teams()->detach();
             }
         });
     }

@@ -15,6 +15,11 @@ class ManageTeams extends ManageRecords
     {
         return [
             Actions\CreateAction::make()->icon('heroicon-o-plus-circle')
+                ->mutateFormDataUsing(function (array $data): array {
+                    $data['created_by'] = filament()->auth()->user()->id;
+
+                    return $data;
+                })
                 ->successNotification(
                     Notification::make()
                         ->success()

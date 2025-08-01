@@ -110,7 +110,8 @@ class UserResource extends Resource
                                             ->preload()
                                             ->searchable()
                                             ->required()
-                                            ->visible(fn (Forms\Get $get) => $get('resource_permission') === PermissionType::GROUP->value),
+                                            ->visible(fn (Forms\Get $get) => $get('resource_permission') === PermissionType::GROUP->value)
+                                            ->dehydrated(fn (Forms\Get $get) => $get('resource_permission') === PermissionType::GROUP->value)
                                     ])
                                     ->columns(2),
                             ])
