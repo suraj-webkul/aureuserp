@@ -25,6 +25,7 @@ class User extends Authenticatable
         'password',
         'partner_id',
         'language',
+        'created_by',
         'is_active',
         'default_company_id',
         'resource_permission',

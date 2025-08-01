@@ -66,6 +66,11 @@ class User extends BaseUser implements FilamentUser
         return $this->hasMany(Department::class, 'manager_id');
     }
 
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
     /**
      * The companies that the user owns.
      */

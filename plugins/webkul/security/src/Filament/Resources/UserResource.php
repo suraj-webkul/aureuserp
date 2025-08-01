@@ -10,6 +10,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
@@ -94,17 +95,22 @@ class UserResource extends Resource
                                             ->preload()
                                             ->searchable(),
                                         Forms\Components\Select::make('resource_permission')
+                                            ->live()
                                             ->label(__('security::filament/resources/user.form.sections.permissions.fields.resource-permission'))
                                             ->options(PermissionType::options())
                                             ->required()
                                             ->preload()
+                                            ->default(PermissionType::GLOBAL->value)
                                             ->searchable(),
                                         Forms\Components\Select::make('teams')
+                                            ->live()
                                             ->label(__('security::filament/resources/user.form.sections.permissions.fields.teams'))
                                             ->relationship('teams', 'name')
                                             ->multiple()
                                             ->preload()
-                                            ->searchable(),
+                                            ->searchable()
+                                            ->required()
+                                            ->visible(fn (Forms\Get $get) => $get('resource_permission') === PermissionType::GROUP->value),
                                     ])
                                     ->columns(2),
                             ])
@@ -411,13 +417,6 @@ class UserResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
     public static function getPages(): array
     {
         return [
@@ -426,5 +425,21 @@ class UserResource extends Resource
             'edit'   => Pages\EditUser::route('/{record}/edit'),
             'view'   => Pages\ViewUsers::route('/{record}'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        $userIds = bouncer()->getAuthorizedUserIds();
+
+        if ($userIds !== null) {
+            $query->where(function ($q) use ($userIds) {
+                $q->whereIn('users.id', $userIds)
+                    ->orWhere('users.created_by', filament()->auth()->id());
+            });
+        }
+
+        return $query;
     }
 }
