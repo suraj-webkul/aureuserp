@@ -111,7 +111,7 @@ class UserResource extends Resource
                                             ->searchable()
                                             ->required()
                                             ->visible(fn (Forms\Get $get) => $get('resource_permission') === PermissionType::GROUP->value)
-                                            ->dehydrated(fn (Forms\Get $get) => $get('resource_permission') === PermissionType::GROUP->value)
+                                            ->dehydrated(fn (Forms\Get $get) => $get('resource_permission') === PermissionType::GROUP->value),
                                     ])
                                     ->columns(2),
                             ])
@@ -212,6 +212,10 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('allowedCompanies.name')
                     ->label(__('security::filament/resources/user.table.columns.allowed-company'))
                     ->badge(),
+                Tables\Columns\TextColumn::make('createdBy.name')
+                    ->label(__('security::filament/resources/user.table.columns.created-by'))
+                    ->default('—')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('security::filament/resources/user.table.columns.created-at'))
                     ->dateTime()

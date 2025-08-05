@@ -15,7 +15,6 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Facades\Auth;
 use Webkul\Field\Filament\Traits\HasCustomFields;
 use Webkul\Security\Enums\CompanyStatus;
 use Webkul\Security\Filament\Resources\CompanyResource\Pages;
@@ -289,6 +288,11 @@ class CompanyResource extends Resource
                     ->sortable()
                     ->label(__('security::filament/resources/company.table.columns.status'))
                     ->boolean(),
+                Tables\Columns\TextColumn::make('createdBy.name')
+                    ->label(__('security::filament/resources/company.table.columns.created-by'))
+                    ->sortable()
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('security::filament/resources/company.table.columns.created-at'))
                     ->dateTime()
@@ -322,6 +326,9 @@ class CompanyResource extends Resource
                     ->collapsible(),
                 Tables\Grouping\Group::make('currency_id')
                     ->label(__('security::filament/resources/company.table.groups.currency'))
+                    ->collapsible(),
+                Tables\Grouping\Group::make('createdBy.name')
+                    ->label(__('security::filament/resources/company.table.groups.created-by'))
                     ->collapsible(),
                 Tables\Grouping\Group::make('created_at')
                     ->label(__('security::filament/resources/company.table.groups.created-at'))
@@ -394,11 +401,7 @@ class CompanyResource extends Resource
                                 ->body(__('security::filament/resources/company.table.bulk-actions.restore.notification.body')),
                         ),
                 ]),
-            ])->modifyQueryUsing(function (Builder $query) {
-                $query
-                    ->where('creator_id', Auth::user()->id)
-                    ->whereNull('parent_id');
-            })
+            ])
             ->reorderable('sequence');
     }
 
@@ -534,9 +537,18 @@ class CompanyResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()
+        $query = parent::getEloquentQuery()
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
-            ]);
+            ])
+            ->whereNull('parent_id');
+
+        $userIds = bouncer()->getAuthorizedUserIds();
+
+        if ($userIds !== null) {
+            $query->whereIn('companies.creator_id', $userIds);
+        }
+
+        return $query;
     }
 }

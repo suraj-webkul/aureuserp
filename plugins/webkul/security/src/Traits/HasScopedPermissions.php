@@ -1,5 +1,7 @@
 <?php
 
+// 1. Enhanced HasScopedPermissions Trait
+
 namespace Webkul\Security\Traits;
 
 use Illuminate\Database\Eloquent\Collection;
@@ -54,7 +56,7 @@ trait HasScopedPermissions
     /**
      * Check if the user has individual access to their own resources only.
      */
-    protected function hasIndividualAccess(User $user, Model $model, $ownerAttribute = 'user'): bool
+    protected function hasIndividualAccess(User $user, Model $model, string $ownerAttribute = 'user'): bool
     {
         if ($user->resource_permission !== PermissionType::INDIVIDUAL->value) {
             return false;

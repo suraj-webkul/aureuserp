@@ -21,9 +21,13 @@ class UserPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user): bool
+    public function view(User $user, User $record): bool
     {
-        return $user->can('view_user');
+        if (! $user->can('view_user')) {
+            return false;
+        }
+
+        return $this->hasAccess($user, $record, 'createdBy');
     }
 
     /**
@@ -107,7 +111,7 @@ class UserPolicy
     }
 
     /**
-     * Determine whether the user can bulk restore.
+     * Determine whether the user can replicate.
      */
     public function replicate(User $user, User $record): bool
     {

@@ -4,6 +4,7 @@ namespace Webkul\Invoice\Filament\Clusters\Customer\Resources;
 
 use Filament\Pages\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
+use Illuminate\Database\Eloquent\Builder;
 use Webkul\Account\Filament\Resources\InvoiceResource as BaseInvoiceResource;
 use Webkul\Invoice\Filament\Clusters\Customer;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\InvoiceResource\Pages;
@@ -57,5 +58,19 @@ class InvoiceResource extends BaseInvoiceResource
             'view'   => Pages\ViewInvoice::route('/{record}'),
             'edit'   => Pages\EditInvoice::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        $userIds = bouncer()->getAuthorizedUserIds();
+
+        if ($userIds !== null) {
+            $query->whereIn('accounts_account_moves.creator_id', $userIds)
+                ->orWhere('accounts_account_moves.invoice_user_id', $userIds);
+        }
+
+        return $query;
     }
 }

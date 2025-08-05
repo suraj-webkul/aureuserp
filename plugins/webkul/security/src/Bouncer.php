@@ -26,7 +26,7 @@ class Bouncer
         if ($user->resource_permission == PermissionType::GLOBAL->value) {
             static::$authorizedUserIdsCache = null;
         } elseif ($user->resource_permission == PermissionType::GROUP->value) {
-            static::$authorizedUserIdsCache = $this->getCurrentUserGroupsUserIds($user);
+            static::$authorizedUserIdsCache = $this->getCurrentAccessibleUserIds($user);
         } else {
             static::$authorizedUserIdsCache = [$user->id];
         }
@@ -37,7 +37,7 @@ class Bouncer
     /**
      * Get user IDs of the current user's groups.
      */
-    protected function getCurrentUserGroupsUserIds(User $user): array
+    protected function getCurrentAccessibleUserIds(User $user): array
     {
         return User::query()
             ->select('users.id')
