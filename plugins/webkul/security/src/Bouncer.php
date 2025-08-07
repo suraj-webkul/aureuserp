@@ -23,9 +23,9 @@ class Bouncer
 
         $user = filament()->auth()->user();
 
-        if ($user->resource_permission == PermissionType::GLOBAL->value) {
+        if ($user->resource_permission == PermissionType::GLOBAL) {
             static::$authorizedUserIdsCache = null;
-        } elseif ($user->resource_permission == PermissionType::GROUP->value) {
+        } elseif ($user->resource_permission == PermissionType::GROUP) {
             static::$authorizedUserIdsCache = $this->getCurrentAccessibleUserIds($user);
         } else {
             static::$authorizedUserIdsCache = [$user->id];

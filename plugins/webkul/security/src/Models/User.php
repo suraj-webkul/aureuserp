@@ -8,6 +8,7 @@ use Filament\Panel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -22,47 +23,50 @@ class User extends BaseUser implements FilamentUser
 {
     use HasRoles, SoftDeletes;
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'default_company_id' => 'integer',
-    ];
+    public function __construct(array $attributes = [])
+    {
+        $this->mergeFillable([
+            'partner_id',
+            'language',
+            'created_by',
+            'is_active',
+            'default_company_id',
+            'resource_permission',
+        ]);
 
-    /**
-     * Determine if the user can access the Filament panel.
-     */
+        $this->mergeCasts([
+            'is_active'           => 'boolean',
+            'language'            => 'string',
+            'created_by'          => 'integer',
+            'default_company_id'  => 'integer',
+            'partner_id'          => 'integer',
+            'resource_permission' => PermissionType::class,
+        ]);
+
+        parent::__construct($attributes);
+    }
+
     public function canAccessPanel(Panel $panel): bool
     {
         return true;
     }
 
-    /**
-     * Get image url for the product image.
-     *
-     * @return string
-     */
-    public function getAvatarUrlAttribute()
+    public function getAvatarUrlAttribute(): ?string
     {
         return $this->partner?->avatar_url;
     }
 
-    /**
-     * The teams that belong to the user.
-     */
     public function teams(): BelongsToMany
     {
         return $this->belongsToMany(Team::class, 'user_team', 'user_id', 'team_id');
     }
 
-    public function employee()
+    public function employee(): HasOne
     {
         return $this->hasOne(Employee::class, 'user_id');
     }
 
-    public function departments()
+    public function departments(): HasMany
     {
         return $this->hasMany(Department::class, 'manager_id');
     }
@@ -72,38 +76,26 @@ class User extends BaseUser implements FilamentUser
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    /**
-     * The companies that the user owns.
-     */
     public function companies(): HasMany
     {
         return $this->hasMany(Company::class);
     }
 
-    public function partner()
+    public function partner(): BelongsTo
     {
         return $this->belongsTo(Partner::class, 'partner_id');
     }
 
-    /**
-     * The companies that the user is allowed to access.
-     */
     public function allowedCompanies(): BelongsToMany
     {
         return $this->belongsToMany(Company::class, 'user_allowed_companies', 'user_id', 'company_id');
     }
 
-    /**
-     * The user's default company.
-     */
     public function defaultCompany(): BelongsTo
     {
         return $this->belongsTo(Company::class, 'default_company_id');
     }
 
-    /**
-     * Bootstrap the model and its traits.
-     */
     protected static function boot()
     {
         parent::boot();
@@ -121,9 +113,6 @@ class User extends BaseUser implements FilamentUser
         });
     }
 
-    /**
-     * Handle the creation of a partner.
-     */
     private function handlePartnerCreation(self $user)
     {
         $partner = $user->partner()->create([
@@ -137,9 +126,6 @@ class User extends BaseUser implements FilamentUser
         $user->save();
     }
 
-    /**
-     * Handle the updation of a partner.
-     */
     private function handlePartnerUpdation(self $user)
     {
         $partner = Partner::updateOrCreate(

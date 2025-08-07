@@ -95,23 +95,35 @@ class UserResource extends Resource
                                             ->preload()
                                             ->searchable(),
                                         Forms\Components\Select::make('resource_permission')
-                                            ->live()
                                             ->label(__('security::filament/resources/user.form.sections.permissions.fields.resource-permission'))
-                                            ->options(PermissionType::options())
+                                            ->live()
+                                            ->options(PermissionType::class)
                                             ->required()
                                             ->preload()
                                             ->default(PermissionType::GLOBAL->value)
                                             ->searchable(),
                                         Forms\Components\Select::make('teams')
-                                            ->live()
                                             ->label(__('security::filament/resources/user.form.sections.permissions.fields.teams'))
-                                            ->relationship('teams', 'name')
+                                            ->relationship(
+                                                name: 'teams',
+                                                titleAttribute: 'name'
+                                            )
+                                            ->live()
                                             ->multiple()
                                             ->preload()
                                             ->searchable()
                                             ->required()
-                                            ->visible(fn (Forms\Get $get) => $get('resource_permission') === PermissionType::GROUP->value)
-                                            ->dehydrated(fn (Forms\Get $get) => $get('resource_permission') === PermissionType::GROUP->value),
+                                            ->createOptionForm(fn (Form $form) => TeamResource::form($form))
+                                            ->createOptionAction(function (Forms\Components\Actions\Action $action) {
+                                                $action
+                                                    ->mutateFormDataUsing(function (array $data) {
+                                                        $data['created_by'] = filament()->auth()->user()->id;
+
+                                                        return $data;
+                                                    });
+                                            })
+                                            ->visible(fn (Forms\Get $get) => $get('resource_permission') == PermissionType::GROUP->value)
+                                            ->dehydrated(fn (Forms\Get $get) => $get('resource_permission') == PermissionType::GROUP->value),
                                     ])
                                     ->columns(2),
                             ])
@@ -204,7 +216,7 @@ class UserResource extends Resource
                     ->label(__('security::filament/resources/user.table.columns.role')),
                 Tables\Columns\TextColumn::make('resource_permission')
                     ->label(__('security::filament/resources/user.table.columns.resource-permission'))
-                    ->formatStateUsing(fn ($state) => PermissionType::options()[$state] ?? $state)
+                    ->formatStateUsing(fn (PermissionType $state) => $state->getLabel())
                     ->sortable(),
                 Tables\Columns\TextColumn::make('defaultCompany.name')
                     ->label(__('security::filament/resources/user.table.columns.default-company'))
@@ -231,7 +243,7 @@ class UserResource extends Resource
                 Tables\Filters\SelectFilter::make('resource_permission')
                     ->label(__('security::filament/resources/user.table.filters.resource-permission'))
                     ->searchable()
-                    ->options(PermissionType::options())
+                    ->options(PermissionType::class)
                     ->preload(),
                 Tables\Filters\SelectFilter::make('default_company')
                     ->relationship('defaultCompany', 'name')
@@ -367,20 +379,12 @@ class UserResource extends Resource
                                             ->formatStateUsing(fn ($state) => ucfirst($state))
                                             ->bulleted(),
                                         Infolists\Components\TextEntry::make('teams.name')
-                                            ->icon('heroicon-o-user-group')
                                             ->placeholder('—')
                                             ->label(__('security::filament/resources/user.infolist.sections.permissions.entries.teams'))
-                                            ->listWithLineBreaks()
-                                            ->bulleted(),
+                                            ->badge(),
                                         Infolists\Components\TextEntry::make('resource_permission')
-                                            ->icon(function ($record) {
-                                                return [
-                                                    PermissionType::GLOBAL->value     => 'heroicon-o-globe-alt',
-                                                    PermissionType::INDIVIDUAL->value => 'heroicon-o-user',
-                                                    PermissionType::GROUP->value      => 'heroicon-o-user-group',
-                                                ][$record->resource_permission];
-                                            })
-                                            ->formatStateUsing(fn ($state) => PermissionType::options()[$state] ?? $state)
+                                            ->formatStateUsing(fn (PermissionType $state) => $state->getLabel())
+                                            ->icon(fn (PermissionType $state) => $state->getColor())
                                             ->placeholder('-')
                                             ->label(__('security::filament/resources/user.infolist.sections.permissions.entries.resource-permission')),
                                     ])

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Webkul\Security\Enums\PermissionType;
 use Webkul\Support\Models\Company;
 
 use function Laravel\Prompts\password;
@@ -124,7 +125,7 @@ class InstallERP extends Command
                     validate: fn ($value) => $this->validateAdminPassword($value)
                 )
             ),
-            'resource_permission' => 'global',
+            'resource_permission' => PermissionType::GLOBAL->value,
             'default_company_id'  => $defaultCompany->id,
         ];
 

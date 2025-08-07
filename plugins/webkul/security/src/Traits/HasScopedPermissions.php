@@ -16,7 +16,7 @@ trait HasScopedPermissions
      */
     protected function hasGlobalAccess(User $user): bool
     {
-        return $user->resource_permission === PermissionType::GLOBAL->value;
+        return $user->resource_permission === PermissionType::GLOBAL;
     }
 
     /**
@@ -24,7 +24,7 @@ trait HasScopedPermissions
      */
     protected function hasGroupAccess(User $user, Model $model, string $ownerAttribute = 'user'): bool
     {
-        if ($user->resource_permission !== PermissionType::GROUP->value) {
+        if ($user->resource_permission !== PermissionType::GROUP) {
             return false;
         }
 
@@ -58,7 +58,7 @@ trait HasScopedPermissions
      */
     protected function hasIndividualAccess(User $user, Model $model, string $ownerAttribute = 'user'): bool
     {
-        if ($user->resource_permission !== PermissionType::INDIVIDUAL->value) {
+        if ($user->resource_permission !== PermissionType::INDIVIDUAL) {
             return false;
         }
 
