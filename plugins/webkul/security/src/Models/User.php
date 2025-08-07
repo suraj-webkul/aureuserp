@@ -25,6 +25,8 @@ class User extends BaseUser implements FilamentUser
 
     public function __construct(array $attributes = [])
     {
+        parent::__construct($attributes);
+
         $this->mergeFillable([
             'partner_id',
             'language',
@@ -35,15 +37,9 @@ class User extends BaseUser implements FilamentUser
         ]);
 
         $this->mergeCasts([
-            'is_active'           => 'boolean',
-            'language'            => 'string',
-            'created_by'          => 'integer',
             'default_company_id'  => 'integer',
-            'partner_id'          => 'integer',
             'resource_permission' => PermissionType::class,
         ]);
-
-        parent::__construct($attributes);
     }
 
     public function canAccessPanel(Panel $panel): bool
@@ -51,7 +47,12 @@ class User extends BaseUser implements FilamentUser
         return true;
     }
 
-    public function getAvatarUrlAttribute(): ?string
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function getAvatarUrlAttribute()
     {
         return $this->partner?->avatar_url;
     }
@@ -69,11 +70,6 @@ class User extends BaseUser implements FilamentUser
     public function departments(): HasMany
     {
         return $this->hasMany(Department::class, 'manager_id');
-    }
-
-    public function createdBy(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'created_by');
     }
 
     public function companies(): HasMany
@@ -105,10 +101,6 @@ class User extends BaseUser implements FilamentUser
                 $user->handlePartnerCreation($user);
             } else {
                 $user->handlePartnerUpdation($user);
-            }
-
-            if ($user->resource_permission !== PermissionType::GROUP->value) {
-                $user->teams()->detach();
             }
         });
     }
