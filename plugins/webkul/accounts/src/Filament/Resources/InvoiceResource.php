@@ -261,6 +261,11 @@ class InvoiceResource extends Resource
                     ->label(__('accounts::filament/resources/invoice.table.columns.state'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
+                Tables\Columns\TextColumn::make('createdBy.name')
+                    ->placeholder('-')
+                    ->label(__('accounts::filament/resources/invoice.table.columns.created-by'))
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('invoice_partner_display_name')
                     ->label(__('accounts::filament/resources/invoice.table.columns.customer'))
                     ->placeholder('-')

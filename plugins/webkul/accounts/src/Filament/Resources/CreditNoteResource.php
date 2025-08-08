@@ -5,9 +5,12 @@ namespace Webkul\Account\Filament\Resources;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Account\Filament\Resources\CreditNoteResource\Pages;
 use Webkul\Account\Models\Move as AccountMove;
+use Webkul\Security\Traits\HasResourcePermissionQuery;
 
 class CreditNoteResource extends InvoiceResource
 {
+    use HasResourcePermissionQuery;
+
     protected static ?string $model = AccountMove::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-credit-card';

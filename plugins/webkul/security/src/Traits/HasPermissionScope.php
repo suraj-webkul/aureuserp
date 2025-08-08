@@ -3,10 +3,19 @@
 namespace Webkul\Security\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
-use Webkul\Security\Enums\PermissionType;
 
 trait HasPermissionScope
 {
+    protected function getOwnerColumn(): string
+    {
+        return 'created_by';
+    }
+
+    protected function getAssignmentColumn(): ?string
+    {
+        return 'user_id';
+    }
+
     public function scopeApplyPermissionScope(Builder $query): Builder
     {
         $user = filament()->auth()->user();
@@ -17,33 +26,21 @@ trait HasPermissionScope
 
         $userIds = bouncer()->getAuthorizedUserIds();
 
-        if ($userIds === null) {
+        if (empty($userIds)) {
             return $query;
         }
 
-        return $query->where(function (Builder $subQuery) use ($userIds, $user) {
+        return $query->where(function (Builder $subQuery) use ($userIds) {
+            $assignmentColumn = $this->getAssignmentColumn();
+
             $subQuery->whereIn($this->getOwnerColumn(), $userIds);
 
-            if ($user->resource_permission === PermissionType::INDIVIDUAL) {
-                $assignmentColumn = $this->getAssignmentColumn();
-
-                if (
-                    $assignmentColumn
-                    && $this->getConnection()->getSchemaBuilder()->hasColumn($this->getTable(), $assignmentColumn)
-                ) {
-                    $subQuery->orWhere($assignmentColumn, $user->id);
-                }
+            if (
+                $assignmentColumn &&
+                $this->getConnection()->getSchemaBuilder()->hasColumn($this->getTable(), $assignmentColumn)
+            ) {
+                $subQuery->orWhereIn($assignmentColumn, $userIds);
             }
         });
-    }
-
-    protected function getOwnerColumn(): string
-    {
-        return 'created_by';
-    }
-
-    protected function getAssignmentColumn(): ?string
-    {
-        return 'user_id';
     }
 }

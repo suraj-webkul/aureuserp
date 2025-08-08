@@ -43,6 +43,11 @@ class User extends BaseUser implements FilamentUser
         parent::__construct($attributes);
     }
 
+    protected function getAssignmentColumn(): ?string
+    {
+        return 'id';
+    }
+
     public function canAccessPanel(Panel $panel): bool
     {
         return true;

@@ -438,17 +438,4 @@ class UserResource extends Resource
             'view'   => Pages\ViewUsers::route('/{record}'),
         ];
     }
-
-    public static function getEloquentQuery(): Builder
-    {
-        $query = parent::getEloquentQuery();
-
-        $userIds = bouncer()->getAuthorizedUserIds();
-
-        if ($userIds !== null) {
-            $query->whereIn('users.id', $userIds);
-        }
-
-        return $query;
-    }
 }
