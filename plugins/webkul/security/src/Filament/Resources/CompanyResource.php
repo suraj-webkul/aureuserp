@@ -14,18 +14,18 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Webkul\Field\Filament\Traits\HasCustomFields;
 use Webkul\Security\Enums\CompanyStatus;
 use Webkul\Security\Filament\Resources\CompanyResource\Pages;
 use Webkul\Security\Filament\Resources\CompanyResource\RelationManagers;
+use Webkul\Security\Traits\HasResourcePermissionQuery;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Country;
 use Webkul\Support\Models\Currency;
 
 class CompanyResource extends Resource
 {
-    use HasCustomFields;
+    use HasCustomFields, HasResourcePermissionQuery;
 
     protected static ?string $model = Company::class;
 
@@ -533,22 +533,5 @@ class CompanyResource extends Resource
             'view'   => Pages\ViewCompany::route('/{record}'),
             'edit'   => Pages\EditCompany::route('/{record}/edit'),
         ];
-    }
-
-    public static function getEloquentQuery(): Builder
-    {
-        $query = parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ])
-            ->whereNull('parent_id');
-
-        $userIds = bouncer()->getAuthorizedUserIds();
-
-        if ($userIds !== null) {
-            $query->whereIn('companies.creator_id', $userIds);
-        }
-
-        return $query;
     }
 }

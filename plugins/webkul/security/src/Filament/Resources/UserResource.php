@@ -17,9 +17,12 @@ use Spatie\Permission\Models\Role;
 use Webkul\Security\Enums\PermissionType;
 use Webkul\Security\Filament\Resources\UserResource\Pages;
 use Webkul\Security\Models\User;
+use Webkul\Security\Traits\HasResourcePermissionQuery;
 
 class UserResource extends Resource
 {
+    use HasResourcePermissionQuery;
+
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
@@ -443,10 +446,7 @@ class UserResource extends Resource
         $userIds = bouncer()->getAuthorizedUserIds();
 
         if ($userIds !== null) {
-            $query->where(function ($q) use ($userIds) {
-                $q->whereIn('users.id', $userIds)
-                    ->orWhere('users.created_by', filament()->auth()->id());
-            });
+            $query->whereIn('users.id', $userIds);
         }
 
         return $query;

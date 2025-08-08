@@ -10,12 +10,14 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Webkul\Security\Filament\Resources\TeamResource\Pages;
 use Webkul\Security\Models\Team;
+use Webkul\Security\Traits\HasResourcePermissionQuery;
 
 class TeamResource extends Resource
 {
+    use HasResourcePermissionQuery;
+
     protected static ?string $model = Team::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
@@ -104,18 +106,5 @@ class TeamResource extends Resource
         return [
             'index' => Pages\ManageTeams::route('/'),
         ];
-    }
-
-    public static function getEloquentQuery(): Builder
-    {
-        $query = parent::getEloquentQuery();
-
-        $userIds = bouncer()->getAuthorizedUserIds();
-
-        if ($userIds !== null) {
-            $query->whereIn('teams.created_by', $userIds);
-        }
-
-        return $query;
     }
 }

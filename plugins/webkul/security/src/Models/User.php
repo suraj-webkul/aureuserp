@@ -17,16 +17,15 @@ use Webkul\Employee\Models\Department;
 use Webkul\Employee\Models\Employee;
 use Webkul\Partner\Models\Partner;
 use Webkul\Security\Enums\PermissionType;
+use Webkul\Security\Traits\HasPermissionScope;
 use Webkul\Support\Models\Company;
 
 class User extends BaseUser implements FilamentUser
 {
-    use HasRoles, SoftDeletes;
+    use HasPermissionScope, HasRoles, SoftDeletes;
 
     public function __construct(array $attributes = [])
     {
-        parent::__construct($attributes);
-
         $this->mergeFillable([
             'partner_id',
             'language',
@@ -40,6 +39,8 @@ class User extends BaseUser implements FilamentUser
             'default_company_id'  => 'integer',
             'resource_permission' => PermissionType::class,
         ]);
+
+        parent::__construct($attributes);
     }
 
     public function canAccessPanel(Panel $panel): bool
