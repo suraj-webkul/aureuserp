@@ -6,14 +6,28 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait HasPermissionScope
 {
+    protected ?string $ownerColumn = 'creator_id';
+
+    protected ?string $assignmentColumn = 'user_id';
+
     protected function getOwnerColumn(): string
     {
-        return 'created_by';
+        return $this->ownerColumn;
     }
 
     protected function getAssignmentColumn(): ?string
     {
-        return 'user_id';
+        return $this->assignmentColumn;
+    }
+
+    protected function setOwnerColumn(string $column): void
+    {
+        $this->ownerColumn = $column;
+    }
+
+    protected function setAssignmentColumn(?string $column): void
+    {
+        $this->assignmentColumn = $column;
     }
 
     public function scopeApplyPermissionScope(Builder $query): Builder

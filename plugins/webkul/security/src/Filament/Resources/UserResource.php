@@ -120,7 +120,7 @@ class UserResource extends Resource
                                             ->createOptionAction(function (Forms\Components\Actions\Action $action) {
                                                 $action
                                                     ->mutateFormDataUsing(function (array $data) {
-                                                        $data['created_by'] = filament()->auth()->user()->id;
+                                                        $data['creator_id'] = filament()->auth()->user()->id;
 
                                                         return $data;
                                                     });

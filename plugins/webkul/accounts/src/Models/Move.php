@@ -374,7 +374,7 @@ class Move extends Model implements Sortable
         parent::boot();
 
         static::creating(function ($model) {
-            $model->creator_id = auth()->id();
+            $model->creator_id = filament()->auth()->user()->id;
         });
 
         static::created(function ($model) {

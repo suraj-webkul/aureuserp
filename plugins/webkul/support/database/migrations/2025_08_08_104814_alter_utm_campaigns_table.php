@@ -6,13 +6,12 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::table('teams', function (Blueprint $table) {
-            $table->unsignedBigInteger('creator_id')->nullable()->after('id');
+        Schema::table('utm_campaigns', function (Blueprint $table) {
+            $table->dropForeign(['created_by']);
+
+            $table->renameColumn('created_by', 'creator_id');
 
             $table->foreign('creator_id')
                 ->references('id')
@@ -21,15 +20,16 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::table('teams', function (Blueprint $table) {
+        Schema::table('utm_campaigns', function (Blueprint $table) {
             $table->dropForeign(['creator_id']);
+            $table->renameColumn('creator_id', 'created_by');
 
-            $table->dropColumn('creator_id');
+            $table->foreign('created_by')
+                ->references('id')
+                ->on('users')
+                ->nullOnDelete();
         });
     }
 };

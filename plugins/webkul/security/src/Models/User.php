@@ -29,7 +29,7 @@ class User extends BaseUser implements FilamentUser
         $this->mergeFillable([
             'partner_id',
             'language',
-            'created_by',
+            'creator_id',
             'is_active',
             'default_company_id',
             'resource_permission',
@@ -55,7 +55,7 @@ class User extends BaseUser implements FilamentUser
 
     public function createdBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'creator_id');
     }
 
     public function getAvatarUrlAttribute()

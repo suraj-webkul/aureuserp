@@ -18,7 +18,7 @@ class Team extends Model
      */
     protected $fillable = [
         'name',
-        'created_by',
+        'creator_id',
     ];
 
     /**
@@ -26,7 +26,7 @@ class Team extends Model
      */
     public function createdBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'creator_id');
     }
 
     /**
