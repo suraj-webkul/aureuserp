@@ -150,11 +150,6 @@ class Move extends Model implements Sortable
         'sort_when_creating' => true,
     ];
 
-    protected function getOwnerColumn(): string
-    {
-        return 'creator_id';
-    }
-
     protected function getAssignmentColumn(): ?string
     {
         return 'invoice_user_id';
