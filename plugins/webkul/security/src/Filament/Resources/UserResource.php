@@ -10,7 +10,6 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
@@ -104,6 +103,11 @@ class UserResource extends Resource
                                             ->required()
                                             ->preload()
                                             ->default(PermissionType::GLOBAL->value)
+                                            ->afterStateUpdated(function (Forms\Get $get, Forms\Set $set) {
+                                                if ($get('resource_permission') != PermissionType::GROUP->value) {
+                                                    $set('teams', []);
+                                                }
+                                            })
                                             ->searchable(),
                                         Forms\Components\Select::make('teams')
                                             ->label(__('security::filament/resources/user.form.sections.permissions.fields.teams'))
@@ -115,18 +119,16 @@ class UserResource extends Resource
                                             ->multiple()
                                             ->preload()
                                             ->searchable()
-                                            ->required()
+                                            ->required(fn (Forms\Get $get) => $get('resource_permission') == PermissionType::GROUP->value)
                                             ->createOptionForm(fn (Form $form) => TeamResource::form($form))
-                                            ->createOptionAction(function (Forms\Components\Actions\Action $action) {
+                                            ->createOptionAction(function (Forms\Components\Actions\Action $action, Forms\Get $get) {
                                                 $action
                                                     ->mutateFormDataUsing(function (array $data) {
                                                         $data['creator_id'] = filament()->auth()->user()->id;
 
                                                         return $data;
                                                     });
-                                            })
-                                            ->visible(fn (Forms\Get $get) => $get('resource_permission') == PermissionType::GROUP->value)
-                                            ->dehydrated(fn (Forms\Get $get) => $get('resource_permission') == PermissionType::GROUP->value),
+                                            }),
                                     ])
                                     ->columns(2),
                             ])
