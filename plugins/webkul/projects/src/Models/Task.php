@@ -17,24 +17,15 @@ use Webkul\Partner\Models\Partner;
 use Webkul\Project\Database\Factories\TaskFactory;
 use Webkul\Security\Models\Scopes\UserPermissionScope;
 use Webkul\Security\Models\User;
+use Webkul\Security\Traits\HasPermissionScope;
 use Webkul\Support\Models\Company;
 
 class Task extends Model implements Sortable
 {
-    use HasChatter, HasCustomFields, HasFactory, HasLogActivity, SoftDeletes, SortableTrait;
+    use HasChatter, HasCustomFields, HasFactory, HasLogActivity, HasPermissionScope, SoftDeletes, SortableTrait;
 
-    /**
-     * Table name.
-     *
-     * @var string
-     */
     protected $table = 'projects_tasks';
 
-    /**
-     * Fillable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'title',
         'description',
@@ -63,11 +54,6 @@ class Task extends Model implements Sortable
         'creator_id',
     ];
 
-    /**
-     * Table name.
-     *
-     * @var string
-     */
     protected $casts = [
         'deadline'            => 'datetime',
         'is_active'           => 'boolean',
@@ -111,6 +97,17 @@ class Task extends Model implements Sortable
         'order_column_name'  => 'sort',
         'sort_when_creating' => true,
     ];
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->setPivotTable('projects_task_users');
+
+        $this->setPivotForeignKey('task_id');
+
+        $this->setPivotRelatedKey('user_id');
+    }
 
     public function parent(): BelongsTo
     {
@@ -172,9 +169,6 @@ class Task extends Model implements Sortable
         static::addGlobalScope(new UserPermissionScope('users'));
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     protected static function boot()
     {
         parent::boot();
