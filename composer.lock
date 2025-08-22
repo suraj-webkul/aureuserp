@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c3f374544766b6597f542e640a6d26be",
+    "content-hash": "0c4ac3942f4db55a55a236d0949573a7",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -2256,6 +2256,85 @@
                 }
             ],
             "time": "2024-07-20T21:45:45+00:00"
+        },
+        {
+            "name": "guava/filament-icon-picker",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lukas-frey/filament-icon-picker.git",
+                "reference": "a55c3cb8efe35ae5925c1dd4bd45500089a69da7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lukas-frey/filament-icon-picker/zipball/a55c3cb8efe35ae5925c1dd4bd45500089a69da7",
+                "reference": "a55c3cb8efe35ae5925c1dd4bd45500089a69da7",
+                "shasum": ""
+            },
+            "require": {
+                "blade-ui-kit/blade-icons": "^1.8",
+                "filament/filament": "^4.0",
+                "php": "^8.2",
+                "spatie/laravel-package-tools": "^1.15.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.0",
+                "nunomaduro/collision": "^8.0",
+                "nunomaduro/larastan": "^3.0",
+                "orchestra/testbench": "^10.0",
+                "pestphp/pest": "^3.1",
+                "pestphp/pest-plugin-arch": "^3.0",
+                "pestphp/pest-plugin-laravel": "^3.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan-deprecation-rules": "^2.0",
+                "phpstan/phpstan-phpunit": "2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "IconPicker": "IconManager"
+                    },
+                    "providers": [
+                        "Guava\\IconPicker\\IconPickerServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Guava\\IconPicker\\": "src/",
+                    "Guava\\IconPicker\\Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lukas Frey",
+                    "email": "lukas.frey@guava.cz",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A filament plugin that adds an icon picker field.",
+            "homepage": "https://github.com/GuavaCZ/filament-icon-picker",
+            "keywords": [
+                "Guava",
+                "filament-icon-picker",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/guavaCZ/filament-icon-picker/issues",
+                "source": "https://github.com/guavaCZ/filament-icon-picker"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/GuavaCZ",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-08-20T07:07:57+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

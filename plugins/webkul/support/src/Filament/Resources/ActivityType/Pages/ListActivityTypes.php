@@ -1,11 +1,11 @@
 <?php
 
-namespace Webkul\Support\Filament\Resources\ActivityTypeResource\Pages;
+namespace Webkul\Support\Filament\Resources\ActivityType\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
-use Webkul\Support\Filament\Resources\ActivityTypeResource;
+use Webkul\Support\Filament\Resources\ActivityType\ActivityTypeResource;
 use Webkul\Support\Models\ActivityType;
 
 class ListActivityTypes extends ListRecords

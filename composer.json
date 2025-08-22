@@ -18,6 +18,7 @@
         "filament/filament": "^4.0",
         "filament/spatie-laravel-settings-plugin": "^4.0",
         "flowframe/laravel-trend": "^0.3.0",
+        "guava/filament-icon-picker": "^3.0",
         "hugomyb/filament-media-action": "^4.0",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",

@@ -1,12 +1,12 @@
 <?php
 
-namespace Webkul\Support\Filament\Resources\ActivityTypeResource\Pages;
+namespace Webkul\Support\Filament\Resources\ActivityType\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
-use Webkul\Support\Filament\Resources\ActivityTypeResource;
+use Webkul\Support\Filament\Resources\ActivityType\ActivityTypeResource;
 
 class ViewActivityType extends ViewRecord
 {
