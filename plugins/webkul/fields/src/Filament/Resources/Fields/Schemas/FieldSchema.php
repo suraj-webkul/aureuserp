@@ -1,65 +1,25 @@
 <?php
 
-namespace Webkul\Field\Filament\Resources;
+namespace Webkul\Field\Filament\Resources\Fields\Schemas;
 
-use Filament\Actions\ActionGroup;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\ForceDeleteAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Actions\RestoreAction;
-use Filament\Actions\RestoreBulkAction;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Notifications\Notification;
-use Filament\Resources\Resource;
 use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\IconPosition;
 use Filament\Support\Enums\TextSize;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Table;
-use Illuminate\Support\Facades\Schema;
-use Webkul\Field\FieldsColumnManager;
-use Webkul\Field\Filament\Resources\FieldResource\Pages\CreateField;
-use Webkul\Field\Filament\Resources\FieldResource\Pages\EditField;
-use Webkul\Field\Filament\Resources\FieldResource\Pages\ListFields;
-use Webkul\Field\Models\Field;
 
-class FieldResource extends Resource
+class FieldSchema
 {
-    protected static ?string $model = Field::class;
-
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-puzzle-piece';
-
-    protected static ?int $navigationSort = 5;
-
-    public static function getModelLabel(): string
-    {
-        return __('fields::filament/resources/field.navigation.title');
-    }
-
-    public static function getNavigationLabel(): string
-    {
-        return __('fields::filament/resources/field.navigation.title');
-    }
-
-    public static function getNavigationGroup(): ?string
-    {
-        return __('fields::filament/resources/field.navigation.group');
-    }
-
-    public static function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public static function configure(Schema $schema): Schema
     {
         return $schema
             ->components([
@@ -193,123 +153,6 @@ class FieldResource extends Resource
                     ->columnSpan(['lg' => 1]),
             ])
             ->columns(3);
-    }
-
-    public static function table(Table $table): Table
-    {
-        return $table
-            ->columns([
-                TextColumn::make('code')
-                    ->label(__('fields::filament/resources/field.table.columns.code'))
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('name')
-                    ->label(__('fields::filament/resources/field.table.columns.name'))
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('type')
-                    ->label(__('fields::filament/resources/field.table.columns.type'))
-                    ->sortable(),
-                TextColumn::make('customizable_type')
-                    ->label(__('fields::filament/resources/field.table.columns.resource'))
-                    ->description(fn (Field $record): string => str($record->customizable_type)->afterLast('\\')->toString().'Resource')
-                    ->sortable(),
-                TextColumn::make('created_at')
-                    ->label(__('fields::filament/resources/field.table.columns.created-at'))
-                    ->sortable(),
-            ])
-            ->filters([
-                SelectFilter::make('type')
-                    ->label(__('fields::filament/resources/field.table.filters.type'))
-                    ->options([
-                        'text'          => __('fields::filament/resources/field.table.filters.type-options.text'),
-                        'textarea'      => __('fields::filament/resources/field.table.filters.type-options.textarea'),
-                        'select'        => __('fields::filament/resources/field.table.filters.type-options.select'),
-                        'checkbox'      => __('fields::filament/resources/field.table.filters.type-options.checkbox'),
-                        'radio'         => __('fields::filament/resources/field.table.filters.type-options.radio'),
-                        'toggle'        => __('fields::filament/resources/field.table.filters.type-options.toggle'),
-                        'checkbox_list' => __('fields::filament/resources/field.table.filters.type-options.checkbox-list'),
-                        'datetime'      => __('fields::filament/resources/field.table.filters.type-options.datetime'),
-                        'editor'        => __('fields::filament/resources/field.table.filters.type-options.editor'),
-                        'markdown'      => __('fields::filament/resources/field.table.filters.type-options.markdown'),
-                        'color'         => __('fields::filament/resources/field.table.filters.type-options.color'),
-                    ]),
-                SelectFilter::make('customizable_type')
-                    ->label(__('fields::filament/resources/field.table.filters.resource'))
-                    ->options(fn () => collect(Filament::getResources())->filter(fn ($resource) => in_array('Webkul\Field\Filament\Traits\HasCustomFields', class_uses($resource)))->mapWithKeys(fn ($resource) => [
-                        $resource::getModel() => str($resource)->afterLast('\\')->toString(),
-                    ])),
-            ])
-            ->recordActions([
-                ActionGroup::make([
-                    EditAction::make()
-                        ->hidden(fn ($record) => $record->trashed()),
-                    RestoreAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
-                                ->title(__('fields::filament/resources/field.table.actions.restore.notification.title'))
-                                ->body(__('fields::filament/resources/field.table.actions.restore.notification.body')),
-                        ),
-                    DeleteAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
-                                ->title(__('fields::filament/resources/field.table.actions.delete.notification.title'))
-                                ->body(__('fields::filament/resources/field.table.actions.delete.notification.body')),
-                        ),
-                    ForceDeleteAction::make()
-                        ->before(function ($record) {
-                            FieldsColumnManager::deleteColumn($record);
-                        })
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
-                                ->title(__('fields::filament/resources/field.table.actions.force-delete.notification.title'))
-                                ->body(__('fields::filament/resources/field.table.actions.force-delete.notification.body')),
-                        ),
-                ]),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    RestoreBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
-                                ->title(__('fields::filament/resources/field.table.bulk-actions.restore.notification.title'))
-                                ->body(__('fields::filament/resources/field.table.bulk-actions.restore.notification.body')),
-                        ),
-                    DeleteBulkAction::make()
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
-                                ->title(__('fields::filament/resources/field.table.bulk-actions.delete.notification.title'))
-                                ->body(__('fields::filament/resources/field.table.bulk-actions.delete.notification.body')),
-                        ),
-                    ForceDeleteBulkAction::make()
-                        ->before(function ($records) {
-                            foreach ($records as $record) {
-                                FieldsColumnManager::deleteColumn($record);
-                            }
-                        })
-                        ->successNotification(
-                            Notification::make()
-                                ->success()
-                                ->title(__('fields::filament/resources/field.table.bulk-actions.force-delete.notification.title'))
-                                ->body(__('fields::filament/resources/field.table.bulk-actions.force-delete.notification.body')),
-                        ),
-                ]),
-            ])
-            ->defaultSort('created_at', 'desc');
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index'  => ListFields::route('/'),
-            'create' => CreateField::route('/create'),
-            'edit'   => EditField::route('/{record}/edit'),
-        ];
     }
 
     public static function getFormSettingsSchema(): array
@@ -502,6 +345,261 @@ class FieldResource extends Resource
                         }),
                 ])
                 ->columns(1),
+        ];
+    }
+
+    public static function getTableSettingsSchema(): array
+    {
+        return [
+            Toggle::make('use_in_table')
+                ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.use-in-table'))
+                ->required()
+                ->live(),
+            Repeater::make('table_settings')
+                ->hiddenLabel()
+                ->visible(fn (Get $get): bool => $get('use_in_table'))
+                ->schema([
+                    Select::make('setting')
+                        ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.setting'))
+                        ->searchable()
+                        ->required()
+                        ->distinct()
+                        ->live()
+                        ->options(fn (Get $get): array => static::getTypeTableSettings($get('../../type'))),
+                    TextInput::make('value')
+                        ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.value'))
+                        ->required()
+                        ->maxLength(255)
+                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
+                            'copyMessage',
+                            'dateTimeTooltip',
+                            'default',
+                            'icon',
+                            'label',
+                            'money',
+                            'placeholder',
+                            'prefix',
+                            'suffix',
+                            'tooltip',
+                            'width',
+                        ])),
+
+                    Select::make('value')
+                        ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.color'))
+                        ->required()
+                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
+                            'color',
+                            'iconColor',
+                        ]))
+                        ->options([
+                            'danger'    => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.danger'),
+                            'info'      => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.info'),
+                            'primary'   => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.primary'),
+                            'secondary' => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.secondary'),
+                            'warning'   => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.warning'),
+                            'success'   => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.success'),
+                        ]),
+
+                    Select::make('value')
+                        ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.alignment'))
+                        ->required()
+                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
+                            'alignment',
+                            'verticalAlignment',
+                        ]))
+                        ->options([
+                            Alignment::Start->value   => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.start'),
+                            Alignment::Left->value    => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.left'),
+                            Alignment::Center->value  => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.center'),
+                            Alignment::End->value     => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.end'),
+                            Alignment::Right->value   => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.right'),
+                            Alignment::Justify->value => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.justify'),
+                            Alignment::Between->value => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.between'),
+                        ]),
+
+                    Select::make('value')
+                        ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.font-weight'))
+                        ->required()
+                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
+                            'weight',
+                        ]))
+                        ->options([
+                            FontWeight::Thin->name       => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.thin'),
+                            FontWeight::ExtraLight->name => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.extra-light'),
+                            FontWeight::Light->name      => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.light'),
+                            FontWeight::Normal->name     => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.normal'),
+                            FontWeight::Medium->name     => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.medium'),
+                            FontWeight::SemiBold->name   => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.semi-bold'),
+                            FontWeight::Bold->name       => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.bold'),
+                            FontWeight::ExtraBold->name  => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.extra-bold'),
+                            FontWeight::Black->name      => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.black'),
+                        ]),
+
+                    Select::make('value')
+                        ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.icon-position'))
+                        ->required()
+                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
+                            'iconPosition',
+                        ]))
+                        ->options([
+                            IconPosition::Before->value => __('fields::filament/resources/field.form.sections.table-settings.fields.icon-position-options.before'),
+                            IconPosition::After->value  => __('fields::filament/resources/field.form.sections.table-settings.fields.icon-position-options.after'),
+                        ]),
+
+                    Select::make('value')
+                        ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.size'))
+                        ->required()
+                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
+                            'size',
+                        ]))
+                        ->options([
+                            TextSize::ExtraSmall->name  => __('fields::filament/resources/field.form.sections.table-settings.fields.size-options.extra-small'),
+                            TextSize::Small->name       => __('fields::filament/resources/field.form.sections.table-settings.fields.size-options.small'),
+                            TextSize::Medium->name      => __('fields::filament/resources/field.form.sections.table-settings.fields.size-options.medium'),
+                            TextSize::Large->name       => __('fields::filament/resources/field.form.sections.table-settings.fields.size-options.large'),
+                        ]),
+
+                    TextInput::make('value')
+                        ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.value'))
+                        ->required()
+                        ->numeric()
+                        ->minValue(0)
+                        ->maxValue(99999999999)
+                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
+                            'limit',
+                            'words',
+                            'lineClamp',
+                            'copyMessageDuration',
+                        ])),
+                ])
+                ->addActionLabel(__('fields::filament/resources/field.form.sections.table-settings.fields.add-setting'))
+                ->columns(2)
+                ->collapsible()
+                ->itemLabel(function (array $state, Get $get): ?string {
+                    $settings = static::getTypeTableSettings($get('type'));
+
+                    return $settings[$state['setting']] ?? null;
+                }),
+        ];
+    }
+
+    public static function getInfolistSettingsSchema(): array
+    {
+        return [
+            Repeater::make('infolist_settings')
+                ->hiddenLabel()
+                ->schema([
+                    Select::make('setting')
+                        ->label(__('fields::filament/resources/field.form.sections.infolist-settings.fields.setting'))
+                        ->searchable()
+                        ->required()
+                        ->distinct()
+                        ->live()
+                        ->options(fn (Get $get): array => static::getTypeInfolistSettings($get('../../type'))),
+                    TextInput::make('value')
+                        ->label(__('fields::filament/resources/field.form.sections.infolist-settings.fields.value'))
+                        ->required()
+                        ->maxLength(255)
+                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
+                            'copyMessage',
+                            'dateTimeTooltip',
+                            'default',
+                            'icon',
+                            'label',
+                            'money',
+                            'placeholder',
+                            'tooltip',
+                            'helperText',
+                            'hint',
+                            'hintIcon',
+                            'separator',
+                            'trueIcon',
+                            'falseIcon',
+                        ])),
+
+                    Select::make('value')
+                        ->label(__('fields::filament/resources/field.form.sections.infolist-settings.fields.color'))
+                        ->required()
+                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
+                            'color',
+                            'iconColor',
+                            'hintColor',
+                            'trueColor',
+                            'falseColor',
+                        ]))
+                        ->options([
+                            'danger'    => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.danger'),
+                            'info'      => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.info'),
+                            'primary'   => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.primary'),
+                            'secondary' => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.secondary'),
+                            'warning'   => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.warning'),
+                            'success'   => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.success'),
+                        ]),
+
+                    Select::make('value')
+                        ->label(__('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight'))
+                        ->required()
+                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
+                            'weight',
+                        ]))
+                        ->options([
+                            FontWeight::Thin->name       => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.thin'),
+                            FontWeight::ExtraLight->name => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.extra-light'),
+                            FontWeight::Light->name      => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.light'),
+                            FontWeight::Normal->name     => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.normal'),
+                            FontWeight::Medium->name     => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.medium'),
+                            FontWeight::SemiBold->name   => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.semi-bold'),
+                            FontWeight::Bold->name       => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.bold'),
+                            FontWeight::ExtraBold->name  => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.extra-bold'),
+                            FontWeight::Black->name      => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.black'),
+                        ]),
+
+                    Select::make('value')
+                        ->label(__('fields::filament/resources/field.form.sections.infolist-settings.fields.icon-position'))
+                        ->required()
+                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
+                            'iconPosition',
+                        ]))
+                        ->options([
+                            IconPosition::Before->value => __('fields::filament/resources/field.form.sections.infolist-settings.fields.icon-position-options.before'),
+                            IconPosition::After->value  => __('fields::filament/resources/field.form.sections.infolist-settings.fields.icon-position-options.after'),
+                        ]),
+
+                    Select::make('value')
+                        ->label(__('fields::filament/resources/field.form.sections.infolist-settings.fields.size'))
+                        ->required()
+                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
+                            'size',
+                        ]))
+                        ->options([
+                            TextSize::Small->name  => __('fields::filament/resources/field.form.sections.infolist-settings.fields.size-options.small'),
+                            TextSize::Medium->name => __('fields::filament/resources/field.form.sections.infolist-settings.fields.size-options.medium'),
+                            TextSize::Large->name  => __('fields::filament/resources/field.form.sections.infolist-settings.fields.size-options.large'),
+                        ]),
+
+                    TextInput::make('value')
+                        ->label(__('fields::filament/resources/field.form.sections.infolist-settings.fields.value'))
+                        ->required()
+                        ->numeric()
+                        ->minValue(0)
+                        ->maxValue(99999999999)
+                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
+                            'limit',
+                            'words',
+                            'lineClamp',
+                            'copyMessageDuration',
+                            'columnSpan',
+                            'limitList',
+                        ])),
+                ])
+                ->addActionLabel(__('fields::filament/resources/field.form.sections.infolist-settings.fields.add-setting'))
+                ->columns(2)
+                ->collapsible()
+                ->itemLabel(function (array $state, Get $get): ?string {
+                    $settings = static::getTypeInfolistSettings($get('type'));
+
+                    return $settings[$state['setting']] ?? null;
+                }),
         ];
     }
 
@@ -833,141 +931,6 @@ class FieldResource extends Resource
         };
     }
 
-    public static function getTableSettingsSchema(): array
-    {
-        return [
-            Toggle::make('use_in_table')
-                ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.use-in-table'))
-                ->required()
-                ->live(),
-            Repeater::make('table_settings')
-                ->hiddenLabel()
-                ->visible(fn (Get $get): bool => $get('use_in_table'))
-                ->schema([
-                    Select::make('setting')
-                        ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.setting'))
-                        ->searchable()
-                        ->required()
-                        ->distinct()
-                        ->live()
-                        ->options(fn (Get $get): array => static::getTypeTableSettings($get('../../type'))),
-                    TextInput::make('value')
-                        ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.value'))
-                        ->required()
-                        ->maxLength(255)
-                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
-                            'copyMessage',
-                            'dateTimeTooltip',
-                            'default',
-                            'icon',
-                            'label',
-                            'money',
-                            'placeholder',
-                            'prefix',
-                            'suffix',
-                            'tooltip',
-                            'width',
-                        ])),
-
-                    Select::make('value')
-                        ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.color'))
-                        ->required()
-                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
-                            'color',
-                            'iconColor',
-                        ]))
-                        ->options([
-                            'danger'    => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.danger'),
-                            'info'      => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.info'),
-                            'primary'   => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.primary'),
-                            'secondary' => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.secondary'),
-                            'warning'   => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.warning'),
-                            'success'   => __('fields::filament/resources/field.form.sections.table-settings.fields.color-options.success'),
-                        ]),
-
-                    Select::make('value')
-                        ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.alignment'))
-                        ->required()
-                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
-                            'alignment',
-                            'verticalAlignment',
-                        ]))
-                        ->options([
-                            Alignment::Start->value   => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.start'),
-                            Alignment::Left->value    => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.left'),
-                            Alignment::Center->value  => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.center'),
-                            Alignment::End->value     => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.end'),
-                            Alignment::Right->value   => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.right'),
-                            Alignment::Justify->value => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.justify'),
-                            Alignment::Between->value => __('fields::filament/resources/field.form.sections.table-settings.fields.alignment-options.between'),
-                        ]),
-
-                    Select::make('value')
-                        ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.font-weight'))
-                        ->required()
-                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
-                            'weight',
-                        ]))
-                        ->options([
-                            FontWeight::Thin->name       => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.thin'),
-                            FontWeight::ExtraLight->name => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.extra-light'),
-                            FontWeight::Light->name      => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.light'),
-                            FontWeight::Normal->name     => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.normal'),
-                            FontWeight::Medium->name     => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.medium'),
-                            FontWeight::SemiBold->name   => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.semi-bold'),
-                            FontWeight::Bold->name       => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.bold'),
-                            FontWeight::ExtraBold->name  => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.extra-bold'),
-                            FontWeight::Black->name      => __('fields::filament/resources/field.form.sections.table-settings.fields.font-weight-options.black'),
-                        ]),
-
-                    Select::make('value')
-                        ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.icon-position'))
-                        ->required()
-                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
-                            'iconPosition',
-                        ]))
-                        ->options([
-                            IconPosition::Before->value => __('fields::filament/resources/field.form.sections.table-settings.fields.icon-position-options.before'),
-                            IconPosition::After->value  => __('fields::filament/resources/field.form.sections.table-settings.fields.icon-position-options.after'),
-                        ]),
-
-                    Select::make('value')
-                        ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.size'))
-                        ->required()
-                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
-                            'size',
-                        ]))
-                        ->options([
-                            TextSize::ExtraSmall->name  => __('fields::filament/resources/field.form.sections.table-settings.fields.size-options.extra-small'),
-                            TextSize::Small->name       => __('fields::filament/resources/field.form.sections.table-settings.fields.size-options.small'),
-                            TextSize::Medium->name      => __('fields::filament/resources/field.form.sections.table-settings.fields.size-options.medium'),
-                            TextSize::Large->name       => __('fields::filament/resources/field.form.sections.table-settings.fields.size-options.large'),
-                        ]),
-
-                    TextInput::make('value')
-                        ->label(__('fields::filament/resources/field.form.sections.table-settings.fields.value'))
-                        ->required()
-                        ->numeric()
-                        ->minValue(0)
-                        ->maxValue(99999999999)
-                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
-                            'limit',
-                            'words',
-                            'lineClamp',
-                            'copyMessageDuration',
-                        ])),
-                ])
-                ->addActionLabel(__('fields::filament/resources/field.form.sections.table-settings.fields.add-setting'))
-                ->columns(2)
-                ->collapsible()
-                ->itemLabel(function (array $state, Get $get): ?string {
-                    $settings = static::getTypeTableSettings($get('type'));
-
-                    return $settings[$state['setting']] ?? null;
-                }),
-        ];
-    }
-
     public static function getTypeTableSettings(?string $type): array
     {
         if (is_null($type)) {
@@ -1023,126 +986,6 @@ class FieldResource extends Resource
         };
 
         return array_merge($typeSettings, $commonSettings);
-    }
-
-    public static function getInfolistSettingsSchema(): array
-    {
-        return [
-            Repeater::make('infolist_settings')
-                ->hiddenLabel()
-                ->schema([
-                    Select::make('setting')
-                        ->label(__('fields::filament/resources/field.form.sections.infolist-settings.fields.setting'))
-                        ->searchable()
-                        ->required()
-                        ->distinct()
-                        ->live()
-                        ->options(fn (Get $get): array => static::getTypeInfolistSettings($get('../../type'))),
-                    TextInput::make('value')
-                        ->label(__('fields::filament/resources/field.form.sections.infolist-settings.fields.value'))
-                        ->required()
-                        ->maxLength(255)
-                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
-                            'copyMessage',
-                            'dateTimeTooltip',
-                            'default',
-                            'icon',
-                            'label',
-                            'money',
-                            'placeholder',
-                            'tooltip',
-                            'helperText',
-                            'hint',
-                            'hintIcon',
-                            'separator',
-                            'trueIcon',
-                            'falseIcon',
-                        ])),
-
-                    Select::make('value')
-                        ->label(__('fields::filament/resources/field.form.sections.infolist-settings.fields.color'))
-                        ->required()
-                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
-                            'color',
-                            'iconColor',
-                            'hintColor',
-                            'trueColor',
-                            'falseColor',
-                        ]))
-                        ->options([
-                            'danger'    => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.danger'),
-                            'info'      => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.info'),
-                            'primary'   => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.primary'),
-                            'secondary' => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.secondary'),
-                            'warning'   => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.warning'),
-                            'success'   => __('fields::filament/resources/field.form.sections.infolist-settings.fields.color-options.success'),
-                        ]),
-
-                    Select::make('value')
-                        ->label(__('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight'))
-                        ->required()
-                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
-                            'weight',
-                        ]))
-                        ->options([
-                            FontWeight::Thin->name       => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.thin'),
-                            FontWeight::ExtraLight->name => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.extra-light'),
-                            FontWeight::Light->name      => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.light'),
-                            FontWeight::Normal->name     => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.normal'),
-                            FontWeight::Medium->name     => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.medium'),
-                            FontWeight::SemiBold->name   => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.semi-bold'),
-                            FontWeight::Bold->name       => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.bold'),
-                            FontWeight::ExtraBold->name  => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.extra-bold'),
-                            FontWeight::Black->name      => __('fields::filament/resources/field.form.sections.infolist-settings.fields.font-weight-options.black'),
-                        ]),
-
-                    Select::make('value')
-                        ->label(__('fields::filament/resources/field.form.sections.infolist-settings.fields.icon-position'))
-                        ->required()
-                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
-                            'iconPosition',
-                        ]))
-                        ->options([
-                            IconPosition::Before->value => __('fields::filament/resources/field.form.sections.infolist-settings.fields.icon-position-options.before'),
-                            IconPosition::After->value  => __('fields::filament/resources/field.form.sections.infolist-settings.fields.icon-position-options.after'),
-                        ]),
-
-                    Select::make('value')
-                        ->label(__('fields::filament/resources/field.form.sections.infolist-settings.fields.size'))
-                        ->required()
-                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
-                            'size',
-                        ]))
-                        ->options([
-                            TextSize::Small->name  => __('fields::filament/resources/field.form.sections.infolist-settings.fields.size-options.small'),
-                            TextSize::Medium->name => __('fields::filament/resources/field.form.sections.infolist-settings.fields.size-options.medium'),
-                            TextSize::Large->name  => __('fields::filament/resources/field.form.sections.infolist-settings.fields.size-options.large'),
-                        ]),
-
-                    TextInput::make('value')
-                        ->label(__('fields::filament/resources/field.form.sections.infolist-settings.fields.value'))
-                        ->required()
-                        ->numeric()
-                        ->minValue(0)
-                        ->maxValue(99999999999)
-                        ->visible(fn (Get $get): bool => in_array($get('setting'), [
-                            'limit',
-                            'words',
-                            'lineClamp',
-                            'copyMessageDuration',
-                            'columnSpan',
-                            'limitList',
-                        ])),
-                ])
-                ->addActionLabel(__('fields::filament/resources/field.form.sections.infolist-settings.fields.add-setting'))
-                ->columns(2)
-                ->collapsible()
-                ->itemLabel(function (array $state, Get $get): ?string {
-                    $settings = static::getTypeInfolistSettings($get('type'));
-
-                    return $settings[$state['setting']] ?? null;
-                }),
-        ];
     }
 
     public static function getTypeInfolistSettings(?string $type): array

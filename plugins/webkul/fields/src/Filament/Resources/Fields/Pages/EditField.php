@@ -1,12 +1,12 @@
 <?php
 
-namespace Webkul\Field\Filament\Resources\FieldResource\Pages;
+namespace Webkul\Field\Filament\Resources\Fields\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Field\FieldsColumnManager;
-use Webkul\Field\Filament\Resources\FieldResource;
+use Webkul\Field\Filament\Resources\Fields\FieldResource;
 
 class EditField extends EditRecord
 {

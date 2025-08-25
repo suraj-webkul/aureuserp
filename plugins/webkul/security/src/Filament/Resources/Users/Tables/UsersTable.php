@@ -2,7 +2,6 @@
 
 namespace Webkul\Security\Filament\Resources\Users\Tables;
 
-use Filament\Tables\Table;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
@@ -17,10 +16,11 @@ use Filament\Notifications\Notification;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
 use Spatie\Permission\Models\Role;
 use Webkul\Security\Enums\PermissionType;
 
-class UserTable
+class UsersTable
 {
     public static function configure(Table $table): Table
     {

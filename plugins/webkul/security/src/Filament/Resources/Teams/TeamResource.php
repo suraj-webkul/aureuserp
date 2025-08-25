@@ -20,7 +20,7 @@ class TeamResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
-    protected static ?string $slug = 'settings/teams';
+    protected static ?string $slug = 'teams';
 
     public static function getSlug(?Panel $panel = null): string
     {

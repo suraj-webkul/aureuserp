@@ -31,7 +31,7 @@ class CompanyResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $slug = 'settings/companies';
+    protected static ?string $slug = 'companies';
 
     public static function getSlug(?Panel $panel = null): string
     {

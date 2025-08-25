@@ -14,7 +14,7 @@ use Webkul\Security\Filament\Resources\User\Pages\ListUsers;
 use Webkul\Security\Filament\Resources\User\Pages\ViewUsers;
 use Webkul\Security\Filament\Resources\User\Schemas\UserForm;
 use Webkul\Security\Filament\Resources\User\Schemas\UserInfolist;
-use Webkul\Security\Filament\Resources\Users\Tables\UserTable;
+use Webkul\Security\Filament\Resources\Users\Tables\UsersTable;
 use Webkul\Security\Models\User;
 
 class UserResource extends Resource
@@ -25,7 +25,7 @@ class UserResource extends Resource
 
     protected static ?int $navigationSort = 4;
 
-    protected static ?string $slug = 'settings/users';
+    protected static ?string $slug = 'users';
 
     public static function getSlug(?Panel $panel = null): string
     {
@@ -62,7 +62,7 @@ class UserResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return UserTable::configure($table);
+        return UsersTable::configure($table);
     }
 
     public static function infolist(Schema $schema): Schema

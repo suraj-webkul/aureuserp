@@ -152,7 +152,8 @@ class RoleForm
 
                                         return Fieldset::make($fieldsetLabel)
                                             ->schema([
-                                                static::getCheckBoxListComponentForResource($entity),
+                                                static::getCheckBoxListComponentForResource($entity)
+                                                    ->hiddenLabel(),
                                             ])
                                             ->columnSpan(static::shield()->getSectionColumnSpan());
                                     })

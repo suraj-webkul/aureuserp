@@ -2,22 +2,22 @@
 
 namespace Webkul\Security\Filament\Resources\Roles;
 
+use BezhanSalleh\FilamentShield\Resources\RoleResource as BaseRoleResource;
 use Filament\Panel;
-use Filament\Tables\Table;
 use Filament\Schemas\Schema;
-use Webkul\Security\Filament\Resources\Roles\Schemas\RoleForm;
-use Webkul\Security\Filament\Resources\Roles\Tables\RolesTable;
+use Filament\Tables\Table;
 use Webkul\Security\Filament\Resources\RoleResource\Pages\CreateRole;
 use Webkul\Security\Filament\Resources\RoleResource\Pages\EditRole;
 use Webkul\Security\Filament\Resources\RoleResource\Pages\ListRoles;
 use Webkul\Security\Filament\Resources\RoleResource\Pages\ViewRole;
-use BezhanSalleh\FilamentShield\Resources\RoleResource as BaseRoleResource;
+use Webkul\Security\Filament\Resources\Roles\Schemas\RoleForm;
+use Webkul\Security\Filament\Resources\Roles\Tables\RolesTable;
 
 class RoleResource extends BaseRoleResource
 {
     protected static ?int $navigationSort = 1;
 
-    protected static ?string $slug = 'settings/roles';
+    protected static ?string $slug = 'roles';
 
     public static function getSlug(?Panel $panel = null): string
     {
