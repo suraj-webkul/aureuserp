@@ -14,23 +14,7 @@ use BezhanSalleh\FilamentShield\Resources\RoleResource as BaseRoleResource;
 
 class RoleResource extends BaseRoleResource
 {
-    protected static ?string $recordTitleAttribute = 'name';
-
     protected static ?int $navigationSort = 1;
-
-    protected static $permissionsCollection;
-
-    public static function getPermissionPrefixes(): array
-    {
-        return [
-            'view',
-            'view_any',
-            'create',
-            'update',
-            'delete',
-            'delete_any',
-        ];
-    }
 
     public static function form(Schema $schema): Schema
     {
