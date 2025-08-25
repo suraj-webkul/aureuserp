@@ -58,11 +58,7 @@ class PresetView extends Tab
         return $this;
     }
 
-<<<<<<< HEAD
-    public function setDefault(bool|Closure $condition = true): static
-=======
     public function setAsDefault(bool|Closure $condition = true): static
->>>>>>> f34e10963de900caeafe42d2851b81fd0e1ca730
     {
         $this->isDefault = $condition;
 
