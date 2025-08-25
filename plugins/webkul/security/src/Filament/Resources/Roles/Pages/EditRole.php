@@ -8,7 +8,7 @@ use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Webkul\Security\Filament\Resources\RoleResource;
+use Webkul\Security\Filament\Resources\Roles\RoleResource;
 
 class EditRole extends EditRecord
 {

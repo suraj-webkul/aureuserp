@@ -6,7 +6,7 @@ use BezhanSalleh\FilamentShield\Support\Utils;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Webkul\Security\Filament\Resources\RoleResource;
+use Webkul\Security\Filament\Resources\Roles\RoleResource;
 
 class CreateRole extends CreateRecord
 {
