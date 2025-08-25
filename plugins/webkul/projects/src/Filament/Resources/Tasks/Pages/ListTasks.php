@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Project\Filament\Resources\TaskResource\Pages;
+namespace Webkul\Project\Filament\Resources\Tasks\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
@@ -8,7 +8,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Project\Enums\TaskState;
-use Webkul\Project\Filament\Resources\TaskResource;
+use Webkul\Project\Filament\Resources\Tasks\TaskResource;
 use Webkul\Project\Filament\Widgets\StatsOverviewWidget;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
@@ -40,7 +40,7 @@ class ListTasks extends ListRecords
             'open_tasks' => PresetView::make(__('projects::filament/resources/task/pages/list-tasks.tabs.open-tasks'))
                 ->icon('heroicon-s-bolt')
                 ->favorite()
-                ->default()
+                ->default(true)
                 ->modifyQueryUsing(fn (Builder $query) => $query->whereNotIn('state', [
                     TaskState::CANCELLED,
                     TaskState::DONE,

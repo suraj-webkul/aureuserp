@@ -65,7 +65,7 @@ class CustomEntries extends Component
     protected function getFields(): Collection
     {
         $query = Field::query()
-            ->where('customizable_type', $this->getResourceClass()::getModel());
+            ->where('customizable_type', $this->getResourceClass());
 
         if (! empty($this->include)) {
             $query->whereIn('code', $this->include);

@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Project\Filament\Resources;
+namespace Webkul\Project\Filament\Resources\Tasks;
 
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
@@ -58,14 +58,14 @@ use Webkul\Field\Filament\Traits\HasCustomFields;
 use Webkul\Partner\Filament\Resources\PartnerResource;
 use Webkul\Project\Enums\TaskState;
 use Webkul\Project\Filament\Resources\ProjectResource\Pages\ManageTasks;
-use Webkul\Project\Filament\Resources\TaskResource\Pages\CreateTask;
-use Webkul\Project\Filament\Resources\TaskResource\Pages\EditTask;
-use Webkul\Project\Filament\Resources\TaskResource\Pages\ListTasks;
-use Webkul\Project\Filament\Resources\TaskResource\Pages\ManageSubTasks;
-use Webkul\Project\Filament\Resources\TaskResource\Pages\ManageTimesheets;
-use Webkul\Project\Filament\Resources\TaskResource\Pages\ViewTask;
-use Webkul\Project\Filament\Resources\TaskResource\RelationManagers\SubTasksRelationManager;
-use Webkul\Project\Filament\Resources\TaskResource\RelationManagers\TimesheetsRelationManager;
+use Webkul\Project\Filament\Resources\Tasks\Pages\CreateTask;
+use Webkul\Project\Filament\Resources\Tasks\Pages\EditTask;
+use Webkul\Project\Filament\Resources\Tasks\Pages\ListTasks;
+use Webkul\Project\Filament\Resources\Tasks\Pages\ManageSubTasks;
+use Webkul\Project\Filament\Resources\Tasks\Pages\ManageTimesheets;
+use Webkul\Project\Filament\Resources\Tasks\Pages\ViewTask;
+use Webkul\Project\Filament\Resources\Tasks\RelationManagers\SubTasksRelationManager;
+use Webkul\Project\Filament\Resources\Tasks\RelationManagers\TimesheetsRelationManager;
 use Webkul\Project\Models\Project;
 use Webkul\Project\Models\Task;
 use Webkul\Project\Models\TaskStage;
