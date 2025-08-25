@@ -7,7 +7,7 @@ use Filament\Actions\Concerns\CanCustomizeProcess;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Support\Enums\Width;
-use Guava\FilamentIconPicker\Forms\IconPicker;
+use Guava\IconPicker\Forms\Components\IconPicker;
 use Webkul\TableViews\Models\TableView;
 use Webkul\TableViews\Models\TableViewFavorite;
 
@@ -34,9 +34,7 @@ class CreateViewAction extends Action
                 IconPicker::make('icon')
                     ->label(__('table-views::filament/actions/create-view.form.icon'))
                     ->sets(['heroicons'])
-                    ->columns(4)
-                    ->preload()
-                    ->optionsLimit(50),
+                    ->columns(4),
                 Toggle::make('is_favorite')
                     ->label(__('table-views::filament/actions/create-view.form.add-to-favorites'))
                     ->helperText(__('table-views::filament/actions/create-view.form.add-to-favorites-help')),

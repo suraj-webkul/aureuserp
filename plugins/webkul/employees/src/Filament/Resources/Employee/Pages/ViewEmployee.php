@@ -1,12 +1,12 @@
 <?php
 
-namespace Webkul\Employee\Filament\Resources\EmployeeResource\Pages;
+namespace Webkul\Employee\Filament\Resources\Employee\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
-use Webkul\Employee\Filament\Resources\EmployeeResource;
+use Webkul\Employee\Filament\Resources\Employee\EmployeeResource;
 use Webkul\Support\Models\ActivityPlan;
 
 class ViewEmployee extends ViewRecord

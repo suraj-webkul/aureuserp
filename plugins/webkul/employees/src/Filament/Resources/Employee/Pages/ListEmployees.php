@@ -1,13 +1,13 @@
 <?php
 
-namespace Webkul\Employee\Filament\Resources\EmployeeResource\Pages;
+namespace Webkul\Employee\Filament\Resources\Employee\Pages;
 
 use Carbon\Carbon;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Employee\Filament\Resources\EmployeeResource;
+use Webkul\Employee\Filament\Resources\Employee\EmployeeResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 

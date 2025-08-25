@@ -1,15 +1,16 @@
 <?php
 
-namespace Webkul\Employee\Filament\Resources\EmployeeResource\Pages;
+namespace Webkul\Employee\Filament\Resources\Employee\Pages;
 
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Employee\Filament\Resources\EmployeeResource;
+use Webkul\Employee\Filament\Resources\Employee\EmployeeResource;
 
 class CreateEmployee extends CreateRecord
 {
     protected static string $resource = EmployeeResource::class;
+
 
     protected function getRedirectUrl(): string
     {

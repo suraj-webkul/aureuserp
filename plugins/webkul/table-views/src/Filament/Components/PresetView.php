@@ -46,7 +46,7 @@ class PresetView extends Tab
         return $this;
     }
 
-    public function getModel()
+    public function getModel(): ?string
     {
         return null;
     }
@@ -58,7 +58,7 @@ class PresetView extends Tab
         return $this;
     }
 
-    public function default(bool|Closure $condition = true): static
+    public function setDefault(bool|Closure $condition = true): static
     {
         $this->isDefault = $condition;
 

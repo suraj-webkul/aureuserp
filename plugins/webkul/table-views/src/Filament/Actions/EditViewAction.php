@@ -7,7 +7,7 @@ use Filament\Actions\Concerns\CanCustomizeProcess;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Support\Enums\Width;
-use Guava\FilamentIconPicker\Forms\IconPicker;
+use Guava\IconPicker\Forms\Components\IconPicker;
 use Webkul\TableViews\Models\TableView;
 use Webkul\TableViews\Models\TableViewFavorite;
 
@@ -35,11 +35,11 @@ class EditViewAction extends Action
                     ->first();
 
                 return [
-                    'name'        => $arguments['view_model']['name'],
-                    'color'       => $arguments['view_model']['color'],
-                    'icon'        => $arguments['view_model']['icon'],
+                    'name' => $arguments['view_model']['name'],
+                    'color' => $arguments['view_model']['color'],
+                    'icon' => $arguments['view_model']['icon'],
                     'is_favorite' => $tableViewFavorite?->is_favorite ?? false,
-                    'is_public'   => $arguments['view_model']['is_public'],
+                    'is_public' => $arguments['view_model']['is_public'],
                 ];
             })
             ->schema([
@@ -48,11 +48,9 @@ class EditViewAction extends Action
                     ->autofocus()
                     ->required(),
                 IconPicker::make('icon')
-                    ->label(__('table-views::filament/actions/edit-view.form.icon'))
+                    ->label(__('table-views::filament/actions/create-view.form.icon'))
                     ->sets(['heroicons'])
-                    ->columns(4)
-                    ->preload()
-                    ->optionsLimit(50),
+                    ->columns(4),
                 Toggle::make('is_favorite')
                     ->label(__('table-views::filament/actions/edit-view.form.add-to-favorites'))
                     ->helperText(__('table-views::filament/actions/edit-view.form.add-to-favorites-help')),
@@ -70,11 +68,12 @@ class EditViewAction extends Action
 
                     TableViewFavorite::updateOrCreate(
                         [
-                            'view_type'       => 'saved',
-                            'view_key'        => $arguments['view_model']['id'],
+                            'view_type' => 'saved',
+                            'view_key' => $arguments['view_model']['id'],
                             'filterable_type' => $record->filterable_type,
-                            'user_id'         => auth()->id(),
-                        ], [
+                            'user_id' => auth()->id(),
+                        ],
+                        [
                             'is_favorite' => $data['is_favorite'],
                         ]
                     );
