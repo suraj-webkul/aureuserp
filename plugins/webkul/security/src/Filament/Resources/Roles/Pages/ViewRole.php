@@ -4,7 +4,7 @@ namespace Webkul\Security\Filament\Resources\RoleResource\Pages;
 
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
-use Webkul\Security\Filament\Resources\RoleResource;
+use Webkul\Security\Filament\Resources\Roles\RoleResource;
 
 class ViewRole extends ViewRecord
 {

@@ -3,28 +3,18 @@
 namespace Webkul\Security\Filament\Resources\RoleResource\Pages;
 
 use BezhanSalleh\FilamentShield\Support\Utils;
-use Filament\Actions\DeleteAction;
-use Filament\Resources\Pages\EditRecord;
-use Illuminate\Database\Eloquent\Model;
+use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Webkul\Security\Filament\Resources\RoleResource;
+use Webkul\Security\Filament\Resources\Roles\RoleResource;
 
-class EditRole extends EditRecord
+class CreateRole extends CreateRecord
 {
     protected static string $resource = RoleResource::class;
 
     public Collection $permissions;
 
-    protected function getActions(): array
-    {
-        return [
-            DeleteAction::make()
-                ->hidden(fn (Model $record) => $record->name == config('filament-shield.panel_user.name')),
-        ];
-    }
-
-    protected function mutateFormDataBeforeSave(array $data): array
+    protected function mutateFormDataBeforeCreate(array $data): array
     {
         $this->permissions = collect($data)
             ->filter(function ($permission, $key) {
@@ -37,7 +27,7 @@ class EditRole extends EditRecord
         return Arr::only($data, ['name', 'guard_name']);
     }
 
-    protected function afterSave(): void
+    protected function afterCreate(): void
     {
         $permissionModels = collect();
         $this->permissions->each(function ($permission) use ($permissionModels) {

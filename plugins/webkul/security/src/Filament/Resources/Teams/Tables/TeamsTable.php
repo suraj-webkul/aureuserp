@@ -1,51 +1,18 @@
 <?php
 
-namespace Webkul\Security\Filament\Resources;
+namespace Webkul\Security\Filament\Resources\Teams\Tables;
 
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Forms\Components\TextInput;
-use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
-use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Webkul\Security\Filament\Resources\TeamResource\Pages\ManageTeams;
-use Webkul\Security\Models\Team;
 
-class TeamResource extends Resource
+class TeamsTable
 {
-    protected static ?string $model = Team::class;
-
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
-
-    protected static ?int $navigationSort = 3;
-
-    public static function getNavigationLabel(): string
-    {
-        return __('security::filament/resources/team.navigation.title');
-    }
-
-    public static function getNavigationGroup(): string
-    {
-        return __('security::filament/resources/team.navigation.group');
-    }
-
-    public static function form(Schema $schema): Schema
-    {
-        return $schema
-            ->components([
-                TextInput::make('name')
-                    ->label(__('security::filament/resources/team.form.fields.name'))
-                    ->required()
-                    ->maxLength(255),
-            ]);
-    }
-
-    public static function table(Table $table): Table
+    public static function configure(Table $table): Table
     {
         return $table
             ->columns([
@@ -82,23 +49,5 @@ class TeamResource extends Resource
                             ->body(__('security::filament/resources/team.table.empty-state-actions.create.notification.body'))
                     ),
             ]);
-    }
-
-    public static function infolist(Schema $schema): Schema
-    {
-        return $schema
-            ->components([
-                TextEntry::make('name')
-                    ->icon('heroicon-o-user')
-                    ->placeholder('—')
-                    ->label(__('security::filament/resources/team.infolist.entries.name')),
-            ]);
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => ManageTeams::route('/'),
-        ];
     }
 }

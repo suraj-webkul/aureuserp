@@ -4,7 +4,7 @@ namespace Webkul\Security\Filament\Resources\RoleResource\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
-use Webkul\Security\Filament\Resources\RoleResource;
+use Webkul\Security\Filament\Resources\Roles\RoleResource;
 
 class ListRoles extends ListRecords
 {

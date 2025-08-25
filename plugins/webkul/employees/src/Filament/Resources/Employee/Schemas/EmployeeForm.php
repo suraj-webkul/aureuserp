@@ -41,6 +41,7 @@ class EmployeeForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(1)
             ->components([
                 Section::make()
                     ->schema([
@@ -660,7 +661,7 @@ class EmployeeForm
                                                             ->rows(3),
                                                         Textarea::make('notes')
                                                             ->label(__('employees::filament/resources/employee.form.tabs.settings.fields.notes')),
-                                                        ...static::getCustomFormFields(),
+                                                        ...EmployeeResource::getCustomFormFields(),
                                                     ])->columns(2),
                                             ])
                                             ->columnSpan(['lg' => 2]),

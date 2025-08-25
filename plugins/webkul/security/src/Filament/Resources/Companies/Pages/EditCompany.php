@@ -1,13 +1,13 @@
 <?php
 
-namespace Webkul\Security\Filament\Resources\CompanyResource\Pages;
+namespace Webkul\Security\Filament\Resources\Companies\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Security\Filament\Resources\CompanyResource;
+use Webkul\Security\Filament\Resources\Companies\CompanyResource;
 
 class EditCompany extends EditRecord
 {
