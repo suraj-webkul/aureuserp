@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Project\Filament\Resources\TaskResource\Pages;
+namespace Webkul\Project\Filament\Resources\Tasks\Pages;
 
 use Filament\Actions\ActionGroup;
 use Filament\Actions\CreateAction;
@@ -17,7 +17,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Project\Enums\TaskState;
-use Webkul\Project\Filament\Resources\TaskResource;
+use Webkul\Project\Filament\Resources\Tasks\TaskResource;
 use Webkul\Project\Models\Task;
 use Webkul\Project\Models\TaskStage;
 
