@@ -1,12 +1,12 @@
 <?php
 
-namespace Webkul\Website\Filament\Admin\Resources\PageResource\Pages;
+namespace Webkul\Website\Filament\Admin\Resources\Page\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
-use Webkul\Website\Filament\Admin\Resources\PageResource;
+use Webkul\Website\Filament\Admin\Resources\Page\PageResource;
 
 class ListPages extends ListRecords
 {

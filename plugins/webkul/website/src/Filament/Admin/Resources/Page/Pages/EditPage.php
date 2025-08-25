@@ -1,12 +1,12 @@
 <?php
 
-namespace Webkul\Website\Filament\Admin\Resources\PageResource\Pages;
+namespace Webkul\Website\Filament\Admin\Resources\Page\Pages;
 
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
-use Webkul\Website\Filament\Admin\Resources\PageResource;
+use Webkul\Website\Filament\Admin\Resources\Page\PageResource;
 use Webkul\Website\Models\Page;
 
 class EditPage extends EditRecord
