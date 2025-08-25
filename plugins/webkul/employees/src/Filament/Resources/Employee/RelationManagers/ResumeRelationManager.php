@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Employee\Filament\Resources\EmployeeResource\RelationManagers;
+namespace Webkul\Employee\Filament\Resources\Employee\RelationManagers;
 
 use Filament\Resources\RelationManagers\RelationManager;
 use Webkul\Employee\Traits\Resources\Employee\EmployeeResumeRelation;

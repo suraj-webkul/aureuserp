@@ -1,9 +1,9 @@
 <?php
 
-namespace Webkul\Employee\Filament\Resources\EmployeeResource\Pages;
+namespace Webkul\Employee\Filament\Resources\Employee\Pages;
 
 use Filament\Resources\Pages\ManageRelatedRecords;
-use Webkul\Employee\Filament\Resources\EmployeeResource;
+use Webkul\Employee\Filament\Resources\Employee\EmployeeResource;
 use Webkul\Employee\Traits\Resources\Employee\EmployeeSkillRelation;
 
 class ManageSkill extends ManageRelatedRecords

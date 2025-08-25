@@ -2,6 +2,7 @@
 
 namespace Webkul\Field\Filament\Tables\Filters;
 
+use Filament\Actions\Concerns\InteractsWithRecord;
 use Filament\Support\Components\Component;
 use Filament\Tables\Filters\BaseFilter;
 use Filament\Tables\Filters\Filter;
@@ -18,6 +19,7 @@ use Webkul\Field\Models\Field;
 
 class CustomFilters extends Component
 {
+
     protected array $include = [];
 
     protected array $exclude = [];
@@ -26,6 +28,10 @@ class CustomFilters extends Component
 
     final public function __construct(string $resource)
     {
+        if (!method_exists($resource, 'getModel')) {
+            throw new \InvalidArgumentException("Class {$resource} must implement getModel()");
+        }
+
         $this->resourceClass = $resource;
     }
 
@@ -81,11 +87,11 @@ class CustomFilters extends Component
             ->where('customizable_type', $this->getResourceClass()::getModel())
             ->where('use_in_table', true);
 
-        if (! empty($this->include)) {
+        if (!empty($this->include)) {
             $query->whereIn('code', $this->include);
         }
 
-        if (! empty($this->exclude)) {
+        if (!empty($this->exclude)) {
             $query->whereNotIn('code', $this->exclude);
         }
 
@@ -99,27 +105,27 @@ class CustomFilters extends Component
     {
         $filter = match ($field->type) {
             'checkbox' => Filter::make($field->code)
-                ->query(fn (Builder $query): Builder => $query->where($field->code, true)),
+                ->query(fn(Builder $query): Builder => $query->where($field->code, true)),
 
             'toggle' => Filter::make($field->code)
                 ->toggle()
-                ->query(fn (Builder $query): Builder => $query->where($field->code, true)),
+                ->query(fn(Builder $query): Builder => $query->where($field->code, true)),
 
             'radio' => SelectFilter::make($field->code)
                 ->options(function () use ($field) {
-                    return collect($field->options)
-                        ->mapWithKeys(fn ($option) => [$option => $option])
+                        return collect($field->options)
+                        ->mapWithKeys(fn($option) => [$option => $option])
                         ->toArray();
-                }),
+                    }),
 
             'select' => $field->is_multiselect
-                ? SelectFilter::make($field->code)
-                    ->options(function () use ($field) {
+            ? SelectFilter::make($field->code)
+                ->options(function () use ($field) {
                         return collect($field->options)
-                            ->mapWithKeys(fn ($option) => [$option => $option])
-                            ->toArray();
+                        ->mapWithKeys(fn($option) => [$option => $option])
+                        ->toArray();
                     })
-                    ->query(function (Builder $query, $state) use ($field): Builder {
+                ->query(function (Builder $query, $state) use ($field): Builder {
                         if (empty($state['values'])) {
                             return $query;
                         }
@@ -130,31 +136,31 @@ class CustomFilters extends Component
                             }
                         });
                     })
-                    ->multiple()
-                : SelectFilter::make($field->code)
-                    ->options(function () use ($field) {
+                ->multiple()
+            : SelectFilter::make($field->code)
+                ->options(function () use ($field) {
                         return collect($field->options)
-                            ->mapWithKeys(fn ($option) => [$option => $option])
-                            ->toArray();
+                        ->mapWithKeys(fn($option) => [$option => $option])
+                        ->toArray();
                     }),
 
             'checkbox_list' => SelectFilter::make($field->code)
                 ->options(function () use ($field) {
-                    return collect($field->options)
-                        ->mapWithKeys(fn ($option) => [$option => $option])
+                        return collect($field->options)
+                        ->mapWithKeys(fn($option) => [$option => $option])
                         ->toArray();
-                })
+                    })
                 ->query(function (Builder $query, $state) use ($field): Builder {
-                    if (empty($state['values'])) {
-                        return $query;
-                    }
-
-                    return $query->where(function (Builder $query) use ($state, $field) {
-                        foreach ((array) $state as $value) {
-                            $query->orWhereJsonContains($field->code, $value);
+                        if (empty($state['values'])) {
+                            return $query;
                         }
-                    });
-                })
+
+                        return $query->where(function (Builder $query) use ($state, $field) {
+                            foreach ((array) $state as $value) {
+                                $query->orWhereJsonContains($field->code, $value);
+                            }
+                        });
+                    })
                 ->multiple(),
 
             default => Filter::make($field->code),
@@ -167,36 +173,36 @@ class CustomFilters extends Component
     {
         $filter = match ($field->type) {
             'text' => match ($field->input_type) {
-                'integer' => NumberConstraint::make($field->code)->integer(),
-                'numeric' => NumberConstraint::make($field->code),
-                default   => TextConstraint::make($field->code),
-            },
+                    'integer' => NumberConstraint::make($field->code)->integer(),
+                    'numeric' => NumberConstraint::make($field->code),
+                    default => TextConstraint::make($field->code),
+                },
 
             'datetime' => DateConstraint::make($field->code),
 
             'checkbox', 'toggle' => BooleanConstraint::make($field->code),
 
             'select' => $field->is_multiselect
-                ? SelectConstraint::make($field->code)
-                    ->options(function () use ($field) {
+            ? SelectConstraint::make($field->code)
+                ->options(function () use ($field) {
                         return collect($field->options)
-                            ->mapWithKeys(fn ($option) => [$option => $option])
-                            ->toArray();
+                        ->mapWithKeys(fn($option) => [$option => $option])
+                        ->toArray();
                     })
-                    ->multiple()
-                : SelectConstraint::make($field->code)
-                    ->options(function () use ($field) {
+                ->multiple()
+            : SelectConstraint::make($field->code)
+                ->options(function () use ($field) {
                         return collect($field->options)
-                            ->mapWithKeys(fn ($option) => [$option => $option])
-                            ->toArray();
+                        ->mapWithKeys(fn($option) => [$option => $option])
+                        ->toArray();
                     }),
 
             'checkbox_list' => SelectConstraint::make($field->code)
                 ->options(function () use ($field) {
-                    return collect($field->options)
-                        ->mapWithKeys(fn ($option) => [$option => $option])
+                        return collect($field->options)
+                        ->mapWithKeys(fn($option) => [$option => $option])
                         ->toArray();
-                })
+                    })
                 ->multiple(),
 
             default => TextConstraint::make($field->code),
