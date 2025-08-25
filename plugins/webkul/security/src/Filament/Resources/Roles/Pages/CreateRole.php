@@ -30,6 +30,7 @@ class CreateRole extends CreateRecord
     protected function afterCreate(): void
     {
         $permissionModels = collect();
+
         $this->permissions->each(function ($permission) use ($permissionModels) {
             $permissionModels->push(Utils::getPermissionModel()::firstOrCreate([
                 'name'       => $permission,

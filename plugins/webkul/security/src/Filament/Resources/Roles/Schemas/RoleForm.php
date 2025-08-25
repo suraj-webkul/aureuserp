@@ -7,7 +7,6 @@ use BezhanSalleh\FilamentShield\Resources\RoleResource;
 use BezhanSalleh\FilamentShield\Support\Utils;
 use BezhanSalleh\FilamentShield\Traits\HasShieldFormComponents;
 use Filament\Facades\Filament;
-use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Component;
@@ -17,7 +16,6 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Unique;
 
@@ -154,11 +152,6 @@ class RoleForm
 
                                         return Fieldset::make($fieldsetLabel)
                                             ->schema([
-                                                Placeholder::make('model')
-                                                    ->inlineLabel()
-                                                    ->content(fn (): HtmlString => new HtmlString('<span style="word-break: break-word;">'.$entity['fqcn'].'</span>'))
-                                                    ->columnSpan(2)
-                                                    ->visible(config('filament-shield.shield_resource.show_model_path', false)),
                                                 static::getCheckBoxListComponentForResource($entity),
                                             ])
                                             ->columnSpan(static::shield()->getSectionColumnSpan());
