@@ -2,6 +2,7 @@
 
 namespace Webkul\Security\Filament\Resources\Roles;
 
+use Filament\Panel;
 use Filament\Tables\Table;
 use Filament\Schemas\Schema;
 use Webkul\Security\Filament\Resources\Roles\Schemas\RoleForm;
@@ -15,6 +16,13 @@ use BezhanSalleh\FilamentShield\Resources\RoleResource as BaseRoleResource;
 class RoleResource extends BaseRoleResource
 {
     protected static ?int $navigationSort = 1;
+
+    protected static ?string $slug = 'settings/roles';
+
+    public static function getSlug(?Panel $panel = null): string
+    {
+        return static::$slug ?? parent::getSlug($panel);
+    }
 
     public static function form(Schema $schema): Schema
     {

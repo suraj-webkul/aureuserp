@@ -3,6 +3,7 @@
 namespace Webkul\Security\Filament\Resources\Companies;
 
 use BackedEnum;
+use Filament\Panel;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
@@ -29,6 +30,13 @@ class CompanyResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-building-office';
 
     protected static ?int $navigationSort = 2;
+
+    protected static ?string $slug = 'settings/companies';
+
+    public static function getSlug(?Panel $panel = null): string
+    {
+        return static::$slug ?? parent::getSlug($panel);
+    }
 
     public static function getNavigationLabel(): string
     {

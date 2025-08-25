@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Security\Filament\Resources\UserResource\Pages;
+namespace Webkul\Security\Filament\Resources\User\Pages;
 
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
@@ -10,7 +10,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
-use Webkul\Security\Filament\Resources\UserResource;
+use Webkul\Security\Filament\Resources\Users\UserResource;
 use Webkul\Security\Models\User;
 use Webkul\Security\Settings\UserSettings;
 

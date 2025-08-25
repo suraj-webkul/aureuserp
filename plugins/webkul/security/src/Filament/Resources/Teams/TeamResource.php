@@ -3,6 +3,7 @@
 namespace Webkul\Security\Filament\Resources\Teams;
 
 use BackedEnum;
+use Filament\Panel;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
@@ -18,6 +19,13 @@ class TeamResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     protected static ?int $navigationSort = 3;
+
+    protected static ?string $slug = 'settings/teams';
+
+    public static function getSlug(?Panel $panel = null): string
+    {
+        return static::$slug ?? parent::getSlug($panel);
+    }
 
     public static function getNavigationLabel(): string
     {
