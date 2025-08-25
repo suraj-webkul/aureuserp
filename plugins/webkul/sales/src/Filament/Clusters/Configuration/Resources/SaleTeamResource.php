@@ -2,6 +2,7 @@
 
 namespace Webkul\Sale\Filament\Clusters\Configuration\Resources;
 
+use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -19,6 +20,7 @@ use Filament\Infolists\Components\ColorEntry;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
+use Filament\Panel;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Components\Grid;
@@ -35,21 +37,28 @@ use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Webkul\Sale\Filament\Clusters\Configuration;
-use Webkul\Sale\Filament\Clusters\Configuration\Resources\TeamResource\Pages\CreateTeam;
-use Webkul\Sale\Filament\Clusters\Configuration\Resources\TeamResource\Pages\EditTeam;
-use Webkul\Sale\Filament\Clusters\Configuration\Resources\TeamResource\Pages\ListTeams;
-use Webkul\Sale\Filament\Clusters\Configuration\Resources\TeamResource\Pages\ViewTeam;
+use Webkul\Sale\Filament\Clusters\Configuration\Resources\SaleTeamResource\Pages\CreateTeam;
+use Webkul\Sale\Filament\Clusters\Configuration\Resources\SaleTeamResource\Pages\EditTeam;
+use Webkul\Sale\Filament\Clusters\Configuration\Resources\SaleTeamResource\Pages\ListTeams;
+use Webkul\Sale\Filament\Clusters\Configuration\Resources\SaleTeamResource\Pages\ViewTeam;
 use Webkul\Sale\Models\Team;
 
-class TeamResource extends Resource
+class SaleTeamResource extends Resource
 {
     protected static ?string $model = Team::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     protected static ?string $cluster = Configuration::class;
 
     protected static bool $shouldRegisterNavigation = false;
+
+    protected static ?string $slug = 'sales/teams';
+
+    public static function getSlug(?Panel $panel = null): string
+    {
+        return static::$slug ?? parent::getSlug($panel);
+    }
 
     public static function getModelLabel(): string
     {

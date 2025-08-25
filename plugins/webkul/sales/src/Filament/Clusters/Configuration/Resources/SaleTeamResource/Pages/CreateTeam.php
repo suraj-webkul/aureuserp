@@ -1,15 +1,15 @@
 <?php
 
-namespace Webkul\Sale\Filament\Clusters\Configuration\Resources\TeamResource\Pages;
+namespace Webkul\Sale\Filament\Clusters\Configuration\Resources\SaleTeamResource\Pages;
 
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Sale\Filament\Clusters\Configuration\Resources\TeamResource;
+use Webkul\Sale\Filament\Clusters\Configuration\Resources\SaleTeamResource;
 
 class CreateTeam extends CreateRecord
 {
-    protected static string $resource = TeamResource::class;
+    protected static string $resource = SaleTeamResource::class;
 
     protected function getRedirectUrl(): string
     {

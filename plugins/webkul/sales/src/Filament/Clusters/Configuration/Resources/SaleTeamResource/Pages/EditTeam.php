@@ -1,17 +1,17 @@
 <?php
 
-namespace Webkul\Sale\Filament\Clusters\Configuration\Resources\TeamResource\Pages;
+namespace Webkul\Sale\Filament\Clusters\Configuration\Resources\SaleTeamResource\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
-use Webkul\Sale\Filament\Clusters\Configuration\Resources\TeamResource;
+use Webkul\Sale\Filament\Clusters\Configuration\Resources\SaleTeamResource;
 
 class EditTeam extends EditRecord
 {
-    protected static string $resource = TeamResource::class;
+    protected static string $resource = SaleTeamResource::class;
 
     protected function getRedirectUrl(): string
     {

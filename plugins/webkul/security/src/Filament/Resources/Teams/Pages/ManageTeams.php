@@ -5,7 +5,7 @@ namespace Webkul\Security\Filament\Resources\TeamResource\Pages;
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRecords;
-use Webkul\Sale\Filament\Clusters\Configuration\Resources\TeamResource;
+use Webkul\Security\Filament\Resources\Teams\TeamResource;
 
 class ManageTeams extends ManageRecords
 {
