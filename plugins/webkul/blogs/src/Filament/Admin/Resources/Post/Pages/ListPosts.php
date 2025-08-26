@@ -1,12 +1,12 @@
 <?php
 
-namespace Webkul\Blog\Filament\Admin\Resources\PostResource\Pages;
+namespace Webkul\Blog\Filament\Admin\Resources\Post\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Blog\Filament\Admin\Resources\PostResource;
+use Webkul\Blog\Filament\Admin\Resources\Post\PostResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
