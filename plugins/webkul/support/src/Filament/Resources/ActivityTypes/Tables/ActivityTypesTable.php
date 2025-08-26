@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Support\Filament\Resources\ActivityType;
+namespace Webkul\Support\Filament\Resources\ActivityTypes\Tables;
 
 use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;

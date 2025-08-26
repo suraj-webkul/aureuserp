@@ -102,10 +102,6 @@ class RoleForm
 
         return collect($resources)
             ->reject(function ($resource) {
-                if (! $resource::shouldRegisterNavigation()) {
-                    return true;
-                }
-
                 if ($resource == 'BezhanSalleh\FilamentShield\Resources\RoleResource') {
                     return true;
                 }
