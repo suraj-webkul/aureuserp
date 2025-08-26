@@ -1,21 +1,22 @@
 <?php
 
-namespace Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Tag;
+namespace Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Tags;
 
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Tag\Pages\ManageTags;
+use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Tags\Pages\ManageTags;
+use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Tags\Tables\TagsTable;
 use Webkul\Blog\Models\Tag;
-use Webkul\Blogs\Filament\Admin\Clusters\Configurations\Resources\Tag\Schemas\TagForm;
-use Webkul\Partner\Filament\Resources\Tag\Tables\TagTable;
+use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Tags\Schemas\TagForm;
 use Webkul\Website\Filament\Admin\Clusters\Configurations;
+use BackedEnum;
 
 class TagResource extends Resource
 {
     protected static ?string $model = Tag::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-tag';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-tag';
 
     protected static ?int $navigationSort = 4;
 
@@ -38,7 +39,7 @@ class TagResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return TagTable::configure($table);
+        return TagsTable::configure($table);
     }
 
     public static function getPages(): array

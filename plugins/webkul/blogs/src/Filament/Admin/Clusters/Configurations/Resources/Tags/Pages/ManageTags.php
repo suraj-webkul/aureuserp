@@ -1,13 +1,13 @@
 <?php
 
-namespace Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Tag\Pages;
+namespace Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Tags\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRecords;
 use Filament\Schemas\Components\Tabs\Tab;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Tag\TagResource;
+use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Tags\TagResource;
 use Webkul\Blog\Models\Tag;
 
 class ManageTags extends ManageRecords

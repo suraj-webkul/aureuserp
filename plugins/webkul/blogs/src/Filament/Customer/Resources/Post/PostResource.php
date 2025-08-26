@@ -5,14 +5,11 @@ namespace Webkul\Blog\Filament\Customer\Resources;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Webkul\Blog\Filament\Customer\Resources\Category\CategoryResource;
-use Webkul\Blog\Filament\Customer\Resources\Post\Pages\ViewPost;
 use Webkul\Blog\Models\Post;
+use Webkul\Blog\Filament\Customer\Resources\Post\Pages\ViewPost;
 
 class PostResource extends Resource
 {
-    public static string $parentResource = CategoryResource::class;
-
     protected static ?string $model = Post::class;
 
     protected static ?string $recordRouteKeyName = 'slug';
@@ -37,12 +34,18 @@ class PostResource extends Resource
 
     public static function getGlobalSearchResultUrl(Model $record): string
     {
-        return CategoryResource::getUrl('posts.view', ['parent' => $record->category->slug, 'record' => $record->slug]);
+        // Manual route definition since nested resource is no longer handled via $parentResource
+        return route('filament.customer.resources.categories.posts.view', [
+            'category' => $record->category->slug,
+            'record' => $record->slug,
+        ]);
     }
 
     public static function getGlobalSearchEloquentQuery(): Builder
     {
-        return parent::getGlobalSearchEloquentQuery()->with(['category'])->where('is_published', true);
+        return parent::getGlobalSearchEloquentQuery()
+            ->with(['category'])
+            ->where('is_published', true);
     }
 
     public static function getPages(): array

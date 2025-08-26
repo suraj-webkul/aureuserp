@@ -1,15 +1,15 @@
 <?php
 
-namespace Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Category;
+namespace Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Categories;
 
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Category\Pages\ManageCategories;
-use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Category\Tables\CategoryTable;
+use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Categories\Pages\ManageCategories;
+use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Categories\Tables\CategoryTable;
 use Webkul\Blog\Models\Category;
 use BackedEnum;
-use Webkul\Blogs\Filament\Admin\Clusters\Configurations\Resources\Category\Schemas\CategoryForm;
+use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Categories\Schemas\CategoryForm;
 use Webkul\Website\Filament\Admin\Clusters\Configurations;
 
 class CategoryResource extends Resource

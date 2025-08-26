@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Blogs\Filament\Admin\Clusters\Configurations\Resources\Tag\Tables;
+namespace Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Tags\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -15,8 +15,7 @@ use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-
-class CategoryTable
+class TagsTable
 {
     public static function configure(Table $table): Table
     {

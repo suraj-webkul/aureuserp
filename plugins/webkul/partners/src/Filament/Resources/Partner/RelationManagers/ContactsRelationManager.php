@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Partner\Filament\Resources\PartnerResource\RelationManagers;
+namespace Webkul\Partner\Filament\Resources\Partner\RelationManagers;
 
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;

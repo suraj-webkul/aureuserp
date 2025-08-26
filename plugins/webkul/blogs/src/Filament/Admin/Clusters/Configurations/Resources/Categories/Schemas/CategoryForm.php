@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Blogs\Filament\Admin\Clusters\Configurations\Resources\Category\Schemas;
+namespace Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Categories\Schemas;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;

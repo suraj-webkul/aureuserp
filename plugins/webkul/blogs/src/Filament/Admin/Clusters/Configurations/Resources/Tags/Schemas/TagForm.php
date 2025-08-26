@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Blogs\Filament\Admin\Clusters\Configurations\Resources\Tag\Schemas;
+namespace Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Tags\Schemas;
 
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\TextInput;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Category\Tables;
+namespace Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Categories\Tables;
 
 
 use Filament\Actions\BulkActionGroup;
