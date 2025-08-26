@@ -97,7 +97,8 @@ trait HasTableViews
 
     public function resetToggledTableColumns(): void
     {
-        $this->toggledTableColumns = $this->getDefaultTableColumnToggleState();
+        
+        $this->toggledTableColumns = [];
     }
 
     public function applyTableViewFilters(): void
@@ -112,7 +113,7 @@ trait HasTableViews
             return;
         }
 
-        foreach ($tableViews[$this->activeTableView]->getModel()->filters as $key => $filter) {
+        foreach ($tableViews[$this->activeTableView]->getModels()->filters as $key => $filter) {
             if (! $filter) {
                 continue;
             }
@@ -225,11 +226,11 @@ trait HasTableViews
             'tableGrouping'       => $this->tableGrouping,
             'tableSearch'         => $this->tableSearch,
             'tableColumnSearches' => $this->tableColumnSearches,
-            'tableSortColumn'     => $this->tableSortColumn,
-            'tableSortDirection'  => $this->tableSortDirection,
-            'tableRecordsPerPage' => $this->tableRecordsPerPage,
-            'toggledTableColumns' => $this->toggledTableColumns,
-        ] != $tableViews[$this->activeTableView]->getModel()->filters;
+            'tableSortColumn'     => $this->tableSortColumn ?? null,
+            'tableSortDirection'  => $this->tableSortDirection ?? null,
+            'tableRecordsPerPage' => $this->tableRecordsPerPage ?? null,
+            'toggledTableColumns' => $this->toggledTableColumns ?? null,
+        ] != $tableViews[$this->activeTableView]->getModels()->filters;
     }
 
     protected function modifyQueryWithActiveTab(Builder $query): Builder
@@ -299,10 +300,10 @@ trait HasTableViews
                     'tableGrouping'       => $this->tableGrouping,
                     'tableSearch'         => $this->tableSearch,
                     'tableColumnSearches' => $this->tableColumnSearches,
-                    'tableSortColumn'     => $this->tableSortColumn,
-                    'tableSortDirection'  => $this->tableSortDirection,
-                    'tableRecordsPerPage' => $this->tableRecordsPerPage,
-                    'toggledTableColumns' => $this->toggledTableColumns,
+                    'tableSortColumn'     => $this->tableSortColumn ?? null,
+                    'tableSortDirection'  => $this->tableSortDirection ?? null,
+                    'tableRecordsPerPage' => $this->tableRecordsPerPage ?? null,
+                    'toggledTableColumns' => $this->toggledTableColumns ?? null,
                 ];
 
                 return $data;
@@ -435,10 +436,10 @@ trait HasTableViews
                         'tableGrouping'       => $this->tableGrouping,
                         'tableSearch'         => $this->tableSearch,
                         'tableColumnSearches' => $this->tableColumnSearches,
-                        'tableSortColumn'     => $this->tableSortColumn,
-                        'tableSortDirection'  => $this->tableSortDirection,
-                        'tableRecordsPerPage' => $this->tableRecordsPerPage,
-                        'toggledTableColumns' => $this->toggledTableColumns,
+                        'tableSortColumn'     => $this->tableSortColumn ?? null,
+                        'tableSortDirection'  => $this->tableSortDirection ?? null,
+                        'tableRecordsPerPage' => $this->tableRecordsPerPage ?? null,
+                        'toggledTableColumns' => $this->toggledTableColumns ?? null,
                     ],
                 ]);
 
