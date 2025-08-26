@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Website\Filament\Admin\Resources;
+namespace Webkul\Website\Filament\Admin\Resources\Partner;
 
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
@@ -8,12 +8,12 @@ use Filament\Resources\RelationManagers\RelationGroup;
 use Webkul\Partner\Filament\Resources\PartnerResource as BasePartnerResource;
 use Webkul\Partner\Filament\Resources\PartnerResource\RelationManagers\AddressesRelationManager;
 use Webkul\Partner\Filament\Resources\PartnerResource\RelationManagers\ContactsRelationManager;
-use Webkul\Website\Filament\Admin\Resources\PartnerResource\Pages\CreatePartner;
-use Webkul\Website\Filament\Admin\Resources\PartnerResource\Pages\EditPartner;
-use Webkul\Website\Filament\Admin\Resources\PartnerResource\Pages\ListPartners;
-use Webkul\Website\Filament\Admin\Resources\PartnerResource\Pages\ManageAddresses;
-use Webkul\Website\Filament\Admin\Resources\PartnerResource\Pages\ManageContacts;
-use Webkul\Website\Filament\Admin\Resources\PartnerResource\Pages\ViewPartner;
+use Webkul\Website\Filament\Admin\Resources\Partner\Pages\CreatePartner;
+use Webkul\Website\Filament\Admin\Resources\Partner\Pages\EditPartner;
+use Webkul\Website\Filament\Admin\Resources\Partner\Pages\ListPartners;
+use Webkul\Website\Filament\Admin\Resources\Partner\Pages\ManageAddresses;
+use Webkul\Website\Filament\Admin\Resources\Partner\Pages\ManageContacts;
+use Webkul\Website\Filament\Admin\Resources\Partner\Pages\ViewPartner;
 use Webkul\Website\Models\Partner;
 
 class PartnerResource extends BasePartnerResource
@@ -26,7 +26,7 @@ class PartnerResource extends BasePartnerResource
 
     protected static bool $shouldRegisterNavigation = true;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getNavigationLabel(): string
     {
