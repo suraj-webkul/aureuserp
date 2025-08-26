@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Project\Filament\Resources\ProjectResource\Pages;
+namespace Webkul\Project\Filament\Resources\Project\Pages;
 
 use Filament\Actions\ActionGroup;
 use Filament\Actions\CreateAction;
@@ -16,8 +16,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Project\Enums\TaskState;
-use Webkul\Project\Filament\Resources\ProjectResource;
-use Webkul\Project\Filament\Resources\TaskResource;
+use Webkul\Project\Filament\Resources\Project\ProjectResource;
+use Webkul\Project\Filament\Resources\Task\TaskResource;
 use Webkul\Project\Models\Task;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
@@ -97,7 +97,7 @@ class ManageTasks extends ManageRelatedRecords
             'open_tasks' => PresetView::make(__('projects::filament/resources/project/pages/manage-tasks.tabs.open-tasks'))
                 ->icon('heroicon-s-bolt')
                 ->favorite()
-                ->default()
+                ->setAsDefault()
                 ->modifyQueryUsing(fn (Builder $query) => $query->whereNotIn('state', [
                     TaskState::CANCELLED,
                     TaskState::DONE,

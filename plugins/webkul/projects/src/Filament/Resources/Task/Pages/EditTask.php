@@ -1,17 +1,17 @@
 <?php
 
-namespace Webkul\Project\Filament\Resources\ProjectResource\Pages;
+namespace Webkul\Project\Filament\Resources\Task\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Chatter\Filament\Actions\ChatterAction;
-use Webkul\Project\Filament\Resources\ProjectResource;
+use Webkul\Project\Filament\Resources\Task\TaskResource;
 use Webkul\Support\Models\ActivityPlan;
 
-class EditProject extends EditRecord
+class EditTask extends EditRecord
 {
-    protected static string $resource = ProjectResource::class;
+    protected static string $resource = TaskResource::class;
 
     protected function getRedirectUrl(): string
     {
@@ -22,8 +22,8 @@ class EditProject extends EditRecord
     {
         return Notification::make()
             ->success()
-            ->title(__('projects::filament/resources/project/pages/edit-project.notification.title'))
-            ->body(__('projects::filament/resources/project/pages/edit-project.notification.body'));
+            ->title(__('projects::filament/resources/task/pages/edit-task.notification.title'))
+            ->body(__('projects::filament/resources/task/pages/edit-task.notification.body'));
     }
 
     protected function getHeaderActions(): array
@@ -36,8 +36,8 @@ class EditProject extends EditRecord
                 ->successNotification(
                     Notification::make()
                         ->success()
-                        ->title(__('projects::filament/resources/project/pages/edit-project.header-actions.delete.notification.title'))
-                        ->body(__('projects::filament/resources/project/pages/edit-project.header-actions.delete.notification.body')),
+                        ->title(__('projects::filament/resources/task/pages/edit-task.header-actions.delete.notification.title'))
+                        ->body(__('projects::filament/resources/task/pages/edit-task.header-actions.delete.notification.body')),
                 ),
         ];
     }

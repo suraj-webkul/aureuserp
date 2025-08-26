@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Project\Filament\Resources\TaskResource\RelationManagers;
+namespace Webkul\Project\Filament\Resources\Task\Pages;
 
 use Filament\Actions\ActionGroup;
 use Filament\Actions\CreateAction;
@@ -10,20 +10,29 @@ use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreAction;
 use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
-use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Resources\Pages\ManageRelatedRecords;
 use Filament\Schemas\Schema;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Project\Enums\TaskState;
-use Webkul\Project\Filament\Resources\TaskResource;
+use Webkul\Project\Filament\Resources\Task\TaskResource;
 use Webkul\Project\Models\Task;
 use Webkul\Project\Models\TaskStage;
 
-class SubTasksRelationManager extends RelationManager
+class ManageSubTasks extends ManageRelatedRecords
 {
+    protected static string $resource = TaskResource::class;
+
     protected static string $relationship = 'subTasks';
+
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-list';
+
+    public static function getNavigationLabel(): string
+    {
+        return __('projects::filament/resources/task/pages/manage-sub-tasks.title');
+    }
 
     public function form(Schema $schema): Schema
     {
@@ -42,7 +51,7 @@ class SubTasksRelationManager extends RelationManager
             ->groups([])
             ->headerActions([
                 CreateAction::make()
-                    ->label(__('projects::filament/resources/task/relation-managers/sub-tasks.table.header-actions.create.label'))
+                    ->label(__('projects::filament/resources/task/pages/manage-sub-tasks.table.header-actions.create.label'))
                     ->icon('heroicon-o-plus-circle')
                     ->fillForm(function (array $arguments): array {
                         return [
@@ -63,8 +72,8 @@ class SubTasksRelationManager extends RelationManager
                     ->successNotification(
                         Notification::make()
                             ->success()
-                            ->title(__('projects::filament/resources/task/relation-managers/sub-tasks.table.header-actions.create.notification.title'))
-                            ->body(__('projects::filament/resources/task/relation-managers/sub-tasks.table.header-actions.create.notification.body')),
+                            ->title(__('projects::filament/resources/task/pages/manage-sub-tasks.table.header-actions.create.notification.title'))
+                            ->body(__('projects::filament/resources/task/pages/manage-sub-tasks.table.header-actions.create.notification.body')),
                     ),
             ])
             ->recordActions([
@@ -79,22 +88,22 @@ class SubTasksRelationManager extends RelationManager
                         ->successNotification(
                             Notification::make()
                                 ->success()
-                                ->title(__('projects::filament/resources/task/relation-managers/sub-tasks.table.actions.restore.notification.title'))
-                                ->body(__('projects::filament/resources/task/relation-managers/sub-tasks.table.actions.restore.notification.body')),
+                                ->title(__('projects::filament/resources/task/pages/manage-sub-tasks.table.actions.restore.notification.title'))
+                                ->body(__('projects::filament/resources/task/pages/manage-sub-tasks.table.actions.restore.notification.body')),
                         ),
                     DeleteAction::make()
                         ->successNotification(
                             Notification::make()
                                 ->success()
-                                ->title(__('projects::filament/resources/task/relation-managers/sub-tasks.table.actions.delete.notification.title'))
-                                ->body(__('projects::filament/resources/task/relation-managers/sub-tasks.table.actions.delete.notification.body')),
+                                ->title(__('projects::filament/resources/task/pages/manage-sub-tasks.table.actions.delete.notification.title'))
+                                ->body(__('projects::filament/resources/task/pages/manage-sub-tasks.table.actions.delete.notification.body')),
                         ),
                     ForceDeleteAction::make()
                         ->successNotification(
                             Notification::make()
                                 ->success()
-                                ->title(__('projects::filament/resources/task/relation-managers/sub-tasks.table.actions.force-delete.notification.title'))
-                                ->body(__('projects::filament/resources/task/relation-managers/sub-tasks.table.actions.force-delete.notification.body')),
+                                ->title(__('projects::filament/resources/task/pages/manage-sub-tasks.table.actions.force-delete.notification.title'))
+                                ->body(__('projects::filament/resources/task/pages/manage-sub-tasks.table.actions.force-delete.notification.body')),
                         ),
                 ]),
             ]);
