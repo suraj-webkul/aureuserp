@@ -1,10 +1,10 @@
 <?php
 
-namespace Webkul\Employee\Filament\Clusters\Reportings\Resources\EmployeeSkillResource\Pages;
+namespace Webkul\Employee\Filament\Clusters\Reportings\Resources\EmployeeSkills\Pages;
 
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
-use Webkul\Employee\Filament\Clusters\Reportings\Resources\EmployeeSkillResource;
+use Webkul\Employee\Filament\Clusters\Reportings\Resources\EmployeeSkills\EmployeeSkillResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 

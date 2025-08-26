@@ -1,14 +1,9 @@
 <?php
 
-namespace Webkul\Employee\Filament\Clusters\Reportings\Resources;
+namespace Webkul\Employee\Filament\Clusters\Reportings\Resources\EmployeeSkills\Tables;
 
 use Filament\Actions\ActionGroup;
 use Filament\Actions\ViewAction;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Panel;
-use Filament\Resources\Resource;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\QueryBuilder;
 use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
@@ -17,32 +12,11 @@ use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint\Oper
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
-use Webkul\Employee\Filament\Clusters\Reportings;
-use Webkul\Employee\Filament\Clusters\Reportings\Resources\EmployeeSkillResource\Pages\ListEmployeeSkills;
-use Webkul\Employee\Models\EmployeeSkill;
 use Webkul\Support\Filament\Tables as CustomTables;
 
-class EmployeeSkillResource extends Resource
+class EmployeeSkillsTable
 {
-    protected static ?string $model = EmployeeSkill::class;
-
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-academic-cap';
-
-    protected static ?string $pluralModelLabel = 'Skills';
-
-    protected static ?string $cluster = Reportings::class;
-
-    public static function getModelLabel(): string
-    {
-        return __('employees::filament/clusters/reportings/resources/employee-skill.title');
-    }
-
-    public static function getNavigationLabel(): string
-    {
-        return __('employees::filament/clusters/reportings/resources/employee-skill.navigation.title');
-    }
-
-    public static function table(Table $table): Table
+    public static function configure(Table $table): Table
     {
         return $table
             ->columns([
@@ -172,55 +146,5 @@ class EmployeeSkillResource extends Resource
                     ViewAction::make(),
                 ]),
             ]);
-    }
-
-    public static function infolist(Schema $schema): Schema
-    {
-        return $schema
-            ->components([
-                Section::make(__('employees::filament/clusters/reportings/resources/employee-skill.infolist.sections.skill-details.title'))
-                    ->schema([
-                        TextEntry::make('employee.name')
-                            ->icon('heroicon-o-user')
-                            ->placeholder('—')
-                            ->label(__('employees::filament/clusters/reportings/resources/employee-skill.infolist.sections.skill-details.entries.employee')),
-                        TextEntry::make('skill.name')
-                            ->icon('heroicon-o-bolt')
-                            ->placeholder('—')
-                            ->label(__('employees::filament/clusters/reportings/resources/employee-skill.infolist.sections.skill-details.entries.skill')),
-                        TextEntry::make('skillLevel.name')
-                            ->icon('heroicon-o-bolt')
-                            ->placeholder('—')
-                            ->label(__('employees::filament/clusters/reportings/resources/employee-skill.infolist.sections.skill-details.entries.skill-level')),
-                        TextEntry::make('skillType.name')
-                            ->placeholder('—')
-                            ->label(__('employees::filament/clusters/reportings/resources/employee-skill.infolist.sections.skill-details.entries.skill-type')),
-                    ])
-                    ->columns(2),
-                Section::make(__('employees::filament/clusters/reportings/resources/employee-skill.infolist.sections.additional-information.title'))
-                    ->schema([
-                        TextEntry::make('creator.name')
-                            ->icon('heroicon-o-user')
-                            ->placeholder('—')
-                            ->label(__('employees::filament/clusters/reportings/resources/employee-skill.infolist.sections.additional-information.entries.created-by')),
-                        TextEntry::make('user.name')
-                            ->placeholder('—')
-                            ->icon('heroicon-o-user')
-                            ->label(__('employees::filament/clusters/reportings/resources/employee-skill.infolist.sections.additional-information.entries.updated-by')),
-                    ])
-                    ->columns(2),
-            ]);
-    }
-
-    public static function getSlug(?Panel $panel = null): string
-    {
-        return 'employees/skills';
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => ListEmployeeSkills::route('/'),
-        ];
     }
 }

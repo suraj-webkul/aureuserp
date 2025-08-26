@@ -2,12 +2,13 @@
 
 namespace Webkul\Employee\Filament\Clusters;
 
+use BackedEnum;
 use Filament\Clusters\Cluster;
 use Filament\Panel;
 
 class Configurations extends Cluster
 {
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-squares-2x2';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-squares-2x2';
 
     protected static ?int $navigationSort = 4;
 
