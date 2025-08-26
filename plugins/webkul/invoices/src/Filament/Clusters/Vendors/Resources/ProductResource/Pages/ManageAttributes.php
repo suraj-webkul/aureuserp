@@ -14,7 +14,7 @@ class ManageAttributes extends BaseManageAttributes
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-swatch';
 
-    public function getSubNavigationPosition(): SubNavigationPosition
+    public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }

@@ -10,7 +10,7 @@ class ViewCreditNote extends BaseViewInvoice
 {
     protected static string $resource = CreditNotesResource::class;
 
-    public function getSubNavigationPosition(): SubNavigationPosition
+    public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }

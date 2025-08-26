@@ -10,7 +10,7 @@ class ViewRefund extends BaseViewRefund
 {
     protected static string $resource = RefundResource::class;
 
-    public function getSubNavigationPosition(): SubNavigationPosition
+    public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }

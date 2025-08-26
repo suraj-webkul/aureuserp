@@ -3,7 +3,6 @@
 namespace Webkul\Support\Traits;
 
 use Barryvdh\DomPDF\Facade\Pdf;
-use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -16,7 +15,7 @@ trait PDFHandler
      * @param  string  $html  HTML content to convert to PDF.
      * @return PDF Returns the generated PDF instance.
      */
-    protected function generatePDF(string $html): PDF
+    protected function generatePDF(string $html)
     {
         $html = mb_convert_encoding($html, 'UTF-8', 'UTF-8');
 

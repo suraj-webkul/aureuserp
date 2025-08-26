@@ -12,7 +12,7 @@ class ListVendors extends BaseListVendors
 {
     protected static string $resource = VendorResource::class;
 
-    public function getSubNavigationPosition(): SubNavigationPosition
+    public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }

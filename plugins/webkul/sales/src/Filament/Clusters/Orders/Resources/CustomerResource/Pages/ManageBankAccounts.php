@@ -10,7 +10,7 @@ class ManageBankAccounts extends BaseManageBankAccounts
 {
     protected static string $resource = CustomerResource::class;
 
-    public function getSubNavigationPosition(): SubNavigationPosition
+    public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }

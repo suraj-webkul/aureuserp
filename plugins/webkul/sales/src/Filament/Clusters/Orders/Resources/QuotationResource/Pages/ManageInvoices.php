@@ -18,7 +18,7 @@ class ManageInvoices extends ManageRelatedRecords
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-banknotes';
 
-    public function getSubNavigationPosition(): SubNavigationPosition
+    public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }

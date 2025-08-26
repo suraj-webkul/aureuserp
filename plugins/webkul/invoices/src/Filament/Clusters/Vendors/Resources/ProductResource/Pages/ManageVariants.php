@@ -10,7 +10,7 @@ class ManageVariants extends BaseManageVariants
 {
     protected static string $resource = ProductResource::class;
 
-    public function getSubNavigationPosition(): SubNavigationPosition
+    public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }

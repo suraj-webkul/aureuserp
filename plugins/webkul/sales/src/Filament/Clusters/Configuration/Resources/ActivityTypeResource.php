@@ -2,13 +2,13 @@
 
 namespace Webkul\Sale\Filament\Clusters\Configuration\Resources;
 
+use Webkul\Sale\Models\ActivityType;
 use Webkul\Sale\Filament\Clusters\Configuration;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityTypeResource\Pages\CreateActivityType;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityTypeResource\Pages\EditActivityType;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityTypeResource\Pages\ListActivityTypes;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityTypeResource\Pages\ViewActivityType;
-use Webkul\Sale\Models\ActivityType;
-use Webkul\Support\Filament\Resources\ActivityTypeResource as BaseActivityTypeResource;
+use Webkul\Support\Filament\Resources\ActivityType\ActivityTypeResource as BaseActivityTypeResource;
 
 class ActivityTypeResource extends BaseActivityTypeResource
 {

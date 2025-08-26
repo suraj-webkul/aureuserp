@@ -97,7 +97,7 @@ trait HasTableViews
 
     public function resetToggledTableColumns(): void
     {
-        $this->toggledTableColumns = $this->getDefaultTableColumnToggleState();
+        $this->toggledTableColumns = $this->getDefaultTableColumnState();
     }
 
     public function applyTableViewFilters(): void

@@ -17,7 +17,7 @@ class ManageVariants extends ManageRelatedRecords
 
     protected static string $relationship = 'variants';
 
-    public function getSubNavigationPosition(): SubNavigationPosition
+    public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }

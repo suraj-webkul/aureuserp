@@ -18,7 +18,7 @@ class EditQuotationTemplate extends EditRecord
         return $this->getResource()::getUrl('view', ['record' => $this->getRecord()]);
     }
 
-    public function getSubNavigationPosition(): SubNavigationPosition
+    public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }

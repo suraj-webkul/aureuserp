@@ -10,7 +10,7 @@ class EditBill extends BaseEditBill
 {
     protected static string $resource = BillResource::class;
 
-    public function getSubNavigationPosition(): SubNavigationPosition
+    public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }

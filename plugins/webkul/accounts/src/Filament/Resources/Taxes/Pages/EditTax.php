@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Account\Filament\Resources\TaxResource\Pages;
+namespace Webkul\Account\Filament\Resources\Taxes\TaxResource\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
@@ -8,14 +8,14 @@ use Filament\Notifications\Notification;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\QueryException;
-use Webkul\Account\Filament\Resources\TaxResource;
+use Webkul\Account\Filament\Resources\Taxes\TaxResource;
 use Webkul\Account\Models\Tax;
 
 class EditTax extends EditRecord
 {
     protected static string $resource = TaxResource::class;
 
-    public function getSubNavigationPosition(): SubNavigationPosition
+    public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }
