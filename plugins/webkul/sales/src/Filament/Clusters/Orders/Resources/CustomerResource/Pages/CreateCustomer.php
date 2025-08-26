@@ -4,7 +4,7 @@ namespace Webkul\Sale\Filament\Clusters\Orders\Resources\CustomerResource\Pages;
 
 use Filament\Pages\Enums\SubNavigationPosition;
 use Illuminate\Contracts\Support\Htmlable;
-use Webkul\Partner\Filament\Resources\PartnerResource\Pages\CreatePartner as BaseCreateCustomer;
+use Webkul\Partner\Filament\Resources\Partner\Pages\CreatePartner as BaseCreateCustomer;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\CustomerResource;
 
 class CreateCustomer extends BaseCreateCustomer
