@@ -2,26 +2,27 @@
 
 namespace Webkul\Security\Filament\Resources\Companies\Schemas;
 
-use Filament\Notifications\Notification;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Actions\ActionGroup;
+use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
-use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\ViewAction;
+use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
+use Filament\Notifications\Notification;
+use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Security\Enums\CompanyStatus;
+use Webkul\Security\Filament\Resources\Companies\CompanyResource;
 use Webkul\Support\Models\Country;
 
 class CompaniesTable
@@ -29,7 +30,7 @@ class CompaniesTable
     public static function configure(Table $table): Table
     {
         return $table
-            ->columns([
+            ->columns(CompanyResource::mergeCustomTableColumns([
                 ImageColumn::make('partner.avatar')
                     ->circular()
                     ->size(50)
@@ -75,7 +76,7 @@ class CompaniesTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])
+            ]))
             ->columnToggleFormColumns(2)
             ->groups([
                 Tables\Grouping\Group::make('name')

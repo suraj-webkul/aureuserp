@@ -16,6 +16,7 @@ use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\IconPosition;
 use Filament\Support\Enums\TextSize;
+use Illuminate\Support\Facades\Schema as SchemaFacade;
 
 class FieldSchema
 {
@@ -45,7 +46,7 @@ class FieldSchema
 
                                         $table = app($get('customizable_type'))->getTable();
 
-                                        return Schema::getColumnListing($table);
+                                        return SchemaFacade::getColumnListing($table);
                                     })
                                     ->rules([
                                         'regex:/^[a-zA-Z_][a-zA-Z0-9_]*$/',

@@ -11,6 +11,7 @@ use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
 use Filament\Facades\Filament;
 use Filament\Notifications\Notification;
 use Filament\Tables\Columns\TextColumn;
@@ -70,6 +71,7 @@ class FieldsTable
                 ActionGroup::make([
                     EditAction::make()
                         ->hidden(fn ($record) => $record->trashed()),
+                    ViewAction::make(),
                     RestoreAction::make()
                         ->successNotification(
                             Notification::make()
