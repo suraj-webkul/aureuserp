@@ -1,12 +1,12 @@
 <?php
 
-namespace Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\CategoryResource\Pages;
+namespace Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Category\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRecords;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\CategoryResource;
+use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Category\CategoryResource;
 
 class ManageCategories extends ManageRecords
 {

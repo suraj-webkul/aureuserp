@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Blog\Filament\Customer\Resources\PostResource\Pages;
+namespace Webkul\Blog\Filament\Customer\Resources\Post\Pages;
 
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Contracts\Support\Htmlable;
