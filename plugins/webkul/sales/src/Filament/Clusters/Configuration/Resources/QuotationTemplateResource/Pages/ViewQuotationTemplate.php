@@ -13,7 +13,7 @@ class ViewQuotationTemplate extends ViewRecord
 {
     protected static string $resource = QuotationTemplateResource::class;
 
-    public function getSubNavigationPosition(): SubNavigationPosition
+    public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Account\Filament\Resources\TaxResource\RelationManagers;
+namespace Webkul\Account\Filament\Resources\Taxes\TaxResource\RelationManagers;
 
 use Filament\Resources\RelationManagers\RelationManager;
 use Webkul\Account\Enums\DocumentType;

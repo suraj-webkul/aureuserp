@@ -27,7 +27,7 @@ class EditFiscalPosition extends EditRecord
             ->body(__('accounts::filament/resources/fiscal-position/pages/edit-fiscal-position.notification.body'));
     }
 
-    public function getSubNavigationPosition(): SubNavigationPosition
+    public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }

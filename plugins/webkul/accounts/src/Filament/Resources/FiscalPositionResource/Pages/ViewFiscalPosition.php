@@ -13,7 +13,7 @@ class ViewFiscalPosition extends ViewRecord
 {
     protected static string $resource = FiscalPositionResource::class;
 
-    public function getSubNavigationPosition(): SubNavigationPosition
+    public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }

@@ -2,7 +2,7 @@
 
 namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources;
 
-use Webkul\Account\Filament\Resources\TaxResource as BaseTaxResource;
+use Webkul\Account\Filament\Resources\Taxes\TaxResource as BaseTaxResource;
 use Webkul\Invoice\Filament\Clusters\Configuration;
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxResource\Pages\CreateTax;
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxResource\Pages\EditTax;
