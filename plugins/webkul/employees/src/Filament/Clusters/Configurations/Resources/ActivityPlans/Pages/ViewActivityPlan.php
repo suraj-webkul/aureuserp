@@ -1,16 +1,16 @@
 <?php
 
-namespace Webkul\Employee\Filament\Clusters\Configurations\Resources\Calendar\Pages;
+namespace Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlans\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
-use Webkul\Employee\Filament\Clusters\Configurations\Resources\Calendar\CalendarResource;
+use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlans\ActivityPlanResource;
 
-class ViewCalendar extends ViewRecord
+class ViewActivityPlan extends ViewRecord
 {
-    protected static string $resource = CalendarResource::class;
+    protected static string $resource = ActivityPlanResource::class;
 
     protected function getHeaderActions(): array
     {

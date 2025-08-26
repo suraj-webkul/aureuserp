@@ -1,12 +1,12 @@
 <?php
 
-namespace Webkul\Employee\Filament\Clusters\Configurations\Resources\CalendarResource\Pages;
+namespace Webkul\Employee\Filament\Clusters\Configurations\Resources\Calendar\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
-use Webkul\Employee\Filament\Clusters\Configurations\Resources\CalendarResource;
+use Webkul\Employee\Filament\Clusters\Configurations\Resources\Calendar\CalendarResource;
 
 class EditCalendar extends EditRecord
 {
