@@ -43,9 +43,7 @@ class WebsiteServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        FilamentAsset::register([
-            Css::make('website', __DIR__.'/../resources/dist/website.css'),
-        ], 'website');
+        $this->registerCustomCss();
 
         if (! Package::isPluginInstalled(self::$name)) {
             Route::get('/', function () {
@@ -57,5 +55,12 @@ class WebsiteServiceProvider extends PackageServiceProvider
     public function packageRegistered(): void
     {
         $this->app->bind(\Filament\Auth\Http\Responses\Contracts\LogoutResponse::class, LogoutResponse::class);
+    }
+
+    public function registerCustomCss()
+    {
+        FilamentAsset::register([
+            Css::make('website', __DIR__.'/../resources/dist/website.css'),
+        ], 'website');
     }
 }

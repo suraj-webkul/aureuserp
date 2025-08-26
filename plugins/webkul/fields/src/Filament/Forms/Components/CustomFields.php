@@ -70,7 +70,7 @@ class CustomFields extends Component
     protected function getFields(): Collection
     {
         $query = Field::query()
-            ->where('customizable_type', $this->getResourceClass());
+            ->where('customizable_type', $this->getResourceClass()::getModel());
 
         if (! empty($this->include)) {
             $query->whereIn('code', $this->include);

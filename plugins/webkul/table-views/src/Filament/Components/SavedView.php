@@ -2,16 +2,20 @@
 
 namespace Webkul\TableViews\Filament\Components;
 
-use Closure;
 use Webkul\TableViews\Models\TableView;
-use Illuminate\Database\Eloquent\Model;
+
 class SavedView extends PresetView
 {
-    protected Model|array|string|Closure|null $model;
+    protected TableView $model;
 
-  
+    public function model(TableView $model): static
+    {
+        $this->model = $model;
 
-    public function getModels(): TableView
+        return $this;
+    }
+
+    public function getModel(): TableView
     {
         return $this->model;
     }

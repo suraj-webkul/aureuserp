@@ -1,8 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "dev:styles": "tailwindcss -i resources/css/index.css -o resources/dist/website.css --watch",
-    "build:styles": "tailwindcss -i resources/css/index.css -o resources/dist/website.css --minify",
+    "dev:styles": "tailwindcss -i resources/css/index.css -o resources/dist/table-views.css --watch",
+    "build:styles": "tailwindcss -i resources/css/index.css -o resources/dist/table-views.css --minify",
     "dev": "npm-run-all --parallel dev:*",
     "build": "npm-run-all build:*"
   },
