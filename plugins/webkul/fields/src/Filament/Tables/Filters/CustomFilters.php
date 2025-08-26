@@ -28,9 +28,9 @@ class CustomFilters extends Component
 
     final public function __construct(string $resource)
     {
-        // if (!method_exists($resource, 'getModel')) {
-        //     throw new \InvalidArgumentException("Class {$resource} must implement getModel()");
-        // }
+        if (!method_exists($resource, 'getModel')) {
+            throw new \InvalidArgumentException("Class {$resource} must implement getModel()");
+        }
 
         $this->resourceClass = $resource;
     }
@@ -84,7 +84,7 @@ class CustomFilters extends Component
     protected function getFields(): Collection
     {
         $query = Field::query()
-            ->where('customizable_type', $this->getResourceClass())
+            ->where('customizable_type', $this->getResourceClass()::getModel())
             ->where('use_in_table', true);
 
         if (!empty($this->include)) {

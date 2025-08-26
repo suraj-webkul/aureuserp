@@ -1,17 +1,17 @@
 <?php
 
-namespace Webkul\Project\Filament\Resources\Projects\Pages;
+namespace Webkul\Project\Filament\Resources\TaskResource\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Chatter\Filament\Actions\ChatterAction;
-use Webkul\Project\Filament\Resources\Projects\ProjectResource;
+use Webkul\Project\Filament\Resources\TaskResource;
 use Webkul\Support\Models\ActivityPlan;
 
-class ViewProject extends ViewRecord
+class ViewTask extends ViewRecord
 {
-    protected static string $resource = ProjectResource::class;
+    protected static string $resource = TaskResource::class;
 
     protected function getHeaderActions(): array
     {
@@ -23,8 +23,8 @@ class ViewProject extends ViewRecord
                 ->successNotification(
                     Notification::make()
                         ->success()
-                        ->title(__('projects::filament/resources/project/pages/view-project.header-actions.delete.notification.title'))
-                        ->body(__('projects::filament/resources/project/pages/view-project.header-actions.delete.notification.body')),
+                        ->title(__('projects::filament/resources/task/pages/view-task.header-actions.delete.notification.title'))
+                        ->body(__('projects::filament/resources/task/pages/view-task.header-actions.delete.notification.body')),
                 ),
         ];
     }

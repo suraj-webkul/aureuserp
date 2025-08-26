@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Project\Filament\Resources\Tasks\RelationManagers;
+namespace Webkul\Project\Filament\Resources\TaskResource\RelationManagers;
 
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;

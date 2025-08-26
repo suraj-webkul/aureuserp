@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Project\Filament\Resources\Projects\Pages;
+namespace Webkul\Project\Filament\Resources\ProjectResource\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
@@ -9,7 +9,7 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Project\Filament\Clusters\Configurations\Resources\MilestoneResource;
-use Webkul\Project\Filament\Resources\Projects\ProjectResource;
+use Webkul\Project\Filament\Resources\ProjectResource;
 use Webkul\Project\Settings\TaskSettings;
 
 class ManageMilestones extends ManageRelatedRecords

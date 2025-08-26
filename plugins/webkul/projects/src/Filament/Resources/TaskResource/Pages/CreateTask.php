@@ -1,11 +1,11 @@
 <?php
 
-namespace Webkul\Project\Filament\Resources\Tasks\Pages;
+namespace Webkul\Project\Filament\Resources\TaskResource\Pages;
 
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Project\Filament\Resources\Tasks\TaskResource;
+use Webkul\Project\Filament\Resources\TaskResource;
 
 class CreateTask extends CreateRecord
 {
