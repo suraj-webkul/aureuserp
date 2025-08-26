@@ -23,7 +23,7 @@ class ListInvoices extends ListRecords
         return [
             'invoice' => PresetView::make(__('accounts::filament/resources/invoice/pages/list-invoice.tabs.invoices'))
                 ->favorite()
-                ->default()
+                ->setAsDefault()
                 ->icon('heroicon-s-receipt-percent')
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('move_type', MoveType::OUT_INVOICE)),
             'draft' => PresetView::make(__('accounts::filament/resources/invoice/pages/list-invoice.tabs.draft'))

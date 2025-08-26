@@ -1,67 +1,24 @@
 <?php
 
-namespace Webkul\Account\Filament\Resources;
+namespace Webkul\Accounts\Filament\Resources\TaxGroups\Schemas;
 
+use Filament\Tables\Table;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
-use Filament\Resources\Resource;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Grouping\Group;
-use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
-use Webkul\Account\Filament\Resources\TaxGroupResource\Pages\CreateTaxGroup;
-use Webkul\Account\Filament\Resources\TaxGroupResource\Pages\EditTaxGroup;
-use Webkul\Account\Filament\Resources\TaxGroupResource\Pages\ListTaxGroups;
-use Webkul\Account\Filament\Resources\TaxGroupResource\Pages\ViewTaxGroup;
 use Webkul\Account\Models\TaxGroup;
 
-class TaxGroupResource extends Resource
+class TaxGroupsTable
 {
-    protected static ?string $model = TaxGroup::class;
-
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-group';
-
-    protected static bool $shouldRegisterNavigation = false;
-
-    public static function form(Schema $schema): Schema
-    {
-        return $schema
-            ->components([
-                Section::make()
-                    ->schema([
-                        Select::make('company_id')
-                            ->relationship('company', 'name')
-                            ->searchable()
-                            ->label(__('accounts::filament/resources/tax-group.form.sections.fields.company'))
-                            ->preload(),
-                        Select::make('country_id')
-                            ->relationship('country', 'name')
-                            ->searchable()
-                            ->label(__('accounts::filament/resources/tax-group.form.sections.fields.country'))
-                            ->preload(),
-                        TextInput::make('name')
-                            ->required()
-                            ->label(__('accounts::filament/resources/tax-group.form.sections.fields.name'))
-                            ->maxLength(255),
-                        TextInput::make('preceding_subtotal')
-                            ->label(__('accounts::filament/resources/tax-group.form.sections.fields.preceding-subtotal'))
-                            ->maxLength(255),
-                    ])->columns(2),
-            ]);
-    }
-
-    public static function table(Table $table): Table
+    public static function configure(Table $table): Table
     {
         return $table
             ->columns([
@@ -137,7 +94,7 @@ class TaxGroupResource extends Resource
                     DeleteBulkAction::make()
                         ->action(function (Collection $records) {
                             try {
-                                $records->each(fn (Model $record) => $record->delete());
+                                $records->each(fn(Model $record) => $record->delete());
                             } catch (QueryException $e) {
                                 Notification::make()
                                     ->danger()
@@ -153,41 +110,5 @@ class TaxGroupResource extends Resource
                         ),
                 ]),
             ]);
-    }
-
-    public static function infolist(Schema $schema): Schema
-    {
-        return $schema
-            ->components([
-                Section::make()
-                    ->schema([
-                        TextEntry::make('company.name')
-                            ->icon('heroicon-o-building-office-2')
-                            ->placeholder('-')
-                            ->label(__('accounts::filament/resources/tax-group.infolist.sections.entries.company')),
-                        TextEntry::make('country.name')
-                            ->icon('heroicon-o-globe-alt')
-                            ->placeholder('-')
-                            ->label(__('accounts::filament/resources/tax-group.infolist.sections.entries.country')),
-                        TextEntry::make('name')
-                            ->icon('heroicon-o-tag')
-                            ->placeholder('-')
-                            ->label(__('accounts::filament/resources/tax-group.infolist.sections.entries.name')),
-                        TextEntry::make('preceding_subtotal')
-                            ->icon('heroicon-o-rectangle-group')
-                            ->placeholder('-')
-                            ->label(__('accounts::filament/resources/tax-group.infolist.sections.entries.preceding-subtotal')),
-                    ])->columns(2),
-            ]);
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index'  => ListTaxGroups::route('/'),
-            'create' => CreateTaxGroup::route('/create'),
-            'view'   => ViewTaxGroup::route('/{record}'),
-            'edit'   => EditTaxGroup::route('/{record}/edit'),
-        ];
     }
 }

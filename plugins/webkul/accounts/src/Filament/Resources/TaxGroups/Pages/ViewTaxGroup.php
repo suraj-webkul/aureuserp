@@ -1,13 +1,13 @@
 <?php
 
-namespace Webkul\Account\Filament\Resources\TaxGroupResource\Pages;
+namespace Webkul\Account\Filament\Resources\TaxGroups\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Database\QueryException;
-use Webkul\Account\Filament\Resources\TaxGroupResource;
+use Webkul\Account\Filament\Resources\TaxGroups\TaxGroupResource;
 use Webkul\Account\Models\TaxGroup;
 
 class ViewTaxGroup extends ViewRecord

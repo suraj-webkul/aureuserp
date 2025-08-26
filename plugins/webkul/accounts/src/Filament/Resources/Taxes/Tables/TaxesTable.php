@@ -21,7 +21,7 @@ use Webkul\Account\Enums\AmountType;
 use Webkul\Account\Enums\TaxScope;
 use Webkul\Account\Models\Tax;
 
-class TaxTable
+class TaxesTable
 {
     public static function configure(Table $table): Table
     {

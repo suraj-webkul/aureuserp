@@ -1,10 +1,10 @@
 <?php
 
-namespace Webkul\Account\Filament\Resources\TaxGroupResource\Pages;
+namespace Webkul\Account\Filament\Resources\TaxGroups\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
-use Webkul\Account\Filament\Resources\TaxGroupResource;
+use Webkul\Account\Filament\Resources\TaxGroups\TaxGroupResource;
 
 class ListTaxGroups extends ListRecords
 {
