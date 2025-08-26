@@ -1,12 +1,12 @@
 <?php
 
-namespace Webkul\Account\Filament\Resources\BillResource\Pages;
+namespace Webkul\Account\Filament\Resources\Bills\Pages;
 
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Webkul\Account\Enums\MoveType;
 use Webkul\Account\Facades\Account;
-use Webkul\Account\Filament\Resources\BillResource;
+use Webkul\Account\Filament\Resources\Bills\BillResource;
 
 class CreateBill extends CreateRecord
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Webkul\Account\Filament\Resources\BillResource\Pages;
+namespace Webkul\Account\Filament\Resources\Bills\Pages;
 
 use Filament\Actions\CreateAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use Webkul\Account\Enums\MoveType;
-use Webkul\Account\Filament\Resources\BillResource;
+use Webkul\Account\Filament\Resources\Bills\BillResource;
 use Webkul\Account\Filament\Resources\InvoiceResource\Pages\ListInvoices as BaseListBills;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
@@ -30,7 +30,7 @@ class ListBills extends BaseListBills
         return [
             'bill' => PresetView::make(__('accounts::filament/resources/bill/pages/list-bill.tabs.bills'))
                 ->favorite()
-                ->default()
+                ->setAsDefault()
                 ->icon('heroicon-s-receipt-percent')
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('move_type', MoveType::IN_INVOICE)),
             ...Arr::except(parent::getPresetTableViews(), 'invoice'),

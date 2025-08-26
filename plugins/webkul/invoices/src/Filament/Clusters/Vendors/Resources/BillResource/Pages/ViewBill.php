@@ -3,7 +3,7 @@
 namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\BillResource\Pages;
 
 use Filament\Pages\Enums\SubNavigationPosition;
-use Webkul\Account\Filament\Resources\BillResource\Pages\ViewBill as BaseViewBill;
+use Webkul\Account\Filament\Resources\Bills\Pages\ViewBill as BaseViewBill;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\BillResource;
 
 class ViewBill extends BaseViewBill

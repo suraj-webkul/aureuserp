@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Account\Filament\Resources\BillResource\Actions;
+namespace Webkul\Account\Filament\Resources\Bills\Actions;
 
 use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
