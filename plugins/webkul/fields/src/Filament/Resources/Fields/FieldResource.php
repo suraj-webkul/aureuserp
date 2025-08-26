@@ -10,6 +10,8 @@ use Filament\Tables\Table;
 use Webkul\Field\Filament\Resources\Fields\Pages\CreateField;
 use Webkul\Field\Filament\Resources\Fields\Pages\EditField;
 use Webkul\Field\Filament\Resources\Fields\Pages\ListFields;
+use Webkul\Field\Filament\Resources\Fields\Pages\ViewField;
+use Webkul\Field\Filament\Resources\Fields\Schemas\FieldInfolist;
 use Webkul\Field\Filament\Resources\Fields\Schemas\FieldSchema;
 use Webkul\Field\Filament\Resources\Fields\Tables\FieldsTable;
 use Webkul\Field\Models\Field;
@@ -54,12 +56,18 @@ class FieldResource extends Resource
         return FieldsTable::configure($table);
     }
 
+    public static function infolist(Schema $schema): Schema
+    {
+        return FieldInfolist::configure($schema);
+    }
+
     public static function getPages(): array
     {
         return [
             'index'  => ListFields::route('/'),
             'create' => CreateField::route('/create'),
             'edit'   => EditField::route('/{record}/edit'),
+            'view'   => ViewField::route('/{record}'),
         ];
     }
 }

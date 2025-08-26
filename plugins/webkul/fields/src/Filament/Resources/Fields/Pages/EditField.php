@@ -3,6 +3,7 @@
 namespace Webkul\Field\Filament\Resources\Fields\Pages;
 
 use Filament\Actions\DeleteAction;
+use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Webkul\Field\FieldsColumnManager;
@@ -23,6 +24,7 @@ class EditField extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
+            ViewAction::make(),
             DeleteAction::make(),
         ];
     }
@@ -34,6 +36,6 @@ class EditField extends EditRecord
 
     protected function getRedirectUrl(): string
     {
-        return $this->previousUrl ?? $this->getResource()::getUrl('index');
+        return $this->getResource()::getUrl('view', ['record' => $this->getRecord()]);
     }
 }

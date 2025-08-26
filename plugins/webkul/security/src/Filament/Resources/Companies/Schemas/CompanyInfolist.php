@@ -10,6 +10,7 @@ use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Webkul\Security\Filament\Resources\Companies\CompanyResource;
 
 class CompanyInfolist
 {
@@ -87,6 +88,7 @@ class CompanyInfolist
                                         IconEntry::make('is_active')
                                             ->label(__('security::filament/resources/company.infolist.sections.additional-information.entries.status'))
                                             ->boolean(),
+                                        ...CompanyResource::getCustomInfolistEntries(),
                                     ])
                                     ->columns(2),
                             ])
