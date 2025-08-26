@@ -1,12 +1,12 @@
 <?php
 
-namespace Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlanResource\Pages;
+namespace Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlan\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
-use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlanResource;
+use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlan\ActivityPlanResource;
 
 class ViewActivityPlan extends ViewRecord
 {
