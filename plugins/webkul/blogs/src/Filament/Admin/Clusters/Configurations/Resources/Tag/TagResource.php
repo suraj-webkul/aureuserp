@@ -8,7 +8,7 @@ use Filament\Tables\Table;
 use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Tag\Pages\ManageTags;
 use Webkul\Blog\Models\Tag;
 use Webkul\Blogs\Filament\Admin\Clusters\Configurations\Resources\Tag\Schemas\TagForm;
-use Webkul\Partners\Filament\Resources\Tag\Tables\TagTable;
+use Webkul\Partner\Filament\Resources\Tag\Tables\TagTable;
 use Webkul\Website\Filament\Admin\Clusters\Configurations;
 
 class TagResource extends Resource

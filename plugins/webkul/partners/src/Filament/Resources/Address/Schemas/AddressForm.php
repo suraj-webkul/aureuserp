@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Partners\Filament\Resources\Address\Schemas;
+namespace Webkul\Partner\Filament\Resources\Address\Schemas;
 
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;

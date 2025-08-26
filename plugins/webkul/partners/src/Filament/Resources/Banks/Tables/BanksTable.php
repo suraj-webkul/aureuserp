@@ -1,8 +1,6 @@
 <?php
 
-
-namespace Webkul\Partners\Src\Filament\Resources\Bank\Tables;
-
+namespace Webkul\Partner\Filament\Resources\Banks\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -17,7 +15,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 
-class BankTable
+class BanksTable
 {
     public static function configure(Table $table): Table
     {

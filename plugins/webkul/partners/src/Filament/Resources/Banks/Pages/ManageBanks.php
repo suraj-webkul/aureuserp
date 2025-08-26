@@ -1,13 +1,13 @@
 <?php
 
-namespace Webkul\Partner\Filament\Resources\Bank\Pages;
+namespace Webkul\Partner\Filament\Resources\Banks\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRecords;
 use Filament\Schemas\Components\Tabs\Tab;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Partner\Filament\Resources\Bank\BankResource;
+use Webkul\Partner\Filament\Resources\Banks\BankResource;
 use Webkul\Support\Models\Bank;
 
 class ManageBanks extends ManageRecords

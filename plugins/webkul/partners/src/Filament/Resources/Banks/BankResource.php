@@ -1,12 +1,12 @@
 <?php
 
-namespace Webkul\Partner\Filament\Resources\Bank;
+namespace Webkul\Partner\Filament\Resources\Banks;
 
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use Webkul\Partners\Src\Filament\Resources\Bank\Schemas\BankForm;
-use Webkul\Partners\Src\Filament\Resources\Bank\Tables\BankTable;
+use Webkul\Partner\Filament\Resources\Bank\Schemas\BankForm;
+use Webkul\Partner\Filament\Resources\Banks\Tables\BanksTable;
 use Webkul\Support\Models\Bank;
 
 class BankResource extends Resource
@@ -32,6 +32,6 @@ class BankResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return BankTable::configure($table);
+        return BanksTable::configure($table);
     }
 }

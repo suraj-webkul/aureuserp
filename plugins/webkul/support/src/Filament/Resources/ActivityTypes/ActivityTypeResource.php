@@ -1,15 +1,15 @@
 <?php
 
-namespace Webkul\Support\Filament\Resources\ActivityType;
+namespace Webkul\Support\Filament\Resources\ActivityTypes;
 
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use Webkul\Support\Filament\Resources\ActivityType\Pages\CreateActivityType;
-use Webkul\Support\Filament\Resources\ActivityType\Pages\EditActivityType;
-use Webkul\Support\Filament\Resources\ActivityType\Pages\ListActivityTypes;
-use Webkul\Support\Filament\Resources\ActivityType\Pages\ViewActivityType;
+use Webkul\Support\Filament\Resources\ActivityTypes\Pages\CreateActivityType;
+use Webkul\Support\Filament\Resources\ActivityTypes\Pages\EditActivityType;
+use Webkul\Support\Filament\Resources\ActivityTypes\Pages\ListActivityTypes;
+use Webkul\Support\Filament\Resources\ActivityTypes\Pages\ViewActivityType;
 use Webkul\Support\Models\ActivityType;
 
 class ActivityTypeResource extends Resource

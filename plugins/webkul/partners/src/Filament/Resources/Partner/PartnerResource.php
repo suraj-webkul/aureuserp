@@ -5,9 +5,9 @@ namespace Webkul\Partner\Filament\Resources\Partner;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Webkul\Partner\Models\Partner;
-use Webkul\Partners\Filament\Resources\Partner\Schemas\PartnerForm;
-use Webkul\Partners\Filament\Resources\Partner\Schemas\PartnerInfolist;
-use Webkul\Partners\Filament\Resources\Partner\Tables\PartnerTable;
+use Webkul\Partner\Filament\Resources\Partner\Schemas\PartnerForm;
+use Webkul\Partner\Filament\Resources\Partner\Schemas\PartnerInfolist;
+use Webkul\Partner\Filament\Resources\Partner\Tables\PartnerTable;
 use Filament\Resources\Resource;
 
 class PartnerResource extends Resource

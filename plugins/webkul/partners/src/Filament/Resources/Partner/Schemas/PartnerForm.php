@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Partners\Filament\Resources\Partner\Schemas;
+namespace Webkul\Partner\Filament\Resources\Partner\Schemas;
 
 use Filament\Schemas\Schema;
 use Filament\Actions\Action;

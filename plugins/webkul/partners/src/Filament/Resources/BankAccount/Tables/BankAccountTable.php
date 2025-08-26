@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Partners\Filament\Resources\BankAccount\Tables;
+namespace Webkul\Partner\Filament\Resources\BankAccount\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;

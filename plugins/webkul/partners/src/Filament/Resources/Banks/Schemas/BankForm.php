@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Partners\Src\Filament\Resources\Bank\Schemas;
+namespace Webkul\Partner\Filament\Resources\Banks\Schemas;
 
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;

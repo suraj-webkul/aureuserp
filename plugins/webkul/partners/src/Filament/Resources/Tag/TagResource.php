@@ -6,8 +6,8 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Webkul\Partner\Models\Tag;
-use Webkul\Partners\Filament\Resources\Tag\Schemas\TagForm;
-use Webkul\Partners\Filament\Resources\Tag\Tables\TagTable;
+use Webkul\Partner\Filament\Resources\Tag\Schemas\TagForm;
+use Webkul\Partner\Filament\Resources\Tag\Tables\TagTable;
 
 class TagResource extends Resource
 {

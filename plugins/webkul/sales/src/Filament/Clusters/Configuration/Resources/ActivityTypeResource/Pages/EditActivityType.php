@@ -3,7 +3,7 @@
 namespace Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityTypeResource\Pages;
 
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityTypeResource;
-use Webkul\Support\Filament\Resources\ActivityType\Pages\EditActivityType as BaseEditActivityType;
+use Webkul\Support\Filament\Resources\ActivityTypes\Pages\EditActivityType as BaseEditActivityType;
 
 class EditActivityType extends BaseEditActivityType
 {

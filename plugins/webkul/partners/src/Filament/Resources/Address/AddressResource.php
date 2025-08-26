@@ -6,8 +6,8 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Webkul\Partner\Models\Partner;
-use Webkul\Partners\Filament\Resources\Address\Schemas\AddressForm;
-use Webkul\Partners\Filament\Resources\Address\Table\AddressTable;
+use Webkul\Partner\Filament\Resources\Address\Schemas\AddressForm;
+use Webkul\Partner\Filament\Resources\Address\Table\AddressTable;
 
 class AddressResource extends Resource
 {

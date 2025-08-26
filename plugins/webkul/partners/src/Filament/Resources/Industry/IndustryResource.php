@@ -6,8 +6,8 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Webkul\Partner\Models\Industry;
-use Webkul\Partners\Filament\Resources\Industry\Schemas\IndustryForm;
-use Webkul\Partners\Filament\Resources\Industry\Table\IndustryTable;
+use Webkul\Partner\Filament\Resources\Industry\Schemas\IndustryForm;
+use Webkul\Partner\Filament\Resources\Industry\Table\IndustryTable;
 
 class IndustryResource extends Resource
 {
