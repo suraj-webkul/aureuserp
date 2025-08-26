@@ -63,7 +63,7 @@ class BillForm
                         return $options;
                     })
                     ->default(MoveState::DRAFT->value)
-                    ->columnSpan('full')
+                    ->columnSpanFull()
                     ->disabled()
                     ->live()
                     ->reactive(),
