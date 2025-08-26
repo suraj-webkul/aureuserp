@@ -32,7 +32,7 @@ use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\Mana
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\ViewVendor;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\RelationManagers\BankAccountsRelationManager;
 use Webkul\Invoice\Models\Partner;
-use Webkul\Partner\Filament\Resources\PartnerResource as BaseVendorResource;
+use Webkul\Partner\Filament\Resources\Partner\PartnerResource as BaseVendorResource;
 
 class VendorResource extends BaseVendorResource
 {

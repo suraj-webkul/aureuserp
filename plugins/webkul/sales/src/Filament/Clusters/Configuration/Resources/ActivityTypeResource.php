@@ -8,7 +8,7 @@ use Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityTypeResource\P
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityTypeResource\Pages\EditActivityType;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityTypeResource\Pages\ListActivityTypes;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityTypeResource\Pages\ViewActivityType;
-use Webkul\Support\Filament\Resources\ActivityType\ActivityTypeResource as BaseActivityTypeResource;
+use Webkul\Support\Filament\Resources\ActivityTypes\ActivityTypeResource as BaseActivityTypeResource;
 
 class ActivityTypeResource extends BaseActivityTypeResource
 {

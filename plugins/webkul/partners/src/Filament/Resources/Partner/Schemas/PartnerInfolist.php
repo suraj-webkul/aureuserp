@@ -1,5 +1,5 @@
 <?php
-namespace Webkul\Partners\Filament\Resources\Partner\Schemas;
+namespace Webkul\Partner\Filament\Resources\Partner\Schemas;
 
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;

@@ -1,14 +1,13 @@
 <?php
 
-namespace Webkul\Partners\Filament\Resources\BankAccount\Schemas;
+namespace Webkul\Partner\Filament\Resources\BankAccount\Schemas;
 
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Builder;
-use Webkul\Partner\Filament\Resources\Bank\BankResource;
-
+use Webkul\Partner\Filament\Resources\Banks\BankResource;
 
 class BankAccountForm
 {

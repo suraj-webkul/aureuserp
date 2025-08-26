@@ -6,8 +6,8 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Webkul\Partner\Models\Title;
-use Webkul\Partners\Filament\Resources\Title\Schemas\TitleForm;
-use Webkul\Partners\Filament\Resources\Title\Table\TitleTable;
+use Webkul\Partner\Filament\Resources\Title\Schemas\TitleForm;
+use Webkul\Partner\Filament\Resources\Title\Table\TitleTable;
 
 class TitleResource extends Resource
 {

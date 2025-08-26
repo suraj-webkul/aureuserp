@@ -3,7 +3,7 @@
 namespace Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityTypeResource\Pages;
 
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityTypeResource;
-use Webkul\Support\Filament\Resources\ActivityType\Pages\CreateActivityType as BaseCreateActivityType;
+use Webkul\Support\Filament\Resources\ActivityTypes\Pages\CreateActivityType as BaseCreateActivityType;
 
 class CreateActivityType extends BaseCreateActivityType
 {

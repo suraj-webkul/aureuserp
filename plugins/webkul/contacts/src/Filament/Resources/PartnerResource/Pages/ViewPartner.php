@@ -3,7 +3,7 @@
 namespace Webkul\Contact\Filament\Resources\PartnerResource\Pages;
 
 use Webkul\Contact\Filament\Resources\PartnerResource;
-use Webkul\Partner\Filament\Resources\PartnerResource\Pages\ViewPartner as BaseViewPartner;
+use Webkul\Partner\Filament\Resources\Partner\Pages\ViewPartner as BaseViewPartner;
 
 class ViewPartner extends BaseViewPartner
 {

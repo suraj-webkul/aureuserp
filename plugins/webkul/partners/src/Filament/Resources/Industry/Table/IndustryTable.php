@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Partners\Filament\Resources\Industry\Table;
+namespace Webkul\Partner\Filament\Resources\Industry\Table;
 
 
 use Filament\Actions\BulkActionGroup;

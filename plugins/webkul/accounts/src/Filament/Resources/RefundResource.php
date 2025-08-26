@@ -2,6 +2,8 @@
 
 namespace Webkul\Account\Filament\Resources;
 
+use BackedEnum;
+use Webkul\Account\Filament\Resources\Bills\BillResource;
 use Webkul\Account\Filament\Resources\RefundResource\Pages\CreateRefund;
 use Webkul\Account\Filament\Resources\RefundResource\Pages\EditRefund;
 use Webkul\Account\Filament\Resources\RefundResource\Pages\ListRefunds;
@@ -14,7 +16,7 @@ class RefundResource extends BillResource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-credit-card';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-credit-card';
 
     public static function getPages(): array
     {

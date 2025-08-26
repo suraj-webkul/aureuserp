@@ -7,7 +7,7 @@ use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Webkul\Account\Filament\Resources\Taxes\Schemas\TaxForm;
-use Webkul\Account\Filament\Resources\Taxes\Tables\TaxTable;
+use Webkul\Account\Filament\Resources\Taxes\Tables\TaxesTable;
 use Filament\Tables\Table;
 use Webkul\Account\Filament\Resources\Taxes\Schemas\TaxInfolist;
 use Webkul\Account\Filament\Resources\Taxes\TaxResource\Pages\CreateTax;
@@ -33,7 +33,7 @@ class TaxResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return TaxTable::configure($table);
+        return TaxesTable::configure($table);
     }
 
     public static function infolist(Schema $schema): Schema

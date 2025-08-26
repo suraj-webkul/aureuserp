@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Partners\Filament\Resources\Address\Table;
+namespace Webkul\Partner\Filament\Resources\Address\Table;
 
 
 use Filament\Actions\CreateAction;

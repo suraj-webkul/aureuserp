@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Partners\Filament\Resources\Title\Table;
+namespace Webkul\Partner\Filament\Resources\Title\Table;
 
 
 use Filament\Actions\DeleteAction;
