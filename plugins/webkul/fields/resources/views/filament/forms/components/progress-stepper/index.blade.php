@@ -22,26 +22,32 @@
         {{ $getLabel() }}
     </x-slot>
 
-    <x-filament::grid
-        :default="$getColumns('default')"
-        :sm="$getColumns('sm')"
-        :md="$getColumns('md')"
-        :lg="$getColumns('lg')"
-        :xl="$getColumns('xl')"
-        :two-xl="$getColumns('2xl')"
-        :is-grid="! $isInline"
-        :direction="$gridDirection"
-        :attributes="
+    <div
+        {{
             \Filament\Support\prepare_inherited_attributes($attributes)
                 ->merge($getExtraAttributes(), escape: false)
+                ->merge([
+                    'id' => $getId(),
+                ], escape: false)
                 ->class([
                     'state-container justify-end',
                     'fi-fo-radio',
                     '-mt-3' => (! $isInline) && ($gridDirection === 'column'),
                     'flex flex-wrap' => $isInline,
+                    'grid' => ! $isInline,
+                    'grid-cols-' . $getColumns('default') => ! $isInline && $getColumns('default'),
+                    'sm:grid-cols-' . $getColumns('sm') => ! $isInline && $getColumns('sm'),
+                    'md:grid-cols-' . $getColumns('md') => ! $isInline && $getColumns('md'),
+                    'lg:grid-cols-' . $getColumns('lg') => ! $isInline && $getColumns('lg'),
+                    'xl:grid-cols-' . $getColumns('xl') => ! $isInline && $getColumns('xl'),
+                    '2xl:grid-cols-' . $getColumns('2xl') => ! $isInline && $getColumns('2xl'),
+                    'grid-flow-row' => ! $isInline && $gridDirection === 'row',
+                    'grid-flow-col' => ! $isInline && $gridDirection === 'column',
                 ])
-        "
+        }}
     >
+        {{ $getChildComponentContainer() }}
+
         @foreach ($getOptions() as $value => $label)
             @php
                 $inputId = "{$id}-{$value}";
@@ -80,80 +86,82 @@
                 </x-filament::button>
             </div>
         @endforeach
-    </x-filament::grid>
+    </div>
 </x-dynamic-component>
 
-<style>
-    .stage-button {
-        border-radius: 0;
-        padding-left: 30px;
-        padding-right: 20px;
-        border: 1px solid rgba(var(--gray-950), 0.2);
-        box-shadow: none;
-    }
+@pushOnce('styles')
+    <style>
+        .stage-button {
+            border-radius: 0 !important;
+            padding-left: 30px !important;
+            padding-right: 20px !important;
+            border: 1px solid rgba(var(--gray-950), 0.2) !important;
+            box-shadow: none !important;
+        }
 
-    .dark .stage-button {
-        border: 1px solid hsla(0, 0%, 100%, .2);
-    }
+        .dark .stage-button {
+            border: 1px solid hsla(0, 0%, 100%, .2) !important;
+        }
 
-    .stage-button:after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        right: -14px;
-        width: 26px;
-        height: 26px;
-        z-index: 1;
-        transform: translateY(-50%) rotate(45deg);
-        background-color: #ffffff;
-        border-right: 1px solid rgba(var(--gray-950), 0.3);
-        border-top: 1px solid rgba(var(--gray-950), 0.3);
-        transition-duration: 75ms;
-    }
+        .stage-button:after {
+            content: "" !important;
+            position: absolute !important;
+            top: 50% !important;
+            right: -14px !important;
+            width: 26px !important;
+            height: 26px !important;
+            z-index: 1 !important;
+            transform: translateY(-50%) rotate(45deg) !important;
+            background-color: #ffffff !important;
+            border-right: 1px solid rgba(var(--gray-950), 0.3) !important;
+            border-top: 1px solid rgba(var(--gray-950), 0.3) !important;
+            transition-duration: 75ms !important;
+        }
 
-    .dark .stage-button:after {
-        background-color: rgba(var(--gray-900),var(--tw-bg-opacity));
-        border-right: 1px solid hsla(0, 0%, 100%, .2);
-        border-top: 1px solid hsla(0, 0%, 100%, .2);
-    }
+        .dark .stage-button:after {
+            background-color: rgba(var(--gray-900),var(--tw-bg-opacity)) !important;
+            border-right: 1px solid hsla(0, 0%, 100%, .2) !important;
+            border-top: 1px solid hsla(0, 0%, 100%, .2) !important;
+        }
 
-    .dark .stage-button:hover:after {
-        background-color: rgba(var(--gray-800),var(--tw-bg-opacity));
-    }
+        .dark .stage-button:hover:after {
+            background-color: rgba(var(--gray-800),var(--tw-bg-opacity)) !important;
+        }
 
-    .state-container .state:last-child .stage-button {
-        border-radius: 0 8px 8px 0;
-    }
+        .state-container .state:last-child .stage-button {
+            border-radius: 0 8px 8px 0 !important;
+        }
 
-    .state-container .state:first-child .stage-button {
-        border-radius: 8px 0 0 8px;
-    }
+        .state-container .state:first-child .stage-button {
+            border-radius: 8px 0 0 8px !important;
+        }
 
-    .state-container .state:last-child .stage-button:after {
-        content: none;
-    }
+        .state-container .state:last-child .stage-button:after {
+            content: none !important;
+        }
 
-    input:checked + .stage-button {
-        color: #fff;
-        border: 1px solid rgba(var(--c-500), var(--tw-bg-opacity));
-    }
+        input:checked + .stage-button {
+            color: #fff !important;
+            border: 1px solid rgba(var(--c-500), var(--tw-bg-opacity)) !important;
+        }
 
-    input:checked + .stage-button:after {
-        background-color: rgba(var(--c-600), var(--tw-bg-opacity));
-        border-right: 1px solid rgba(var(--c-500));
-        border-top: 1px solid rgba(var(--c-500));
-    }
+        input:checked + .stage-button:after {
+            background-color: rgba(var(--c-600), var(--tw-bg-opacity)) !important;
+            border-right: 1px solid rgba(var(--c-500)) !important;
+            border-top: 1px solid rgba(var(--c-500)) !important;
+        }
 
-    .dark input:checked + .stage-button:after {
-        background-color: rgba(var(--c-500), var(--tw-bg-opacity));
-    }
+        .dark input:checked + .stage-button:after {
+            background-color: rgba(var(--c-500), var(--tw-bg-opacity)) !important;
+        }
 
-    input:checked + .stage-button:hover:after {
-        background-color: rgba(var(--c-500), var(--tw-bg-opacity));
-        transition-duration: 75ms;
-    }
+        input:checked + .stage-button:hover:after {
+            background-color: rgba(var(--c-500), var(--tw-bg-opacity)) !important;
+            transition-duration: 75ms !important;
+        }
 
-    .dark input:checked + .stage-button:hover:after {
-        background-color: rgba(var(--c-400), var(--tw-bg-opacity));
-    }
-</style>
+        .dark input:checked + .stage-button:hover:after {
+            background-color: rgba(var(--c-400), var(--tw-bg-opacity)) !important;
+        }
+    </style>
+@endPushOnce
