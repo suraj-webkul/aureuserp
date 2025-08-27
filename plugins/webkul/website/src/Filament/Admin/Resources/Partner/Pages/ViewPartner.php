@@ -2,7 +2,7 @@
 
 namespace Webkul\Website\Filament\Admin\Resources\Partner\Pages;
 
-use Webkul\Partner\Filament\Resources\Partner\Pages\ViewPartner as BaseViewPartner;
+use Webkul\Partner\Filament\Resources\Partners\Pages\ViewPartner as BaseViewPartner;
 use Webkul\Website\Filament\Admin\Resources\Partner\PartnerResource;
 
 class ViewPartner extends BaseViewPartner

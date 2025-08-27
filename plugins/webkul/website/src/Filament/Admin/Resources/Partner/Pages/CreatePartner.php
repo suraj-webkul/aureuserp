@@ -2,7 +2,7 @@
 
 namespace Webkul\Website\Filament\Admin\Resources\Partner\Pages;
 
-use Webkul\Partner\Filament\Resources\Partner\Pages\CreatePartner as BaseCreatePartner;
+use Webkul\Partner\Filament\Resources\Partners\Pages\CreatePartner as BaseCreatePartner;
 use Webkul\Website\Filament\Admin\Resources\Partner\PartnerResource;
 
 class CreatePartner extends BaseCreatePartner
