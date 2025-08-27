@@ -7,12 +7,12 @@ use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Group;
-use Webkul\Employee\Filament\Resources\Departments\DepartmentResource;
-use Webkul\Field\Filament\Traits\HasCustomFields;
-use Webkul\Support\Models\Company;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Auth;
+use Webkul\Employee\Filament\Resources\Departments\DepartmentResource;
+use Webkul\Field\Filament\Traits\HasCustomFields;
+use Webkul\Support\Models\Company;
 
 class DepartmentForm
 {
@@ -22,7 +22,7 @@ class DepartmentForm
     {
         return DepartmentResource::getModel();
     }
-    
+
     public static function configure(Schema $schema): Schema
     {
         return $schema
@@ -57,7 +57,7 @@ class DepartmentForm
                                         Select::make('company_id')
                                             ->label(__('employees::filament/resources/department.form.sections.general.fields.company'))
                                             ->relationship('company', 'name')
-                                            ->options(fn() => Company::pluck('name', 'id'))
+                                            ->options(fn () => Company::pluck('name', 'id'))
                                             ->searchable()
                                             ->placeholder(__('employees::filament/resources/department.form.sections.general.fields.company-placeholder'))
                                             ->nullable(),
@@ -67,7 +67,7 @@ class DepartmentForm
                                     ])
                                     ->columns(2),
                                 Section::make(__('employees::filament/resources/department.form.sections.additional.title'))
-                                    ->visible(!empty($customFormFields = static::getCustomFormFields()))
+                                    ->visible(! empty($customFormFields = static::getCustomFormFields()))
                                     ->description(__('employees::filament/resources/department.form.sections.additional.description'))
                                     ->schema($customFormFields),
                             ]),

@@ -1,4 +1,5 @@
 <?php
+
 namespace Webkul\Partner\Filament\Resources\Partner\Schemas;
 
 use Filament\Infolists\Components\ImageEntry;
@@ -15,7 +16,6 @@ use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\TextSize;
 use Webkul\Partner\Enums\AccountType;
 use Webkul\Partner\Models\Partner;
-
 
 class PartnerInfolist
 {
@@ -39,7 +39,7 @@ class PartnerInfolist
 
                                         TextEntry::make('parent.name')
                                             ->label(__('partners::filament/resources/partner.infolist.sections.general.fields.company'))
-                                            ->visible(fn($record): bool => $record->account_type === AccountType::INDIVIDUAL->value),
+                                            ->visible(fn ($record): bool => $record->account_type === AccountType::INDIVIDUAL->value),
                                     ]),
 
                                 Group::make()
@@ -89,16 +89,16 @@ class PartnerInfolist
                                     ->label(__('partners::filament/resources/partner.infolist.sections.general.fields.tags'))
                                     ->badge()
                                     ->state(function (Partner $record): array {
-                                        return $record->tags()->get()->map(fn($tag) => [
+                                        return $record->tags()->get()->map(fn ($tag) => [
                                             'label' => $tag->name,
                                             'color' => $tag->color ?? '#808080',
                                         ])->toArray();
                                     })
                                     ->badge()
-                                    ->formatStateUsing(fn($state) => $state['label'])
-                                    ->color(fn($state) => Color::generateV3Palette($state['color']))
+                                    ->formatStateUsing(fn ($state) => $state['label'])
+                                    ->color(fn ($state) => Color::generateV3Palette($state['color']))
                                     ->separator(',')
-                                    ->visible(fn($record): bool => (bool) $record->tags()->count()),
+                                    ->visible(fn ($record): bool => (bool) $record->tags()->count()),
                             ]),
 
                         Fieldset::make('Address')

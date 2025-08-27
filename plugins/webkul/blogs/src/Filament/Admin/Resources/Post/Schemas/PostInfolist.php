@@ -2,14 +2,13 @@
 
 namespace Webkul\Blog\Filament\Admin\Resources\Post\Schemas;
 
-
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
-use Filament\Support\Enums\FontWeight;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\TextSize;
 
 class PostInfolist

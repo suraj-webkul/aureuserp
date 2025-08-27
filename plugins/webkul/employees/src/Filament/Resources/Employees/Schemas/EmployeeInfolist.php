@@ -17,16 +17,16 @@ use Filament\Support\Colors\Color;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\IconPosition;
 use Filament\Support\Enums\TextSize;
-use Filament\Tables\Columns\Column;
 use Webkul\Employee\Models\Employee;
 use Webkul\Field\Traits\HasCustomFields;
 
 class EmployeeInfolist
 {
     use HasCustomFields;
+
     public static function configure(Schema $schema): Schema
     {
-        
+
         return $schema
             ->components([
                 Section::make()
@@ -56,7 +56,7 @@ class EmployeeInfolist
                                 TextEntry::make('work_email')
                                     ->label(__('employees::filament/resources/employee.infolist.sections.entries.work-email'))
                                     ->placeholder('—')
-                                    ->url(fn(?string $state) => $state ? "mailto:{$state}" : '#')
+                                    ->url(fn (?string $state) => $state ? "mailto:{$state}" : '#')
                                     ->icon('heroicon-o-envelope')
                                     ->iconPosition(IconPosition::Before),
                                 TextEntry::make('department.complete_name')
@@ -65,7 +65,7 @@ class EmployeeInfolist
                                 TextEntry::make('mobile_phone')
                                     ->label(__('employees::filament/resources/employee.infolist.sections.entries.work-mobile'))
                                     ->placeholder('—')
-                                    ->url(fn(?string $state) => $state ? "tel:{$state}" : '#')
+                                    ->url(fn (?string $state) => $state ? "tel:{$state}" : '#')
                                     ->icon('heroicon-o-phone')
                                     ->iconPosition(IconPosition::Before),
                                 TextEntry::make('job.name')
@@ -74,7 +74,7 @@ class EmployeeInfolist
                                 TextEntry::make('work_phone')
                                     ->placeholder('—')
                                     ->label(__('employees::filament/resources/employee.infolist.sections.entries.work-phone'))
-                                    ->url(fn(?string $state) => $state ? "tel:{$state}" : '#')
+                                    ->url(fn (?string $state) => $state ? "tel:{$state}" : '#')
                                     ->icon('heroicon-o-phone')
                                     ->iconPosition(IconPosition::Before),
                                 TextEntry::make('parent.name')
@@ -85,14 +85,14 @@ class EmployeeInfolist
                                     ->label(__('employees::filament/resources/employee.infolist.sections.entries.employee-tags'))
                                     ->placeholder('—')
                                     ->state(function (Employee $record): array {
-                                        return $record->categories->map(fn($category) => [
+                                        return $record->categories->map(fn ($category) => [
                                             'label' => $category->name,
                                             'color' => $category->color ?? '#808080',
                                         ])->toArray();
                                     })
                                     ->badge()
-                                    ->formatStateUsing(fn($state) => $state['label'])
-                                    ->color(fn($state) => Color::generateV3Palette($state['color']))
+                                    ->formatStateUsing(fn ($state) => $state['label'])
+                                    ->color(fn ($state) => Color::generateV3Palette($state['color']))
                                     ->listWithLineBreaks(),
                                 TextEntry::make('coach.name')
                                     ->placeholder('—')
@@ -190,12 +190,12 @@ class EmployeeInfolist
                                                     TextEntry::make('private_phone')
                                                         ->label(__('employees::filament/resources/employee.infolist.tabs.private-information.entries.private-phone'))
                                                         ->placeholder('—')
-                                                        ->url(fn(?string $state) => $state ? "tel:{$state}" : '#')
+                                                        ->url(fn (?string $state) => $state ? "tel:{$state}" : '#')
                                                         ->icon('heroicon-o-phone'),
                                                     TextEntry::make('private_email')
                                                         ->label(__('employees::filament/resources/employee.infolist.tabs.private-information.entries.private-email'))
                                                         ->placeholder('—')
-                                                        ->url(fn(?string $state) => $state ? "mailto:{$state}" : '#')
+                                                        ->url(fn (?string $state) => $state ? "mailto:{$state}" : '#')
                                                         ->icon('heroicon-o-envelope'),
                                                     TextEntry::make('private_car_plate')
                                                         ->label(__('employees::filament/resources/employee.infolist.tabs.private-information.entries.private-car-plate'))
@@ -216,7 +216,7 @@ class EmployeeInfolist
                                                     TextEntry::make('emergency_phone')
                                                         ->label(__('employees::filament/resources/employee.infolist.tabs.private-information.entries.contact-phone'))
                                                         ->placeholder('—')
-                                                        ->url(fn(?string $state) => $state ? "tel:{$state}" : '#')
+                                                        ->url(fn (?string $state) => $state ? "tel:{$state}" : '#')
                                                         ->icon('heroicon-o-phone'),
                                                 ]),
                                             Fieldset::make(__('employees::filament/resources/employee.infolist.tabs.private-information.entries.work-permit'))
@@ -241,7 +241,7 @@ class EmployeeInfolist
                                                         ->icon('heroicon-o-calendar-days')
                                                         ->date('F j, Y')
                                                         ->color(
-                                                            fn($record) => $record->visa_expire && now()->diffInDays($record->visa_expire, false) <= 30
+                                                            fn ($record) => $record->visa_expire && now()->diffInDays($record->visa_expire, false) <= 30
                                                             ? 'danger'
                                                             : 'success'
                                                         ),
@@ -251,7 +251,7 @@ class EmployeeInfolist
                                                         ->icon('heroicon-o-calendar-days')
                                                         ->date('F j, Y')
                                                         ->color(
-                                                            fn($record) => $record->work_permit_expiration_date && now()->diffInDays($record->work_permit_expiration_date, false) <= 30
+                                                            fn ($record) => $record->work_permit_expiration_date && now()->diffInDays($record->work_permit_expiration_date, false) <= 30
                                                             ? 'danger'
                                                             : 'success'
                                                         ),
@@ -307,10 +307,10 @@ class EmployeeInfolist
                                                         ->placeholder('—')
                                                         ->icon('heroicon-o-user')
                                                         ->badge()
-                                                        ->color(fn(string $state): string => match ($state) {
-                                                            'male' => 'info',
+                                                        ->color(fn (string $state): string => match ($state) {
+                                                            'male'   => 'info',
                                                             'female' => 'success',
-                                                            default => 'warning',
+                                                            default  => 'warning',
                                                         }),
                                                     TextEntry::make('birthday')
                                                         ->label(__('employees::filament/resources/employee.infolist.tabs.private-information.entries.date-of-birth'))
@@ -341,16 +341,16 @@ class EmployeeInfolist
                                                     ->schema([
                                                         IconEntry::make('is_active')
                                                             ->label(__('employees::filament/resources/employee.infolist.tabs.settings.entries.active-employee'))
-                                                            ->color(fn($state) => $state ? 'success' : 'danger'),
+                                                            ->color(fn ($state) => $state ? 'success' : 'danger'),
                                                         IconEntry::make('is_flexible')
                                                             ->label(__('employees::filament/resources/employee.infolist.tabs.settings.entries.flexible-work-arrangement'))
-                                                            ->color(fn($state) => $state ? 'success' : 'danger'),
+                                                            ->color(fn ($state) => $state ? 'success' : 'danger'),
                                                         IconEntry::make('is_fully_flexible')
                                                             ->label(__('employees::filament/resources/employee.infolist.tabs.settings.entries.fully-flexible-schedule'))
-                                                            ->color(fn($state) => $state ? 'success' : 'danger'),
+                                                            ->color(fn ($state) => $state ? 'success' : 'danger'),
                                                         IconEntry::make('work_permit_scheduled_activity')
                                                             ->label(__('employees::filament/resources/employee.infolist.tabs.settings.entries.work-permit-scheduled-activity'))
-                                                            ->color(fn($state) => $state ? 'success' : 'danger'),
+                                                            ->color(fn ($state) => $state ? 'success' : 'danger'),
                                                         TextEntry::make('user.name')
                                                             ->label(__('employees::filament/resources/employee.infolist.tabs.settings.entries.related-user'))
                                                             ->placeholder('—')

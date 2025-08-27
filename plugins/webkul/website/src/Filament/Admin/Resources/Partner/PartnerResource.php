@@ -66,11 +66,11 @@ class PartnerResource extends BasePartnerResource
     public static function getPages(): array
     {
         return [
-            'index' => ListPartners::route('/'),
-            'create' => CreatePartner::route('/create'),
-            'view' => ViewPartner::route('/{record}'),
-            'edit' => EditPartner::route('/{record}/edit'),
-            'contacts' => ManageContacts::route('/{record}/contacts'),
+            'index'     => ListPartners::route('/'),
+            'create'    => CreatePartner::route('/create'),
+            'view'      => ViewPartner::route('/{record}'),
+            'edit'      => EditPartner::route('/{record}/edit'),
+            'contacts'  => ManageContacts::route('/{record}/contacts'),
             'addresses' => ManageAddresses::route('/{record}/addresses'),
         ];
     }

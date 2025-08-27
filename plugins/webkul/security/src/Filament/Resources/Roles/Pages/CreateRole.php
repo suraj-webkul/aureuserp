@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Security\Filament\Resources\RoleResource\Pages;
+namespace Webkul\Security\Filament\Resources\Roles\Pages;
 
 use BezhanSalleh\FilamentShield\Support\Utils;
 use Filament\Resources\Pages\CreateRecord;

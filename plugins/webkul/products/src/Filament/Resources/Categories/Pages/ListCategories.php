@@ -6,7 +6,7 @@ use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Product\Filament\Resources\CategoryResource;
+use Webkul\Product\Filament\Resources\Categories\CategoryResource;
 
 class ListCategories extends ListRecords
 {

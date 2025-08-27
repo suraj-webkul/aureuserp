@@ -106,4 +106,3 @@ class CompanyPolicy
         return $user->can('reorder_companies::company');
     }
 }
-

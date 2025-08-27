@@ -7,11 +7,11 @@ use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use Webkul\Website\Filament\Admin\Resources\Page\Tables\PageTable;
 use Webkul\Website\Filament\Admin\Resources\Page\Pages\CreatePage;
 use Webkul\Website\Filament\Admin\Resources\Page\Pages\EditPage;
 use Webkul\Website\Filament\Admin\Resources\Page\Pages\ListPages;
 use Webkul\Website\Filament\Admin\Resources\Page\Pages\ViewPage;
+use Webkul\Website\Filament\Admin\Resources\Page\Tables\PageTable;
 use Webkul\Website\Models\Page as PageModel;
 use Webkul\Website\Src\Filament\Admin\Resources\Page\Schemas\PageForm;
 use Webkul\Website\Src\Filament\Admin\Resources\Page\Schemas\PageInfolist;
@@ -65,10 +65,10 @@ class PageResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListPages::route('/'),
+            'index'  => ListPages::route('/'),
             'create' => CreatePage::route('/create'),
-            'view' => ViewPage::route('/{record}'),
-            'edit' => EditPage::route('/{record}/edit'),
+            'view'   => ViewPage::route('/{record}'),
+            'edit'   => EditPage::route('/{record}/edit'),
         ];
     }
 }

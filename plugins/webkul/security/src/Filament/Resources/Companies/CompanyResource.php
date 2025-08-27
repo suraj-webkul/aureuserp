@@ -16,7 +16,7 @@ use Webkul\Security\Filament\Resources\Companies\Pages\EditCompany;
 use Webkul\Security\Filament\Resources\Companies\Pages\ListCompanies;
 use Webkul\Security\Filament\Resources\Companies\Pages\ViewCompany;
 use Webkul\Security\Filament\Resources\Companies\RelationManagers\BranchesRelationManager;
-use Webkul\Security\Filament\Resources\Companies\Schemas\CompaniesTable;
+use Webkul\Security\Filament\Resources\Companies\Tables\CompaniesTable;
 use Webkul\Security\Filament\Resources\Companies\Schemas\CompanyForm;
 use Webkul\Security\Filament\Resources\Companies\Schemas\CompanyInfolist;
 use Webkul\Support\Models\Company;

@@ -5,9 +5,9 @@ namespace Webkul\Partner\Filament\Resources\Tag;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use Webkul\Partner\Models\Tag;
 use Webkul\Partner\Filament\Resources\Tag\Schemas\TagForm;
 use Webkul\Partner\Filament\Resources\Tag\Tables\TagTable;
+use Webkul\Partner\Models\Tag;
 
 class TagResource extends Resource
 {

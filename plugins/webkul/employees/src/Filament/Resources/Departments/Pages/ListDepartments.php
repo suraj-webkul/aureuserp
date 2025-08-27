@@ -31,7 +31,7 @@ class ListDepartments extends ListRecords
                 ->icon('heroicon-s-archive-box')
                 ->favorite()
                 ->label(__('employees::filament/resources/department/pages/list-department.tabs.archived-departments'))
-                ->modifyQueryUsing(fn(Builder $query) => $query->onlyTrashed()),
+                ->modifyQueryUsing(fn (Builder $query) => $query->onlyTrashed()),
         ];
     }
 }

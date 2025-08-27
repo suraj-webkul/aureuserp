@@ -2,26 +2,10 @@
 
 namespace Webkul\Product\Filament\Resources\Categories;
 
-use Filament\Actions\CreateAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use Filament\Support\Enums\FontWeight;
-use Filament\Support\Enums\TextSize;
-use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\QueryException;
+use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Categories\Tables\CategoryTable;
 use Webkul\Product\Filament\Resources\Categories\Schemas\CategoryForm;
 use Webkul\Product\Filament\Resources\Categories\Schemas\CategoryInfolist;
 use Webkul\Product\Models\Category;
@@ -42,7 +26,7 @@ class CategoryResource extends Resource
 
     public static function table(Table $table): Table
     {
-       
+        return CategoryTable::configure($table);
     }
 
     public static function infolist(Schema $schema): Schema

@@ -3,7 +3,7 @@
 namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource\Pages;
 
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource;
-use Webkul\Product\Filament\Resources\CategoryResource\Pages\CreateCategory;
+use Webkul\Product\Filament\Resources\Categories\Pages\CreateCategory;
 
 class CreateProductCategory extends CreateCategory
 {

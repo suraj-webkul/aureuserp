@@ -5,9 +5,9 @@ namespace Webkul\Partner\Filament\Resources\BankAccount;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use Webkul\Partner\Models\BankAccount;
 use Webkul\Partner\Filament\Resources\BankAccount\Schemas\BankAccountForm;
 use Webkul\Partner\Filament\Resources\BankAccount\Tables\BankAccountTable;
+use Webkul\Partner\Models\BankAccount;
 
 class BankAccountResource extends Resource
 {

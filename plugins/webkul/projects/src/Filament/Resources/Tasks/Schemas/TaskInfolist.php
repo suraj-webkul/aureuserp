@@ -21,6 +21,7 @@ use Webkul\Project\Settings\TimeSettings;
 class TaskInfolist
 {
     use HasCustomFields;
+
     public static function getModel(): string
     {
         return TaskResource::class;
@@ -42,14 +43,14 @@ class TaskInfolist
                                 TextEntry::make('state')
                                     ->label(__('projects::filament/resources/task.infolist.sections.general.entries.state'))
                                     ->badge()
-                                    ->icon(fn(string $state): string => TaskState::icons()[$state])
-                                    ->color(fn(string $state): string => TaskState::colors()[$state])
-                                    ->formatStateUsing(fn(string $state): string => TaskState::options()[$state]),
+                                    ->icon(fn (string $state): string => TaskState::icons()[$state])
+                                    ->color(fn (string $state): string => TaskState::colors()[$state])
+                                    ->formatStateUsing(fn (string $state): string => TaskState::options()[$state]),
 
                                 IconEntry::make('priority')
                                     ->label(__('projects::filament/resources/task.infolist.sections.general.entries.priority'))
-                                    ->icon(fn($record): string => $record->priority ? 'heroicon-s-star' : 'heroicon-o-star')
-                                    ->color(fn($record): string => $record->priority ? 'warning' : 'gray'),
+                                    ->icon(fn ($record): string => $record->priority ? 'heroicon-s-star' : 'heroicon-o-star')
+                                    ->color(fn ($record): string => $record->priority ? 'warning' : 'gray'),
 
                                 TextEntry::make('description')
                                     ->label(__('projects::filament/resources/task.infolist.sections.general.entries.description'))
@@ -59,14 +60,14 @@ class TaskInfolist
                                     ->label(__('projects::filament/resources/task.infolist.sections.general.entries.tags'))
                                     ->badge()
                                     ->state(function (Task $record): array {
-                                        return $record->tags()->get()->map(fn($tag) => [
+                                        return $record->tags()->get()->map(fn ($tag) => [
                                             'label' => $tag->name,
                                             'color' => $tag->color ?? '#808080',
                                         ])->toArray();
                                     })
                                     ->badge()
-                                    ->formatStateUsing(fn($state) => $state['label'])
-                                    ->color(fn($state) => Color::generateV3Palette($state['color']))
+                                    ->formatStateUsing(fn ($state) => $state['label'])
+                                    ->color(fn ($state) => Color::generateV3Palette($state['color']))
                                     ->listWithLineBreaks()
                                     ->separator(', '),
                             ]),
@@ -80,13 +81,13 @@ class TaskInfolist
                                             ->icon('heroicon-o-folder')
                                             ->placeholder('—')
                                             ->color('primary')
-                                            ->url(fn(Task $record): string => $record->project_id ? ProjectResource::getUrl('view', ['record' => $record->project]) : '#'),
+                                            ->url(fn (Task $record): string => $record->project_id ? ProjectResource::getUrl('view', ['record' => $record->project]) : '#'),
 
                                         TextEntry::make('milestone.name')
                                             ->label(__('projects::filament/resources/task.infolist.sections.project-information.entries.milestone'))
                                             ->icon('heroicon-o-flag')
                                             ->placeholder('—')
-                                            ->visible(fn(TaskSettings $taskSettings) => $taskSettings->enable_milestones),
+                                            ->visible(fn (TaskSettings $taskSettings) => $taskSettings->enable_milestones),
 
                                         TextEntry::make('stage.name')
                                             ->label(__('projects::filament/resources/task.infolist.sections.project-information.entries.stage'))
@@ -127,9 +128,9 @@ class TaskInfolist
                                                 $hours = floor($state);
                                                 $minutes = ($state - $hours) * 60;
 
-                                                return $hours . ':' . $minutes;
+                                                return $hours.':'.$minutes;
                                             })
-                                            ->visible(fn(TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                                            ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
 
                                         TextEntry::make('total_hours_spent')
                                             ->label(__('projects::filament/resources/task.infolist.sections.time-tracking.entries.time-spent'))
@@ -139,9 +140,9 @@ class TaskInfolist
                                                 $hours = floor($state);
                                                 $minutes = ($state - $hours) * 60;
 
-                                                return $hours . ':' . $minutes;
+                                                return $hours.':'.$minutes;
                                             })
-                                            ->visible(fn(TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                                            ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
 
                                         TextEntry::make('remaining_hours')
                                             ->label(__('projects::filament/resources/task.infolist.sections.time-tracking.entries.time-remaining'))
@@ -151,24 +152,24 @@ class TaskInfolist
                                                 $hours = floor($state);
                                                 $minutes = ($state - $hours) * 60;
 
-                                                return $hours . ':' . $minutes;
+                                                return $hours.':'.$minutes;
                                             })
-                                            ->color(fn($state): string => $state < 0 ? 'danger' : 'success')
-                                            ->visible(fn(TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                                            ->color(fn ($state): string => $state < 0 ? 'danger' : 'success')
+                                            ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
 
                                         TextEntry::make('progress')
                                             ->label(__('projects::filament/resources/task.infolist.sections.time-tracking.entries.progress'))
                                             ->icon('heroicon-o-chart-bar')
                                             ->suffix('%')
                                             ->color(
-                                                fn($record): string => $record->progress > 100
+                                                fn ($record): string => $record->progress > 100
                                                     ? 'danger'
                                                     : ($record->progress < 100 ? 'warning' : 'success')
                                             )
-                                            ->visible(fn(TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                                            ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
                                     ]),
                             ])
-                            ->visible(fn(TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                            ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
 
                         Section::make(__('projects::filament/resources/task.infolist.sections.additional-information.title'))
                             ->visible(! empty($customInfolistEntries = static::getCustomInfolistEntries()))
@@ -199,14 +200,14 @@ class TaskInfolist
                             ->schema([
                                 TextEntry::make('subtasks_count')
                                     ->label(__('projects::filament/resources/task.infolist.sections.statistics.entries.sub-tasks'))
-                                    ->state(fn(Task $record): int => $record->subTasks()->count())
+                                    ->state(fn (Task $record): int => $record->subTasks()->count())
                                     ->icon('heroicon-o-clipboard-document-list'),
 
                                 TextEntry::make('timesheets_count')
                                     ->label(__('projects::filament/resources/task.infolist.sections.statistics.entries.timesheet-entries'))
-                                    ->state(fn(Task $record): int => $record->timesheets()->count())
+                                    ->state(fn (Task $record): int => $record->timesheets()->count())
                                     ->icon('heroicon-o-clock')
-                                    ->visible(fn(TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                                    ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
                             ]),
                     ])
                     ->columnSpan(['lg' => 1]),

@@ -2,7 +2,6 @@
 
 namespace Webkul\Employee\Filament\Clusters\Configurations\Resources\SkillTypes\Tables;
 
-
 use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
@@ -43,13 +42,21 @@ class SkillTypesTable
                 TextColumn::make('color')
                     ->label(__('employees::filament/clusters/configurations/resources/skill-type.table.columns.color'))
                     ->toggleable(isToggledHiddenByDefault: false)
+<<<<<<< HEAD
                     ->formatStateUsing(fn(SkillType $record) => '<span class="flex h-5 w-5 rounded-full" style="background: rgb(var(--' . $record->color . '-500))"></span>')
+=======
+                    ->formatStateUsing(fn (SkillType $skillType) => '<span class="flex h-5 w-5 rounded-full" style="background: rgb(var(--'.$skillType->color.'-500))"></span>')
+>>>>>>> 5931efb32468311711f01e07f70573227c87e1c6
                     ->html()
                     ->sortable(),
                 TextColumn::make('skills.name')
                     ->label(__('employees::filament/clusters/configurations/resources/skill-type.table.columns.skills'))
                     ->badge()
+<<<<<<< HEAD
                     ->color(fn(SkillType $record) => $record->color)
+=======
+                    ->color(fn (SkillType $skillType) => $skillType->color)
+>>>>>>> 5931efb32468311711f01e07f70573227c87e1c6
                     ->searchable(),
                 TextColumn::make('skillLevels.name')
                     ->label(__('employees::filament/clusters/configurations/resources/skill-type.table.columns.levels'))

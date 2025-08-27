@@ -42,7 +42,7 @@ class JobByPositionsTable
                                 ->icon('heroicon-m-building-office-2')
                                 ->searchable(),
                         ])
-                            ->visible(fn($record) => filled($record?->company?->name)),
+                            ->visible(fn ($record) => filled($record?->company?->name)),
                     ])->space(1),
                 ])->space(4),
             ])

@@ -14,9 +14,8 @@ use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\HtmlString;
 
-
-class CandidateForm{
-
+class CandidateForm
+{
     public static function configure(Schema $schema): Schema
     {
         return $schema
@@ -102,5 +101,4 @@ class CandidateForm{
             ])
             ->columns(3);
     }
-
 }

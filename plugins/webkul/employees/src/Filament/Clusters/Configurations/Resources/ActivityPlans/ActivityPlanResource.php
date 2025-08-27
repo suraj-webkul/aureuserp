@@ -10,11 +10,15 @@ use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlans\Pag
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlans\Pages\ListActivityPlans;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlans\Pages\ViewActivityPlan;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlans\RelationManagers\ActivityTemplateRelationManager;
-use Webkul\Employee\Models\ActivityPlan;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlans\Schemas\ActivityPlanForm;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlans\Schemas\ActivityPlanInfolist;
+<<<<<<< HEAD
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlans\Tables\ActivityPlansTable;
 use BackedEnum;
+=======
+use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlans\Schemas\ActivityPlanTable;
+use Webkul\Employee\Models\ActivityPlan;
+>>>>>>> 5931efb32468311711f01e07f70573227c87e1c6
 
 class ActivityPlanResource extends Resource
 {
@@ -55,8 +59,8 @@ class ActivityPlanResource extends Resource
     {
         return [
             'index' => ListActivityPlans::route('/'),
-            'view' => ViewActivityPlan::route('/{record}'),
-            'edit' => EditActivityPlan::route('/{record}/edit'),
+            'view'  => ViewActivityPlan::route('/{record}'),
+            'edit'  => EditActivityPlan::route('/{record}/edit'),
         ];
     }
 }

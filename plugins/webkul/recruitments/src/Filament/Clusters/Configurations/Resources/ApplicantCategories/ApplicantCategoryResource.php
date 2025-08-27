@@ -3,16 +3,14 @@
 namespace Webkul\Recruitment\Filament\Clusters\Configurations\Resources\ApplicantCategories;
 
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Tables\Table;
 use Webkul\Recruitment\Filament\Clusters\Configurations;
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\ApplicantCategories\Pages\ListApplicantCategories;
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\ApplicantCategories\Schemas\ApplicantCategoryForm;
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\ApplicantCategories\Schemas\ApplicantCategoryInfolist;
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\ApplicantCategories\Tables\ApplicantCategoriesTable;
 use Webkul\Recruitment\Models\ApplicantCategory;
-use Filament\Schemas\Schema;
-use Filament\Tables\Table;
-
-
 
 class ApplicantCategoryResource extends Resource
 {
@@ -36,7 +34,7 @@ class ApplicantCategoryResource extends Resource
     {
         return __('recruitments::filament/clusters/configurations/resources/applicant-category.navigation.title');
     }
-    
+
     public static function form(Schema $schema): Schema
     {
         return ApplicantCategoryForm::configure($schema);
@@ -51,7 +49,6 @@ class ApplicantCategoryResource extends Resource
     {
         return ApplicantCategoryInfolist::configure($schema);
     }
-
 
     public static function getPages(): array
     {

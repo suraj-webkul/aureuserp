@@ -18,10 +18,8 @@ use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 
-
 class BankAccountTable
 {
-
     public static function configure(Table $table): Table
     {
         return $table
@@ -89,7 +87,7 @@ class BankAccountTable
             ])
             ->recordActions([
                 EditAction::make()
-                    ->hidden(fn($record) => $record->trashed())
+                    ->hidden(fn ($record) => $record->trashed())
                     ->successNotification(
                         Notification::make()
                             ->success()

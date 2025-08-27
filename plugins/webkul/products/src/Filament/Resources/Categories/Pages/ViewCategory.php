@@ -7,7 +7,7 @@ use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Database\QueryException;
-use Webkul\Product\Filament\Resources\CategoryResource;
+use Webkul\Product\Filament\Resources\Categories\CategoryResource;
 use Webkul\Product\Models\Category;
 
 class ViewCategory extends ViewRecord

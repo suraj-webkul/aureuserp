@@ -3,7 +3,7 @@
 namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductCategoryResource\Pages;
 
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductCategoryResource;
-use Webkul\Product\Filament\Resources\CategoryResource\Pages\ViewCategory;
+use Webkul\Product\Filament\Resources\Categories\Pages\ViewCategory;
 
 class ViewProductCategory extends ViewCategory
 {

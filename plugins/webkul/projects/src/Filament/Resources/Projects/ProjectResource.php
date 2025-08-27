@@ -57,7 +57,7 @@ class ProjectResource extends Resource
         ];
     }
 
-     public static function form(Schema $schema): Schema
+    public static function form(Schema $schema): Schema
     {
         return ProjectForm::configure($schema);
     }

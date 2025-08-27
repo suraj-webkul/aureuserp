@@ -5,9 +5,9 @@ namespace Webkul\Employee\Filament\Resources\Departments\Schemas;
 use Filament\Infolists\Components\ColorEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Fieldset;
-use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Webkul\Employee\Filament\Resources\Departments\DepartmentResource;
 use Webkul\Employee\Models\Department;
 
@@ -45,7 +45,7 @@ class DepartmentInfolist
                                                 TextEntry::make('hierarchy')
                                                     ->label('')
                                                     ->html()
-                                                    ->state(fn(Department $record): string => (static::$resource)::buildHierarchyTree($record)),
+                                                    ->state(fn (Department $record): string => (static::$resource)::buildHierarchyTree($record)),
                                             ])->columnSpan(1),
                                     ])
                                     ->columns(2),
@@ -54,5 +54,4 @@ class DepartmentInfolist
                     ->columnSpan(1),
             ])->columns(1);
     }
-
 }

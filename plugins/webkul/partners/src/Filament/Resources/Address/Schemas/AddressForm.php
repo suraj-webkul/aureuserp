@@ -31,7 +31,7 @@ class AddressForm
                 ->required()
                 ->columnSpan(2)
                 ->hiddenOn([ManageAddresses::class])
-                ->createOptionForm(fn(Schema $schema): Schema => PartnerResource::form($schema)),
+                ->createOptionForm(fn (Schema $schema): Schema => PartnerResource::form($schema)),
             TextInput::make('name')
                 ->label(__('partners::filament/resources/address.form.name'))
                 ->required()
@@ -62,7 +62,7 @@ class AddressForm
             Select::make('country_id')
                 ->label(__('partners::filament/resources/address.form.country'))
                 ->relationship(name: 'country', titleAttribute: 'name')
-                ->afterStateUpdated(fn(Set $set) => $set('state_id', null))
+                ->afterStateUpdated(fn (Set $set) => $set('state_id', null))
                 ->searchable()
                 ->preload()
                 ->live()
@@ -74,7 +74,7 @@ class AddressForm
                 ->relationship(
                     name: 'state',
                     titleAttribute: 'name',
-                    modifyQueryUsing: fn(Get $get, Builder $query) => $query->where('country_id', $get('country_id')),
+                    modifyQueryUsing: fn (Get $get, Builder $query) => $query->where('country_id', $get('country_id')),
                 )
                 ->createOptionForm(function (Schema $schema, Get $get, Set $set) {
                     return $schema

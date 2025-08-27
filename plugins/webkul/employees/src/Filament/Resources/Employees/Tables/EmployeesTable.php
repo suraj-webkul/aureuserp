@@ -23,10 +23,10 @@ use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
 use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
 use Webkul\Employee\Filament\Resources\Employees\EmployeeResource;
 use Webkul\Employee\Models\Employee;
 use Webkul\Field\Filament\Traits\HasCustomFields;
-use Filament\Tables\Table;
 
 class EmployeesTable
 {
@@ -58,7 +58,7 @@ class EmployeesTable
                                 ->sortable()
                                 ->label(__('employees::filament/resources/employee.table.columns.job-title')),
                         ])
-                            ->visible(fn($record) => filled($record->job_title)),
+                            ->visible(fn ($record) => filled($record->job_title)),
                         Stack::make([
                             TextColumn::make('work_email')
                                 ->icon('heroicon-o-envelope')
@@ -68,7 +68,7 @@ class EmployeesTable
                                 ->color('gray')
                                 ->limit(20),
                         ])
-                            ->visible(fn($record) => filled($record->work_email)),
+                            ->visible(fn ($record) => filled($record->work_email)),
                         Stack::make([
                             TextColumn::make('work_phone')
                                 ->icon('heroicon-o-phone')
@@ -78,22 +78,22 @@ class EmployeesTable
                                 ->limit(30)
                                 ->sortable(),
                         ])
-                            ->visible(fn($record) => filled($record->work_phone)),
+                            ->visible(fn ($record) => filled($record->work_phone)),
                         Stack::make([
                             TextColumn::make('categories.name')
                                 ->label(__('employees::filament/resources/employee.table.columns.categories'))
                                 ->badge()
                                 ->state(function (Employee $record): array {
-                                    return $record->categories->map(fn($category) => [
+                                    return $record->categories->map(fn ($category) => [
                                         'label' => $category->name,
                                         'color' => $category->color ?? '#808080',
                                     ])->toArray();
                                 })
-                                ->formatStateUsing(fn($state) => $state['label'])
-                                ->color(fn($state) => Color::generateV3Palette($state['color']))
+                                ->formatStateUsing(fn ($state) => $state['label'])
+                                ->color(fn ($state) => Color::generateV3Palette($state['color']))
                                 ->weight(FontWeight::Bold),
                         ])
-                            ->visible(fn($record): bool => (bool) $record->categories()->get()?->count()),
+                            ->visible(fn ($record): bool => (bool) $record->categories()->get()?->count()),
                     ])->space(1),
                 ])->space(4),
             ])

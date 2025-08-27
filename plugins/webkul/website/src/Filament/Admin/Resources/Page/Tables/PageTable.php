@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Webkul\Website\Filament\Admin\Resources\Page\Tables;
-
 
 use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
@@ -77,9 +75,9 @@ class PageTable
             ->recordActions([
                 ActionGroup::make([
                     ViewAction::make()
-                        ->hidden(fn($record) => $record->trashed()),
+                        ->hidden(fn ($record) => $record->trashed()),
                     EditAction::make()
-                        ->hidden(fn($record) => $record->trashed()),
+                        ->hidden(fn ($record) => $record->trashed()),
                     RestoreAction::make()
                         ->successNotification(
                             Notification::make()

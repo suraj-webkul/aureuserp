@@ -2,15 +2,15 @@
 
 namespace Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Tags;
 
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Tags\Pages\ManageTags;
+use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Tags\Schemas\TagForm;
 use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Tags\Tables\TagsTable;
 use Webkul\Blog\Models\Tag;
-use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Tags\Schemas\TagForm;
 use Webkul\Website\Filament\Admin\Clusters\Configurations;
-use BackedEnum;
 
 class TagResource extends Resource
 {

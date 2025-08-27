@@ -22,8 +22,8 @@ use Filament\Tables\Table;
 use Illuminate\Support\HtmlString;
 use Webkul\Recruitment\Models\Candidate;
 
-class CandidatesTable{
-
+class CandidatesTable
+{
     public static function configure(Table $table): Table
     {
         return $table

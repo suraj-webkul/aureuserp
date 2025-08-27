@@ -6,14 +6,14 @@ use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Webkul\Account\Filament\Resources\Taxes\Schemas\TaxForm;
-use Webkul\Account\Filament\Resources\Taxes\Tables\TaxesTable;
 use Filament\Tables\Table;
+use Webkul\Account\Filament\Resources\Taxes\Pages\CreateTax;
+use Webkul\Account\Filament\Resources\Taxes\Pages\EditTax;
+use Webkul\Account\Filament\Resources\Taxes\Pages\ListTaxes;
+use Webkul\Account\Filament\Resources\Taxes\Pages\ViewTax;
+use Webkul\Account\Filament\Resources\Taxes\Schemas\TaxForm;
 use Webkul\Account\Filament\Resources\Taxes\Schemas\TaxInfolist;
-use Webkul\Account\Filament\Resources\Taxes\TaxResource\Pages\CreateTax;
-use Webkul\Account\Filament\Resources\Taxes\TaxResource\Pages\EditTax;
-use Webkul\Account\Filament\Resources\Taxes\TaxResource\Pages\ListTaxes;
-use Webkul\Account\Filament\Resources\Taxes\TaxResource\Pages\ViewTax;
+use Webkul\Account\Filament\Resources\Taxes\Tables\TaxesTable;
 use Webkul\Account\Models\Tax;
 
 class TaxResource extends Resource

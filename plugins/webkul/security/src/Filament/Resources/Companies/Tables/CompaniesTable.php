@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Security\Filament\Resources\Companies\Schemas;
+namespace Webkul\Security\Filament\Resources\Companies\Tables;
 
 use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;

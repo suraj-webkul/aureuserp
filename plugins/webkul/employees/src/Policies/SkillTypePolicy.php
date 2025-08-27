@@ -106,4 +106,3 @@ class SkillTypePolicy
         return $user->can('reorder_skill::types::skill::type');
     }
 }
-

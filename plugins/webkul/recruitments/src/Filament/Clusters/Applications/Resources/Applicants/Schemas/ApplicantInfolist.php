@@ -11,9 +11,9 @@ use Filament\Support\Colors\Color;
 use Illuminate\Support\HtmlString;
 use Webkul\Recruitment\Enums\ApplicationStatus;
 use Webkul\Recruitment\Models\Applicant;
+
 class ApplicantInfolist
 {
-
     public static function configure(Schema $schema): Schema
     {
         return $schema
@@ -55,9 +55,9 @@ class ApplicantInfolist
                                                             'color' => $record->application_status->getColor(),
                                                         ];
                                                     })
-                                                    ->hidden(fn($record) => $record->application_status->value === ApplicationStatus::ONGOING->value)
+                                                    ->hidden(fn ($record) => $record->application_status->value === ApplicationStatus::ONGOING->value)
                                                     ->formatStateUsing(function ($record, $state) {
-                                                        $html = '<span style="display: inline-flex; align-items: center; background-color: ' . $record->application_status->getColor() . '; color: white; padding: 4px 8px; border-radius: 12px; font-size: 18px; font-weight: 500;">';
+                                                        $html = '<span style="display: inline-flex; align-items: center; background-color: '.$record->application_status->getColor().'; color: white; padding: 4px 8px; border-radius: 12px; font-size: 18px; font-weight: 500;">';
 
                                                         $html .= view('filament::components.icon', [
                                                             'icon'  => $record->application_status->getIcon(),
@@ -89,7 +89,7 @@ class ApplicantInfolist
                                         TextEntry::make('candidate.linkedin_profile')
                                             ->icon('heroicon-o-link')
                                             ->placeholder('—')
-                                            ->url(fn($record) => $record->candidate->linkedin_profile)
+                                            ->url(fn ($record) => $record->candidate->linkedin_profile)
                                             ->label(__('recruitments::filament/clusters/applications/resources/applicant.infolist.sections.general-information.entries.linkedin-profile')),
                                         TextEntry::make('job.name')
                                             ->icon('heroicon-o-briefcase')
@@ -109,14 +109,14 @@ class ApplicantInfolist
                                             ->state(function (Applicant $record): array {
                                                 $tags = $record->categories ?? $record->candidate->categories;
 
-                                                return $tags->map(fn($category) => [
+                                                return $tags->map(fn ($category) => [
                                                     'label' => $category->name,
                                                     'color' => $category->color ?? '#808080',
                                                 ])->toArray();
                                             })
                                             ->badge()
-                                            ->formatStateUsing(fn($state) => $state['label'])
-                                            ->color(fn($state) => Color::generateV3Palette($state['color']))
+                                            ->formatStateUsing(fn ($state) => $state['label'])
+                                            ->color(fn ($state) => Color::generateV3Palette($state['color']))
                                             ->listWithLineBreaks()
                                             ->label('Tags'),
                                         TextEntry::make('interviewer.name')
@@ -129,7 +129,7 @@ class ApplicantInfolist
                                 Section::make()
                                     ->schema([
                                         TextEntry::make('applicant_notes')
-                                            ->formatStateUsing(fn($state) => new HtmlString($state))
+                                            ->formatStateUsing(fn ($state) => new HtmlString($state))
                                             ->placeholder('—')
                                             ->label(__('recruitments::filament/clusters/applications/resources/applicant.infolist.sections.general-information.entries.notes')),
                                     ]),

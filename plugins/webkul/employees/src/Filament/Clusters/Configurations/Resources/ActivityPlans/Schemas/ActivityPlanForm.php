@@ -27,15 +27,15 @@ class ActivityPlanForm
                             ->relationship(name: 'department', titleAttribute: 'name')
                             ->searchable()
                             ->preload()
-                            ->createOptionForm(fn(Schema $schema) => DepartmentResource::form($schema))
-                            ->editOptionForm(fn(Schema $schema) => DepartmentResource::form($schema)),
+                            ->createOptionForm(fn (Schema $schema) => DepartmentResource::form($schema))
+                            ->editOptionForm(fn (Schema $schema) => DepartmentResource::form($schema)),
                         Select::make('company_id')
                             ->label(__('employees::filament/clusters/configurations/resources/activity-plan.form.sections.general.fields.company'))
                             ->relationship(name: 'company', titleAttribute: 'name')
                             ->searchable()
                             ->preload()
-                            ->createOptionForm(fn(Schema $schema) => CompanyResource::form($schema))
-                            ->editOptionForm(fn(Schema $schema) => CompanyResource::form($schema)),
+                            ->createOptionForm(fn (Schema $schema) => CompanyResource::form($schema))
+                            ->editOptionForm(fn (Schema $schema) => CompanyResource::form($schema)),
                         Toggle::make('is_active')
                             ->label(__('employees::filament/clusters/configurations/resources/activity-plan.form.sections.general.fields.status'))
                             ->default(true)

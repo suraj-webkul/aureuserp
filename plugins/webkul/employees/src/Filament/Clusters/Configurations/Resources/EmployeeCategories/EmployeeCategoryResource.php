@@ -6,10 +6,10 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Webkul\Employee\Filament\Clusters\Configurations;
+use Webkul\Employee\Filament\Clusters\Configurations\Resources\EmployeeCategories\Pages\ListEmployeeCategories;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\EmployeeCategories\Schemas\EmployeeCategoryForm;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\EmployeeCategories\Schemas\EmployeeCategoryInfolist;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\EmployeeCategories\Tables\EmployeeCategoriesTable;
-use Webkul\Employee\Filament\Clusters\Configurations\Resources\EmployeeCategories\Pages\ListEmployeeCategories;
 use Webkul\Employee\Models\EmployeeCategory;
 
 class EmployeeCategoryResource extends Resource

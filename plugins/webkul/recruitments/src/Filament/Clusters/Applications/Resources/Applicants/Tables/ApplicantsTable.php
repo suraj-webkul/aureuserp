@@ -29,9 +29,8 @@ use Webkul\Recruitment\Models\Applicant;
 
 class ApplicantsTable
 {
-
     public static function configure(Table $table): Table
- {
+    {
         return $table
             ->columns([
                 TextColumn::make('candidate.partner.name')

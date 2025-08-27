@@ -8,12 +8,12 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
-use Webkul\Security\Filament\Resources\User\Pages\CreateUser;
-use Webkul\Security\Filament\Resources\User\Pages\EditUser;
-use Webkul\Security\Filament\Resources\User\Pages\ListUsers;
-use Webkul\Security\Filament\Resources\User\Pages\ViewUsers;
-use Webkul\Security\Filament\Resources\User\Schemas\UserForm;
-use Webkul\Security\Filament\Resources\User\Schemas\UserInfolist;
+use Webkul\Security\Filament\Resources\Users\Pages\CreateUser;
+use Webkul\Security\Filament\Resources\Users\Pages\EditUser;
+use Webkul\Security\Filament\Resources\Users\Pages\ListUsers;
+use Webkul\Security\Filament\Resources\Users\Pages\ViewUsers;
+use Webkul\Security\Filament\Resources\Users\Schemas\UserForm;
+use Webkul\Security\Filament\Resources\Users\Schemas\UserInfolist;
 use Webkul\Security\Filament\Resources\Users\Tables\UsersTable;
 use Webkul\Security\Models\User;
 

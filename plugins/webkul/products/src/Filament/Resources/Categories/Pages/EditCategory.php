@@ -8,7 +8,7 @@ use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\QueryException;
-use Webkul\Product\Filament\Resources\CategoryResource;
+use Webkul\Product\Filament\Resources\Categories\CategoryResource;
 use Webkul\Product\Models\Category;
 
 class EditCategory extends EditRecord

@@ -43,7 +43,7 @@ class CandidateInfolist
                                         TextEntry::make('linkedin_profile')
                                             ->icon('heroicon-o-link')
                                             ->placeholder('—')
-                                            ->url(fn($record) => $record->linkedin_profile)
+                                            ->url(fn ($record) => $record->linkedin_profile)
                                             ->label(__('recruitments::filament/clusters/applications/resources/candidate.infolist.sections.basic-information.entries.linkedin')),
                                     ])
                                     ->columns(2),
@@ -61,14 +61,14 @@ class CandidateInfolist
                                             ->icon('heroicon-o-tag')
                                             ->placeholder('—')
                                             ->state(function (Candidate $record): array {
-                                                return $record->categories->map(fn($category) => [
+                                                return $record->categories->map(fn ($category) => [
                                                     'label' => $category->name,
                                                     'color' => $category->color ?? '#808080',
                                                 ])->toArray();
                                             })
                                             ->badge()
-                                            ->formatStateUsing(fn($state) => $state['label'])
-                                            ->color(fn($state) => Color::generateV3Palette($state['color']))
+                                            ->formatStateUsing(fn ($state) => $state['label'])
+                                            ->color(fn ($state) => Color::generateV3Palette($state['color']))
                                             ->listWithLineBreaks()
                                             ->label(__('recruitments::filament/clusters/applications/resources/candidate.infolist.sections.additional-details.entries.tags')),
                                         TextEntry::make('manager.name')

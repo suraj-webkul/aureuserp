@@ -25,7 +25,6 @@ use Filament\Tables\Table;
 
 class WorkLocationsTable
 {
-
     public static function configure(Table $table): Table
     {
         return $table

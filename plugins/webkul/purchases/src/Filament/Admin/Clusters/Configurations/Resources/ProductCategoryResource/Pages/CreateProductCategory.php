@@ -2,7 +2,7 @@
 
 namespace Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductCategoryResource\Pages;
 
-use Webkul\Product\Filament\Resources\CategoryResource\Pages\CreateCategory;
+use Webkul\Product\Filament\Resources\Categories\Pages\CreateCategory;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductCategoryResource;
 
 class CreateProductCategory extends CreateCategory

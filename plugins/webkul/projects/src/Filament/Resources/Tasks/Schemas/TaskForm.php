@@ -31,6 +31,7 @@ use Webkul\Security\Filament\Resources\Users\UserResource;
 class TaskForm
 {
     use HasCustomFields;
+
     public static function getModel(): string
     {
         return TaskResource::class;
@@ -46,7 +47,7 @@ class TaskForm
                             ->hiddenLabel()
                             ->inline()
                             ->required()
-                            ->options(fn() => TaskStage::orderBy('sort')->get()->mapWithKeys(fn($stage) => [$stage->id => $stage->name]))
+                            ->options(fn () => TaskStage::orderBy('sort')->get()->mapWithKeys(fn ($stage) => [$stage->id => $stage->name]))
                             ->default(TaskStage::first()?->id),
                         Section::make(__('projects::filament/resources/task.form.sections.general.title'))
                             ->schema([
@@ -104,7 +105,7 @@ class TaskForm
                                     ->searchable()
                                     ->preload()
                                     ->live()
-                                    ->createOptionForm(fn(Schema $schema): Schema => ProjectResource::form($schema))
+                                    ->createOptionForm(fn (Schema $schema): Schema => ProjectResource::form($schema))
                                     ->afterStateUpdated(function (Set $set) {
                                         $set('milestone_id', null);
                                     }),
@@ -113,12 +114,12 @@ class TaskForm
                                     ->relationship(
                                         name: 'milestone',
                                         titleAttribute: 'name',
-                                        modifyQueryUsing: fn(Get $get, Builder $query) => $query->where('project_id', $get('project_id')),
+                                        modifyQueryUsing: fn (Get $get, Builder $query) => $query->where('project_id', $get('project_id')),
                                     )
                                     ->searchable()
                                     ->preload()
                                     ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('projects::filament/resources/task.form.sections.settings.fields.milestone-hint-text'))
-                                    ->createOptionForm(fn($get) => [
+                                    ->createOptionForm(fn ($get) => [
                                         TextInput::make('name')
                                             ->label(__('projects::filament/resources/task.form.sections.settings.fields.name'))
                                             ->required()
@@ -133,7 +134,7 @@ class TaskForm
                                         Hidden::make('project_id')
                                             ->default($get('project_id')),
                                         Hidden::make('creator_id')
-                                            ->default(fn() => Auth::user()->id),
+                                            ->default(fn () => Auth::user()->id),
                                     ])
                                     ->hidden(function (TaskSettings $taskSettings, Get $get) {
                                         $project = Project::find($get('project_id'));
@@ -148,21 +149,21 @@ class TaskForm
 
                                         return ! $project->allow_milestones;
                                     })
-                                    ->visible(fn(TaskSettings $taskSettings) => $taskSettings->enable_milestones),
+                                    ->visible(fn (TaskSettings $taskSettings) => $taskSettings->enable_milestones),
                                 Select::make('partner_id')
                                     ->label(__('projects::filament/resources/task.form.sections.settings.fields.customer'))
                                     ->relationship('partner', 'name')
                                     ->searchable()
                                     ->preload()
-                                    ->createOptionForm(fn(Schema $schema): Schema => PartnerResource::form($schema))
-                                    ->editOptionForm(fn(Schema $schema): Schema => PartnerResource::form($schema)),
+                                    ->createOptionForm(fn (Schema $schema): Schema => PartnerResource::form($schema))
+                                    ->editOptionForm(fn (Schema $schema): Schema => PartnerResource::form($schema)),
                                 Select::make('users')
                                     ->label(__('projects::filament/resources/task.form.sections.settings.fields.assignees'))
                                     ->relationship('users', 'name')
                                     ->searchable()
                                     ->multiple()
                                     ->preload()
-                                    ->createOptionForm(fn(Schema $schema) => UserResource::form($schema)),
+                                    ->createOptionForm(fn (Schema $schema) => UserResource::form($schema)),
                                 DateTimePicker::make('deadline')
                                     ->label(__('projects::filament/resources/task.form.sections.settings.fields.deadline'))
                                     ->native(false)
@@ -174,8 +175,8 @@ class TaskForm
                                     ->maxValue(99999999999)
                                     ->suffixIcon('heroicon-o-clock')
                                     ->helperText(__('projects::filament/resources/task.form.sections.settings.fields.allocated-hours-helper-text'))
-                                    ->dehydrateStateUsing(fn($state) => $state ?: 0)
-                                    ->visible(fn(TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                                    ->dehydrateStateUsing(fn ($state) => $state ?: 0)
+                                    ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
                             ]),
                     ]),
             ])

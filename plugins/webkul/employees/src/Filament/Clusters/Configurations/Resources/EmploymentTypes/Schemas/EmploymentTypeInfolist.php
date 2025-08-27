@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Webkul\Employee\Filament\Clusters\Configurations\Resources\EmploymentTypes\Schemas;
 
 use Filament\Infolists\Components\TextEntry;

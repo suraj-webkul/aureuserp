@@ -2,7 +2,6 @@
 
 namespace Webkul\Website\Src\Filament\Admin\Resources\Page\Schemas;
 
-
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -13,7 +12,6 @@ use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
 use Webkul\Website\Models\Page as PageModel;
-
 
 class PageForm
 {
@@ -31,7 +29,7 @@ class PageForm
                                     ->live(onBlur: true)
                                     ->placeholder(__('website::filament/admin/resources/page.form.sections.general.fields.title-placeholder'))
                                     ->extraInputAttributes(['style' => 'font-size: 1.5rem;height: 3rem;'])
-                                    ->afterStateUpdated(fn(string $operation, $state, Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                                    ->afterStateUpdated(fn (string $operation, $state, Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
                                 TextInput::make('slug')
                                     ->disabled()
                                     ->dehydrated()

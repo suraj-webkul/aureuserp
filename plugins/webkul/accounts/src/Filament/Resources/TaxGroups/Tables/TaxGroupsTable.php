@@ -2,7 +2,6 @@
 
 namespace Webkul\Accounts\Filament\Resources\TaxGroups\Schemas;
 
-use Filament\Tables\Table;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -11,6 +10,7 @@ use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Grouping\Group;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
@@ -94,7 +94,7 @@ class TaxGroupsTable
                     DeleteBulkAction::make()
                         ->action(function (Collection $records) {
                             try {
-                                $records->each(fn(Model $record) => $record->delete());
+                                $records->each(fn (Model $record) => $record->delete());
                             } catch (QueryException $e) {
                                 Notification::make()
                                     ->danger()

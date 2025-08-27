@@ -2,6 +2,7 @@
 
 namespace Webkul\Employee\Filament\Resources\Departments;
 
+use BackedEnum;
 use Filament\Panel;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -11,12 +12,11 @@ use Webkul\Employee\Filament\Resources\Departments\Pages\CreateDepartment;
 use Webkul\Employee\Filament\Resources\Departments\Pages\EditDepartment;
 use Webkul\Employee\Filament\Resources\Departments\Pages\ListDepartments;
 use Webkul\Employee\Filament\Resources\Departments\Pages\ViewDepartment;
-use Webkul\Employee\Models\Department;
-use Webkul\Field\Filament\Traits\HasCustomFields;
 use Webkul\Employee\Filament\Resources\Departments\Schemas\DepartmentForm;
 use Webkul\Employee\Filament\Resources\Departments\Schemas\DepartmentInfolist;
 use Webkul\Employee\Filament\Resources\Departments\Tables\DepartmentsTable;
-use BackedEnum;
+use Webkul\Employee\Models\Department;
+use Webkul\Field\Filament\Traits\HasCustomFields;
 
 class DepartmentResource extends Resource
 {
@@ -44,9 +44,9 @@ class DepartmentResource extends Resource
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         return [
-            __('employees::filament/resources/department.global-search.name') => $record->name ?? '—',
+            __('employees::filament/resources/department.global-search.name')               => $record->name ?? '—',
             __('employees::filament/resources/department.global-search.department-manager') => $record->manager?->name ?? '—',
-            __('employees::filament/resources/department.global-search.company') => $record->company?->name ?? '—',
+            __('employees::filament/resources/department.global-search.company')            => $record->company?->name ?? '—',
         ];
     }
 
@@ -142,7 +142,7 @@ class DepartmentResource extends Resource
         $managerName = $department->manager?->name ? " · {$department->manager->name}" : '';
 
         $style = $isActive
-            ? 'color: ' . ($department->color ?? '#1D4ED8') . '; font-weight: bold;'
+            ? 'color: '.($department->color ?? '#1D4ED8').'; font-weight: bold;'
             : '';
 
         return sprintf(
@@ -170,10 +170,10 @@ class DepartmentResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListDepartments::route('/'),
+            'index'  => ListDepartments::route('/'),
             'create' => CreateDepartment::route('/create'),
-            'view' => ViewDepartment::route('/{record}'),
-            'edit' => EditDepartment::route('/{record}/edit'),
+            'view'   => ViewDepartment::route('/{record}'),
+            'edit'   => EditDepartment::route('/{record}/edit'),
         ];
     }
 }

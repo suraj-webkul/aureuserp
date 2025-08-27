@@ -5,9 +5,9 @@ namespace Webkul\Partner\Filament\Resources\Address;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use Webkul\Partner\Models\Partner;
 use Webkul\Partner\Filament\Resources\Address\Schemas\AddressForm;
 use Webkul\Partner\Filament\Resources\Address\Table\AddressTable;
+use Webkul\Partner\Models\Partner;
 
 class AddressResource extends Resource
 {

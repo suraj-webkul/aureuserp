@@ -51,11 +51,11 @@ class PartnerTable
                         Stack::make([
                             TextColumn::make('parent.name')
                                 ->label(__('partners::filament/resources/partner.table.columns.parent'))
-                                ->icon(fn(Partner $record) => $record->parent->account_type === AccountType::INDIVIDUAL->value ? 'heroicon-o-user' : 'heroicon-o-building-office')
+                                ->icon(fn (Partner $record) => $record->parent->account_type === AccountType::INDIVIDUAL->value ? 'heroicon-o-user' : 'heroicon-o-building-office')
                                 ->tooltip(__('partners::filament/resources/partner.table.columns.parent'))
                                 ->sortable(),
                         ])
-                            ->visible(fn(Partner $record) => filled($record->parent)),
+                            ->visible(fn (Partner $record) => filled($record->parent)),
                         Stack::make([
                             TextColumn::make('job_title')
                                 ->icon('heroicon-m-briefcase')
@@ -63,7 +63,7 @@ class PartnerTable
                                 ->sortable()
                                 ->label('Job Title'),
                         ])
-                            ->visible(fn($record) => filled($record->job_title)),
+                            ->visible(fn ($record) => filled($record->job_title)),
                         Stack::make([
                             TextColumn::make('email')
                                 ->icon('heroicon-o-envelope')
@@ -73,7 +73,7 @@ class PartnerTable
                                 ->color('gray')
                                 ->limit(20),
                         ])
-                            ->visible(fn($record) => filled($record->email)),
+                            ->visible(fn ($record) => filled($record->email)),
                         Stack::make([
                             TextColumn::make('phone')
                                 ->icon('heroicon-o-phone')
@@ -83,22 +83,22 @@ class PartnerTable
                                 ->limit(30)
                                 ->sortable(),
                         ])
-                            ->visible(fn($record) => filled($record->phone)),
+                            ->visible(fn ($record) => filled($record->phone)),
                         Stack::make([
                             TextColumn::make('tags.name')
                                 ->badge()
                                 ->state(function (Partner $record): array {
-                                    return $record->tags()->get()->map(fn($tag) => [
+                                    return $record->tags()->get()->map(fn ($tag) => [
                                         'label' => $tag->name,
                                         'color' => $tag->color ?? '#808080',
                                     ])->toArray();
                                 })
                                 ->badge()
-                                ->formatStateUsing(fn($state) => $state['label'])
-                                ->color(fn($state) => Color::generateV3Palette($state['color']))
+                                ->formatStateUsing(fn ($state) => $state['label'])
+                                ->color(fn ($state) => Color::generateV3Palette($state['color']))
                                 ->weight(FontWeight::Bold),
                         ])
-                            ->visible(fn($record): bool => (bool) $record->tags()->get()?->count()),
+                            ->visible(fn ($record): bool => (bool) $record->tags()->get()?->count()),
                     ])->space(1),
                 ])->space(4),
             ])
@@ -216,15 +216,15 @@ class PartnerTable
                     ]),
             ], layout: FiltersLayout::Modal)
             ->filtersTriggerAction(
-                fn(Action $action) => $action
+                fn (Action $action) => $action
                     ->slideOver(),
             )
             ->filtersFormColumns(2)
             ->recordActions([
                 ViewAction::make()
-                    ->hidden(fn($record) => $record->trashed()),
+                    ->hidden(fn ($record) => $record->trashed()),
                 EditAction::make()
-                    ->hidden(fn($record) => $record->trashed())
+                    ->hidden(fn ($record) => $record->trashed())
                     ->successNotification(
                         Notification::make()
                             ->success()
@@ -283,7 +283,7 @@ class PartnerTable
                     ForceDeleteBulkAction::make()
                         ->action(function (Collection $records) {
                             try {
-                                $records->each(fn(Model $record) => $record->forceDelete());
+                                $records->each(fn (Model $record) => $record->forceDelete());
                             } catch (QueryException $e) {
                                 Notification::make()
                                     ->danger()
@@ -304,9 +304,9 @@ class PartnerTable
                 $query->where('account_type', '!=', AccountType::ADDRESS);
             })
             ->contentGrid([
-                'sm' => 1,
-                'md' => 2,
-                'xl' => 3,
+                'sm'  => 1,
+                'md'  => 2,
+                'xl'  => 3,
                 '2xl' => 4,
             ])
             ->paginated([
