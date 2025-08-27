@@ -22,7 +22,8 @@ use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint\Oper
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
-use Webkul\Employee\Models\SkillType;
+use Illuminate\Database\Eloquent\Model;
+use Webkul\Employee\Filament\Clusters\Configurations\Resources\SkillTypes\SkillTypeResource;
 
 class SkillTypesTable
 {
@@ -42,13 +43,13 @@ class SkillTypesTable
                 TextColumn::make('color')
                     ->label(__('employees::filament/clusters/configurations/resources/skill-type.table.columns.color'))
                     ->toggleable(isToggledHiddenByDefault: false)
-                    ->formatStateUsing(fn(SkillType $record) => '<span class="flex h-5 w-5 rounded-full" style="background: rgb(var(--' . $record->color . '-500))"></span>')
+                    ->formatStateUsing(fn (Model $record) => '<span class="flex h-5 w-5 rounded-full" style="background: rgb(var(--'.$record->color.'-500))"></span>')
                     ->html()
                     ->sortable(),
                 TextColumn::make('skills.name')
                     ->label(__('employees::filament/clusters/configurations/resources/skill-type.table.columns.skills'))
                     ->badge()
-                    ->color(fn(SkillType $record) => $record->color)
+                    ->color(fn (Model $record) => $record->color)
                     ->searchable(),
                 TextColumn::make('skillLevels.name')
                     ->label(__('employees::filament/clusters/configurations/resources/skill-type.table.columns.levels'))
@@ -199,7 +200,7 @@ class SkillTypesTable
                     )
                     ->after(function ($record) {
                         return redirect(
-                            self::getUrl('edit', ['record' => $record])
+                            SkillTypeResource::getUrl('edit', ['record' => $record])
                         );
                     }),
             ]);

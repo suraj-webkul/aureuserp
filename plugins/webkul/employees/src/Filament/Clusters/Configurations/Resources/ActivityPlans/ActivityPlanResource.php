@@ -2,6 +2,7 @@
 
 namespace Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlans;
 
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
@@ -13,7 +14,7 @@ use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlans\Rel
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlans\Schemas\ActivityPlanForm;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlans\Schemas\ActivityPlanInfolist;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlans\Tables\ActivityPlansTable;
-use BackedEnum;
+use Webkul\Employee\Models\ActivityPlan;
 
 class ActivityPlanResource extends Resource
 {
