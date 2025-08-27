@@ -25,7 +25,7 @@ use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 
-class ActivityPlanTable
+class ActivityPlansTable
 {
     public static function configure(Table $table): Table
     {

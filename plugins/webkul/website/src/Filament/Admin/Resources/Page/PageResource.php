@@ -15,6 +15,7 @@ use Webkul\Website\Filament\Admin\Resources\Page\Pages\ViewPage;
 use Webkul\Website\Models\Page as PageModel;
 use Webkul\Website\Src\Filament\Admin\Resources\Page\Schemas\PageForm;
 use Webkul\Website\Src\Filament\Admin\Resources\Page\Schemas\PageInfolist;
+use BackedEnum;
 
 class PageResource extends Resource
 {
@@ -22,7 +23,7 @@ class PageResource extends Resource
 
     protected static ?string $slug = 'website/pages';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-window';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-window';
 
     protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 

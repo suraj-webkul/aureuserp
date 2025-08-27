@@ -13,13 +13,14 @@ use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlans\Rel
 use Webkul\Employee\Models\ActivityPlan;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlans\Schemas\ActivityPlanForm;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlans\Schemas\ActivityPlanInfolist;
-use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlans\Schemas\ActivityPlanTable;
+use Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlans\Tables\ActivityPlansTable;
+use BackedEnum;
 
 class ActivityPlanResource extends Resource
 {
     protected static ?string $model = ActivityPlan::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-briefcase';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-briefcase';
 
     protected static ?string $cluster = Configurations::class;
 
@@ -35,7 +36,7 @@ class ActivityPlanResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return ActivityPlanTable::configure($table);
+        return ActivityPlansTable::configure($table);
     }
 
     public static function infolist(Schema $schema): Schema

@@ -39,7 +39,7 @@ class ReceiptResource extends Resource
 
     protected static ?string $cluster = Operations::class;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getModelLabel(): string
     {
@@ -69,7 +69,7 @@ class ReceiptResource extends Resource
                     ViewAction::make(),
                     EditAction::make(),
                     DeleteAction::make()
-                        ->hidden(fn (Receipt $record): bool => $record->state == OperationState::DONE)
+                        ->hidden(fn(Receipt $record): bool => $record->state == OperationState::DONE)
                         ->action(function (Receipt $record) {
                             try {
                                 $record->delete();
@@ -93,7 +93,7 @@ class ReceiptResource extends Resource
                 DeleteBulkAction::make()
                     ->action(function (Collection $records) {
                         try {
-                            $records->each(fn (Model $record) => $record->delete());
+                            $records->each(fn(Model $record) => $record->delete());
                         } catch (QueryException $e) {
                             Notification::make()
                                 ->danger()
@@ -133,11 +133,11 @@ class ReceiptResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListReceipts::route('/'),
+            'index' => ListReceipts::route('/'),
             'create' => CreateReceipt::route('/create'),
-            'edit'   => EditReceipt::route('/{record}/edit'),
-            'view'   => ViewReceipt::route('/{record}/view'),
-            'moves'  => ManageMoves::route('/{record}/moves'),
+            'edit' => EditReceipt::route('/{record}/edit'),
+            'view' => ViewReceipt::route('/{record}/view'),
+            'moves' => ManageMoves::route('/{record}/moves'),
         ];
     }
 }

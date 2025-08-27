@@ -4,9 +4,11 @@ namespace Webkul\TableViews\Filament\Components;
 
 use Webkul\TableViews\Models\TableView;
 
+
 class SavedView extends PresetView
 {
     protected TableView $model;
+    
 
     public function model(TableView $model): static
     {
