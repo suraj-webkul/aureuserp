@@ -1,13 +1,13 @@
 <?php
 
-namespace Webkul\Account\Filament\Resources\PaymentTermResource\Pages;
+namespace Webkul\Account\Filament\Resources\PaymentTerms\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\ViewRecord;
-use Webkul\Account\Filament\Resources\PaymentTermResource;
+use Webkul\Account\Filament\Resources\PaymentTerms\PaymentTermResource;
 
 class ViewPaymentTerm extends ViewRecord
 {

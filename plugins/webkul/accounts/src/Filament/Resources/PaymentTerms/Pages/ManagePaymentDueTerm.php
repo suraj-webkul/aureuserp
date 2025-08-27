@@ -1,11 +1,11 @@
 <?php
 
-namespace Webkul\Account\Filament\Resources\PaymentTermResource\Pages;
+namespace Webkul\Account\Filament\Resources\PaymentTerms\Pages;
 
 use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\ManageRelatedRecords;
-use Webkul\Account\Filament\Resources\PaymentTermResource;
+use Webkul\Account\Filament\Resources\PaymentTerms\PaymentTermResource;
 use Webkul\Account\Traits\PaymentDueTerm;
 
 class ManagePaymentDueTerm extends ManageRelatedRecords
