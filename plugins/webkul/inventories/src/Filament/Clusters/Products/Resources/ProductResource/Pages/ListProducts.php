@@ -4,7 +4,7 @@ namespace Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\
 
 use Illuminate\Database\Eloquent\Builder;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource;
-use Webkul\Product\Filament\Resources\ProductResource\Pages\ListProducts as BaseListProducts;
+use Webkul\Product\Filament\Resources\Products\Pages\ListProducts as BaseListProducts;
 use Webkul\TableViews\Filament\Components\PresetView;
 
 class ListProducts extends BaseListProducts

@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Product\Filament\Resources\ProductResource\Actions;
+namespace Webkul\Product\Filament\Resources\Products\Actions;
 
 use Closure;
 use Exception;
@@ -10,7 +10,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Product\Filament\Resources\ProductResource\Pages\ManageAttributes;
+use Webkul\Product\Filament\Resources\Products\Pages\ManageAttributes;
 use Webkul\Product\Models\Product;
 use Webkul\Product\Models\ProductAttribute;
 use Webkul\Product\Models\ProductCombination;

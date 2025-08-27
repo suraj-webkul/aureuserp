@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Product\Filament\Resources\ProductResource\Pages;
+namespace Webkul\Product\Filament\Resources\Products\Pages;
 
 use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Actions\Action;
@@ -9,30 +9,17 @@ use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Pages\Enums\SubNavigationPosition;
-use Filament\Resources\Pages\EditRecord;
+use Filament\Resources\Pages\ViewRecord;
 use Webkul\Chatter\Filament\Actions\ChatterAction;
-use Webkul\Product\Filament\Resources\ProductResource;
+use Webkul\Product\Filament\Resources\Products\ProductResource;
 
-class EditProduct extends EditRecord
+class ViewProduct extends ViewRecord
 {
     protected static string $resource = ProductResource::class;
 
     public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
-    }
-
-    protected function getRedirectUrl(): string
-    {
-        return $this->getResource()::getUrl('view', ['record' => $this->getRecord()]);
-    }
-
-    protected function getSavedNotification(): Notification
-    {
-        return Notification::make()
-            ->success()
-            ->title(__('products::filament/resources/product/pages/edit-product.notification.title'))
-            ->body(__('products::filament/resources/product/pages/edit-product.notification.body'));
     }
 
     protected function getHeaderActions(): array
@@ -85,18 +72,9 @@ class EditProduct extends EditRecord
                 ->successNotification(
                     Notification::make()
                         ->success()
-                        ->title(__('products::filament/resources/product/pages/edit-product.header-actions.delete.notification.title'))
-                        ->body(__('products::filament/resources/product/pages/edit-product.header-actions.delete.notification.body')),
+                        ->title(__('products::filament/resources/product/pages/view-product.header-actions.delete.notification.title'))
+                        ->body(__('products::filament/resources/product/pages/view-product.header-actions.delete.notification.body')),
                 ),
         ];
-    }
-
-    protected function afterSave(): void
-    {
-        $this->getRecord()->variants->each(function ($variant) {
-            $variant->update([
-                'is_storable' => $this->getRecord()->is_storable,
-            ]);
-        });
     }
 }

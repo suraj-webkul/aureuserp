@@ -1,10 +1,10 @@
 <?php
 
-namespace Webkul\Product\Filament\Resources\PriceListResource\Pages;
+namespace Webkul\Product\Filament\Resources\PriceLists\Pages;
 
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
-use Webkul\Product\Filament\Resources\PriceListResource;
+use Webkul\Product\Filament\Resources\PriceLists\PriceListResource;
 
 class ViewPriceList extends ViewRecord
 {

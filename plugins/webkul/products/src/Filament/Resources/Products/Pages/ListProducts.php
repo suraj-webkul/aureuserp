@@ -1,13 +1,13 @@
 <?php
 
-namespace Webkul\Product\Filament\Resources\ProductResource\Pages;
+namespace Webkul\Product\Filament\Resources\Products\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Webkul\Product\Enums\ProductType;
-use Webkul\Product\Filament\Resources\ProductResource;
+use Webkul\Product\Filament\Resources\Products\ProductResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;
 
@@ -32,17 +32,17 @@ class ListProducts extends ListRecords
                 ->icon('heroicon-s-squares-plus')
                 ->favorite()
                 ->default()
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', ProductType::GOODS)),
+                ->modifyQueryUsing(fn(Builder $query) => $query->where('type', ProductType::GOODS)),
 
             'services_products' => PresetView::make(__('products::filament/resources/product/pages/list-products.tabs.services'))
                 ->icon('heroicon-s-sparkles')
                 ->favorite()
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', ProductType::SERVICE)),
+                ->modifyQueryUsing(fn(Builder $query) => $query->where('type', ProductType::SERVICE)),
 
             'favorites_products' => PresetView::make(__('products::filament/resources/product/pages/list-products.tabs.favorites'))
                 ->icon('heroicon-s-star')
                 ->favorite()
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('is_favorite', true)),
+                ->modifyQueryUsing(fn(Builder $query) => $query->where('is_favorite', true)),
 
             'archived_products' => PresetView::make(__('products::filament/resources/product/pages/list-products.tabs.archived'))
                 ->icon('heroicon-s-archive-box')

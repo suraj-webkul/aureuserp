@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Product\Filament\Resources\ProductResource\Pages;
+namespace Webkul\Product\Filament\Resources\Products\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
@@ -16,9 +16,9 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Product\Filament\Resources\AttributeResource;
-use Webkul\Product\Filament\Resources\ProductResource;
-use Webkul\Product\Filament\Resources\ProductResource\Actions\GenerateVariantsAction;
+use Webkul\Product\Filament\Resources\Attributes\AttributeResource;
+use Webkul\Product\Filament\Resources\Products\ProductResource;
+use Webkul\Product\Filament\Resources\Products\Actions\GenerateVariantsAction;
 use Webkul\Product\Models\ProductAttribute;
 
 class ManageAttributes extends ManageRelatedRecords
@@ -49,10 +49,10 @@ class ManageAttributes extends ManageRelatedRecords
                     ->relationship(
                         'attribute',
                         'name',
-                        modifyQueryUsing: fn (Builder $query) => $query->withTrashed(),
+                        modifyQueryUsing: fn(Builder $query) => $query->withTrashed(),
                     )
                     ->getOptionLabelFromRecordUsing(function ($record): string {
-                        return $record->name.($record->trashed() ? ' (Deleted)' : '');
+                        return $record->name . ($record->trashed() ? ' (Deleted)' : '');
                     })
                     ->disableOptionWhen(function (string $value) {
                         return $this->getOwnerRecord()->attributes->contains('attribute_id', $value);
@@ -60,7 +60,7 @@ class ManageAttributes extends ManageRelatedRecords
                     ->searchable()
                     ->preload()
                     ->disabledOn('edit')
-                    ->createOptionForm(fn (Schema $schema): Schema => AttributeResource::form($schema))
+                    ->createOptionForm(fn(Schema $schema): Schema => AttributeResource::form($schema))
                     ->afterStateUpdated(function ($state, Set $set) {
                         $set('options', []);
                     }),
@@ -70,7 +70,7 @@ class ManageAttributes extends ManageRelatedRecords
                     ->relationship(
                         name: 'options',
                         titleAttribute: 'name',
-                        modifyQueryUsing: fn (Get $get, Builder $query) => $query->where('products_attribute_options.attribute_id', $get('attribute_id')),
+                        modifyQueryUsing: fn(Get $get, Builder $query) => $query->where('products_attribute_options.attribute_id', $get('attribute_id')),
                     )
                     ->searchable()
                     ->preload()
@@ -140,9 +140,9 @@ class ManageAttributes extends ManageRelatedRecords
     {
         $record->values->each(function ($value) use ($record) {
             $value->update([
-                'extra_price'  => $value->attributeOption->extra_price,
+                'extra_price' => $value->attributeOption->extra_price,
                 'attribute_id' => $record->attribute_id,
-                'product_id'   => $record->product_id,
+                'product_id' => $record->product_id,
             ]);
         });
 

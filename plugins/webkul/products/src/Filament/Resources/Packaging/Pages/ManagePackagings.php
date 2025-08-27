@@ -1,12 +1,12 @@
 <?php
 
-namespace Webkul\Product\Filament\Resources\PackagingResource\Pages;
+namespace Webkul\Product\Filament\Resources\Packaging\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRecords;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Product\Filament\Resources\PackagingResource;
+use Webkul\Product\Filament\Resources\Packaging\PackagingResource;
 
 class ManagePackagings extends ManageRecords
 {
