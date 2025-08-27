@@ -39,7 +39,7 @@ trait HasCustomFields
         return CustomFields::make(static::class)
             ->include($include)
             ->exclude($exclude)
-            ->getSchema();
+            ->getSchema();  
     }
 
     public static function getCustomTableColumns(array $include = [], array $exclude = []): array

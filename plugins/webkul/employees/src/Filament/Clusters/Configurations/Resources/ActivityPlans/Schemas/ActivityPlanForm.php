@@ -7,7 +7,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use Webkul\Employee\Filament\Resources\Department\DepartmentResource;
+use Webkul\Employee\Filament\Resources\Departments\DepartmentResource;
 use Webkul\Security\Filament\Resources\Companies\CompanyResource;
 
 class ActivityPlanForm

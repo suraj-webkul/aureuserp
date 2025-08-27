@@ -26,7 +26,7 @@ use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Webkul\Employee\Models\SkillType;
 
-class SkillTypesTable extends Resource
+class SkillTypesTable
 {
     public static function configure(Table $table): Table
     {
