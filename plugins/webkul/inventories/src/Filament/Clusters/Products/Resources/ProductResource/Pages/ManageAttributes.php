@@ -4,7 +4,7 @@ namespace Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource\
 
 use Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource;
 use Webkul\Inventory\Settings\ProductSettings;
-use Webkul\Product\Filament\Resources\ProductResource\Pages\ManageAttributes as BaseManageAttributes;
+use Webkul\Product\Filament\Resources\Products\Pages\ManageAttributes as BaseManageAttributes;
 
 class ManageAttributes extends BaseManageAttributes
 {

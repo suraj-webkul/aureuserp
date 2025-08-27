@@ -55,7 +55,7 @@ class PackageResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function isDiscovered(): bool
     {
@@ -91,7 +91,7 @@ class PackageResource extends Resource
                                     ->relationship('packageType', 'name')
                                     ->searchable()
                                     ->preload()
-                                    ->createOptionForm(fn (Schema $schema): Schema => PackageTypeResource::form($schema)),
+                                    ->createOptionForm(fn(Schema $schema): Schema => PackageTypeResource::form($schema)),
                                 DatePicker::make('pack_date')
                                     ->label(__('inventories::filament/clusters/products/resources/package.form.sections.general.fields.pack-date'))
                                     ->native(false)
@@ -217,7 +217,7 @@ class PackageResource extends Resource
                     DeleteBulkAction::make()
                         ->action(function (Collection $records) {
                             try {
-                                $records->each(fn (Model $record) => $record->delete());
+                                $records->each(fn(Model $record) => $record->delete());
                             } catch (QueryException $e) {
                                 Notification::make()
                                     ->danger()
@@ -322,11 +322,11 @@ class PackageResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'      => ListPackages::route('/'),
-            'create'     => CreatePackage::route('/create'),
-            'edit'       => EditPackage::route('/{record}/edit'),
-            'view'       => ViewPackage::route('/{record}/view'),
-            'products'   => ManageProducts::route('/{record}/products'),
+            'index' => ListPackages::route('/'),
+            'create' => CreatePackage::route('/create'),
+            'edit' => EditPackage::route('/{record}/edit'),
+            'view' => ViewPackage::route('/{record}/view'),
+            'products' => ManageProducts::route('/{record}/products'),
             'operations' => ManageOperations::route('/{record}/operations'),
         ];
     }

@@ -2,7 +2,7 @@
 
 namespace Webkul\Sale\Filament\Clusters\Configuration\Resources;
 
-use Webkul\Product\Filament\Resources\PackagingResource as BasePackagingResource;
+use Webkul\Product\Filament\Resources\Packaging\PackagingResource as BasePackagingResource;
 use Webkul\Sale\Filament\Clusters\Configuration;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\PackagingResource\Pages\ManagePackagings;
 use Webkul\Sale\Models\Packaging;

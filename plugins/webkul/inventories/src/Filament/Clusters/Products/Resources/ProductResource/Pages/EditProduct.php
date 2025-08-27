@@ -18,7 +18,7 @@ use Webkul\Inventory\Models\Warehouse;
 use Webkul\Inventory\Settings\OperationSettings;
 use Webkul\Inventory\Settings\TraceabilitySettings;
 use Webkul\Inventory\Settings\WarehouseSettings;
-use Webkul\Product\Filament\Resources\ProductResource\Pages\EditProduct as BaseEditProduct;
+use Webkul\Product\Filament\Resources\Products\Pages\EditProduct as BaseEditProduct;
 
 class EditProduct extends BaseEditProduct
 {
