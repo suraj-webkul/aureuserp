@@ -7,4 +7,12 @@ module.exports = {
         './resources/views/**/*.blade.php',
         './vendor/filament/**/*.blade.php',
     ],
+    safelist: [
+        'stage-button',
+        'state-container',
+        'state',
+        'border-primary-500',
+        'break-inside-avoid',
+        'pt-3',
+    ],
 }
