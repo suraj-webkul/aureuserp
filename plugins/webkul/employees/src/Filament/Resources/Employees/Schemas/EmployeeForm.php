@@ -35,9 +35,11 @@ use Webkul\Security\Filament\Resources\CompanyResource;
 use Webkul\Security\Filament\Resources\UserResource;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Country;
+
 class EmployeeForm
 {
     use HasCustomFields;
+
     public static function configure(Schema $schema): Schema
     {
         return $schema
@@ -87,7 +89,7 @@ class EmployeeForm
                                                     $set('work_email', $state);
                                                 }
                                             })
-                                            ->url(fn(?string $state) => $state ? "mailto:{$state}" : '#')
+                                            ->url(fn (?string $state) => $state ? "mailto:{$state}" : '#')
                                     )
                                     ->email(),
                                 Select::make('department_id')
@@ -95,7 +97,7 @@ class EmployeeForm
                                     ->relationship(name: 'department', titleAttribute: 'complete_name')
                                     ->searchable()
                                     ->preload()
-                                    ->createOptionForm(fn(Schema $schema) => DepartmentResource::form($schema)),
+                                    ->createOptionForm(fn (Schema $schema) => DepartmentResource::form($schema)),
                                 TextInput::make('mobile_phone')
                                     ->label(__('employees::filament/resources/employee.form.sections.fields.work-mobile'))
                                     ->suffixAction(
@@ -105,7 +107,7 @@ class EmployeeForm
                                             ->action(function (Set $set, $state) {
                                                 $set('mobile_phone', $state);
                                             })
-                                            ->url(fn(?string $state) => $state ? "tel:{$state}" : '#')
+                                            ->url(fn (?string $state) => $state ? "tel:{$state}" : '#')
                                     )
                                     ->tel(),
                                 Select::make('job_id')
@@ -113,7 +115,7 @@ class EmployeeForm
                                     ->searchable()
                                     ->preload()
                                     ->label(__('employees::filament/resources/employee.form.sections.fields.job-position'))
-                                    ->createOptionForm(fn(Schema $schema) => JobPositionResource::form($schema)),
+                                    ->createOptionForm(fn (Schema $schema) => JobPositionResource::form($schema)),
                                 TextInput::make('work_phone')
                                     ->label(__('employees::filament/resources/employee.form.sections.fields.work-phone'))
                                     ->suffixAction(
@@ -123,7 +125,7 @@ class EmployeeForm
                                             ->action(function (Set $set, $state) {
                                                 $set('work_phone', $state);
                                             })
-                                            ->url(fn(?string $state) => $state ? "tel:{$state}" : '#')
+                                            ->url(fn (?string $state) => $state ? "tel:{$state}" : '#')
                                     )
                                     ->tel(),
                                 Select::make('parent_id')
@@ -138,7 +140,7 @@ class EmployeeForm
                                     ->searchable()
                                     ->preload()
                                     ->label(__('employees::filament/resources/employee.form.sections.fields.employee-tags'))
-                                    ->createOptionForm(fn(Schema $schema) => EmployeeCategoryResource::form($schema)),
+                                    ->createOptionForm(fn (Schema $schema) => EmployeeCategoryResource::form($schema)),
                                 Select::make('coach_id')
                                     ->searchable()
                                     ->preload()
@@ -173,20 +175,20 @@ class EmployeeForm
                                                             ->preload()
                                                             ->label(__('employees::filament/resources/employee.form.tabs.work-information.fields.work-location'))
                                                             ->prefixIcon('heroicon-o-map-pin')
-                                                            ->createOptionForm(fn(Schema $schema) => WorkLocationResource::form($schema))
-                                                            ->editOptionForm(fn(Schema $schema) => WorkLocationResource::form($schema)),
+                                                            ->createOptionForm(fn (Schema $schema) => WorkLocationResource::form($schema))
+                                                            ->editOptionForm(fn (Schema $schema) => WorkLocationResource::form($schema)),
                                                     ])->columns(1),
                                                 Fieldset::make(__('employees::filament/resources/employee.form.tabs.work-information.fields.approver'))
                                                     ->schema([
                                                         Select::make('leave_manager_id')
-                                                            ->options(fn() => User::pluck('name', 'id'))
+                                                            ->options(fn () => User::pluck('name', 'id'))
                                                             ->searchable()
                                                             ->preload()
                                                             ->live()
                                                             ->suffixIcon('heroicon-o-clock')
                                                             ->label(__('employees::filament/resources/employee.form.tabs.work-information.fields.time-off')),
                                                         Select::make('attendance_manager_id')
-                                                            ->options(fn() => User::pluck('name', 'id'))
+                                                            ->options(fn () => User::pluck('name', 'id'))
                                                             ->searchable()
                                                             ->preload()
                                                             ->live()
@@ -196,7 +198,7 @@ class EmployeeForm
                                                 Fieldset::make(__('employees::filament/resources/employee.form.tabs.work-information.fields.schedule'))
                                                     ->schema([
                                                         Select::make('calendar_id')
-                                                            ->options(fn() => Calendar::pluck('name', 'id'))
+                                                            ->options(fn () => Calendar::pluck('name', 'id'))
                                                             ->searchable()
                                                             ->preload()
                                                             ->live()
@@ -229,7 +231,7 @@ class EmployeeForm
                                                                     ->preload()
                                                                     ->prefixIcon('heroicon-o-building-office')
                                                                     ->label(__('employees::filament/resources/employee.form.tabs.work-information.fields.company'))
-                                                                    ->createOptionForm(fn(Schema $schema) => CompanyResource::form($schema)),
+                                                                    ->createOptionForm(fn (Schema $schema) => CompanyResource::form($schema)),
                                                                 ColorPicker::make('color')
                                                                     ->label(__('employees::filament/resources/employee.form.tabs.work-information.fields.color'))
                                                                     ->hexColor(),
@@ -263,7 +265,7 @@ class EmployeeForm
                                                                 Select::make('private_country_id')
                                                                     ->label(__('employees::filament/resources/employee.form.tabs.private-information.fields.country'))
                                                                     ->relationship(name: 'country', titleAttribute: 'name')
-                                                                    ->afterStateUpdated(fn(Set $set) => $set('private_state_id', null))
+                                                                    ->afterStateUpdated(fn (Set $set) => $set('private_state_id', null))
                                                                     ->searchable()
                                                                     ->preload()
                                                                     ->live(),
@@ -272,7 +274,7 @@ class EmployeeForm
                                                                     ->relationship(
                                                                         name: 'state',
                                                                         titleAttribute: 'name',
-                                                                        modifyQueryUsing: fn(Get $get, Builder $query) => $query->where('country_id', $get('private_country_id')),
+                                                                        modifyQueryUsing: fn (Get $get, Builder $query) => $query->where('country_id', $get('private_country_id')),
                                                                     )
                                                                     ->createOptionForm(function (Schema $schema, Get $get, Set $set) {
                                                                         return $schema
@@ -307,7 +309,7 @@ class EmployeeForm
                                                                             ->action(function (Set $set, $state) {
                                                                                 $set('private_phone', $state);
                                                                             })
-                                                                            ->url(fn(?string $state) => $state ? "tel:{$state}" : '#')
+                                                                            ->url(fn (?string $state) => $state ? "tel:{$state}" : '#')
                                                                     )
                                                                     ->tel(),
                                                                 Select::make('bank_account_id')
@@ -332,7 +334,7 @@ class EmployeeForm
                                                                                     })
                                                                                     ->required(),
                                                                                 Hidden::make('creator_id')
-                                                                                    ->default(fn() => Auth::user()->id),
+                                                                                    ->default(fn () => Auth::user()->id),
                                                                                 Select::make('bank_id')
                                                                                     ->relationship('bank', 'name')
                                                                                     ->label(__('employees::filament/resources/employee.form.tabs.private-information.fields.bank'))
@@ -340,7 +342,7 @@ class EmployeeForm
                                                                                     ->preload()
                                                                                     ->createOptionForm(EmployeeResource::getBankCreateSchema())
                                                                                     ->editOptionForm(EmployeeResource::getBankCreateSchema())
-                                                                                    ->createOptionAction(fn(Action $action) => $action->modalHeading(__('employees::filament/resources/employee.form.tabs.private-information.fields.create-bank')))
+                                                                                    ->createOptionAction(fn (Action $action) => $action->modalHeading(__('employees::filament/resources/employee.form.tabs.private-information.fields.create-bank')))
                                                                                     ->live()
                                                                                     ->required(),
                                                                                 Toggle::make('is_active')
@@ -355,11 +357,11 @@ class EmployeeForm
                                                                             ])->columns(2),
                                                                     ])
                                                                     ->createOptionAction(
-                                                                        fn(Action $action) => $action
+                                                                        fn (Action $action) => $action
                                                                             ->modalHeading(__('employees::filament/resources/employee.form.tabs.private-information.fields.create-bank-account'))
                                                                             ->modalSubmitActionLabel(__('employees::filament/resources/employee.form.tabs.private-information.fields.create-bank-account'))
                                                                     )
-                                                                    ->disabled(fn($livewire) => !$livewire->record?->user)
+                                                                    ->disabled(fn ($livewire) => ! $livewire->record?->user)
                                                                     ->label(__('employees::filament/resources/employee.form.tabs.private-information.fields.bank-account')),
                                                                 TextInput::make('private_email')
                                                                     ->label(__('employees::filament/resources/employee.form.tabs.private-information.fields.private-email'))
@@ -372,7 +374,7 @@ class EmployeeForm
                                                                                     $set('private_email', $state);
                                                                                 }
                                                                             })
-                                                                            ->url(fn(?string $state) => $state ? "mailto:{$state}" : '#')
+                                                                            ->url(fn (?string $state) => $state ? "mailto:{$state}" : '#')
                                                                     )
                                                                     ->email(),
                                                                 TextInput::make('private_car_plate')
@@ -410,7 +412,7 @@ class EmployeeForm
                                                                                     ->action(function (Set $set, $state) {
                                                                                         $set('emergency_phone', $state);
                                                                                     })
-                                                                                    ->url(fn(?string $state) => $state ? "tel:{$state}" : '#')
+                                                                                    ->url(fn (?string $state) => $state ? "tel:{$state}" : '#')
                                                                             )
                                                                             ->tel(),
                                                                     ])->columns(2),
@@ -427,24 +429,24 @@ class EmployeeForm
                                                                     ->live(),
                                                                 TextInput::make('spouse_complete_name')
                                                                     ->label(__('employees::filament/resources/employee.form.tabs.private-information.fields.spouse-name'))
-                                                                    ->hidden(fn(Get $get) => $get('marital') === MaritalStatus::Single->value)
-                                                                    ->dehydrated(fn(Get $get) => $get('marital') !== MaritalStatus::Single->value)
-                                                                    ->required(fn(Get $get) => $get('marital') !== MaritalStatus::Single->value),
+                                                                    ->hidden(fn (Get $get) => $get('marital') === MaritalStatus::Single->value)
+                                                                    ->dehydrated(fn (Get $get) => $get('marital') !== MaritalStatus::Single->value)
+                                                                    ->required(fn (Get $get) => $get('marital') !== MaritalStatus::Single->value),
                                                                 DatePicker::make('spouse_birthdate')
                                                                     ->label(__('employees::filament/resources/employee.form.tabs.private-information.fields.spouse-birthday'))
                                                                     ->native(false)
                                                                     ->suffixIcon('heroicon-o-calendar')
-                                                                    ->disabled(fn(Get $get) => $get('marital') === MaritalStatus::Single->value)
-                                                                    ->hidden(fn(Get $get) => $get('marital') === MaritalStatus::Single->value)
-                                                                    ->dehydrated(fn(Get $get) => $get('marital') !== MaritalStatus::Single->value),
+                                                                    ->disabled(fn (Get $get) => $get('marital') === MaritalStatus::Single->value)
+                                                                    ->hidden(fn (Get $get) => $get('marital') === MaritalStatus::Single->value)
+                                                                    ->dehydrated(fn (Get $get) => $get('marital') !== MaritalStatus::Single->value),
                                                                 TextInput::make('children')
                                                                     ->label(__('employees::filament/resources/employee.form.tabs.private-information.fields.number-of-children'))
                                                                     ->numeric()
                                                                     ->minValue(0)
                                                                     ->maxValue(99999999999)
-                                                                    ->disabled(fn(Get $get) => $get('marital') === MaritalStatus::Single->value)
-                                                                    ->hidden(fn(Get $get) => $get('marital') === MaritalStatus::Single->value)
-                                                                    ->dehydrated(fn(Get $get) => $get('marital') !== MaritalStatus::Single->value),
+                                                                    ->disabled(fn (Get $get) => $get('marital') === MaritalStatus::Single->value)
+                                                                    ->hidden(fn (Get $get) => $get('marital') === MaritalStatus::Single->value)
+                                                                    ->dehydrated(fn (Get $get) => $get('marital') !== MaritalStatus::Single->value),
                                                             ])->columns(2),
                                                         Fieldset::make(__('employees::filament/resources/employee.form.tabs.private-information.fields.education'))
                                                             ->schema([
@@ -452,9 +454,9 @@ class EmployeeForm
                                                                     ->options([
                                                                         'graduate' => __('employees::filament/resources/employee.form.tabs.private-information.fields.graduated'),
                                                                         'bachelor' => __('employees::filament/resources/employee.form.tabs.private-information.fields.bachelor'),
-                                                                        'master' => __('employees::filament/resources/employee.form.tabs.private-information.fields.master'),
-                                                                        'doctor' => __('employees::filament/resources/employee.form.tabs.private-information.fields.doctor'),
-                                                                        'other' => __('employees::filament/resources/employee.form.tabs.private-information.fields.other'),
+                                                                        'master'   => __('employees::filament/resources/employee.form.tabs.private-information.fields.master'),
+                                                                        'doctor'   => __('employees::filament/resources/employee.form.tabs.private-information.fields.doctor'),
+                                                                        'other'    => __('employees::filament/resources/employee.form.tabs.private-information.fields.other'),
                                                                     ])
                                                                     ->label(__('employees::filament/resources/employee.form.tabs.private-information.fields.certificate-level')),
                                                                 TextInput::make('study_field')
@@ -489,12 +491,12 @@ class EmployeeForm
                                                                     ->required(),
                                                             ])
                                                             ->createOptionAction(
-                                                                fn(Action $action) => $action
+                                                                fn (Action $action) => $action
                                                                     ->modalHeading(__('employees::filament/resources/employee.form.tabs.private-information.fields.create-country'))
                                                                     ->modalSubmitActionLabel(__('employees::filament/resources/employee.form.tabs.private-information.fields.create-country'))
                                                                     ->modalWidth('lg')
                                                             )
-                                                            ->afterStateUpdated(fn(Set $set) => $set('state_id', null))
+                                                            ->afterStateUpdated(fn (Set $set) => $set('state_id', null))
                                                             ->searchable()
                                                             ->preload()
                                                             ->live(),
@@ -503,7 +505,7 @@ class EmployeeForm
                                                             ->relationship(
                                                                 name: 'state',
                                                                 titleAttribute: 'name',
-                                                                modifyQueryUsing: fn(Get $get, Builder $query) => $query->where('country_id', $get('country_id')),
+                                                                modifyQueryUsing: fn (Get $get, Builder $query) => $query->where('country_id', $get('country_id')),
                                                             )
                                                             ->createOptionForm([
                                                                 TextInput::make('name')
@@ -516,14 +518,14 @@ class EmployeeForm
                                                                     ->maxLength(255),
                                                             ])
                                                             ->createOptionAction(
-                                                                fn(Action $action) => $action
+                                                                fn (Action $action) => $action
                                                                     ->modalHeading(__('employees::filament/resources/employee.form.tabs.private-information.fields.create-state'))
                                                                     ->modalSubmitActionLabel(__('employees::filament/resources/employee.form.tabs.private-information.fields.create-state'))
                                                                     ->modalWidth('lg')
                                                             )
                                                             ->searchable()
                                                             ->preload()
-                                                            ->required(fn(Get $get) => Country::find($get('country_id'))?->state_required),
+                                                            ->required(fn (Get $get) => Country::find($get('country_id'))?->state_required),
                                                         TextInput::make('identification_id')
                                                             ->label(__('employees::filament/resources/employee.form.tabs.private-information.fields.identification-id')),
                                                         TextInput::make('ssnid')
@@ -602,12 +604,12 @@ class EmployeeForm
                                                             ->preload()
                                                             ->label(__('employees::filament/resources/employee.form.tabs.settings.fields.related-user'))
                                                             ->prefixIcon('heroicon-o-user')
-                                                            ->createOptionForm(fn(Schema $schema) => UserResource::form($schema))
+                                                            ->createOptionForm(fn (Schema $schema) => UserResource::form($schema))
                                                             ->createOptionAction(
-                                                                fn(Action $action, Get $get) => $action
+                                                                fn (Action $action, Get $get) => $action
                                                                     ->fillForm(function (array $arguments) use ($get): array {
                                                                         return [
-                                                                            'name' => $get('name'),
+                                                                            'name'  => $get('name'),
                                                                             'email' => $get('work_email'),
                                                                         ];
                                                                     })
@@ -618,9 +620,9 @@ class EmployeeForm
 
                                                                         $partner = $user->partner()->create([
                                                                             'creator_id' => Auth::user()->id,
-                                                                            'user_id' => $user->id,
+                                                                            'user_id'    => $user->id,
                                                                             'company_id' => $data['default_company_id'] ?? null,
-                                                                            'avatar' => $data['avatar'] ?? null,
+                                                                            'avatar'     => $data['avatar'] ?? null,
                                                                             ...$data,
                                                                         ]);
 
@@ -639,18 +641,18 @@ class EmployeeForm
                                                             ->preload()
                                                             ->live()
                                                             ->label(__('employees::filament/resources/employee.form.tabs.settings.fields.departure-reason'))
-                                                            ->createOptionForm(fn(Schema $schema) => DepartureReasonResource::form($schema)),
+                                                            ->createOptionForm(fn (Schema $schema) => DepartureReasonResource::form($schema)),
                                                         DatePicker::make('departure_date')
                                                             ->label(__('employees::filament/resources/employee.form.tabs.settings.fields.departure-date'))
                                                             ->native(false)
-                                                            ->hidden(fn(Get $get) => $get('departure_reason_id') === null)
-                                                            ->disabled(fn(Get $get) => $get('departure_reason_id') === null)
-                                                            ->required(fn(Get $get) => $get('departure_reason_id') !== null),
+                                                            ->hidden(fn (Get $get) => $get('departure_reason_id') === null)
+                                                            ->disabled(fn (Get $get) => $get('departure_reason_id') === null)
+                                                            ->required(fn (Get $get) => $get('departure_reason_id') !== null),
                                                         Textarea::make('departure_description')
                                                             ->label(__('employees::filament/resources/employee.form.tabs.settings.fields.departure-description'))
-                                                            ->hidden(fn(Get $get) => $get('departure_reason_id') === null)
-                                                            ->disabled(fn(Get $get) => $get('departure_reason_id') === null)
-                                                            ->required(fn(Get $get) => $get('departure_reason_id') !== null),
+                                                            ->hidden(fn (Get $get) => $get('departure_reason_id') === null)
+                                                            ->disabled(fn (Get $get) => $get('departure_reason_id') === null)
+                                                            ->required(fn (Get $get) => $get('departure_reason_id') !== null),
                                                     ])->columns(2),
                                                 Fieldset::make(__('employees::filament/resources/employee.form.tabs.settings.fields.additional-information'))
                                                     ->schema([

@@ -38,7 +38,7 @@ class ApplicantForm
                         ProgressStepper::make('stage_id')
                             ->hiddenLabel()
                             ->inline()
-                            ->options(fn() => RecruitmentStage::orderBy('sort')->get()->mapWithKeys(fn($stage) => [$stage->id => $stage->name]))
+                            ->options(fn () => RecruitmentStage::orderBy('sort')->get()->mapWithKeys(fn ($stage) => [$stage->id => $stage->name]))
                             ->columnSpan('full')
                             ->live()
                             ->reactive()
@@ -80,7 +80,7 @@ class ApplicantForm
                                             Action::make('good')
                                                 ->hiddenLabel()
                                                 ->outlined(false)
-                                                ->icon(fn($record) => $record?->priority >= 1 ? 'heroicon-s-star' : 'heroicon-o-star')
+                                                ->icon(fn ($record) => $record?->priority >= 1 ? 'heroicon-s-star' : 'heroicon-o-star')
                                                 ->color('warning')
                                                 ->size(Size::ExtraLarge)
                                                 ->iconButton()
@@ -96,7 +96,7 @@ class ApplicantForm
                                                 }),
                                             Action::make('veryGood')
                                                 ->hiddenLabel()
-                                                ->icon(fn($record) => $record?->priority >= 2 ? 'heroicon-s-star' : 'heroicon-o-star')
+                                                ->icon(fn ($record) => $record?->priority >= 2 ? 'heroicon-s-star' : 'heroicon-o-star')
                                                 ->color('warning')
                                                 ->size(Size::ExtraLarge)
                                                 ->iconButton()
@@ -112,7 +112,7 @@ class ApplicantForm
                                                 }),
                                             Action::make('excellent')
                                                 ->hiddenLabel()
-                                                ->icon(fn($record) => $record?->priority >= 3 ? 'heroicon-s-star' : 'heroicon-o-star')
+                                                ->icon(fn ($record) => $record?->priority >= 3 ? 'heroicon-s-star' : 'heroicon-o-star')
                                                 ->color('warning')
                                                 ->size(Size::ExtraLarge)
                                                 ->iconButton()
@@ -130,9 +130,9 @@ class ApplicantForm
                                         Placeholder::make('application_status')
                                             ->live()
                                             ->hiddenLabel()
-                                            ->hidden(fn($record) => $record->application_status->value === ApplicationStatus::ONGOING->value)
+                                            ->hidden(fn ($record) => $record->application_status->value === ApplicationStatus::ONGOING->value)
                                             ->content(function ($record) {
-                                                $html = '<span style="display: inline-flex; align-items: center; background-color: ' . $record->application_status->getColor() . '; color: white; padding: 4px 8px; border-radius: 12px; font-size: 18px; font-weight: 500;">';
+                                                $html = '<span style="display: inline-flex; align-items: center; background-color: '.$record->application_status->getColor().'; color: white; padding: 4px 8px; border-radius: 12px; font-size: 18px; font-weight: 500;">';
 
                                                 $html .= view('filament::components.icon', [
                                                     'icon'  => $record->application_status->getIcon(),
@@ -223,7 +223,7 @@ class ApplicantForm
                                             ->searchable(),
                                         DatePicker::make('date_closed')
                                             ->label(__('recruitments::filament/clusters/applications/resources/applicant.form.sections.general-information.fields.hired-date'))
-                                            ->hidden(fn($record) => ! $record->date_closed)
+                                            ->hidden(fn ($record) => ! $record->date_closed)
                                             ->visible()
                                             ->disabled()
                                             ->live()
@@ -243,7 +243,7 @@ class ApplicantForm
                                             ->searchable()
                                             ->dehydrated(true)
                                             ->saveRelationshipsUsing(function () {})
-                                            ->createOptionForm(fn(Schema $schema) => UserResource::form($schema)),
+                                            ->createOptionForm(fn (Schema $schema) => UserResource::form($schema)),
                                         Select::make('recruitments_applicant_applicant_categories')
                                             ->multiple()
                                             ->label(__('recruitments::filament/clusters/applications/resources/applicant.form.sections.general-information.fields.tags'))

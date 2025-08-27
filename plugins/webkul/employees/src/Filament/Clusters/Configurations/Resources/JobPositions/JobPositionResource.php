@@ -56,10 +56,10 @@ class JobPositionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListJobPositions::route('/'),
+            'index'  => ListJobPositions::route('/'),
             'create' => CreateJobPosition::route('/create'),
-            'view' => ViewJobPosition::route('/{record}'),
-            'edit' => EditJobPosition::route('/{record}/edit'),
+            'view'   => ViewJobPosition::route('/{record}'),
+            'edit'   => EditJobPosition::route('/{record}/edit'),
         ];
     }
 }

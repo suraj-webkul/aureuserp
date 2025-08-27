@@ -1,8 +1,7 @@
 <?php
 
-namespace Webkul\Security\Filament\Resources\User\Schemas;
+namespace Webkul\Security\Filament\Resources\Users\Schemas;
 
-use Filament\Schemas\Schema;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
@@ -10,6 +9,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Security\Enums\PermissionType;
 use Webkul\Security\Filament\Resources\Companies\CompanyResource;
@@ -138,6 +138,6 @@ class UserForm
                     ])
                     ->columns(3),
             ])
-                ->columns(1);
+            ->columns(1);
     }
 }

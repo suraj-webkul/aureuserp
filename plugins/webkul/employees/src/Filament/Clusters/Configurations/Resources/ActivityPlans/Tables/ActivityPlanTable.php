@@ -136,9 +136,9 @@ class ActivityPlanTable
             ])
             ->recordActions([
                 ViewAction::make()
-                    ->hidden(fn($record) => $record->trashed()),
+                    ->hidden(fn ($record) => $record->trashed()),
                 EditAction::make()
-                    ->hidden(fn($record) => $record->trashed()),
+                    ->hidden(fn ($record) => $record->trashed()),
                 RestoreAction::make()
                     ->successNotification(
                         Notification::make()

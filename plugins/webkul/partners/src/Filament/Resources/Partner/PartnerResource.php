@@ -2,13 +2,13 @@
 
 namespace Webkul\Partner\Filament\Resources\Partner;
 
+use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use Webkul\Partner\Models\Partner;
 use Webkul\Partner\Filament\Resources\Partner\Schemas\PartnerForm;
 use Webkul\Partner\Filament\Resources\Partner\Schemas\PartnerInfolist;
 use Webkul\Partner\Filament\Resources\Partner\Tables\PartnerTable;
-use Filament\Resources\Resource;
+use Webkul\Partner\Models\Partner;
 
 class PartnerResource extends Resource
 {

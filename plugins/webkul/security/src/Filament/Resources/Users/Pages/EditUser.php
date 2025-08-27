@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Security\Filament\Resources\User\Pages;
+namespace Webkul\Security\Filament\Resources\Users\Pages;
 
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;

@@ -2,7 +2,6 @@
 
 namespace Webkul\Partner\Filament\Resources\Tag\Tables;
 
-
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -30,7 +29,7 @@ class TagTable
             ])
             ->recordActions([
                 EditAction::make()
-                    ->hidden(fn($record) => $record->trashed())
+                    ->hidden(fn ($record) => $record->trashed())
                     ->successNotification(
                         Notification::make()
                             ->success()

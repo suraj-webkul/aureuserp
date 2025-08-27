@@ -7,13 +7,13 @@ use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use Webkul\Blog\Filament\Admin\Resources\Post\Schemas\PostForm;
-use Webkul\Blog\Filament\Admin\Resources\Post\Schemas\PostInfolist;
-use Webkul\Blog\Filament\Admin\Resources\Post\Tables\PostTable;
 use Webkul\Blog\Filament\Admin\Resources\Post\Pages\CreatePost;
 use Webkul\Blog\Filament\Admin\Resources\Post\Pages\EditPost;
 use Webkul\Blog\Filament\Admin\Resources\Post\Pages\ListPosts;
 use Webkul\Blog\Filament\Admin\Resources\Post\Pages\ViewPost;
+use Webkul\Blog\Filament\Admin\Resources\Post\Schemas\PostForm;
+use Webkul\Blog\Filament\Admin\Resources\Post\Schemas\PostInfolist;
+use Webkul\Blog\Filament\Admin\Resources\Post\Tables\PostTable;
 use Webkul\Blog\Models\Post;
 
 class PostResource extends Resource
@@ -64,10 +64,10 @@ class PostResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListPosts::route('/'),
+            'index'  => ListPosts::route('/'),
             'create' => CreatePost::route('/create'),
-            'view' => ViewPost::route('/{record}'),
-            'edit' => EditPost::route('/{record}/edit'),
+            'view'   => ViewPost::route('/{record}'),
+            'edit'   => EditPost::route('/{record}/edit'),
         ];
     }
 }

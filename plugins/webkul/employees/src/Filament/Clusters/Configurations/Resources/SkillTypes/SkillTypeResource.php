@@ -70,8 +70,8 @@ class SkillTypeResource extends Resource
     {
         return [
             'index' => ListSkillTypes::route('/'),
-            'view' => ViewSkillType::route('/{record}'),
-            'edit' => EditSkillType::route('/{record}/edit'),
+            'view'  => ViewSkillType::route('/{record}'),
+            'edit'  => EditSkillType::route('/{record}/edit'),
         ];
     }
 }

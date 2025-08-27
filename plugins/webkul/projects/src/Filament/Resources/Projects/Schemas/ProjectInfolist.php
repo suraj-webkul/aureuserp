@@ -2,28 +2,27 @@
 
 namespace Webkul\Project\Filament\Resources\Projects;
 
-
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Group;
-use Filament\Support\Enums\TextSize;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use Filament\Support\Enums\FontWeight;
-use Webkul\Field\Filament\Traits\HasCustomFields;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\FontWeight;
+use Filament\Support\Enums\TextSize;
+use Webkul\Field\Filament\Traits\HasCustomFields;
 use Webkul\Project\Enums\ProjectVisibility;
 use Webkul\Project\Filament\Resources\Projects\Pages\ManageMilestones;
 use Webkul\Project\Filament\Resources\Projects\Pages\ManageTasks;
+use Webkul\Project\Models\Project;
 use Webkul\Project\Settings\TaskSettings;
 use Webkul\Project\Settings\TimeSettings;
-use Webkul\Project\Models\Project;
-
 
 class ProjectInfolist
 {
     use HasCustomFields;
+
     public static function getModel(): string
     {
         return ProjectResource::class;
@@ -69,7 +68,7 @@ class ProjectInfolist
                                                     return '—';
                                                 }
 
-                                                return $record->start_date->format('d M Y') . ' - ' . $record->end_date->format('d M Y');
+                                                return $record->start_date->format('d M Y').' - '.$record->end_date->format('d M Y');
                                             }),
 
                                         TextEntry::make('allocated_hours')
@@ -77,33 +76,33 @@ class ProjectInfolist
                                             ->icon('heroicon-o-clock')
                                             ->placeholder('—')
                                             ->suffix(__('projects::filament/resources/project.infolist.sections.additional.entries.allocated-hours-suffix'))
-                                            ->visible(fn(TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                                            ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
 
                                         TextEntry::make('remaining_hours')
                                             ->label(__('projects::filament/resources/project.infolist.sections.additional.entries.remaining-hours'))
                                             ->icon('heroicon-o-clock')
                                             ->suffix(__('projects::filament/resources/project.infolist.sections.additional.entries.remaining-hours-suffix'))
-                                            ->color(fn(Project $record): string => $record->remaining_hours < 0 ? 'danger' : 'success')
-                                            ->visible(fn(TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                                            ->color(fn (Project $record): string => $record->remaining_hours < 0 ? 'danger' : 'success')
+                                            ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
 
                                         TextEntry::make('stage.name')
                                             ->label(__('projects::filament/resources/project.infolist.sections.additional.entries.current-stage'))
                                             ->icon('heroicon-o-flag')
                                             ->badge()
-                                            ->visible(fn(TaskSettings $taskSettings) => $taskSettings->enable_project_stages),
+                                            ->visible(fn (TaskSettings $taskSettings) => $taskSettings->enable_project_stages),
 
                                         TextEntry::make('tags.name')
                                             ->label(__('projects::filament/resources/project.infolist.sections.additional.entries.tags'))
                                             ->badge()
                                             ->state(function (Project $record): array {
-                                                return $record->tags()->get()->map(fn($tag) => [
+                                                return $record->tags()->get()->map(fn ($tag) => [
                                                     'label' => $tag->name,
                                                     'color' => $tag->color ?? '#808080',
                                                 ])->toArray();
                                             })
                                             ->badge()
-                                            ->formatStateUsing(fn($state) => $state['label'])
-                                            ->color(fn($state) => Color::generateV3Palette($state['color']))
+                                            ->formatStateUsing(fn ($state) => $state['label'])
+                                            ->color(fn ($state) => Color::generateV3Palette($state['color']))
                                             ->listWithLineBreaks()
                                             ->separator(', ')
                                             ->weight(FontWeight::Bold),
@@ -116,11 +115,11 @@ class ProjectInfolist
                                     ->schema([
                                         TextEntry::make('tasks_count')
                                             ->label(__('projects::filament/resources/project.infolist.sections.statistics.entries.total-tasks'))
-                                            ->state(fn(Project $record): int => $record->tasks()->count())
+                                            ->state(fn (Project $record): int => $record->tasks()->count())
                                             ->icon('heroicon-m-clipboard-document-list')
                                             ->iconColor('primary')
                                             ->color('primary')
-                                            ->url(fn(Project $record): string => ManageTasks::getUrl(['record' => $record])),
+                                            ->url(fn (Project $record): string => ManageTasks::getUrl(['record' => $record])),
 
                                         TextEntry::make('milestones_completion')
                                             ->label(__('projects::filament/resources/project.infolist.sections.statistics.entries.milestones-progress'))
@@ -133,8 +132,8 @@ class ProjectInfolist
                                             ->icon('heroicon-m-flag')
                                             ->iconColor('primary')
                                             ->color('primary')
-                                            ->url(fn(Project $record): string => ManageMilestones::getUrl(['record' => $record]))
-                                            ->visible(fn(TaskSettings $taskSettings, Project $record) => $taskSettings->enable_milestones && $record->allow_milestones),
+                                            ->url(fn (Project $record): string => ManageMilestones::getUrl(['record' => $record]))
+                                            ->visible(fn (TaskSettings $taskSettings, Project $record) => $taskSettings->enable_milestones && $record->allow_milestones),
                                     ]),
                             ]),
                     ])
@@ -164,19 +163,19 @@ class ProjectInfolist
                                 TextEntry::make('visibility')
                                     ->label(__('projects::filament/resources/project.infolist.sections.settings.entries.visibility'))
                                     ->badge()
-                                    ->icon(fn(string $state): string => ProjectVisibility::icons()[$state])
-                                    ->color(fn(string $state): string => ProjectVisibility::colors()[$state])
-                                    ->formatStateUsing(fn(string $state): string => ProjectVisibility::options()[$state]),
+                                    ->icon(fn (string $state): string => ProjectVisibility::icons()[$state])
+                                    ->color(fn (string $state): string => ProjectVisibility::colors()[$state])
+                                    ->formatStateUsing(fn (string $state): string => ProjectVisibility::options()[$state]),
 
                                 IconEntry::make('allow_timesheets')
                                     ->label(__('projects::filament/resources/project.infolist.sections.settings.entries.timesheets-enabled'))
                                     ->boolean()
-                                    ->visible(fn(TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                                    ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
 
                                 IconEntry::make('allow_milestones')
                                     ->label(__('projects::filament/resources/project.infolist.sections.settings.entries.milestones-enabled'))
                                     ->boolean()
-                                    ->visible(fn(TaskSettings $taskSettings) => $taskSettings->enable_milestones),
+                                    ->visible(fn (TaskSettings $taskSettings) => $taskSettings->enable_milestones),
                             ]),
                     ])
                     ->columnSpan(['lg' => 1]),

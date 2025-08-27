@@ -6,10 +6,10 @@ use BezhanSalleh\FilamentShield\Resources\RoleResource as BaseRoleResource;
 use Filament\Panel;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use Webkul\Security\Filament\Resources\RoleResource\Pages\CreateRole;
-use Webkul\Security\Filament\Resources\RoleResource\Pages\EditRole;
-use Webkul\Security\Filament\Resources\RoleResource\Pages\ListRoles;
-use Webkul\Security\Filament\Resources\RoleResource\Pages\ViewRole;
+use Webkul\Security\Filament\Resources\Roles\Pages\CreateRole;
+use Webkul\Security\Filament\Resources\Roles\Pages\EditRole;
+use Webkul\Security\Filament\Resources\Roles\Pages\ListRoles;
+use Webkul\Security\Filament\Resources\Roles\Pages\ViewRole;
 use Webkul\Security\Filament\Resources\Roles\Schemas\RoleForm;
 use Webkul\Security\Filament\Resources\Roles\Tables\RolesTable;
 

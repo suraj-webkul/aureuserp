@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Security\Filament\Resources\TeamResource\Pages;
+namespace Webkul\Security\Filament\Resources\Teams\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;

@@ -28,10 +28,10 @@ class BankAccountForm
                     ->relationship(
                         'bank',
                         'name',
-                        modifyQueryUsing: fn(Builder $query) => $query->withTrashed(),
+                        modifyQueryUsing: fn (Builder $query) => $query->withTrashed(),
                     )
                     ->getOptionLabelFromRecordUsing(function ($record): string {
-                        return $record->name . ($record->trashed() ? ' (Deleted)' : '');
+                        return $record->name.($record->trashed() ? ' (Deleted)' : '');
                     })
                     ->disableOptionWhen(function ($label) {
                         return str_contains($label, ' (Deleted)');
@@ -39,7 +39,7 @@ class BankAccountForm
                     ->required()
                     ->searchable()
                     ->preload()
-                    ->createOptionForm(fn(Schema $schema) => BankResource::form($schema)),
+                    ->createOptionForm(fn (Schema $schema) => BankResource::form($schema)),
                 Select::make('partner_id')
                     ->label(__('partners::filament/resources/bank-account.form.account-holder'))
                     ->relationship('partner', 'name')

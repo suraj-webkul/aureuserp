@@ -42,7 +42,7 @@ class BankForm
                         Select::make('country_id')
                             ->label(__('partners::filament/resources/bank.form.sections.address.fields.country'))
                             ->relationship(name: 'country', titleAttribute: 'name')
-                            ->afterStateUpdated(fn(Set $set) => $set('state_id', null))
+                            ->afterStateUpdated(fn (Set $set) => $set('state_id', null))
                             ->searchable()
                             ->preload()
                             ->live(),
@@ -51,7 +51,7 @@ class BankForm
                             ->relationship(
                                 name: 'state',
                                 titleAttribute: 'name',
-                                modifyQueryUsing: fn(Get $get, Builder $query) => $query->where('country_id', $get('country_id')),
+                                modifyQueryUsing: fn (Get $get, Builder $query) => $query->where('country_id', $get('country_id')),
                             )
                             ->searchable()
                             ->preload(),

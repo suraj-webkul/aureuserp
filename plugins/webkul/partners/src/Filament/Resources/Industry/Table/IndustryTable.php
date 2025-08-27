@@ -2,7 +2,6 @@
 
 namespace Webkul\Partner\Filament\Resources\Industry\Table;
 
-
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -31,7 +30,7 @@ class IndustryTable
             ])
             ->recordActions([
                 EditAction::make()
-                    ->hidden(fn($record) => $record->trashed())
+                    ->hidden(fn ($record) => $record->trashed())
                     ->successNotification(
                         Notification::make()
                             ->success()

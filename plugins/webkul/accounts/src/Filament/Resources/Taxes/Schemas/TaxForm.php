@@ -2,19 +2,19 @@
 
 namespace Webkul\Account\Filament\Resources\Taxes\Schemas;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Fieldset;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\RichEditor;
-use Webkul\Account\Enums\TypeTaxUse;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Webkul\Account\Enums\AmountType;
-use Webkul\Account\Enums\TaxScope;
 use Webkul\Account\Enums\TaxIncludeOverride;
-use Webkul\Account\Filament\Resources\TaxGroupResource;
+use Webkul\Account\Enums\TaxScope;
+use Webkul\Account\Enums\TypeTaxUse;
+use Webkul\Account\Filament\Resources\TaxGroups\TaxGroupResource;
 
 class TaxForm
 {

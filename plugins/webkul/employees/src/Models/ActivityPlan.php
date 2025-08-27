@@ -12,4 +12,3 @@ class ActivityPlan extends BaseActivityPlan
         return $this->belongsTo(Department::class);
     }
 }
- 

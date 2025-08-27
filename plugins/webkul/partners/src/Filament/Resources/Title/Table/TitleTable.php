@@ -2,7 +2,6 @@
 
 namespace Webkul\Partner\Filament\Resources\Title\Table;
 
-
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;

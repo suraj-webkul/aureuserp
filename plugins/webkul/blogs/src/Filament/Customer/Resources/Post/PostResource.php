@@ -5,8 +5,8 @@ namespace Webkul\Blog\Filament\Customer\Resources;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Webkul\Blog\Models\Post;
 use Webkul\Blog\Filament\Customer\Resources\Post\Pages\ViewPost;
+use Webkul\Blog\Models\Post;
 
 class PostResource extends Resource
 {
@@ -37,7 +37,7 @@ class PostResource extends Resource
         // Manual route definition since nested resource is no longer handled via $parentResource
         return route('filament.customer.resources.categories.posts.view', [
             'category' => $record->category->slug,
-            'record' => $record->slug,
+            'record'   => $record->slug,
         ]);
     }
 

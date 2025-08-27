@@ -11,10 +11,10 @@ use Webkul\Employee\Filament\Clusters\Configurations\Resources\Calendar\Pages\Ed
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\Calendar\Pages\ListCalendars;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\Calendar\Pages\ViewCalendar;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\Calendar\RelationManagers\CalendarAttendance;
-use Webkul\Employee\Models\Calendar;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\Calendar\Schemas\CalendarForm;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\Calendar\Schemas\CalendarInfolist;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\Calendar\Tables\CalendarTable;
+use Webkul\Employee\Models\Calendar;
 
 class CalendarResource extends Resource
 {
@@ -64,10 +64,10 @@ class CalendarResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListCalendars::route('/'),
+            'index'  => ListCalendars::route('/'),
             'create' => CreateCalendar::route('/create'),
-            'view' => ViewCalendar::route('/{record}'),
-            'edit' => EditCalendar::route('/{record}/edit'),
+            'view'   => ViewCalendar::route('/{record}'),
+            'edit'   => EditCalendar::route('/{record}/edit'),
         ];
     }
 }

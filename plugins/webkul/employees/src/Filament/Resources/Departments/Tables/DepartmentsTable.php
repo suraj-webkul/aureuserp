@@ -14,18 +14,18 @@ use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Support\Enums\FontWeight;
+use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables;
 use Filament\Tables\Filters\QueryBuilder;
 use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
 use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Table;
-use Webkul\Field\Filament\Traits\HasCustomFields;
 use Webkul\Employee\Filament\Resources\Departments\DepartmentResource;
+use Webkul\Field\Filament\Traits\HasCustomFields;
 
 class DepartmentsTable
 {
@@ -35,7 +35,6 @@ class DepartmentsTable
     {
         return DepartmentResource::getModel();
     }
-
 
     public static function configure(Table $table): Table
     {
@@ -59,7 +58,7 @@ class DepartmentsTable
                                 ->sortable()
                                 ->searchable(),
                         ])
-                            ->visible(fn($record) => filled($record?->manager?->name)),
+                            ->visible(fn ($record) => filled($record?->manager?->name)),
                         Stack::make([
                             TextColumn::make('company.name')
                                 ->searchable()
@@ -67,7 +66,7 @@ class DepartmentsTable
                                 ->icon('heroicon-m-building-office-2')
                                 ->searchable(),
                         ])
-                            ->visible(fn($record) => filled($record?->company?->name)),
+                            ->visible(fn ($record) => filled($record?->company?->name)),
                     ])->space(1),
                 ])->space(4),
             ])

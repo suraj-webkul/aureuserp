@@ -40,7 +40,7 @@ class EmployeePolicy
      */
     public function update(User $user, Employee $employee): bool
     {
-        if (!$user->can('update_employees::employee')) {
+        if (! $user->can('update_employees::employee')) {
             return false;
         }
 
@@ -52,7 +52,7 @@ class EmployeePolicy
      */
     public function delete(User $user, Employee $employee): bool
     {
-        if (!$user->can('delete_employees::employee')) {
+        if (! $user->can('delete_employees::employee')) {
             return false;
         }
 
@@ -72,7 +72,7 @@ class EmployeePolicy
      */
     public function forceDelete(User $user, Employee $employee): bool
     {
-        if (!$user->can('force_delete_employees::employee')) {
+        if (! $user->can('force_delete_employees::employee')) {
             return false;
         }
 
@@ -92,7 +92,7 @@ class EmployeePolicy
      */
     public function restore(User $user, Employee $employee): bool
     {
-        if (!$user->can('restore_employees::employee')) {
+        if (! $user->can('restore_employees::employee')) {
             return false;
         }
 
@@ -112,7 +112,7 @@ class EmployeePolicy
      */
     public function replicate(User $user, Employee $employee): bool
     {
-        if (!$user->can('replicate_employees::employee')) {
+        if (! $user->can('replicate_employees::employee')) {
             return false;
         }
 

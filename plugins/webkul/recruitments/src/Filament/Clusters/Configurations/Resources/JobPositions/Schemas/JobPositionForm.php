@@ -19,7 +19,6 @@ use Webkul\Partner\Filament\Resources\Industry\IndustryResource;
 use Webkul\Security\Filament\Resources\Companies\CompanyResource;
 use Webkul\Security\Filament\Resources\Users\UserResource;
 
-
 class JobPositionForm
 {
     public static function configure(Schema $schema): Schema
@@ -62,7 +61,7 @@ class JobPositionForm
                                                     $set('company_id', $department->company_id);
                                                 }
                                             })
-                                            ->createOptionForm(fn(Schema $schema) => DepartmentResource::form($schema))
+                                            ->createOptionForm(fn (Schema $schema) => DepartmentResource::form($schema))
                                             ->createOptionAction(function (Action $action) {
                                                 return $action
                                                     ->modalHeading(__('recruitments::filament/clusters/configurations/resources/job-position.form.sections.employment-information.fields.department-modal-title'));
@@ -80,7 +79,7 @@ class JobPositionForm
                                             ->searchable()
                                             ->preload()
                                             ->live()
-                                            ->createOptionForm(fn(Schema $schema) => CompanyResource::form($schema))
+                                            ->createOptionForm(fn (Schema $schema) => CompanyResource::form($schema))
                                             ->createOptionAction(function (Action $action) {
                                                 return $action
                                                     ->modalIcon('heroicon-o-building-office')
@@ -92,7 +91,7 @@ class JobPositionForm
                                             ->searchable()
                                             ->preload()
                                             ->live()
-                                            ->createOptionForm(fn(Schema $schema) => CompanyResource::form($schema))
+                                            ->createOptionForm(fn (Schema $schema) => CompanyResource::form($schema))
                                             ->createOptionAction(function (Action $action) {
                                                 return $action
                                                     ->modalIcon('heroicon-o-building-office')
@@ -105,13 +104,13 @@ class JobPositionForm
                                             ->multiple()
                                             ->preload()
                                             ->live()
-                                            ->createOptionForm(fn(Schema $schema) => UserResource::form($schema)),
+                                            ->createOptionForm(fn (Schema $schema) => UserResource::form($schema)),
                                         Select::make('address_id')
                                             ->label(__('recruitments::filament/clusters/configurations/resources/job-position.form.sections.employment-information.fields.job-location'))
                                             ->relationship(name: 'address', titleAttribute: 'name')
                                             ->searchable()
                                             ->preload()
-                                            ->createOptionForm(fn(Schema $schema) => DepartmentResource::form($schema))
+                                            ->createOptionForm(fn (Schema $schema) => DepartmentResource::form($schema))
                                             ->createOptionAction(function (Action $action) {
                                                 return $action
                                                     ->modalHeading(__('recruitments::filament/clusters/configurations/resources/job-position.form.sections.employment-information.fields.department-modal-title'))
@@ -122,7 +121,7 @@ class JobPositionForm
                                             ->label(__('recruitments::filament/clusters/configurations/resources/job-position.form.sections.employment-information.fields.industry'))
                                             ->relationship('industry', 'name')
                                             ->searchable()
-                                            ->createOptionForm(fn($form) => IndustryResource::form($form)->columns(2))
+                                            ->createOptionForm(fn ($form) => IndustryResource::form($form)->columns(2))
                                             ->preload(),
                                     ])->columns(2),
                                 Section::make()

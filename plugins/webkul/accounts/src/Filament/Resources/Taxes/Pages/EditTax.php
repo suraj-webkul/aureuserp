@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Account\Filament\Resources\Taxes\TaxResource\Pages;
+namespace Webkul\Account\Filament\Resources\Taxes\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;

@@ -1,7 +1,6 @@
 <?php
 
-namespace Webkul\Security\Filament\Resources\User\Schemas;
-
+namespace Webkul\Security\Filament\Resources\Users\Schemas;
 
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\ImageEntry;
@@ -105,6 +104,6 @@ class UserInfolist
                         ])->columnSpan(1),
                     ]),
             ])
-                ->columns(1);
+            ->columns(1);
     }
 }

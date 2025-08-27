@@ -2,7 +2,6 @@
 
 namespace Webkul\Partner\Filament\Resources\Partner\Schemas;
 
-use Filament\Schemas\Schema;
 use Filament\Actions\Action;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\FileUpload;
@@ -17,6 +16,7 @@ use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Partner\Enums\AccountType;
@@ -52,7 +52,7 @@ class PartnerForm
                                             ->required()
                                             ->maxLength(255)
                                             ->columnSpan(2)
-                                            ->placeholder(fn(Get $get): string => $get('account_type') === AccountType::INDIVIDUAL->value ? 'Jhon Doe' : 'ACME Corp')
+                                            ->placeholder(fn (Get $get): string => $get('account_type') === AccountType::INDIVIDUAL->value ? 'Jhon Doe' : 'ACME Corp')
                                             ->extraInputAttributes(['style' => 'font-size: 1.5rem;height: 3rem;']),
                                         Select::make('parent_id')
                                             ->label(__('partners::filament/resources/partner.form.sections.general.fields.company'))
@@ -61,12 +61,12 @@ class PartnerForm
                                                 titleAttribute: 'name',
                                                 // modifyQueryUsing: fn (Builder $query) => $query->where('account_type', AccountType::COMPANY->value),
                                             )
-                                            ->visible(fn(Get $get): bool => $get('account_type') === AccountType::INDIVIDUAL->value)
+                                            ->visible(fn (Get $get): bool => $get('account_type') === AccountType::INDIVIDUAL->value)
                                             ->searchable()
                                             ->preload()
                                             ->columnSpan(2)
-                                            ->createOptionForm(fn(Schema $schema): Schema => self::form($schema))
-                                            ->editOptionForm(fn(Schema $schema): Schema => self::form($schema))
+                                            ->createOptionForm(fn (Schema $schema): Schema => self::form($schema))
+                                            ->editOptionForm(fn (Schema $schema): Schema => self::form($schema))
                                             ->createOptionAction(function (Action $action) {
                                                 $action
                                                     ->fillForm(function (array $arguments): array {
@@ -176,7 +176,7 @@ class PartnerForm
                                         Select::make('country_id')
                                             ->label(__('partners::filament/resources/partner.form.sections.general.address.fields.country'))
                                             ->relationship(name: 'country', titleAttribute: 'name')
-                                            ->afterStateUpdated(fn(Set $set) => $set('state_id', null))
+                                            ->afterStateUpdated(fn (Set $set) => $set('state_id', null))
                                             ->searchable()
                                             ->preload()
                                             ->afterStateUpdated(function (Set $set, Get $get) {
@@ -188,7 +188,7 @@ class PartnerForm
                                             ->relationship(
                                                 name: 'state',
                                                 titleAttribute: 'name',
-                                                modifyQueryUsing: fn(Get $get, Builder $query) => $query->where('country_id', $get('country_id')),
+                                                modifyQueryUsing: fn (Get $get, Builder $query) => $query->where('country_id', $get('country_id')),
                                             )
                                             ->createOptionForm(function (Schema $schema, Get $get, Set $set) {
                                                 return $schema

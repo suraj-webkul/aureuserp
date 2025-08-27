@@ -2,8 +2,8 @@
 
 namespace Webkul\Security\Filament\Resources\Teams;
 
-use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Schema;
 
 class TeamForm
 {

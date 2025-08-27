@@ -2,7 +2,6 @@
 
 namespace Webkul\Website\Src\Filament\Admin\Resources\Page\Schemas;
 
-
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Group;

@@ -16,7 +16,6 @@ use Webkul\Employee\Filament\Resources\Departments\DepartmentResource;
 use Webkul\Employee\Models\Department;
 use Webkul\Security\Filament\Resources\Companies\CompanyResource;
 
-
 class JobPositionForm
 {
     public static function configure(Schema $schema): Schema
@@ -45,13 +44,13 @@ class JobPositionForm
                                                 $department = Department::find($state);
 
                                                 if (
-                                                    !$get('company_id')
+                                                    ! $get('company_id')
                                                     && $department?->company_id
                                                 ) {
                                                     $set('company_id', $department->company_id);
                                                 }
                                             })
-                                            ->createOptionForm(fn(Schema $schema) => DepartmentResource::form($schema))
+                                            ->createOptionForm(fn (Schema $schema) => DepartmentResource::form($schema))
                                             ->createOptionAction(function (Action $action) {
                                                 return $action
                                                     ->modalHeading(__('employees::filament/clusters/configurations/resources/job-position.form.sections.employment-information.fields.department-modal-title'));
@@ -62,7 +61,7 @@ class JobPositionForm
                                             ->searchable()
                                             ->preload()
                                             ->live()
-                                            ->createOptionForm(fn(Schema $schema) => CompanyResource::form($schema))
+                                            ->createOptionForm(fn (Schema $schema) => CompanyResource::form($schema))
                                             ->createOptionAction(function (Action $action) {
                                                 return $action
                                                     ->modalIcon('heroicon-o-building-office')

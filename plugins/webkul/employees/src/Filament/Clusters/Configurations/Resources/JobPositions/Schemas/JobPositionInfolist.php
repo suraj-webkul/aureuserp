@@ -9,7 +9,6 @@ use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
-
 class JobPositionInfolist
 {
     public static function configure(Schema $schema): Schema

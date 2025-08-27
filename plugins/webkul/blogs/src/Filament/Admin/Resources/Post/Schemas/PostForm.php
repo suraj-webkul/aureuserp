@@ -15,7 +15,6 @@ use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
 use Webkul\Blog\Models\Post;
 
-
 class PostForm
 {
     public static function configure(Schema $schema): Schema
@@ -33,7 +32,7 @@ class PostForm
                                     ->maxLength(255)
                                     ->placeholder(__('blogs::filament/admin/resources/post.form.sections.general.fields.title-placeholder'))
                                     ->extraInputAttributes(['style' => 'font-size: 1.5rem;height: 3rem;'])
-                                    ->afterStateUpdated(fn(string $operation, $state, Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                                    ->afterStateUpdated(fn (string $operation, $state, Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
                                 TextInput::make('slug')
                                     ->disabled()
                                     ->dehydrated()

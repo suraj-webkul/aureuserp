@@ -22,8 +22,8 @@ use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Employee\Filament\Clusters\Configurations;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\DepartureReasons\Pages\ListDepartureReasons;
-use Webkul\Employee\Models\DepartureReason;
 use Webkul\Employee\Filament\Clusters\Configurations\Resources\DepartureReasons\Schemas\DepartureReasonForm;
+use Webkul\Employee\Models\DepartureReason;
 
 class DepartureReasonResource extends Resource
 {

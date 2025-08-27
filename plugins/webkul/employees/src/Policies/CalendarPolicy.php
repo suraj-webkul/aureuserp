@@ -106,4 +106,3 @@ class CalendarPolicy
         return $user->can('reorder_calendar::calendar');
     }
 }
-

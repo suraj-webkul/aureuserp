@@ -8,8 +8,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Schema;
-use Webkul\Employee\Enums\WorkLocation as WorkLocationEnum;
 use Illuminate\Support\Facades\Auth;
+use Webkul\Employee\Enums\WorkLocation as WorkLocationEnum;
 
 class WorkLocationForm
 {
