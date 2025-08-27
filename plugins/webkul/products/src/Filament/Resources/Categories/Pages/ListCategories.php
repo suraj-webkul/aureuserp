@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Product\Filament\Resources\CategoryResource\Pages;
+namespace Webkul\Product\Filament\Resources\Categories\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;

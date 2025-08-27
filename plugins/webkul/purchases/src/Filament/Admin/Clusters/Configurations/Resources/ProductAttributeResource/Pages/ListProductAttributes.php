@@ -2,7 +2,7 @@
 
 namespace Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductAttributeResource\Pages;
 
-use Webkul\Product\Filament\Resources\AttributeResource\Pages\ListAttributes;
+use Webkul\Product\Filament\Resources\Attributes\Pages\ListAttributes;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductAttributeResource;
 
 class ListProductAttributes extends ListAttributes

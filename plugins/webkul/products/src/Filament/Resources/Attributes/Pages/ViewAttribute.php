@@ -1,12 +1,12 @@
 <?php
 
-namespace Webkul\Product\Filament\Resources\AttributeResource\Pages;
+namespace Webkul\Product\Filament\Resources\Attributes\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
-use Webkul\Product\Filament\Resources\AttributeResource;
+use Webkul\Product\Filament\Resources\Attributes\AttributeResource;
 
 class ViewAttribute extends ViewRecord
 {

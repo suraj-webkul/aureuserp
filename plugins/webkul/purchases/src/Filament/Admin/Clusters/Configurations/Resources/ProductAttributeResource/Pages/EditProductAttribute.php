@@ -2,7 +2,7 @@
 
 namespace Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductAttributeResource\Pages;
 
-use Webkul\Product\Filament\Resources\AttributeResource\Pages\EditAttribute;
+use Webkul\Product\Filament\Resources\Attributes\Pages\EditAttribute;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductAttributeResource;
 
 class EditProductAttribute extends EditAttribute

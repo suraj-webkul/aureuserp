@@ -32,7 +32,6 @@ class EmployeesTable
 {
     use HasCustomFields;
 
-
     public static function getModel(): string
     {
         return EmployeeResource::class;

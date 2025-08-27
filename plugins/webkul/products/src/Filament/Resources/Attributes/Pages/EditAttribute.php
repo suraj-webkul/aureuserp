@@ -1,12 +1,13 @@
 <?php
 
-namespace Webkul\Product\Filament\Resources\AttributeResource\Pages;
+namespace Webkul\Product\Filament\Resources\Attributes\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
-use Webkul\Product\Filament\Resources\AttributeResource;
+use Webkul\Product\Filament\Resources\Attributes\AttributeResource;
+
 
 class EditAttribute extends EditRecord
 {

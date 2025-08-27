@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Product\Filament\Resources\CategoryResource\Pages;
+namespace Webkul\Product\Filament\Resources\Categories\Pages;
 
 use Exception;
 use Filament\Actions\DeleteAction;

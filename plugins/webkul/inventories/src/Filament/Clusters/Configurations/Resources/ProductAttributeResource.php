@@ -9,7 +9,7 @@ use Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductAttribute
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductAttributeResource\Pages\ViewProductAttribute;
 use Webkul\Inventory\Models\Attribute;
 use Webkul\Inventory\Settings\ProductSettings;
-use Webkul\Product\Filament\Resources\AttributeResource;
+use Webkul\Product\Filament\Resources\Attributes\AttributeResource;
 
 class ProductAttributeResource extends AttributeResource
 {
@@ -49,10 +49,10 @@ class ProductAttributeResource extends AttributeResource
     public static function getPages(): array
     {
         return [
-            'index'  => ListProductAttributes::route('/'),
+            'index' => ListProductAttributes::route('/'),
             'create' => CreateProductAttribute::route('/create'),
-            'view'   => ViewProductAttribute::route('/{record}'),
-            'edit'   => EditProductAttribute::route('/{record}/edit'),
+            'view' => ViewProductAttribute::route('/{record}'),
+            'edit' => EditProductAttribute::route('/{record}/edit'),
         ];
     }
 }
