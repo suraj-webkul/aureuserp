@@ -1,9 +1,9 @@
 <?php
 
-namespace Webkul\Account\Filament\Resources\RefundResource\Pages;
+namespace Webkul\Account\Filament\Resources\Refunds\Pages;
 
 use Filament\Resources\Pages\ListRecords;
-use Webkul\Account\Filament\Resources\RefundResource;
+use Webkul\Account\Filament\Resources\Refunds\RefundResource;
 
 class ListRefunds extends ListRecords
 {

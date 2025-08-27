@@ -1,11 +1,11 @@
 <?php
 
-namespace Webkul\Account\Filament\Resources\PaymentTermResource\Pages;
+namespace Webkul\Account\Filament\Resources\PaymentTerms\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
-use Webkul\Account\Filament\Resources\PaymentTermResource;
+use Webkul\Account\Filament\Resources\PaymentTerms\PaymentTermResource;
 use Webkul\Account\Models\PaymentTerm;
 
 class ListPaymentTerms extends ListRecords

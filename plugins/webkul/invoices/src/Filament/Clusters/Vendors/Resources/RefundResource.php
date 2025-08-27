@@ -4,7 +4,7 @@ namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources;
 
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
-use Webkul\Account\Filament\Resources\RefundResource as BaseRefundResource;
+use Webkul\Account\Filament\Resources\Refunds\RefundResource as BaseRefundResource;
 use Webkul\Invoice\Filament\Clusters\Vendors;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\RefundResource\Pages\CreateRefund;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\RefundResource\Pages\EditRefund;
@@ -22,7 +22,7 @@ class RefundResource extends BaseRefundResource
 
     protected static ?string $cluster = Vendors::class;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getNavigationGroup(): ?string
     {
