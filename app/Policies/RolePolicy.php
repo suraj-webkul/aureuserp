@@ -1,12 +1,12 @@
 <?php
 
-namespace Webkul\Employee\Policies;
+namespace App\Policies;
 
-use Illuminate\Auth\Access\HandlesAuthorization;
-use Webkul\Employee\Models\Calendar;
 use Webkul\Security\Models\User;
+use Spatie\Permission\Models\Role;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CalendarPolicy
+class RolePolicy
 {
     use HandlesAuthorization;
 
@@ -15,15 +15,15 @@ class CalendarPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_calendar::calendar');
+        return $user->can('view_any_roles::role');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Calendar $calendar): bool
+    public function view(User $user, Role $role): bool
     {
-        return $user->can('view_calendar::calendar');
+        return $user->can('view_roles::role');
     }
 
     /**
@@ -31,23 +31,23 @@ class CalendarPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_calendar::calendar');
+        return $user->can('create_roles::role');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Calendar $calendar): bool
+    public function update(User $user, Role $role): bool
     {
-        return $user->can('update_calendar::calendar');
+        return $user->can('update_roles::role');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Calendar $calendar): bool
+    public function delete(User $user, Role $role): bool
     {
-        return $user->can('delete_calendar::calendar');
+        return $user->can('delete_roles::role');
     }
 
     /**
@@ -55,15 +55,15 @@ class CalendarPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_calendar::calendar');
+        return $user->can('delete_any_roles::role');
     }
 
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, Calendar $calendar): bool
+    public function forceDelete(User $user, Role $role): bool
     {
-        return $user->can('force_delete_calendar::calendar');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -71,15 +71,15 @@ class CalendarPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_calendar::calendar');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, Calendar $calendar): bool
+    public function restore(User $user, Role $role): bool
     {
-        return $user->can('restore_calendar::calendar');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -87,15 +87,15 @@ class CalendarPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_calendar::calendar');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, Calendar $calendar): bool
+    public function replicate(User $user, Role $role): bool
     {
-        return $user->can('replicate_calendar::calendar');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -103,7 +103,6 @@ class CalendarPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_calendar::calendar');
+        return $user->can('{{ Reorder }}');
     }
 }
-

@@ -1,15 +1,14 @@
 <?php
 
-namespace Webkul\Employee\Policies;
+namespace App\Policies;
 
-use Illuminate\Auth\Access\HandlesAuthorization;
-use Webkul\Employee\Models\Employee;
 use Webkul\Security\Models\User;
-use Webkul\Security\Traits\HasScopedPermissions;
+use Webkul\Employee\Models\Employee;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class EmployeePolicy
 {
-    use HandlesAuthorization, HasScopedPermissions;
+    use HandlesAuthorization;
 
     /**
      * Determine whether the user can view any models.
@@ -40,11 +39,7 @@ class EmployeePolicy
      */
     public function update(User $user, Employee $employee): bool
     {
-        if (!$user->can('update_employees::employee')) {
-            return false;
-        }
-
-        return $this->hasAccess($user, $employee, 'coach');
+        return $user->can('update_employees::employee');
     }
 
     /**
@@ -52,11 +47,7 @@ class EmployeePolicy
      */
     public function delete(User $user, Employee $employee): bool
     {
-        if (!$user->can('delete_employees::employee')) {
-            return false;
-        }
-
-        return $this->hasAccess($user, $employee, 'coach');
+        return $user->can('delete_employees::employee');
     }
 
     /**
@@ -72,11 +63,7 @@ class EmployeePolicy
      */
     public function forceDelete(User $user, Employee $employee): bool
     {
-        if (!$user->can('force_delete_employees::employee')) {
-            return false;
-        }
-
-        return $this->hasAccess($user, $employee, 'coach');
+        return $user->can('force_delete_employees::employee');
     }
 
     /**
@@ -92,11 +79,7 @@ class EmployeePolicy
      */
     public function restore(User $user, Employee $employee): bool
     {
-        if (!$user->can('restore_employees::employee')) {
-            return false;
-        }
-
-        return $this->hasAccess($user, $employee, 'coach');
+        return $user->can('restore_employees::employee');
     }
 
     /**
@@ -112,11 +95,7 @@ class EmployeePolicy
      */
     public function replicate(User $user, Employee $employee): bool
     {
-        if (!$user->can('replicate_employees::employee')) {
-            return false;
-        }
-
-        return $this->hasAccess($user, $employee, 'coach');
+        return $user->can('replicate_employees::employee');
     }
 
     /**

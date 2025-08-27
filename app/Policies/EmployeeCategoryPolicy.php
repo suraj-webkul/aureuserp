@@ -1,10 +1,10 @@
 <?php
 
-namespace Webkul\Employee\Policies;
+namespace App\Policies;
 
-use Illuminate\Auth\Access\HandlesAuthorization;
-use Webkul\Employee\Models\EmployeeCategory;
 use Webkul\Security\Models\User;
+use Webkul\Employee\Models\EmployeeCategory;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class EmployeeCategoryPolicy
 {

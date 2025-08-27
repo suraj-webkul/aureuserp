@@ -1,10 +1,10 @@
 <?php
 
-namespace Webkul\Employee\Policies;
+namespace App\Policies;
 
-use Illuminate\Auth\Access\HandlesAuthorization;
-use Webkul\Employee\Models\ActivityPlan;
 use Webkul\Security\Models\User;
+use Webkul\Employee\Models\ActivityPlan;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ActivityPlanPolicy
 {
