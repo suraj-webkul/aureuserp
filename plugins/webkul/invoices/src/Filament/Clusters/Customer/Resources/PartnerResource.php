@@ -15,7 +15,7 @@ use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages\Ma
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages\ViewPartner;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource as BasePartnerResource;
 use Webkul\Invoice\Models\Partner;
-use Webkul\Partner\Filament\Resources\PartnerResource as BaseVendorResource;
+use Webkul\Partner\Filament\Resources\Partners\PartnerResource as BaseVendorResource;
 
 class PartnerResource extends BasePartnerResource
 {

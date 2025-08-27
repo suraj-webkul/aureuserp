@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Field\Filament\Forms\Components\ProgressStepper;
 use Webkul\Field\Filament\Traits\HasCustomFields;
-use Webkul\Partner\Filament\Resources\Partner\PartnerResource;
+use Webkul\Partner\Filament\Resources\Partners\PartnerResource;
 use Webkul\Project\Enums\TaskState;
 use Webkul\Project\Filament\Resources\Projects\ProjectResource;
 use Webkul\Project\Models\Project;

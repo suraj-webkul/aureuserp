@@ -46,7 +46,7 @@ use Webkul\Inventory\Filament\Clusters\Configurations\Resources\RuleResource\Pag
 use Webkul\Inventory\Models\OperationType;
 use Webkul\Inventory\Models\Rule;
 use Webkul\Inventory\Settings\WarehouseSettings;
-use Webkul\Partner\Filament\Resources\PartnerResource;
+use Webkul\Partner\Filament\Resources\Partners\PartnerResource;
 
 class RuleResource extends Resource
 {

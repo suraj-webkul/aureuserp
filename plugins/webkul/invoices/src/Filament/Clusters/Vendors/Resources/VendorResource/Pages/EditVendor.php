@@ -4,7 +4,7 @@ namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Page
 
 use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource;
-use Webkul\Partner\Filament\Resources\Partner\Pages\EditPartner as BaseEditVendor;
+use Webkul\Partner\Filament\Resources\Partners\Pages\EditPartner as BaseEditVendor;
 
 class EditVendor extends BaseEditVendor
 {

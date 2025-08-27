@@ -46,7 +46,7 @@ use Webkul\Inventory\Filament\Clusters\Configurations\Resources\WarehouseResourc
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\WarehouseResource\Pages\ViewWarehouse;
 use Webkul\Inventory\Models\Warehouse;
 use Webkul\Inventory\Settings\WarehouseSettings;
-use Webkul\Partner\Filament\Resources\PartnerResource;
+use Webkul\Partner\Filament\Resources\Partners\PartnerResource;
 
 class WarehouseResource extends Resource
 {

@@ -57,7 +57,7 @@ use Webkul\Inventory\Settings\OperationSettings;
 use Webkul\Inventory\Settings\ProductSettings;
 use Webkul\Inventory\Settings\TraceabilitySettings;
 use Webkul\Inventory\Settings\WarehouseSettings;
-use Webkul\Partner\Filament\Resources\PartnerResource;
+use Webkul\Partner\Filament\Resources\Partners\PartnerResource;
 use Webkul\Product\Enums\ProductType;
 use Webkul\Support\Models\UOM;
 use Webkul\TableViews\Filament\Components\PresetView;

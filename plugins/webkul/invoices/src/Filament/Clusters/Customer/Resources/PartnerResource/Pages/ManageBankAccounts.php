@@ -7,7 +7,7 @@ use Filament\Resources\Pages\ManageRelatedRecords;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource;
-use Webkul\Partner\Filament\Resources\BankAccountResource;
+use Webkul\Partner\Filament\Resources\BankAccounts\BankAccountResource;
 
 class ManageBankAccounts extends ManageRelatedRecords
 {

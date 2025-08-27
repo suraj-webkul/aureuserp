@@ -4,7 +4,7 @@ namespace Webkul\Sale\Filament\Clusters\Orders\Resources\CustomerResource\Pages;
 
 use Filament\Pages\Enums\SubNavigationPosition;
 use Illuminate\Contracts\Support\Htmlable;
-use Webkul\Partner\Filament\Resources\Partner\Pages\EditPartner as BaseEditCustomer;
+use Webkul\Partner\Filament\Resources\Partners\Pages\EditPartner as BaseEditCustomer;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\CustomerResource;
 
 class EditCustomer extends BaseEditCustomer

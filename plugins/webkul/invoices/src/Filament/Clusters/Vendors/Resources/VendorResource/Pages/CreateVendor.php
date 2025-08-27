@@ -4,7 +4,7 @@ namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Page
 
 use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource;
-use Webkul\Partner\Filament\Resources\Partner\Pages\CreatePartner as BaseCreateVendor;
+use Webkul\Partner\Filament\Resources\Partners\Pages\CreatePartner as BaseCreateVendor;
 
 class CreateVendor extends BaseCreateVendor
 {

@@ -6,7 +6,7 @@ use Filament\Actions\CreateAction;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use Webkul\Partner\Filament\Resources\BankAccountResource;
+use Webkul\Partner\Filament\Resources\BankAccounts\BankAccountResource;
 
 class BankAccountsRelationManager extends RelationManager
 {

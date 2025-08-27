@@ -15,7 +15,7 @@ use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Webkul\Employee\Filament\Resources\Departments\DepartmentResource;
 use Webkul\Employee\Models\Department;
-use Webkul\Partner\Filament\Resources\Industry\IndustryResource;
+use Webkul\Partner\Filament\Resources\Industries\IndustryResource;
 use Webkul\Security\Filament\Resources\Companies\CompanyResource;
 use Webkul\Security\Filament\Resources\Users\UserResource;
 
