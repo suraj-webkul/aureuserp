@@ -195,7 +195,7 @@ class ProductResource extends Resource
                     ->circular()
                     ->stacked()
                     ->limit(3)
-                    ->limitedRemainingText(isSeparate: true),
+                    ->limitedRemainingText(),
                 TextColumn::make('name')
                     ->label(__('products::filament/resources/product.table.columns.name'))
                     ->searchable()

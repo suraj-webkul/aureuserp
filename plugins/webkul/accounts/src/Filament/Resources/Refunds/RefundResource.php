@@ -1,13 +1,13 @@
 <?php
 
-namespace Webkul\Account\Filament\Resources;
+namespace Webkul\Account\Filament\Resources\Refunds;
 
 use BackedEnum;
 use Webkul\Account\Filament\Resources\Bills\BillResource;
-use Webkul\Account\Filament\Resources\RefundResource\Pages\CreateRefund;
-use Webkul\Account\Filament\Resources\RefundResource\Pages\EditRefund;
-use Webkul\Account\Filament\Resources\RefundResource\Pages\ListRefunds;
-use Webkul\Account\Filament\Resources\RefundResource\Pages\ViewRefund;
+use Webkul\Account\Filament\Resources\Refunds\Pages\CreateRefund;
+use Webkul\Account\Filament\Resources\Refunds\Pages\EditRefund;
+use Webkul\Account\Filament\Resources\Refunds\Pages\ListRefunds;
+use Webkul\Account\Filament\Resources\Refunds\Pages\ViewRefund;
 use Webkul\Account\Models\Move as AccountMove;
 
 class RefundResource extends BillResource

@@ -3,7 +3,7 @@
 namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\RefundResource\Pages;
 
 use Filament\Pages\Enums\SubNavigationPosition;
-use Webkul\Account\Filament\Resources\RefundResource\Pages\ViewRefund as BaseViewRefund;
+use Webkul\Account\Filament\Resources\Refunds\Pages\ViewRefund as BaseViewRefund;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\RefundResource;
 
 class ViewRefund extends BaseViewRefund
