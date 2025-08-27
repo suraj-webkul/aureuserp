@@ -1,10 +1,10 @@
 <?php
 
-namespace Webkul\Blog\Policies;
+namespace App\Policies;
 
-use Illuminate\Auth\Access\HandlesAuthorization;
-use Webkul\Blog\Models\Category;
 use Webkul\Security\Models\User;
+use Webkul\Blog\Models\Category;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CategoryPolicy
 {

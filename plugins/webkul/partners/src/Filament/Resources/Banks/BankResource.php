@@ -5,7 +5,7 @@ namespace Webkul\Partner\Filament\Resources\Banks;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use Webkul\Partner\Filament\Resources\Bank\Schemas\BankForm;
+use Webkul\Partner\Filament\Resources\Banks\Schemas\BankForm;
 use Webkul\Partner\Filament\Resources\Banks\Tables\BanksTable;
 use Webkul\Support\Models\Bank;
 

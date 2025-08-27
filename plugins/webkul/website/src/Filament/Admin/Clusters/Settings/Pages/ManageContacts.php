@@ -9,6 +9,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Webkul\Support\Filament\Clusters\Settings;
 use Webkul\Website\Settings\ContactSettings;
+use UnitEnum;
 
 class ManageContacts extends SettingsPage
 {
@@ -18,7 +19,7 @@ class ManageContacts extends SettingsPage
 
     protected static ?string $slug = 'website/manage-contacts';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Website';
+    protected static string|UnitEnum|null $navigationGroup = 'Website';
 
     protected static ?int $navigationSort = 5;
 

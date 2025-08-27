@@ -2,13 +2,23 @@
 
 namespace Webkul\Partner\Filament\Resources;
 
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Webkul\Partner\Filament\Resources\Banks\BankResource;
 use Webkul\Partner\Models\BankAccount;
 
 class BankAccountResource extends Resource
@@ -29,10 +39,10 @@ class BankAccountResource extends Resource
         return __('partners::filament/resources/bank-account.navigation.title');
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Forms\Components\TextInput::make('account_number')
                     ->label(__('partners::filament/resources/bank-account.form.account-number'))
                     ->required()
@@ -46,10 +56,10 @@ class BankAccountResource extends Resource
                     ->relationship(
                         'bank',
                         'name',
-                        modifyQueryUsing: fn (Builder $query) => $query->withTrashed(),
+                        modifyQueryUsing: fn(Builder $query) => $query->withTrashed(),
                     )
                     ->getOptionLabelFromRecordUsing(function ($record): string {
-                        return $record->name.($record->trashed() ? ' (Deleted)' : '');
+                        return $record->name . ($record->trashed() ? ' (Deleted)' : '');
                     })
                     ->disableOptionWhen(function ($label) {
                         return str_contains($label, ' (Deleted)');
@@ -57,7 +67,7 @@ class BankAccountResource extends Resource
                     ->required()
                     ->searchable()
                     ->preload()
-                    ->createOptionForm(fn (Form $form) => BankResource::form($form)),
+                    ->createOptionForm(fn(Form $form) => BankResource::form($form)),
                 Forms\Components\Select::make('partner_id')
                     ->label(__('partners::filament/resources/bank-account.form.account-holder'))
                     ->relationship('partner', 'name')
@@ -133,29 +143,29 @@ class BankAccountResource extends Resource
                     ->preload(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()
-                    ->hidden(fn ($record) => $record->trashed())
+                EditAction::make()
+                    ->hidden(fn($record) => $record->trashed())
                     ->successNotification(
                         Notification::make()
                             ->success()
                             ->title(__('partners::filament/resources/bank-account.table.actions.edit.notification.title'))
                             ->body(__('partners::filament/resources/bank-account.table.actions.edit.notification.body')),
                     ),
-                Tables\Actions\RestoreAction::make()
+                RestoreAction::make()
                     ->successNotification(
                         Notification::make()
                             ->success()
                             ->title(__('partners::filament/resources/bank-account.table.actions.restore.notification.title'))
                             ->body(__('partners::filament/resources/bank-account.table.actions.restore.notification.body')),
                     ),
-                Tables\Actions\DeleteAction::make()
+                DeleteAction::make()
                     ->successNotification(
                         Notification::make()
                             ->success()
                             ->title(__('partners::filament/resources/bank-account.table.actions.delete.notification.title'))
                             ->body(__('partners::filament/resources/bank-account.table.actions.delete.notification.body')),
                     ),
-                Tables\Actions\ForceDeleteAction::make()
+                ForceDeleteAction::make()
                     ->successNotification(
                         Notification::make()
                             ->success()
@@ -164,22 +174,22 @@ class BankAccountResource extends Resource
                     ),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\RestoreBulkAction::make()
+                BulkActionGroup::make([
+                    RestoreBulkAction::make()
                         ->successNotification(
                             Notification::make()
                                 ->success()
                                 ->title(__('partners::filament/resources/bank-account.table.bulk-actions.restore.notification.title'))
                                 ->body(__('partners::filament/resources/bank-account.table.bulk-actions.restore.notification.body')),
                         ),
-                    Tables\Actions\DeleteBulkAction::make()
+                    DeleteBulkAction::make()
                         ->successNotification(
                             Notification::make()
                                 ->success()
                                 ->title(__('partners::filament/resources/bank-account.table.bulk-actions.delete.notification.title'))
                                 ->body(__('partners::filament/resources/bank-account.table.bulk-actions.delete.notification.body')),
                         ),
-                    Tables\Actions\ForceDeleteBulkAction::make()
+                    ForceDeleteBulkAction::make()
                         ->successNotification(
                             Notification::make()
                                 ->success()

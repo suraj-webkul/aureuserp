@@ -1,12 +1,12 @@
 <?php
 
-namespace Webkul\Blog\Policies;
+namespace App\Policies;
 
-use Illuminate\Auth\Access\HandlesAuthorization;
-use Webkul\Blog\Models\Category;
 use Webkul\Security\Models\User;
+use Webkul\Website\Models\Partner;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CategoryPolicy
+class PartnerPolicy
 {
     use HandlesAuthorization;
 
@@ -15,15 +15,15 @@ class CategoryPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_categories::category');
+        return $user->can('view_any_partner::partner');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Category $category): bool
+    public function view(User $user, Partner $partner): bool
     {
-        return $user->can('view_categories::category');
+        return $user->can('view_partner::partner');
     }
 
     /**
@@ -31,23 +31,23 @@ class CategoryPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_categories::category');
+        return $user->can('create_partner::partner');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Category $category): bool
+    public function update(User $user, Partner $partner): bool
     {
-        return $user->can('update_categories::category');
+        return $user->can('update_partner::partner');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Category $category): bool
+    public function delete(User $user, Partner $partner): bool
     {
-        return $user->can('delete_categories::category');
+        return $user->can('delete_partner::partner');
     }
 
     /**
@@ -55,15 +55,15 @@ class CategoryPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_categories::category');
+        return $user->can('delete_any_partner::partner');
     }
 
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, Category $category): bool
+    public function forceDelete(User $user, Partner $partner): bool
     {
-        return $user->can('force_delete_categories::category');
+        return $user->can('force_delete_partner::partner');
     }
 
     /**
@@ -71,15 +71,15 @@ class CategoryPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_categories::category');
+        return $user->can('force_delete_any_partner::partner');
     }
 
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, Category $category): bool
+    public function restore(User $user, Partner $partner): bool
     {
-        return $user->can('restore_categories::category');
+        return $user->can('restore_partner::partner');
     }
 
     /**
@@ -87,15 +87,15 @@ class CategoryPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_categories::category');
+        return $user->can('restore_any_partner::partner');
     }
 
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, Category $category): bool
+    public function replicate(User $user, Partner $partner): bool
     {
-        return $user->can('replicate_categories::category');
+        return $user->can('replicate_partner::partner');
     }
 
     /**
@@ -103,6 +103,6 @@ class CategoryPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_categories::category');
+        return $user->can('reorder_partner::partner');
     }
 }
