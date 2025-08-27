@@ -75,78 +75,69 @@
     </div>
 </x-dynamic-component>
 
-<style>
-    .stage-button {
-        border-radius: 0;
-        padding-left: 30px;
-        padding-right: 20px;
-        border: 1px solid var(--gray-300);
-        box-shadow: none;
-        min-height: 38px;
-    }
+@push('styles')
+    <style>
+        .stage-button {
+            border-radius: 0;
+            padding-left: 30px;
+            padding-right: 20px;
+            border: 1px solid var(--gray-300);
+            box-shadow: none;
+            min-height: 38px;
+        }
+        .dark .stage-button {
+        border: 1px solid var(--gray-700);
+        }
+        .stage-button:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: -14px;
+            width: 26px;
+            height: 26px;
+            z-index: 1;
+            transform: translateY(-50%) rotate(45deg);
+            background-color: #ffffff;
+            border-right: 1px solid var(--gray-950);
+            border-top: 1px solid var(--gray-950);
+            transition-duration: 75ms;
+        }
+        .dark .stage-button:after {
+            background-color: var(--gray-900);
+            border-right: 1px solid hsla(0, 0%, 100%, .2);
+            border-top: 1px solid hsla(0, 0%, 100%, .2);
+        }
 
-    .dark .stage-button {
-       border: 1px solid var(--gray-700);
-    }
-
-    .stage-button:after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        right: -14px;
-        width: 26px;
-        height: 26px;
-        z-index: 1;
-        transform: translateY(-50%) rotate(45deg);
-        background-color: #ffffff;
-        border-right: 1px solid var(--gray-950);
-        border-top: 1px solid var(--gray-950);
-        transition-duration: 75ms;
-    }
-
-    .dark .stage-button:after {
-        background-color: var(--gray-900);
-        border-right: 1px solid hsla(0, 0%, 100%, .2);
-        border-top: 1px solid hsla(0, 0%, 100%, .2);
-    }
-
-    .dark .stage-button:hover:after {
-        background-color: var(--gray-800);
-    }
-
-    .state-container .state:last-child .stage-button {
-        border-radius: 0 8px 8px 0;
-    }
-
-    .state-container .state:first-child .stage-button {
-        border-radius: 8px 0 0 8px;
-    }
-
-    .state-container .state:last-child .stage-button:after {
-        content: none;
-    }
-
-    input:checked + .stage-button {
-        color: #fff;
-        border: 1px solid var(--color-500);
-    }
-
-    input:checked + .stage-button:after {
-        background-color: var(--color-600);
-        border-right: 1px solid var(--color-500);
-        border-top: 1px solid var(--color-500);
-    }
-
-    .dark input:checked + .stage-button:after {
-        background-color: var(--color-600);
-    }
-
-    input:checked + .stage-button:hover:after {
-        background-color: var(--color-500);
-        transition-duration: 75ms;
-    }
-
-    .dark input:checked + .stage-button:hover:after {
-        background-color: var(--color-500);
-    }
-</style>
+        .dark .stage-button:hover:after {
+            background-color: var(--gray-800);
+        }
+        .state-container .state:last-child .stage-button {
+            border-radius: 0 8px 8px 0;
+        }
+        .state-container .state:first-child .stage-button {
+            border-radius: 8px 0 0 8px;
+        }
+        .state-container .state:last-child .stage-button:after {
+            content: none;
+        }
+        input:checked + .stage-button {
+            color: #fff;
+            border: 1px solid var(--color-500);
+        }
+        input:checked + .stage-button:after {
+            background-color: var(--color-600);
+            border-right: 1px solid var(--color-500);
+            border-top: 1px solid var(--color-500);
+        }
+        .dark input:checked + .stage-button:after {
+            background-color: var(--color-600);
+        }
+        input:checked + .stage-button:hover:after {
+            background-color: var(--color-500);
+            transition-duration: 75ms;
+        }
+        .dark input:checked + .stage-button:hover:after {
+            background-color: var(--color-500);
+        }
+    </style>
+@endpush
