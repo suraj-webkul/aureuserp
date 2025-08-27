@@ -27,8 +27,8 @@ class AdminPanelProvider extends PanelProvider
         set_time_limit(300);
 
         return $panel
-            ->id('admin')
             ->default()
+            ->id('admin')
             ->path('admin')
             ->login()
             ->favicon(asset('images/favicon.ico'))

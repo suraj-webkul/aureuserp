@@ -4,7 +4,7 @@ namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCatego
 
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource;
-use Webkul\Product\Filament\Resources\CategoryResource\Pages\ViewCategory;
+use Webkul\Product\Filament\Resources\Categories\Pages\ViewCategory;
 
 class ViewProductCategory extends ViewCategory
 {

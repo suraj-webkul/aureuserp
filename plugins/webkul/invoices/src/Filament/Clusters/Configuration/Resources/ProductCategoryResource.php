@@ -11,7 +11,7 @@ use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryReso
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource\Pages\ManageProducts;
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource\Pages\ViewProductCategory;
 use Webkul\Invoice\Models\Category;
-use Webkul\Product\Filament\Resources\CategoryResource as BaseProductCategoryResource;
+use Webkul\Product\Filament\Resources\Categories\CategoryResource as BaseProductCategoryResource;
 
 class ProductCategoryResource extends BaseProductCategoryResource
 {
