@@ -26,23 +26,10 @@
         {{
             \Filament\Support\prepare_inherited_attributes($attributes)
                 ->merge($getExtraAttributes(), escape: false)
-                ->merge([
-                    'id' => $getId(),
-                ], escape: false)
                 ->class([
-                    'state-container justify-end',
-                    'fi-fo-radio',
-                    '-mt-3' => (! $isInline) && ($gridDirection === 'column'),
-                    'flex flex-wrap' => $isInline,
-                    'grid' => ! $isInline,
-                    'grid-cols-' . $getColumns('default') => ! $isInline && $getColumns('default'),
-                    'sm:grid-cols-' . $getColumns('sm') => ! $isInline && $getColumns('sm'),
-                    'md:grid-cols-' . $getColumns('md') => ! $isInline && $getColumns('md'),
-                    'lg:grid-cols-' . $getColumns('lg') => ! $isInline && $getColumns('lg'),
-                    'xl:grid-cols-' . $getColumns('xl') => ! $isInline && $getColumns('xl'),
-                    '2xl:grid-cols-' . $getColumns('2xl') => ! $isInline && $getColumns('2xl'),
-                    'grid-flow-row' => ! $isInline && $gridDirection === 'row',
-                    'grid-flow-col' => ! $isInline && $gridDirection === 'column',
+                    'state-container',
+                    'grid' => ! $isInline && $gridDirection === 'row',
+                    'flex justify-end flex-wrap' => $isInline,
                 ])
         }}
     >
@@ -77,7 +64,6 @@
                 <x-filament::button
                     class="stage-button"
                     :color="$getColor($value)"
-                    {{-- :disabled="$shouldOptionBeDisabled" --}}
                     :for="$inputId"
                     :icon="$getIcon($value)"
                     tag="label"
@@ -89,79 +75,78 @@
     </div>
 </x-dynamic-component>
 
-@pushOnce('styles')
-    <style>
-        .stage-button {
-            border-radius: 0 !important;
-            padding-left: 30px !important;
-            padding-right: 20px !important;
-            border: 1px solid rgba(var(--gray-950), 0.2) !important;
-            box-shadow: none !important;
-        }
+<style>
+    .stage-button {
+        border-radius: 0;
+        padding-left: 30px;
+        padding-right: 20px;
+        border: 1px solid var(--gray-300);
+        box-shadow: none;
+        min-height: 38px;
+    }
 
-        .dark .stage-button {
-            border: 1px solid hsla(0, 0%, 100%, .2) !important;
-        }
+    .dark .stage-button {
+       border: 1px solid var(--gray-700);
+    }
 
-        .stage-button:after {
-            content: "" !important;
-            position: absolute !important;
-            top: 50% !important;
-            right: -14px !important;
-            width: 26px !important;
-            height: 26px !important;
-            z-index: 1 !important;
-            transform: translateY(-50%) rotate(45deg) !important;
-            background-color: #ffffff !important;
-            border-right: 1px solid rgba(var(--gray-950), 0.3) !important;
-            border-top: 1px solid rgba(var(--gray-950), 0.3) !important;
-            transition-duration: 75ms !important;
-        }
+    .stage-button:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: -14px;
+        width: 26px;
+        height: 26px;
+        z-index: 1;
+        transform: translateY(-50%) rotate(45deg);
+        background-color: #ffffff;
+        border-right: 1px solid var(--gray-950);
+        border-top: 1px solid var(--gray-950);
+        transition-duration: 75ms;
+    }
 
-        .dark .stage-button:after {
-            background-color: rgba(var(--gray-900),var(--tw-bg-opacity)) !important;
-            border-right: 1px solid hsla(0, 0%, 100%, .2) !important;
-            border-top: 1px solid hsla(0, 0%, 100%, .2) !important;
-        }
+    .dark .stage-button:after {
+        background-color: var(--gray-900);
+        border-right: 1px solid hsla(0, 0%, 100%, .2);
+        border-top: 1px solid hsla(0, 0%, 100%, .2);
+    }
 
-        .dark .stage-button:hover:after {
-            background-color: rgba(var(--gray-800),var(--tw-bg-opacity)) !important;
-        }
+    .dark .stage-button:hover:after {
+        background-color: var(--gray-800);
+    }
 
-        .state-container .state:last-child .stage-button {
-            border-radius: 0 8px 8px 0 !important;
-        }
+    .state-container .state:last-child .stage-button {
+        border-radius: 0 8px 8px 0;
+    }
 
-        .state-container .state:first-child .stage-button {
-            border-radius: 8px 0 0 8px !important;
-        }
+    .state-container .state:first-child .stage-button {
+        border-radius: 8px 0 0 8px;
+    }
 
-        .state-container .state:last-child .stage-button:after {
-            content: none !important;
-        }
+    .state-container .state:last-child .stage-button:after {
+        content: none;
+    }
 
-        input:checked + .stage-button {
-            color: #fff !important;
-            border: 1px solid rgba(var(--c-500), var(--tw-bg-opacity)) !important;
-        }
+    input:checked + .stage-button {
+        color: #fff;
+        border: 1px solid var(--color-500);
+    }
 
-        input:checked + .stage-button:after {
-            background-color: rgba(var(--c-600), var(--tw-bg-opacity)) !important;
-            border-right: 1px solid rgba(var(--c-500)) !important;
-            border-top: 1px solid rgba(var(--c-500)) !important;
-        }
+    input:checked + .stage-button:after {
+        background-color: var(--color-600);
+        border-right: 1px solid var(--color-500);
+        border-top: 1px solid var(--color-500);
+    }
 
-        .dark input:checked + .stage-button:after {
-            background-color: rgba(var(--c-500), var(--tw-bg-opacity)) !important;
-        }
+    .dark input:checked + .stage-button:after {
+        background-color: var(--color-600);
+    }
 
-        input:checked + .stage-button:hover:after {
-            background-color: rgba(var(--c-500), var(--tw-bg-opacity)) !important;
-            transition-duration: 75ms !important;
-        }
+    input:checked + .stage-button:hover:after {
+        background-color: var(--color-500);
+        transition-duration: 75ms;
+    }
 
-        .dark input:checked + .stage-button:hover:after {
-            background-color: rgba(var(--c-400), var(--tw-bg-opacity)) !important;
-        }
-    </style>
-@endPushOnce
+    .dark input:checked + .stage-button:hover:after {
+        background-color: var(--color-500);
+    }
+</style>
