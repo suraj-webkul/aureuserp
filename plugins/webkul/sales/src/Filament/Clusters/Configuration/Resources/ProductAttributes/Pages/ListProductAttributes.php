@@ -2,8 +2,8 @@
 
 namespace Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductAttributes\Pages;
 
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductAttributeResource\Pages\ListProductAttributes as BaseListProductAttributes;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductAttributes\ProductAttributeResource;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductAttributes\Pages\ListProductAttributes as BaseListProductAttributes;
 
 class ListProductAttributes extends BaseListProductAttributes
 {

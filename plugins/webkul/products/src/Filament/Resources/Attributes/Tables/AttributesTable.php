@@ -67,9 +67,9 @@ class AttributesTable
             ])
             ->recordActions([
                 ViewAction::make()
-                    ->hidden(fn($record) => $record->trashed()),
+                    ->hidden(fn ($record) => $record->trashed()),
                 EditAction::make()
-                    ->hidden(fn($record) => $record->trashed()),
+                    ->hidden(fn ($record) => $record->trashed()),
                 RestoreAction::make()
                     ->successNotification(
                         Notification::make()
@@ -122,7 +122,7 @@ class AttributesTable
                     ForceDeleteBulkAction::make()
                         ->action(function (Collection $records) {
                             try {
-                                $records->each(fn(Model $record) => $record->forceDelete());
+                                $records->each(fn (Model $record) => $record->forceDelete());
                             } catch (QueryException $e) {
                                 Notification::make()
                                     ->danger()

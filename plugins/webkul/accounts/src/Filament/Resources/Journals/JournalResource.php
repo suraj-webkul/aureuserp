@@ -2,6 +2,7 @@
 
 namespace Webkul\Account\Filament\Resources\Journals;
 
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
@@ -13,7 +14,6 @@ use Webkul\Account\Filament\Resources\Journals\Schemas\JournalForm;
 use Webkul\Account\Filament\Resources\Journals\Schemas\JournalInfolist;
 use Webkul\Account\Filament\Resources\Journals\Tables\JournalsTable;
 use Webkul\Account\Models\Journal;
-use BackedEnum;
 
 class JournalResource extends Resource
 {
@@ -41,10 +41,10 @@ class JournalResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListJournals::route('/'),
+            'index'  => ListJournals::route('/'),
             'create' => CreateJournal::route('/create'),
-            'view' => ViewJournal::route('/{record}'),
-            'edit' => EditJournal::route('/{record}/edit'),
+            'view'   => ViewJournal::route('/{record}'),
+            'edit'   => EditJournal::route('/{record}/edit'),
         ];
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductAttributes;
 
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductAttributeResource as BaseProductAttributeResource;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductAttributes\ProductAttributeResource as BaseProductAttributeResource;
 use Webkul\Sale\Filament\Clusters\Configuration;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductAttributes\Pages\CreateProductAttribute;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductAttributes\Pages\EditProductAttribute;
@@ -35,10 +35,10 @@ class ProductAttributeResource extends BaseProductAttributeResource
     public static function getPages(): array
     {
         return [
-            'index'  => ListProductAttributes::route('/'),
+            'index' => ListProductAttributes::route('/'),
             'create' => CreateProductAttribute::route('/create'),
-            'view'   => ViewProductAttribute::route('/{record}'),
-            'edit'   => EditProductAttribute::route('/{record}/edit'),
+            'view' => ViewProductAttribute::route('/{record}'),
+            'edit' => EditProductAttribute::route('/{record}/edit'),
         ];
     }
 }

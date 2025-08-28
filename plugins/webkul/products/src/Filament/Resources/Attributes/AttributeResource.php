@@ -2,6 +2,7 @@
 
 namespace Webkul\Product\Filament\Resources\Attributes;
 
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
@@ -9,7 +10,6 @@ use Webkul\Product\Filament\Resources\Attributes\Schemas\AttributeForm;
 use Webkul\Product\Filament\Resources\Attributes\Schemas\AttributeInfolist;
 use Webkul\Product\Filament\Resources\Attributes\Tables\AttributesTable;
 use Webkul\Product\Models\Attribute;
-use BackedEnum;
 
 class AttributeResource extends Resource
 {

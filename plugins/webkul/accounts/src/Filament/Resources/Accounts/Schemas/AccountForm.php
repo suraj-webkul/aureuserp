@@ -41,7 +41,7 @@ class AccountForm
                                 Select::make('invoices_account_tax')
                                     ->relationship('taxes', 'name')
                                     ->label(__('accounts::filament/resources/account.form.sections.fields.default-taxes'))
-                                    ->hidden(fn(Get $get) => $get('account_type') === AccountType::OFF_BALANCE->value)
+                                    ->hidden(fn (Get $get) => $get('account_type') === AccountType::OFF_BALANCE->value)
                                     ->multiple()
                                     ->preload()
                                     ->searchable(),

@@ -2,7 +2,6 @@
 
 namespace Webkul\Account\Filament\Resources\AccountTags\Tables;
 
-
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;

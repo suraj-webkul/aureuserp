@@ -35,7 +35,7 @@ class AccountInfolist
                                     ->icon('heroicon-o-tag'),
                                 TextEntry::make('taxes.name')
                                     ->label(__('accounts::filament/resources/account.infolist.sections.entries.default-taxes'))
-                                    ->visible(fn($record) => $record->account_type !== AccountType::OFF_BALANCE->value)
+                                    ->visible(fn ($record) => $record->account_type !== AccountType::OFF_BALANCE->value)
                                     ->listWithLineBreaks()
                                     ->placeholder('-')
                                     ->icon('heroicon-o-calculator'),

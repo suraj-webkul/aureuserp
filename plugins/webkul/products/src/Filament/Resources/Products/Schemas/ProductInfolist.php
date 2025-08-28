@@ -42,7 +42,7 @@ class ProductInfolist
                                     ->hiddenLabel()
                                     ->circular(),
                             ])
-                            ->visible(fn($record): bool => !empty($record->images)),
+                            ->visible(fn ($record): bool => ! empty($record->images)),
 
                         Section::make(__('products::filament/resources/product.infolist.sections.inventory.title'))
                             ->schema([
@@ -62,7 +62,7 @@ class ProductInfolist
                                             ]),
                                     ]),
                             ])
-                            ->visible(fn($record): bool => $record->type == ProductType::GOODS),
+                            ->visible(fn ($record): bool => $record->type == ProductType::GOODS),
                     ])
                     ->columnSpan(['lg' => 2]),
 

@@ -2,6 +2,7 @@
 
 namespace Webkul\Website\Filament\Admin\Resources\Page;
 
+use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
@@ -15,7 +16,6 @@ use Webkul\Website\Filament\Admin\Resources\Page\Tables\PageTable;
 use Webkul\Website\Models\Page as PageModel;
 use Webkul\Website\Src\Filament\Admin\Resources\Page\Schemas\PageForm;
 use Webkul\Website\Src\Filament\Admin\Resources\Page\Schemas\PageInfolist;
-use BackedEnum;
 
 class PageResource extends Resource
 {

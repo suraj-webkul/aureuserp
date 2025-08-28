@@ -2,18 +2,18 @@
 
 namespace Webkul\Account\Filament\Resources\Payments;
 
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use Webkul\Account\Filament\Resources\Payments\Schemas\PaymentForm;
-use Webkul\Account\Filament\Resources\Payments\Schemas\PaymentInfolist;
-use Webkul\Account\Filament\Resources\Payments\Tables\PaymentsTable;
 use Webkul\Account\Filament\Resources\Payments\Pages\CreatePayments;
 use Webkul\Account\Filament\Resources\Payments\Pages\EditPayments;
 use Webkul\Account\Filament\Resources\Payments\Pages\ListPayments;
 use Webkul\Account\Filament\Resources\Payments\Pages\ViewPayments;
+use Webkul\Account\Filament\Resources\Payments\Schemas\PaymentForm;
+use Webkul\Account\Filament\Resources\Payments\Schemas\PaymentInfolist;
+use Webkul\Account\Filament\Resources\Payments\Tables\PaymentsTable;
 use Webkul\Account\Models\Payment;
-use BackedEnum;
 
 class PaymentsResource extends Resource
 {
@@ -41,10 +41,10 @@ class PaymentsResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListPayments::route('/'),
+            'index'  => ListPayments::route('/'),
             'create' => CreatePayments::route('/create'),
-            'view' => ViewPayments::route('/{record}'),
-            'edit' => EditPayments::route('/{record}/edit'),
+            'view'   => ViewPayments::route('/{record}'),
+            'edit'   => EditPayments::route('/{record}/edit'),
         ];
     }
 }

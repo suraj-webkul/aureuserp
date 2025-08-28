@@ -45,10 +45,10 @@ class CreditNotesResource extends BaseCreditNoteResource
     public static function getPages(): array
     {
         return [
-            'index' => ListCreditNotes::route('/'),
+            'index'  => ListCreditNotes::route('/'),
             'create' => CreateCreditNotes::route('/create'),
-            'edit' => EditCreditNotes::route('/{record}/edit'),
-            'view' => ViewCreditNote::route('/{record}'),
+            'edit'   => EditCreditNotes::route('/{record}/edit'),
+            'view'   => ViewCreditNote::route('/{record}'),
         ];
     }
 }

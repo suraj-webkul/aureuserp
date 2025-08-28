@@ -2,13 +2,13 @@
 
 namespace Webkul\Chatter\Filament\Actions\Chatter;
 
-use Throwable;
 use Filament\Actions\Action;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Model;
+use Throwable;
 use Webkul\Chatter\Mail\FollowerMail;
 use Webkul\Partner\Models\Partner;
 use Webkul\Support\Services\EmailService;
@@ -137,7 +137,10 @@ class FollowerAction extends Action
                         }
 
                         // Refresh relation to show immediately in the modal
-                        try { $record->unsetRelation('followers'); } catch (\Throwable $e) {}
+                        try {
+                            $record->unsetRelation('followers');
+                        } catch (\Throwable $e) {
+                        }
 
                         Notification::make()
                             ->success()

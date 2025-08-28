@@ -2,6 +2,7 @@
 
 namespace Webkul\Product\Filament\Resources\Categories;
 
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
@@ -9,7 +10,6 @@ use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Categories\Tabl
 use Webkul\Product\Filament\Resources\Categories\Schemas\CategoryForm;
 use Webkul\Product\Filament\Resources\Categories\Schemas\CategoryInfolist;
 use Webkul\Product\Models\Category;
-use BackedEnum;
 
 class CategoryResource extends Resource
 {
