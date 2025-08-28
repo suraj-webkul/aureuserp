@@ -12,7 +12,7 @@
         <div class="flex-grow space-y-1 pt-[2px]">
             <div class="flex items-center justify-between gap-x-3">
                 <div class="flex items-center gap-x-2.5">
-                    <div class="text-sm font-medium cursor-pointer text-gray-900 dark:text-gray-100">
+                    <div class="text-sm font-medium text-gray-900 cursor-pointer dark:text-gray-100">
                         {{ $getRecord()->causer?->name }}
                     </div>
 
@@ -28,7 +28,7 @@
                     @endif
                 </div>
 
-                <div class="flex-shrink-0 flex items-center gap-1">
+                <div class="flex items-center flex-shrink-0 gap-1">
                     <x-filament::icon-button
                         wire:click="pinMessage({{ $getRecord()->id }})"
                         :icon="$getRecord()->pinned_at ? 'heroicon-m-bookmark' : 'heroicon-m-bookmark'"

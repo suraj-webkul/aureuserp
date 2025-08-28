@@ -75,7 +75,10 @@
                                             </div>
 
                                             <div class="flex items-center gap-1.5">
-                                                @if($isImage || in_array($fileExtension, ['pdf']))
+                                                @if(
+                                                    $isImage
+                                                    || in_array($fileExtension, ['pdf'])
+                                                )
                                                     <x-filament::button
                                                         size="xs"
                                                         color="gray"
@@ -127,6 +130,7 @@
                         <div class="px-4 py-3 border-b border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-800/60">
                             <div class="flex items-center gap-2">
                                 <x-heroicon-m-arrow-path class="w-5 h-5 text-primary-600 dark:text-primary-400"/>
+
                                 <h3 class="text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
                                     @lang('chatter::views/filament/infolists/components/messages/content-text-entry.changes-made')
                                 </h3>

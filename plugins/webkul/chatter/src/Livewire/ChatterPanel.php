@@ -61,16 +61,14 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
     public bool $showFileAction;
     public array $filters;
 
-    // Form properties for filtering
     public string $search = '';
     public string $filterType = 'all';
     public ?string $dateRange = null;
     public bool $pinnedOnly = false;
     public string $viewMode = 'detailed';
     public string $sortBy = 'created_at_desc';
-    public string $tab = 'messages'; // messages|activities
+    public string $tab = 'messages';
 
-    // Force reactivity when data changes
     public int $refreshTick = 0;
 
     protected $listeners = [
@@ -104,9 +102,6 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
         $this->filters = $filters;
     }
 
-    // (Removed form() to avoid type mismatch with Filament Schemas dispatcher)
-
-    // Helper methods for the modern template
     public function getTotalMessages(): int
     {
         return $this->getBaseQuery()->count();
@@ -119,10 +114,10 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
 
     public function hasActiveFilters(): bool
     {
-        return filled($this->search) ||
-               $this->filterType !== 'all' ||
-               filled($this->dateRange) ||
-               $this->pinnedOnly;
+        return filled($this->search)
+            || $this->filterType !== 'all'
+            || filled($this->dateRange)
+            || $this->pinnedOnly;
     }
 
     public function getActiveFilters(): array
@@ -131,28 +126,28 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
 
         if (filled($this->search)) {
             $filters[] = [
-                'key' => 'search',
+                'key'   => 'search',
                 'label' => "Search: \"{$this->search}\"",
             ];
         }
 
         if ($this->filterType !== 'all') {
             $filters[] = [
-                'key' => 'filterType',
+                'key'   => 'filterType',
                 'label' => "Type: " . ucfirst($this->filterType),
             ];
         }
 
         if (filled($this->dateRange)) {
             $filters[] = [
-                'key' => 'dateRange',
+                'key'   => 'dateRange',
                 'label' => "Date: " . $this->getDateRangeLabel(),
             ];
         }
 
         if ($this->pinnedOnly) {
             $filters[] = [
-                'key' => 'pinnedOnly',
+                'key'   => 'pinnedOnly',
                 'label' => 'Pinned only',
             ];
         }
@@ -175,6 +170,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
     public function clearAllFilters(): void
     {
         $this->reset(['search', 'filterType', 'dateRange', 'pinnedOnly']);
+
         $this->refreshMessages();
     }
 
@@ -186,6 +182,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
     public function setTab(string $tab): void
     {
         $this->tab = in_array($tab, ['messages', 'activities'], true) ? $tab : 'messages';
+
         $this->refreshMessages();
     }
 
@@ -216,7 +213,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
 
     public function canViewAllActivities(): bool
     {
-        return true; // Implement your logic here
+        return true;
     }
 
     private function getDateRangeLabel(): string
@@ -234,14 +231,12 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
 
     private function getBaseQuery()
     {
-        // Get fresh data from the database
         $this->record->refresh();
 
         try {
             $this->record->unsetRelation('messages');
             $this->record->unsetRelation('activities');
         } catch (\Throwable $e) {
-            // ignore
         }
 
         return $this->record->withFilters($this->filters);
@@ -251,7 +246,6 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
     {
         $state = $this->getBaseQuery();
 
-        // Apply client-side filters
         if ($state instanceof Collection) {
             $query = trim(strtolower($this->search));
 
@@ -275,7 +269,6 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
                 $state = $state->filter(fn ($m) => !empty($m->pinned_at));
             }
 
-            // Sort by the selected criteria
             $state = $this->applySorting($state);
         }
 
@@ -304,28 +297,24 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
     private function applySorting($state)
     {
         return $state->sort(function ($a, $b) {
-            // Always sort pinned messages first
-            $pa = !empty($a->pinned_at);
-            $pb = !empty($b->pinned_at);
+            $pa = ! empty($a->pinned_at);
+            $pb = ! empty($b->pinned_at);
 
             if ($pa !== $pb) {
                 return $pa ? -1 : 1;
             }
 
-            // Then apply the selected sorting
             return match ($this->sortBy) {
                 'created_at_asc' => $a->created_at <=> $b->created_at,
                 'updated_at_desc' => $b->updated_at <=> $a->updated_at,
                 'priority' => $this->comparePriority($a, $b),
-                default => $b->created_at <=> $a->created_at, // created_at_desc (default)
+                default => $b->created_at <=> $a->created_at,
             };
         })->values();
     }
 
     private function comparePriority($a, $b): int
     {
-        // Implement your priority comparison logic
-        // For example, based on message type or urgency
         $priorityOrder = ['notification' => 4, 'activity' => 3, 'note' => 2, 'comment' => 1];
 
         $priorityA = $priorityOrder[$a->type] ?? 0;
@@ -334,7 +323,6 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
         return $priorityB <=> $priorityA;
     }
 
-    // Updated action methods to trigger refresh
     public function messageAction(): MessageAction
     {
         return MessageAction::make('message')
@@ -344,7 +332,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             ->record($this->record)
             ->after(function () {
                 $this->refreshMessages();
-                // Force immediate UI update
+
                 $this->dispatch('$refresh');
             });
     }
@@ -381,7 +369,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             ->record($this->record)
             ->after(function () {
                 $this->refreshMessages();
-                // Force immediate UI update
+
                 $this->dispatch('$refresh');
             });
     }
@@ -389,6 +377,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
     public function removeFollower($partnerId)
     {
         $partner = Partner::findOrFail($partnerId);
+
         $this->record->removeFollower($partner);
     }
 
@@ -443,7 +432,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
     {
         $message = Message::find($messageId);
 
-        if (!$message) {
+        if (! $message) {
             return;
         }
 
@@ -506,7 +495,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
                                     Placeholder::make('plan_summary')
                                         ->label(__('chatter::livewire/chatter-panel.edit-activity.form.fields.plan-summary'))
                                         ->content(function (Get $get) {
-                                            if (!$get('activity_plan_id')) {
+                                            if (! $get('activity_plan_id')) {
                                                 return null;
                                             }
 
@@ -622,7 +611,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
     {
         $message = Message::find($id);
 
-        if (!$message) {
+        if (! $message) {
             return;
         }
 
@@ -635,27 +624,20 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
 
     public function refreshMessages(): void
     {
-        // Clear cached data first
         $this->record->refresh();
 
         try {
             $this->record->unsetRelation('messages');
             $this->record->unsetRelation('activities');
         } catch (\Throwable $e) {
-            // ignore
         }
 
-        // Force refresh of the entire component state
         $this->refreshTick++;
 
-        // Skip render to force complete re-render
         $this->skipRender();
 
-    // Ask Livewire to refresh immediately
-    $this->dispatch('$refresh');
+        $this->dispatch('$refresh');
     }
-
-    // (Removed resetFormState — not needed without a Form instance)
 
     public function activityInfolist(Schema $schema): Schema
     {
