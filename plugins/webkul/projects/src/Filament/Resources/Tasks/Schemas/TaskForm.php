@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Project\Filament\Resources\Tasks;
+namespace Webkul\Project\Filament\Resources\Tasks\Schemas;
 
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\DateTimePicker;
@@ -22,6 +22,7 @@ use Webkul\Field\Filament\Traits\HasCustomFields;
 use Webkul\Partner\Filament\Resources\Partners\PartnerResource;
 use Webkul\Project\Enums\TaskState;
 use Webkul\Project\Filament\Resources\Projects\ProjectResource;
+use Webkul\Project\Filament\Resources\Tasks\TaskResource;
 use Webkul\Project\Models\Project;
 use Webkul\Project\Models\TaskStage;
 use Webkul\Project\Settings\TaskSettings;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Website\Src\Filament\Admin\Resources\Page\Schemas;
+namespace Webkul\Website\Filament\Admin\Resources\Page\Schemas;
 
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;

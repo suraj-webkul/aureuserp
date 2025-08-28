@@ -6,7 +6,7 @@ use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use Webkul\Account\Filament\Resources\AccountTags\Pages\AccountTagForm;
+use Webkul\Account\Filament\Resources\AccountTags\Schemas\AccountTagForm;
 use Webkul\Account\Filament\Resources\AccountTags\Pages\ListAccountTags;
 use Webkul\Account\Filament\Resources\AccountTags\Schemas\AccountTagInfoList;
 use Webkul\Account\Filament\Resources\AccountTags\Tables\AccountTagsTable;

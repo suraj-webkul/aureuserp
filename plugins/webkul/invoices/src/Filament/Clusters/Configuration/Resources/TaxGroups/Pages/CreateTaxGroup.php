@@ -1,9 +1,9 @@
 <?php
 
-namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxGroupResource\Pages;
+namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxGroups\Pages;
 
 use Webkul\Account\Filament\Resources\TaxGroups\Pages\CreateTaxGroup as BaseCreateTaxGroup;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxGroupResource;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\TaxGroups\TaxGroupResource;
 
 class CreateTaxGroup extends BaseCreateTaxGroup
 {

@@ -7,15 +7,16 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Webkul\Account\Filament\Resources\IncoTerms\Pages\ListIncoTerms;
 use Webkul\Account\Filament\Resources\IncoTerms\Schemas\IncotermInfolist;
-use Webkul\Account\Filament\Resources\IncoTerms\Tables\IncotermTable;
+use Webkul\Account\Filament\Resources\IncoTerms\Tables\IncotermsTable;
 use Webkul\Account\Models\Incoterm;
-use Webkul\Account\Src\Filament\Resources\IncoTerms\Schemas\IncotermForm;
+use Webkul\Account\Filament\Resources\IncoTerms\Schemas\IncotermForm;
+use BackedEnum;
 
 class IncoTermResource extends Resource
 {
     protected static ?string $model = Incoterm::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-globe-alt';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-globe-alt';
 
     protected static bool $shouldRegisterNavigation = false;
 
@@ -26,7 +27,7 @@ class IncoTermResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return IncotermTable::configure($table);
+        return IncotermsTable::configure($table);
     }
 
     public static function infolist(Schema $schema): Schema

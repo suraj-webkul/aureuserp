@@ -17,7 +17,7 @@ use Webkul\Account\Filament\Resources\PaymentTerms\Pages\ViewPaymentTerm;
 use Webkul\Account\Filament\Resources\PaymentTerms\RelationManagers\PaymentDueTermRelationManager;
 use Webkul\Account\Filament\Resources\PaymentTerms\Schemas\PaymentTermForm;
 use Webkul\Account\Filament\Resources\PaymentTerms\Schemas\PaymentTermInfolist;
-use Webkul\Account\Filament\Resources\PaymentTerms\Schemas\PaymentTermsTable;
+use Webkul\Account\Filament\Resources\PaymentTerms\Tables\PaymentTermsTable;
 use Webkul\Account\Models\PaymentTerm;
 
 class PaymentTermResource extends Resource

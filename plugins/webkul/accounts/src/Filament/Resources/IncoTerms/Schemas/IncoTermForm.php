@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Account\Src\Filament\Resources\IncoTerms\Schemas;
+namespace Webkul\Account\Filament\Resources\IncoTerms\Schemas;
 
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;

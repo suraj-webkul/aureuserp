@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Website\Src\Filament\Admin\Resources\Page\Schemas;
+namespace Webkul\Website\Filament\Admin\Resources\Page\Schemas;
 
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Textarea;

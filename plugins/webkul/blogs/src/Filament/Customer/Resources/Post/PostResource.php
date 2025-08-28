@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Blog\Filament\Customer\Resources;
+namespace Webkul\Blog\Filament\Customer\Resources\Post;
 
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Accounts\Filament\Resources\TaxGroups\Schemas;
+namespace Webkul\Account\Filament\Resources\TaxGroups\Schemas;
 
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;

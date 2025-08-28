@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Account\Filament\Resources\PaymentTerms\Schemas;
+namespace Webkul\Account\Filament\Resources\PaymentTerms\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;

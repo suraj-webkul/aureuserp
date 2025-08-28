@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Account\Filament\Resources\AccountTags\Pages;
+namespace Webkul\Account\Filament\Resources\AccountTags\Schemas;
 
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\Select;

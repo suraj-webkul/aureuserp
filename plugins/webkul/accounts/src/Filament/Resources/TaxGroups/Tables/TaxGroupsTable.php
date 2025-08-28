@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Accounts\Filament\Resources\TaxGroups\Schemas;
+namespace Webkul\Account\Filament\Resources\TaxGroups\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;

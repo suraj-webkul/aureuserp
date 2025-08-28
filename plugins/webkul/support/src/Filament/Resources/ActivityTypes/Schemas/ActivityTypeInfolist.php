@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Support\Filament\Resources\ActivityTypes;
+namespace Webkul\Support\Filament\Resources\ActivityTypes\Schemas;
 
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;

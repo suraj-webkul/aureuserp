@@ -13,8 +13,8 @@ use Webkul\Account\Filament\Resources\TaxGroups\Pages\EditTaxGroup;
 use Webkul\Account\Filament\Resources\TaxGroups\Pages\ListTaxGroups;
 use Webkul\Account\Filament\Resources\TaxGroups\Pages\ViewTaxGroup;
 use Webkul\Account\Models\TaxGroup;
-use Webkul\Accounts\Filament\Resources\TaxGroups\Schemas\TaxGroupForm;
-use Webkul\Accounts\Filament\Resources\TaxGroups\Schemas\TaxGroupsTable;
+use Webkul\Account\Filament\Resources\TaxGroups\Schemas\TaxGroupForm;
+use Webkul\Account\Filament\Resources\TaxGroups\Tables\TaxGroupsTable;
 
 class TaxGroupResource extends Resource
 {

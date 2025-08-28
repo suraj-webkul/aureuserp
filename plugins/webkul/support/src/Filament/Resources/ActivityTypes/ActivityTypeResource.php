@@ -10,6 +10,8 @@ use Webkul\Support\Filament\Resources\ActivityTypes\Pages\CreateActivityType;
 use Webkul\Support\Filament\Resources\ActivityTypes\Pages\EditActivityType;
 use Webkul\Support\Filament\Resources\ActivityTypes\Pages\ListActivityTypes;
 use Webkul\Support\Filament\Resources\ActivityTypes\Pages\ViewActivityType;
+use Webkul\Support\Filament\Resources\ActivityTypes\Schemas\ActivityTypeForm;
+use Webkul\Support\Filament\Resources\ActivityTypes\Schemas\ActivityTypeInfolist;
 use Webkul\Support\Filament\Resources\ActivityTypes\Tables\ActivityTypesTable;
 use Webkul\Support\Models\ActivityType;
 

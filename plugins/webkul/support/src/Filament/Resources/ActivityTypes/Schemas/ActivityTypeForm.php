@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Support\Filament\Resources\ActivityTypes;
+namespace Webkul\Support\Filament\Resources\ActivityTypes\Schemas;
 
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;

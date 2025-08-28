@@ -14,8 +14,8 @@ use Webkul\Website\Filament\Admin\Resources\Page\Pages\ListPages;
 use Webkul\Website\Filament\Admin\Resources\Page\Pages\ViewPage;
 use Webkul\Website\Filament\Admin\Resources\Page\Tables\PageTable;
 use Webkul\Website\Models\Page as PageModel;
-use Webkul\Website\Src\Filament\Admin\Resources\Page\Schemas\PageForm;
-use Webkul\Website\Src\Filament\Admin\Resources\Page\Schemas\PageInfolist;
+use Webkul\Website\Filament\Admin\Resources\Page\Schemas\PageForm;
+use Webkul\Website\Filament\Admin\Resources\Page\Schemas\PageInfolist;
 
 class PageResource extends Resource
 {

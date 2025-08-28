@@ -8,6 +8,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Webkul\Security\Filament\Resources\Teams\Pages\ManageTeams;
+use Webkul\Security\Filament\Resources\Teams\Schemas\TeamForm;
 use Webkul\Security\Filament\Resources\Teams\Schemas\TeamInfolist;
 use Webkul\Security\Filament\Resources\Teams\Tables\TeamsTable;
 use Webkul\Security\Models\Team;

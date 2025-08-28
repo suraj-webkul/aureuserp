@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Project\Filament\Resources\Tasks;
+namespace Webkul\Project\Filament\Resources\Tasks\Schemas;
 
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
@@ -14,6 +14,7 @@ use Filament\Support\Enums\TextSize;
 use Webkul\Field\Filament\Traits\HasCustomFields;
 use Webkul\Project\Enums\TaskState;
 use Webkul\Project\Filament\Resources\Projects\ProjectResource;
+use Webkul\Project\Filament\Resources\Tasks\TaskResource;
 use Webkul\Project\Models\Task;
 use Webkul\Project\Settings\TaskSettings;
 use Webkul\Project\Settings\TimeSettings;
