@@ -123,6 +123,11 @@ class FileAction extends Action
             ->icon('heroicon-o-paper-clip')
             ->modalIcon('heroicon-o-paper-clip')
             ->iconPosition(IconPosition::Before)
+            ->after(function ($livewire) {
+                if (method_exists($livewire, 'dispatch')) {
+                    $livewire->dispatch('chatter.refresh');
+                }
+            })
             ->modalSubmitAction(
                 fn ($action) => $action
                     ->label('Upload')

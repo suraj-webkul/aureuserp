@@ -189,6 +189,11 @@ class ActivityAction extends Action
                     report($e);
                 }
             })
+            ->after(function ($livewire) {
+                if (method_exists($livewire, 'dispatch')) {
+                    $livewire->dispatch('chatter.refresh');
+                }
+            })
             ->label(__('chatter::filament/resources/actions/chatter/activity-action.setup.title'))
             ->icon('heroicon-o-clock')
             ->modalIcon('heroicon-o-clock')

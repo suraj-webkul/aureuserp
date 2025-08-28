@@ -128,7 +128,13 @@ class LogAction extends Action
             ->modalIcon('heroicon-o-chat-bubble-oval-left')
             ->modalSubmitAction(function ($action) {
                 $action->label(__('chatter::filament/resources/actions/chatter/log-action.setup.submit-title'));
+
                 $action->icon('heroicon-m-paper-airplane');
+            })
+            ->after(function ($livewire) {
+                if (method_exists($livewire, 'dispatch')) {
+                    $livewire->dispatch('chatter.refresh');
+                }
             })
             ->slideOver(false);
     }

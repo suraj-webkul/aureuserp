@@ -40,6 +40,7 @@ use Webkul\Chatter\Filament\Infolists\Components\Activities\TitleTextEntry as Ac
 use Webkul\Chatter\Filament\Infolists\Components\Messages\ContentTextEntry as MessageContentTextEntry;
 use Webkul\Chatter\Filament\Infolists\Components\Messages\MessageRepeatableEntry;
 use Webkul\Chatter\Filament\Infolists\Components\Messages\TitleTextEntry as MessageTitleTextEntry;
+use Webkul\Chatter\Filament\Actions\Chatter\FiltersAction;
 use Webkul\Chatter\Models\Message;
 use Webkul\Partner\Models\Partner;
 use Webkul\Security\Models\User;
@@ -69,6 +70,12 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
     public string $viewMode = 'detailed';
     public string $sortBy = 'created_at_desc';
     public string $tab = 'messages';
+
+    public int $refreshTick = 0;
+
+    protected $listeners = [
+        'chatter.refresh' => 'refreshMessages',
+    ];
 
     public function mount(
         Model $record,
@@ -197,6 +204,12 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
     public function canViewAllActivities(): bool
     {
         return true;
+    }
+
+    public function filtersAction(): FiltersAction
+    {
+        return FiltersAction::make('filters')
+            ->visible(fn () => $this->tab === 'messages');
     }
 
     private function getDateRangeLabel(): string
@@ -351,6 +364,20 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
         $partner = Partner::findOrFail($partnerId);
 
         $this->record->removeFollower($partner);
+    }
+
+    public function refreshMessages(): void
+    {
+        $this->record->refresh();
+
+        try {
+            $this->record->unsetRelation('messages');
+            $this->record->unsetRelation('activities');
+        } catch (Throwable $e) {}
+
+        $this->refreshTick++;
+
+        $this->dispatch('$refresh');
     }
 
     public function markAsDoneAction(): Action
@@ -541,7 +568,10 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
     {
         return Action::make('deleteMessage')
             ->requiresConfirmation()
-            ->action(fn (array $arguments) => $this->record->removeMessage($arguments['id']));
+            ->action(function (array $arguments) {
+                $this->record->removeMessage($arguments['id']);
+                $this->refreshMessages();
+            });
     }
 
     public function cancelActivityAction(): Action
@@ -551,7 +581,10 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             ->label(__('chatter::livewire/chatter-panel.cancel-activity-plan-action.title'))
             ->color('danger')
             ->requiresConfirmation()
-            ->action(fn (array $arguments) => $this->record->removeMessage($arguments['id'], 'activities'));
+            ->action(function (array $arguments) {
+                $this->record->removeMessage($arguments['id'], 'activities');
+                $this->refreshMessages();
+            });
     }
 
     public function chatInfolist(Schema $schema): Schema
@@ -585,6 +618,8 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
         $message->update([
             'pinned_at' => $message->pinned_at ? null : now(),
         ]);
+
+    $this->refreshMessages();
     }
 
     public function activityInfolist(Schema $schema): Schema

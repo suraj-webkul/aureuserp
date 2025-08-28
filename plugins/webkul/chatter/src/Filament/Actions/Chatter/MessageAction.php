@@ -152,6 +152,11 @@ class MessageAction extends Action
                         ->send();
                 }
             })
+            ->after(function ($livewire) {
+                if (method_exists($livewire, 'dispatch')) {
+                    $livewire->dispatch('chatter.refresh');
+                }
+            })
             ->label(__('chatter::filament/resources/actions/chatter/message-action.setup.title'))
             ->icon('heroicon-o-chat-bubble-left-right')
             ->modalIcon('heroicon-o-chat-bubble-left-right')

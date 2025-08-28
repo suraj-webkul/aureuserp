@@ -148,6 +148,11 @@ class FollowerAction extends Action
             })
             ->hiddenLabel()
             ->modalHeading(__('chatter::filament/resources/actions/chatter/follower-action.setup.title'))
+            ->after(function ($livewire) {
+                if (method_exists($livewire, 'dispatch')) {
+                    $livewire->dispatch('chatter.refresh');
+                }
+            })
             ->modalSubmitAction(
                 fn ($action) => $action
                     ->label(__('chatter::filament/resources/actions/chatter/follower-action.setup.submit-action-title'))
