@@ -2,8 +2,9 @@
 
 namespace Webkul\Chatter\Livewire;
 
-use Carbon\Carbon;
 use Closure;
+use Throwable;
+use Carbon\Carbon;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
@@ -68,13 +69,6 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
     public string $viewMode = 'detailed';
     public string $sortBy = 'created_at_desc';
     public string $tab = 'messages';
-
-    public int $refreshTick = 0;
-
-    protected $listeners = [
-        'chatter.pin' => 'pinMessage',
-        'chatter.refresh' => 'refreshMessages',
-    ];
 
     public function mount(
         Model $record,
@@ -163,15 +157,11 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             'dateRange' => $this->dateRange = null,
             'pinnedOnly' => $this->pinnedOnly = false,
         };
-
-        $this->refreshMessages();
     }
 
     public function clearAllFilters(): void
     {
         $this->reset(['search', 'filterType', 'dateRange', 'pinnedOnly']);
-
-        $this->refreshMessages();
     }
 
     public function setViewMode(string $mode): void
@@ -182,13 +172,6 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
     public function setTab(string $tab): void
     {
         $this->tab = in_array($tab, ['messages', 'activities'], true) ? $tab : 'messages';
-
-        $this->refreshMessages();
-    }
-
-    public function refresh(): void
-    {
-        $this->refreshMessages();
     }
 
     public function isEmpty(): bool
@@ -231,13 +214,11 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
 
     private function getBaseQuery()
     {
-        $this->record->refresh();
-
         try {
             $this->record->unsetRelation('messages');
+
             $this->record->unsetRelation('activities');
-        } catch (\Throwable $e) {
-        }
+        } catch (Throwable $e) {}
 
         return $this->record->withFilters($this->filters);
     }
@@ -283,13 +264,13 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             $createdAt = Carbon::parse($message->created_at);
 
             return match ($this->dateRange) {
-                'today' => $createdAt->isToday(),
+                'today'     => $createdAt->isToday(),
                 'yesterday' => $createdAt->isYesterday(),
-                'week' => $createdAt->gte($now->copy()->subWeek()),
-                'month' => $createdAt->gte($now->copy()->subMonth()),
-                'quarter' => $createdAt->gte($now->copy()->subMonths(3)),
-                'year' => $createdAt->gte($now->copy()->subYear()),
-                default => true,
+                'week'      => $createdAt->gte($now->copy()->subWeek()),
+                'month'     => $createdAt->gte($now->copy()->subMonth()),
+                'quarter'   => $createdAt->gte($now->copy()->subMonths(3)),
+                'year'      => $createdAt->gte($now->copy()->subYear()),
+                default     => true,
             };
         });
     }
@@ -318,6 +299,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
         $priorityOrder = ['notification' => 4, 'activity' => 3, 'note' => 2, 'comment' => 1];
 
         $priorityA = $priorityOrder[$a->type] ?? 0;
+
         $priorityB = $priorityOrder[$b->type] ?? 0;
 
         return $priorityB <=> $priorityA;
@@ -329,12 +311,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             ->visible($this->showMessageAction)
             ->setMessageMailView($this->messageViewMail)
             ->setResource($this->resource)
-            ->record($this->record)
-            ->after(function () {
-                $this->refreshMessages();
-
-                $this->dispatch('$refresh');
-            });
+            ->record($this->record);
     }
 
     public function logAction(): LogAction
@@ -366,12 +343,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
         return ActivityAction::make('activity')
             ->visible($this->showActivityAction)
             ->setActivityPlans($this->activityPlans)
-            ->record($this->record)
-            ->after(function () {
-                $this->refreshMessages();
-
-                $this->dispatch('$refresh');
-            });
+            ->record($this->record);
     }
 
     public function removeFollower($partnerId)
@@ -391,6 +363,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             ->schema(fn (Schema $schema) => $schema->components([
                 TextInput::make('feedback')
                     ->label(__('chatter::livewire/chatter-panel.mark-as-done.form.fields.feedback')),
+
                 Hidden::make('type'),
             ]))
             ->modalFooterActions(fn ($livewire, $arguments): array => [
@@ -400,8 +373,8 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
                     ->modalIcon('heroicon-o-arrow-uturn-right')
                     ->action(function () use ($livewire, $arguments) {
                         $this->processMessage($arguments['id'], $livewire->mountedActionsData[0]['feedback'] ?? null);
+
                         $this->replaceMountedAction('activity');
-                        $this->refreshMessages();
 
                         Notification::make()
                             ->success()
@@ -416,7 +389,6 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
                     ->modalIcon('heroicon-o-check-circle')
                     ->action(function () use ($livewire, $arguments) {
                         $this->processMessage($arguments['id'], $livewire->mountedActionsData[0]['feedback'] ?? null);
-                        $this->refreshMessages();
 
                         Notification::make()
                             ->success()
@@ -484,7 +456,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
                                         ->live(),
                                     DatePicker::make('date_deadline')
                                         ->label(__('chatter::livewire/chatter-panel.edit-activity.form.fields.plan-date'))
-                                        ->hidden(fn (Get $get) => !$get('activity_plan_id'))
+                                        ->hidden(fn (Get $get) => ! $get('activity_plan_id'))
                                         ->live()
                                         ->native(false),
                                 ])
@@ -513,7 +485,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
                                             $html .= '</div>';
 
                                             return new HtmlString($html);
-                                        })->hidden(fn (Get $get) => !$get('activity_plan_id')),
+                                        })->hidden(fn (Get $get) => ! $get('activity_plan_id')),
                                     Select::make('activity_type_id')
                                         ->label(__('chatter::livewire/chatter-panel.edit-activity.form.fields.activity-type'))
                                         ->options(ActivityType::pluck('name', 'id'))
@@ -521,30 +493,30 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
                                         ->preload()
                                         ->live()
                                         ->required()
-                                        ->visible(fn (Get $get) => !$get('activity_plan_id')),
+                                        ->visible(fn (Get $get) => ! $get('activity_plan_id')),
                                     DatePicker::make('date_deadline')
                                         ->label(__('chatter::livewire/chatter-panel.edit-activity.form.fields.due-date'))
                                         ->native(false)
                                         ->hidden(fn (Get $get) => $get('activity_type_id') ? ActivityType::find($get('activity_type_id'))?->category == 'meeting' : false)
-                                        ->visible(fn (Get $get) => !$get('activity_plan_id')),
+                                        ->visible(fn (Get $get) => ! $get('activity_plan_id')),
                                     TextInput::make('summary')
                                         ->label(__('chatter::livewire/chatter-panel.edit-activity.form.fields.summary'))
-                                        ->visible(fn (Get $get) => !$get('activity_plan_id')),
+                                        ->visible(fn (Get $get) => ! $get('activity_plan_id')),
                                     Select::make('assigned_to')
                                         ->label(__('chatter::livewire/chatter-panel.edit-activity.form.fields.assigned-to'))
                                         ->searchable()
                                         ->hidden(fn (Get $get) => $get('activity_type_id') ? ActivityType::find($get('activity_type_id'))?->category == 'meeting' : false)
                                         ->live()
-                                        ->visible(fn (Get $get) => !$get('activity_plan_id'))
+                                        ->visible(fn (Get $get) => ! $get('activity_plan_id'))
                                         ->options(User::all()->pluck('name', 'id')->toArray())
                                         ->required(),
                                 ])->columns(2),
                             RichEditor::make('body')
                                 ->hiddenLabel()
                                 ->hidden(fn (Get $get) => $get('activity_type_id') ? ActivityType::find($get('activity_type_id'))?->category == 'meeting' : false)
-                                ->visible(fn (Get $get) => !$get('activity_plan_id'))
+                                ->visible(fn (Get $get) => ! $get('activity_plan_id'))
                                 ->label(__('chatter::app.filament.actions.chatter.activity.form.type-your-message-here'))
-                                ->visible(fn (Get $get) => !$get('activity_plan_id')),
+                                ->visible(fn (Get $get) => ! $get('activity_plan_id')),
                             Hidden::make('type')
                                 ->default('activity'),
                         ]),
@@ -552,9 +524,10 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             })
             ->action(function (array $data, $livewire) {
                 $activityId = $livewire->mountedActionsArguments[0]['id'];
+
                 $record = Message::find($activityId);
+
                 $record->update($data);
-                $this->refreshMessages();
 
                 Notification::make()
                     ->success()
@@ -568,10 +541,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
     {
         return Action::make('deleteMessage')
             ->requiresConfirmation()
-            ->action(function (array $arguments) {
-                $this->record->removeMessage($arguments['id']);
-                $this->refreshMessages();
-            });
+            ->action(fn (array $arguments) => $this->record->removeMessage($arguments['id']));
     }
 
     public function cancelActivityAction(): Action
@@ -581,10 +551,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             ->label(__('chatter::livewire/chatter-panel.cancel-activity-plan-action.title'))
             ->color('danger')
             ->requiresConfirmation()
-            ->action(function (array $arguments) {
-                $this->record->removeMessage($arguments['id'], 'activities');
-                $this->refreshMessages();
-            });
+            ->action(fn (array $arguments) => $this->record->removeMessage($arguments['id'], 'activities'));
     }
 
     public function chatInfolist(Schema $schema): Schema
@@ -618,25 +585,6 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
         $message->update([
             'pinned_at' => $message->pinned_at ? null : now(),
         ]);
-
-        $this->refreshMessages();
-    }
-
-    public function refreshMessages(): void
-    {
-        $this->record->refresh();
-
-        try {
-            $this->record->unsetRelation('messages');
-            $this->record->unsetRelation('activities');
-        } catch (\Throwable $e) {
-        }
-
-        $this->refreshTick++;
-
-        $this->skipRender();
-
-        $this->dispatch('$refresh');
     }
 
     public function activityInfolist(Schema $schema): Schema

@@ -152,12 +152,6 @@ class MessageAction extends Action
                         ->send();
                 }
             })
-            ->after(function ($livewire) {
-                // Force the Chatter panel to refresh its list after sending a message
-                if (method_exists($livewire, 'dispatch')) {
-                    $livewire->dispatch('chatter.refresh');
-                }
-            })
             ->label(__('chatter::filament/resources/actions/chatter/message-action.setup.title'))
             ->icon('heroicon-o-chat-bubble-left-right')
             ->modalIcon('heroicon-o-chat-bubble-left-right')

@@ -1,4 +1,4 @@
-<div class="w-full h-full" wire:poll.10s="refresh">
+<div class="w-full h-full">
     <!-- Toolbar -->
     <div class="sticky top-0 z-10 -mx-4 -mt-4 mb-4 bg-white/85 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:bg-gray-950/75">
         <div class="flex flex-col items-center gap-3">
@@ -71,13 +71,9 @@
 
     <div class="space-y-6">
         @if ($this->tab === 'activities')
-            <div wire:key="activities-{{ $this->refreshTick }}">
-                {{ $this->activityInfolist }}
-            </div>
+            {{ $this->activityInfolist }}
         @else
-            <div wire:key="messages-{{ $this->refreshTick }}">
-                {{ $this->chatInfolist }}
-            </div>
+            {{ $this->chatInfolist }}
         @endif
     </div>
 
