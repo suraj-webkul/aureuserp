@@ -6,7 +6,7 @@ use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Schemas\Schema;
 use Webkul\Field\Filament\Traits\HasCustomFields;
-use Webkul\Product\Filament\Resources\ProductResource as BaseProductResource;
+use Webkul\Product\Filament\Resources\Products\ProductResource as BaseProductResource;
 use Webkul\Purchase\Filament\Admin\Clusters\Products;
 use Webkul\Purchase\Filament\Admin\Clusters\Products\Resources\ProductResource\Pages\CreateProduct;
 use Webkul\Purchase\Filament\Admin\Clusters\Products\Resources\ProductResource\Pages\EditProduct;

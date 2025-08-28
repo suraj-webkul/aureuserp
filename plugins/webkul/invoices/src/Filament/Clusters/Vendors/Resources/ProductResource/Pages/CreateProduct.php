@@ -4,7 +4,7 @@ namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource\Pag
 
 use Filament\Pages\Enums\SubNavigationPosition;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource;
-use Webkul\Product\Filament\Resources\ProductResource\Pages\CreateProduct as BaseCreateProduct;
+use Webkul\Product\Filament\Resources\Products\Pages\CreateProduct as BaseCreateProduct;
 
 class CreateProduct extends BaseCreateProduct
 {

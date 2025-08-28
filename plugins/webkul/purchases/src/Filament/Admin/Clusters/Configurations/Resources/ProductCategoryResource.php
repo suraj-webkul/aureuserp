@@ -4,7 +4,7 @@ namespace Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources;
 
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
-use Webkul\Product\Filament\Resources\CategoryResource;
+use Webkul\Product\Filament\Resources\Categories\CategoryResource;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductCategoryResource\Pages\CreateProductCategory;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductCategoryResource\Pages\EditProductCategory;
