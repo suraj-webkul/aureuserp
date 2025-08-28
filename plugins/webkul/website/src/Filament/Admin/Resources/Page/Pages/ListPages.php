@@ -18,7 +18,7 @@ class ListPages extends ListRecords
 
     public ?string $tableSortDirection = null;
 
-    public ?string $toggledTableColumns = null;
+    public ?array $toggledTableColumns = null;
 
     public function getPresetTableViews(): array
     {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTermResource\Pages;
+namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTerms\Pages;
 
 use Webkul\Account\Filament\Resources\PaymentTerms\Pages\EditPaymentTerm as BaseEditPaymentTerm;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTermResource;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTerms\PaymentTermResource;
 
 class EditPaymentTerm extends BaseEditPaymentTerm
 {
