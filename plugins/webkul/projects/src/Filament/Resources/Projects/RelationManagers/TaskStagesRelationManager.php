@@ -8,7 +8,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Project\Filament\Clusters\Configurations\Resources\TaskStageResource;
+use Webkul\Project\Filament\Clusters\Configurations\Resources\TaskStages\TaskStageResource;
 
 class TaskStagesRelationManager extends RelationManager
 {

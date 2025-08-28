@@ -7,7 +7,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Pages\SettingsPage;
 use Filament\Schemas\Schema;
 use Illuminate\Support\HtmlString;
-use Webkul\Project\Filament\Clusters\Configurations\Resources\TaskStageResource;
+use Webkul\Project\Filament\Clusters\Configurations\Resources\TaskStages\TaskStageResource;
 use Webkul\Project\Settings\TaskSettings;
 use Webkul\Support\Filament\Clusters\Settings;
 

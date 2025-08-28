@@ -16,7 +16,7 @@ use Webkul\Field\Filament\Forms\Components\ProgressStepper;
 use Webkul\Field\Filament\Traits\HasCustomFields;
 use Webkul\Partner\Filament\Resources\Partners\PartnerResource;
 use Webkul\Project\Enums\ProjectVisibility;
-use Webkul\Project\Filament\Clusters\Configurations\Resources\TagResource;
+use Webkul\Project\Filament\Clusters\Configurations\Resources\Tags\TagResource;
 use Webkul\Project\Models\ProjectStage;
 use Webkul\Project\Settings\TaskSettings;
 use Webkul\Project\Settings\TimeSettings;
