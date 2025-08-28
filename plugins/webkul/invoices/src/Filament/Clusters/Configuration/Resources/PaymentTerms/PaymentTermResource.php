@@ -37,10 +37,10 @@ class PaymentTermResource extends BasePaymentTermResource
     public static function getPages(): array
     {
         return [
-            'index' => ListPaymentTerms::route('/'),
-            'create' => CreatePaymentTerm::route('/create'),
-            'view' => ViewPaymentTerm::route('/{record}'),
-            'edit' => EditPaymentTerm::route('/{record}/edit'),
+            'index'             => ListPaymentTerms::route('/'),
+            'create'            => CreatePaymentTerm::route('/create'),
+            'view'              => ViewPaymentTerm::route('/{record}'),
+            'edit'              => EditPaymentTerm::route('/{record}/edit'),
             'payment-due-terms' => ManagePaymentDueTerm::route('/{record}/payment-due-terms'),
         ];
     }
