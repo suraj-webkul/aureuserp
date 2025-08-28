@@ -5,7 +5,7 @@ namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\RefundResource\Page
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use Webkul\Account\Enums\MoveType;
-use Webkul\Account\Filament\Resources\InvoiceResource\Pages\ListInvoices as BaseListInvoices;
+use Webkul\Account\Filament\Resources\Invoices\Pages\ListInvoices as BaseListInvoices;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\RefundResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 use Webkul\TableViews\Filament\Concerns\HasTableViews;

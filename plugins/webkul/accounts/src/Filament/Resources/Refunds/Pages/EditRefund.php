@@ -7,7 +7,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Account\Facades\Account;
-use Webkul\Account\Filament\Resources\InvoiceResource\Actions as BaseActions;
+use Webkul\Account\Filament\Resources\Invoices\Actions as BaseActions;
 use Webkul\Account\Filament\Resources\Refunds\RefundResource;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 

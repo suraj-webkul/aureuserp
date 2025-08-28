@@ -28,7 +28,7 @@ use Webkul\Account\Enums\MoveState;
 use Webkul\Account\Enums\PaymentState;
 use Webkul\Account\Enums\TypeTaxUse;
 use Webkul\Account\Facades\Tax;
-use Webkul\Account\Filament\Resources\BankAccountResource;
+use Webkul\Account\Filament\Resources\BankAccounts\BankAccountResource;
 use Webkul\Account\Livewire\InvoiceSummary;
 use Webkul\Field\Filament\Forms\Components\ProgressStepper;
 use Webkul\Invoice\Models\Product;

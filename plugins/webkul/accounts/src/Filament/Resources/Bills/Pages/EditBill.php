@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Account\Facades\Account;
 use Webkul\Account\Filament\Resources\Bills\Actions\CreditNoteAction;
 use Webkul\Account\Filament\Resources\Bills\BillResource;
-use Webkul\Account\Filament\Resources\InvoiceResource\Actions as BaseActions;
+use Webkul\Account\Filament\Resources\Invoices\Actions as BaseActions;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 
 class EditBill extends EditRecord

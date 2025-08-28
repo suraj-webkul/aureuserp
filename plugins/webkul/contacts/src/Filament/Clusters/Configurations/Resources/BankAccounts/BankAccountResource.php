@@ -5,10 +5,11 @@ namespace Webkul\Contact\Filament\Clusters\Configurations\Resources\BankAccounts
 use Webkul\Contact\Filament\Clusters\Configurations;
 use Webkul\Contact\Filament\Clusters\Configurations\Resources\BankAccounts\Pages\ManageBankAccounts;
 use Webkul\Partner\Filament\Resources\BankAccounts\BankAccountResource as BaseBankAccountResource;
+use BackedEnum;
 
 class BankAccountResource extends BaseBankAccountResource
 {
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-banknotes';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-banknotes';
 
     protected static bool $shouldRegisterNavigation = true;
 

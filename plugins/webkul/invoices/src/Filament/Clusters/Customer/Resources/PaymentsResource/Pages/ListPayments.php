@@ -3,7 +3,7 @@
 namespace Webkul\Invoice\Filament\Clusters\Customer\Resources\PaymentsResource\Pages;
 
 use Illuminate\Database\Eloquent\Builder;
-use Webkul\Account\Filament\Resources\PaymentsResource\Pages\ListPayments as BaseListPayments;
+use Webkul\Account\Filament\Resources\Payments\Pages\ListPayments as BaseListPayments;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\PaymentsResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 
@@ -19,7 +19,7 @@ class ListPayments extends BaseListPayments
             ...$presets,
             'customer_payments' => PresetView::make(__('Customer Payments'))
                 ->favorite()
-                ->default()
+                ->setAsDefault()
                 ->icon('heroicon-s-banknotes')
                 ->modifyQueryUsing(fn (Builder $query) => $query->whereIn('partner_type', ['customer', 'company'])),
         ];

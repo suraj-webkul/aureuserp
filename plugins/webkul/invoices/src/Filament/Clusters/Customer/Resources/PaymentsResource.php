@@ -3,7 +3,7 @@
 namespace Webkul\Invoice\Filament\Clusters\Customer\Resources;
 
 use Filament\Pages\Enums\SubNavigationPosition;
-use Webkul\Account\Filament\Resources\PaymentsResource as BasePaymentsResource;
+use Webkul\Account\Filament\Resources\Payments\PaymentsResource as BasePaymentsResource;
 use Webkul\Invoice\Filament\Clusters\Customer;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\PaymentsResource\Pages\CreatePayments;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\PaymentsResource\Pages\EditPayments;
@@ -21,7 +21,7 @@ class PaymentsResource extends BasePaymentsResource
 
     protected static ?string $cluster = Customer::class;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getModelLabel(): string
     {
@@ -36,10 +36,10 @@ class PaymentsResource extends BasePaymentsResource
     public static function getPages(): array
     {
         return [
-            'index'  => ListPayments::route('/'),
+            'index' => ListPayments::route('/'),
             'create' => CreatePayments::route('/create'),
-            'view'   => ViewPayments::route('/{record}'),
-            'edit'   => EditPayments::route('/{record}/edit'),
+            'view' => ViewPayments::route('/{record}'),
+            'edit' => EditPayments::route('/{record}/edit'),
         ];
     }
 }

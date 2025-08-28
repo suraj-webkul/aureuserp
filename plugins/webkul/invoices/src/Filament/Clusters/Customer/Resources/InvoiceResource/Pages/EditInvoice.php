@@ -3,7 +3,7 @@
 namespace Webkul\Invoice\Filament\Clusters\Customer\Resources\InvoiceResource\Pages;
 
 use Filament\Pages\Enums\SubNavigationPosition;
-use Webkul\Account\Filament\Resources\InvoiceResource\Pages\EditInvoice as BaseEditInvoice;
+use Webkul\Account\Filament\Resources\Invoices\Pages\EditInvoice as BaseEditInvoice;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\InvoiceResource;
 
 class EditInvoice extends BaseEditInvoice

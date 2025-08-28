@@ -4,6 +4,7 @@ namespace Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources;
 
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
+use BackedEnum;
 use Webkul\Product\Filament\Resources\Categories\CategoryResource;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductCategoryResource\Pages\CreateProductCategory;
@@ -17,7 +18,7 @@ class ProductCategoryResource extends CategoryResource
 {
     protected static ?string $model = Category::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-folder';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-folder';
 
     protected static bool $shouldRegisterNavigation = true;
 
@@ -47,7 +48,7 @@ class ProductCategoryResource extends CategoryResource
             $route = session('current_route');
         }
 
-        if ($route === self::getRouteBaseName().'.index') {
+        if ($route === self::getRouteBaseName() . '.index') {
             return SubNavigationPosition::Start;
         }
 
@@ -66,10 +67,10 @@ class ProductCategoryResource extends CategoryResource
     public static function getPages(): array
     {
         return [
-            'index'    => ListProductCategories::route('/'),
-            'create'   => CreateProductCategory::route('/create'),
-            'view'     => ViewProductCategory::route('/{record}'),
-            'edit'     => EditProductCategory::route('/{record}/edit'),
+            'index' => ListProductCategories::route('/'),
+            'create' => CreateProductCategory::route('/create'),
+            'view' => ViewProductCategory::route('/{record}'),
+            'edit' => EditProductCategory::route('/{record}/edit'),
             'products' => ManageProducts::route('/{record}/products'),
         ];
     }

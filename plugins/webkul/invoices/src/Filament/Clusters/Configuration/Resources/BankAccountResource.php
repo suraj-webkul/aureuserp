@@ -2,7 +2,7 @@
 
 namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources;
 
-use Webkul\Account\Filament\Resources\BankAccountResource as BaseBankAccountResource;
+use Webkul\Account\Filament\Resources\BankAccounts\BankAccountResource as BaseBankAccountResource;
 use Webkul\Invoice\Filament\Clusters\Configuration;
 use Webkul\Invoice\Filament\Clusters\Configuration\Resources\BankAccountResource\Pages\ListBankAccounts;
 use Webkul\Invoice\Models\BankAccount;
