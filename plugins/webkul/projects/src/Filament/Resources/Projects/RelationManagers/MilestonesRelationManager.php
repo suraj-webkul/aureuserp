@@ -9,7 +9,7 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Project\Filament\Clusters\Configurations\Resources\MilestoneResource;
+use Webkul\Project\Filament\Clusters\Configurations\Resources\Milestones\MilestoneResource;
 use Webkul\Project\Settings\TaskSettings;
 
 class MilestonesRelationManager extends RelationManager
