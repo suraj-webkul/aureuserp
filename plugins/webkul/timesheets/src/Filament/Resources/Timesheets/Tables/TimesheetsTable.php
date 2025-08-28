@@ -1,20 +1,13 @@
 <?php
 
-namespace Webkul\Timesheet\Filament\Resources;
+namespace Webkul\Timesheet\Filament\Resources\Timesheets;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
-use Filament\Resources\Resource;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Schema;
 use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
@@ -23,75 +16,10 @@ use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
-use Webkul\Project\Models\Timesheet;
-use Webkul\Timesheet\Filament\Resources\TimesheetResource\Pages\ManageTimesheets;
 
-class TimesheetResource extends Resource
+class TimesheetsTable
 {
-    protected static ?string $model = Timesheet::class;
-
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-clock';
-
-    public static function getNavigationLabel(): string
-    {
-        return __('timesheets::filament/resources/timesheet.navigation.title');
-    }
-
-    public static function getNavigationGroup(): string
-    {
-        return __('timesheets::filament/resources/timesheet.navigation.group');
-    }
-
-    public static function form(Schema $schema): Schema
-    {
-        return $schema
-            ->components([
-                Hidden::make('type')
-                    ->default('projects'),
-                DatePicker::make('date')
-                    ->label(__('timesheets::filament/resources/timesheet.form.date'))
-                    ->required()
-                    ->native(false),
-                Select::make('user_id')
-                    ->label(__('timesheets::filament/resources/timesheet.form.employee'))
-                    ->required()
-                    ->relationship('user', 'name')
-                    ->searchable()
-                    ->preload(),
-                Select::make('project_id')
-                    ->label(__('timesheets::filament/resources/timesheet.form.project'))
-                    ->required()
-                    ->relationship('project', 'name')
-                    ->searchable()
-                    ->preload()
-                    ->live()
-                    ->afterStateUpdated(function (Set $set) {
-                        $set('task_id', null);
-                    }),
-                Select::make('task_id')
-                    ->label(__('timesheets::filament/resources/timesheet.form.task'))
-                    ->required()
-                    ->relationship(
-                        name: 'task',
-                        titleAttribute: 'title',
-                        modifyQueryUsing: fn (Get $get, Builder $query) => $query->where('project_id', $get('project_id')),
-                    )
-                    ->searchable()
-                    ->preload(),
-                TextInput::make('name')
-                    ->label(__('timesheets::filament/resources/timesheet.form.description')),
-                TextInput::make('unit_amount')
-                    ->label(__('timesheets::filament/resources/timesheet.form.time-spent'))
-                    ->numeric()
-                    ->required()
-                    ->minValue(0)
-                    ->maxValue(99999999999)
-                    ->helperText(__('timesheets::filament/resources/timesheet.form.time-spent-helper-text')),
-            ])
-            ->columns(1);
-    }
-
-    public static function table(Table $table): Table
+    public static function configure(Table $table): Table
     {
         return $table
             ->recordTitleAttribute('name')
@@ -241,12 +169,5 @@ class TimesheetResource extends Resource
                         ),
                 ]),
             ]);
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => ManageTimesheets::route('/'),
-        ];
     }
 }
