@@ -33,11 +33,11 @@ class CashRoundingInfolist
                                 TextEntry::make('strategy')
                                     ->label(__('accounts::filament/resources/cash-rounding.infolist.entries.rounding-strategy'))
                                     ->icon('heroicon-o-cog')
-                                    ->formatStateUsing(fn(string $state): string => RoundingStrategy::options()[$state]),
+                                    ->formatStateUsing(fn (string $state): string => RoundingStrategy::options()[$state]),
                                 TextEntry::make('rounding_method')
                                     ->label(__('accounts::filament/resources/cash-rounding.infolist.entries.rounding-method'))
                                     ->icon('heroicon-o-adjustments-horizontal')
-                                    ->formatStateUsing(fn(string $state): string => RoundingMethod::options()[$state]),
+                                    ->formatStateUsing(fn (string $state): string => RoundingMethod::options()[$state]),
                             ])->columns(2),
                     ])->columns(2),
             ]);

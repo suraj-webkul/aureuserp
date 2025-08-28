@@ -98,7 +98,7 @@ class LotResource extends Resource
                                     ->relationship(
                                         name: 'product',
                                         titleAttribute: 'name',
-                                        modifyQueryUsing: fn(Builder $query) => $query->where('tracking', ProductTracking::LOT)->whereNull('is_configurable'),
+                                        modifyQueryUsing: fn (Builder $query) => $query->where('tracking', ProductTracking::LOT)->whereNull('is_configurable'),
                                     )
                                     ->required()
                                     ->searchable()
@@ -232,7 +232,7 @@ class LotResource extends Resource
                     DeleteBulkAction::make()
                         ->action(function (Collection $records) {
                             try {
-                                $records->each(fn(Model $record) => $record->delete());
+                                $records->each(fn (Model $record) => $record->delete());
                             } catch (QueryException $e) {
                                 Notification::make()
                                     ->danger()
@@ -333,10 +333,10 @@ class LotResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListLots::route('/'),
-            'create' => CreateLot::route('/create'),
-            'view' => ViewLot::route('/{record}'),
-            'edit' => EditLot::route('/{record}/edit'),
+            'index'      => ListLots::route('/'),
+            'create'     => CreateLot::route('/create'),
+            'view'       => ViewLot::route('/{record}'),
+            'edit'       => EditLot::route('/{record}/edit'),
             'quantities' => Pages\ManageQuantities::route('/{record}/quantities'),
         ];
     }

@@ -2,18 +2,18 @@
 
 namespace Webkul\Account\Filament\Resources\CashRounding;
 
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use Webkul\Account\Filament\Resources\CashRounding\Schemas\CashRoundingForm;
-use Webkul\Account\Filament\Resources\CashRounding\Schemas\CashRoundingInfolist;
-use Webkul\Account\Filament\Resources\CashRounding\Tables\CashRoundingTable;
 use Webkul\Account\Filament\Resources\CashRounding\Pages\CreateCashRounding;
 use Webkul\Account\Filament\Resources\CashRounding\Pages\EditCashRounding;
 use Webkul\Account\Filament\Resources\CashRounding\Pages\ListCashRounding;
 use Webkul\Account\Filament\Resources\CashRounding\Pages\ViewCashRounding;
+use Webkul\Account\Filament\Resources\CashRounding\Schemas\CashRoundingForm;
+use Webkul\Account\Filament\Resources\CashRounding\Schemas\CashRoundingInfolist;
+use Webkul\Account\Filament\Resources\CashRounding\Tables\CashRoundingTable;
 use Webkul\Account\Models\CashRounding;
-use BackedEnum;
 
 class CashRoundingResource extends Resource
 {
@@ -41,10 +41,10 @@ class CashRoundingResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListCashRounding::route('/'),
+            'index'  => ListCashRounding::route('/'),
             'create' => CreateCashRounding::route('/create'),
-            'view' => ViewCashRounding::route('/{record}'),
-            'edit' => EditCashRounding::route('/{record}/edit'),
+            'view'   => ViewCashRounding::route('/{record}'),
+            'edit'   => EditCashRounding::route('/{record}/edit'),
         ];
     }
 }

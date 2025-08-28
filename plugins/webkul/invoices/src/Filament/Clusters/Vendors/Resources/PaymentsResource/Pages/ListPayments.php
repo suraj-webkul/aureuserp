@@ -21,7 +21,7 @@ class ListPayments extends BaseListPayments
                 ->favorite()
                 ->setAsDefault()
                 ->icon('heroicon-s-banknotes')
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('partner_type', 'supplier')),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('partner_type', 'supplier')),
         ];
     }
 }

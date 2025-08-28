@@ -7,7 +7,6 @@ use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Builder;
 
-
 class PackagingForm
 {
     public static function configure(Schema $schema): Schema
@@ -26,10 +25,10 @@ class PackagingForm
                     ->relationship(
                         'product',
                         'name',
-                        modifyQueryUsing: fn(Builder $query) => $query->withTrashed(),
+                        modifyQueryUsing: fn (Builder $query) => $query->withTrashed(),
                     )
                     ->getOptionLabelFromRecordUsing(function ($record): string {
-                        return $record->name . ($record->trashed() ? ' (Deleted)' : '');
+                        return $record->name.($record->trashed() ? ' (Deleted)' : '');
                     })
                     ->disableOptionWhen(function ($label) {
                         return str_contains($label, ' (Deleted)');

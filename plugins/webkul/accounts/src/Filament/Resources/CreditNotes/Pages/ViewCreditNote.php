@@ -15,7 +15,7 @@ class ViewCreditNote extends ViewRecord
         $predefinedActions = parent::getHeaderActions();
 
         $predefinedActions = collect($predefinedActions)->filter(function ($action) {
-            return !in_array($action->getName(), [
+            return ! in_array($action->getName(), [
                 'customers.invoice.set-as-checked',
                 'customers.invoice.credit-note',
             ]);

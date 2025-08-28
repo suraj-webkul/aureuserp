@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Product\Models\Packaging;
+
 class PackagingTable
 {
     public static function configure(Table $table): Table
@@ -122,7 +123,7 @@ class PackagingTable
                     DeleteBulkAction::make()
                         ->action(function (Collection $records) {
                             try {
-                                $records->each(fn(Model $record) => $record->delete());
+                                $records->each(fn (Model $record) => $record->delete());
                             } catch (QueryException $e) {
                                 Notification::make()
                                     ->danger()

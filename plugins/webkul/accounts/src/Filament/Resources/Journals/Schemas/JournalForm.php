@@ -24,12 +24,12 @@ class JournalForm
                                                             ->schema([
                                                                 Toggle::make('refund_order')
                                                                     ->hidden(function (Get $get) {
-                                                                        return !in_array($get('type'), [JournalType::SALE->value, JournalType::PURCHASE->value]);
+                                                                        return ! in_array($get('type'), [JournalType::SALE->value, JournalType::PURCHASE->value]);
                                                                     })
                                                                     ->label(__('accounts::filament/resources/journal.form.tabs.journal-entries.field-set.accounting-information.fields.dedicated-credit-note-sequence')),
                                                                 Toggle::make('payment_order')
                                                                     ->hidden(function (Get $get) {
-                                                                        return !in_array($get('type'), [JournalType::BANK->value, JournalType::CASH->value, JournalType::CREDIT_CARD->value]);
+                                                                        return ! in_array($get('type'), [JournalType::BANK->value, JournalType::CASH->value, JournalType::CREDIT_CARD->value]);
                                                                     })
                                                                     ->label(__('accounts::filament/resources/journal.form.tabs.journal-entries.field-set.accounting-information.fields.dedicated-payment-sequence')),
                                                                 TextInput::make('code')
@@ -105,7 +105,7 @@ class JournalForm
                                                             ]),
                                                     ]),
                                                 Fieldset::make(__('accounts::filament/resources/journal.form.tabs.advanced-settings.fields.payment-communication'))
-                                                    ->visible(fn(Get $get) => $get('type') === JournalType::SALE->value)
+                                                    ->visible(fn (Get $get) => $get('type') === JournalType::SALE->value)
                                                     ->schema([
                                                         Select::make('invoice_reference_type')
                                                             ->options(CommunicationType::options())

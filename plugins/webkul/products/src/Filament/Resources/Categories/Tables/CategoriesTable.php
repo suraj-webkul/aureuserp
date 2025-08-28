@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Webkul\Product\Filament\Resources\Categories\Tables;
 
 use Filament\Actions\CreateAction;
@@ -108,7 +107,7 @@ class CategoriesTable
                 DeleteBulkAction::make()
                     ->action(function (Collection $records) {
                         try {
-                            $records->each(fn(Model $record) => $record->delete());
+                            $records->each(fn (Model $record) => $record->delete());
                         } catch (QueryException $e) {
                             Notification::make()
                                 ->danger()

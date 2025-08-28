@@ -5,8 +5,8 @@ namespace Webkul\Account\Filament\Resources\Invoices\Pages;
 use Filament\Actions\DeleteAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
-use Webkul\Account\Filament\Resources\Invoices\InvoiceResource;
 use Webkul\Account\Filament\Resources\Invoices\Actions as BaseActions;
+use Webkul\Account\Filament\Resources\Invoices\InvoiceResource;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 
 class ViewInvoice extends ViewRecord

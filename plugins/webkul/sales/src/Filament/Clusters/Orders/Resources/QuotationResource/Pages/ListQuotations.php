@@ -31,7 +31,7 @@ class ListQuotations extends ListRecords
             'my_quotations' => PresetView::make(__('sales::filament/clusters/orders/resources/quotation/pages/list-quotation.tabs.my-quotations'))
                 ->icon('heroicon-s-user')
                 ->favorite()
-                ->default()
+                ->setAsDefault(true)
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('user_id', Auth::id())),
             'quotations' => PresetView::make(__('sales::filament/clusters/orders/resources/quotation/pages/list-quotation.tabs.quotations'))
                 ->icon('heroicon-s-receipt-percent')

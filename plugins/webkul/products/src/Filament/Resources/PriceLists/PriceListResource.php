@@ -46,10 +46,10 @@ class PriceListResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListPriceLists::route('/'),
+            'index'  => ListPriceLists::route('/'),
             'create' => CreatePriceList::route('/create'),
-            'view' => ViewPriceList::route('/{record}'),
-            'edit' => EditPriceList::route('/{record}/edit'),
+            'view'   => ViewPriceList::route('/{record}'),
+            'edit'   => EditPriceList::route('/{record}/edit'),
         ];
     }
 }

@@ -45,12 +45,12 @@ class InvoiceInfolist
                                 TextEntry::make('partner.name')
                                     ->placeholder('-')
                                     ->label(__('accounts::filament/resources/invoice.infolist.section.general.entries.customer'))
-                                    ->visible(fn($record) => $record->partner_id !== null)
+                                    ->visible(fn ($record) => $record->partner_id !== null)
                                     ->icon('heroicon-o-user'),
                                 TextEntry::make('invoice_partner_display_name')
                                     ->placeholder('-')
                                     ->label(__('accounts::filament/resources/invoice.infolist.section.general.entries.customer'))
-                                    ->visible(fn($record) => $record->partner_id === null)
+                                    ->visible(fn ($record) => $record->partner_id === null)
                                     ->icon('heroicon-o-user'),
                                 TextEntry::make('invoice_date')
                                     ->placeholder('-')
@@ -61,12 +61,12 @@ class InvoiceInfolist
                                     ->placeholder('-')
                                     ->label(__('accounts::filament/resources/invoice.infolist.section.general.entries.due-date'))
                                     ->icon('heroicon-o-clock')
-                                    ->hidden(fn($record) => $record->invoice_payment_term_id !== null)
+                                    ->hidden(fn ($record) => $record->invoice_payment_term_id !== null)
                                     ->date(),
                                 TextEntry::make('invoicePaymentTerm.name')
                                     ->placeholder('-')
                                     ->label(__('accounts::filament/resources/invoice.infolist.section.general.entries.payment-term'))
-                                    ->hidden(fn($record) => $record->invoice_payment_term_id === null)
+                                    ->hidden(fn ($record) => $record->invoice_payment_term_id === null)
                                     ->icon('heroicon-o-calendar-days'),
                             ])->columns(2),
                     ]),
@@ -89,14 +89,14 @@ class InvoiceInfolist
                                             ->icon('heroicon-o-hashtag'),
                                         TextEntry::make('uom.name')
                                             ->placeholder('-')
-                                            ->visible(fn(ProductSettings $settings) => $settings->enable_uom)
+                                            ->visible(fn (ProductSettings $settings) => $settings->enable_uom)
                                             ->label(__('accounts::filament/resources/invoice.infolist.tabs.invoice-lines.repeater.products.entries.unit'))
                                             ->icon('heroicon-o-scale'),
                                         TextEntry::make('price_unit')
                                             ->placeholder('-')
                                             ->label(__('accounts::filament/resources/invoice.infolist.tabs.invoice-lines.repeater.products.entries.unit-price'))
                                             ->icon('heroicon-o-currency-dollar')
-                                            ->money(fn($record) => $record->currency->code),
+                                            ->money(fn ($record) => $record->currency->code),
                                         TextEntry::make('discount')
                                             ->placeholder('-')
                                             ->label(__('accounts::filament/resources/invoice.infolist.tabs.invoice-lines.repeater.products.entries.discount-percentage'))
@@ -105,12 +105,12 @@ class InvoiceInfolist
                                         TextEntry::make('taxes.name')
                                             ->badge()
                                             ->state(function ($record): array {
-                                                return $record->taxes->map(fn($tax) => [
+                                                return $record->taxes->map(fn ($tax) => [
                                                     'name' => $tax->name,
                                                 ])->toArray();
                                             })
                                             ->icon('heroicon-o-receipt-percent')
-                                            ->formatStateUsing(fn($state) => $state['name'])
+                                            ->formatStateUsing(fn ($state) => $state['name'])
                                             ->placeholder('-')
                                             ->label(__('accounts::filament/resources/invoice.infolist.tabs.invoice-lines.repeater.products.entries.taxes'))
                                             ->weight(FontWeight::Bold),
@@ -118,13 +118,13 @@ class InvoiceInfolist
                                             ->placeholder('-')
                                             ->label(__('accounts::filament/resources/invoice.infolist.tabs.invoice-lines.repeater.products.entries.sub-total'))
                                             ->icon('heroicon-o-calculator')
-                                            ->money(fn($record) => $record->currency->code),
+                                            ->money(fn ($record) => $record->currency->code),
                                     ])->columns(5),
                                 Livewire::make(InvoiceSummary::class, function ($record) {
                                     return [
-                                        'currency' => $record->currency,
+                                        'currency'  => $record->currency,
                                         'amountTax' => $record->amount_tax ?? 0,
-                                        'products' => $record->lines->map(function ($item) {
+                                        'products'  => $record->lines->map(function ($item) {
                                             return [
                                                 ...$item->toArray(),
                                                 'taxes' => $item->taxes->pluck('id')->toArray() ?? [],

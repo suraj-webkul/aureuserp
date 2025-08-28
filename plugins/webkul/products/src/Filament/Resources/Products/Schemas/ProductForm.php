@@ -76,7 +76,7 @@ class ProductForm
                                             ->maxValue(99999999999),
                                     ]),
                             ])
-                            ->visible(fn(Get $get): bool => $get('type') == ProductType::GOODS->value),
+                            ->visible(fn (Get $get): bool => $get('type') == ProductType::GOODS->value),
                     ])
                     ->columnSpan(['lg' => 2]),
 
@@ -102,7 +102,7 @@ class ProductForm
                                     ->searchable()
                                     ->preload()
                                     ->default(Category::first()?->id)
-                                    ->createOptionForm(fn(Schema $schema): Schema => CategoryResource::form($schema)),
+                                    ->createOptionForm(fn (Schema $schema): Schema => CategoryResource::form($schema)),
                                 Select::make('company_id')
                                     ->label(__('products::filament/resources/product.form.sections.settings.fields.company'))
                                     ->relationship('company', 'name')

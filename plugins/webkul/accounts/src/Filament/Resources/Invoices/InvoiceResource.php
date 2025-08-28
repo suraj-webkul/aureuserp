@@ -2,6 +2,7 @@
 
 namespace Webkul\Account\Filament\Resources\Invoices;
 
+use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Repeater;
@@ -30,7 +31,6 @@ use Webkul\Account\Models\Move as AccountMove;
 use Webkul\Invoice\Models\Product;
 use Webkul\Invoice\Settings\ProductSettings;
 use Webkul\Support\Models\UOM;
-use BackedEnum;
 
 class InvoiceResource extends Resource
 {
@@ -43,9 +43,9 @@ class InvoiceResource extends Resource
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         return [
-            __('accounts::filament/resources/invoice.global-search.number') => $record?->name ?? '—',
-            __('accounts::filament/resources/invoice.global-search.customer') => $record?->invoice_partner_display_name ?? '—',
-            __('accounts::filament/resources/invoice.global-search.invoice-date') => $record?->invoice_date ?? '—',
+            __('accounts::filament/resources/invoice.global-search.number')           => $record?->name ?? '—',
+            __('accounts::filament/resources/invoice.global-search.customer')         => $record?->invoice_partner_display_name ?? '—',
+            __('accounts::filament/resources/invoice.global-search.invoice-date')     => $record?->invoice_date ?? '—',
             __('accounts::filament/resources/invoice.global-search.invoice-date-due') => $record?->invoice_date_due ?? '—',
         ];
     }
@@ -68,10 +68,10 @@ class InvoiceResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListInvoices::route('/'),
+            'index'  => ListInvoices::route('/'),
             'create' => CreateInvoice::route('/create'),
-            'view' => ViewInvoice::route('/{record}'),
-            'edit' => EditInvoice::route('/{record}/edit'),
+            'view'   => ViewInvoice::route('/{record}'),
+            'edit'   => EditInvoice::route('/{record}/edit'),
         ];
     }
 
@@ -87,7 +87,7 @@ class InvoiceResource extends Resource
             ->collapsible()
             ->defaultItems(0)
             ->itemLabel(function ($state) {
-                if (!empty($state['name'])) {
+                if (! empty($state['name'])) {
                     return $state['name'];
                 }
 
@@ -95,7 +95,7 @@ class InvoiceResource extends Resource
 
                 return $product->name ?? null;
             })
-            ->deleteAction(fn(Action $action) => $action->requiresConfirmation())
+            ->deleteAction(fn (Action $action) => $action->requiresConfirmation())
             ->schema([
                 Group::make()
                     ->schema([
@@ -106,7 +106,7 @@ class InvoiceResource extends Resource
                                     ->relationship(
                                         'product',
                                         'name',
-                                        fn($query) => $query->where('is_configurable', null),
+                                        fn ($query) => $query->where('is_configurable', null),
                                     )
                                     ->getOptionLabelUsing(function ($record) {
                                         if ($record->product) {
@@ -119,8 +119,8 @@ class InvoiceResource extends Resource
                                     ->preload()
                                     ->live()
                                     ->dehydrated()
-                                    ->disabled(fn($record) => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL]))
-                                    ->afterStateUpdated(fn(Set $set, Get $get) => static::afterProductUpdated($set, $get))
+                                    ->disabled(fn ($record) => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL]))
+                                    ->afterStateUpdated(fn (Set $set, Get $get) => static::afterProductUpdated($set, $get))
                                     ->required(),
                                 TextInput::make('quantity')
                                     ->label(__('accounts::filament/resources/invoice.form.tabs.invoice-lines.repeater.products.fields.quantity'))
@@ -130,22 +130,22 @@ class InvoiceResource extends Resource
                                     ->maxValue(99999999999)
                                     ->live()
                                     ->dehydrated()
-                                    ->disabled(fn($record) => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL]))
-                                    ->afterStateUpdated(fn(Set $set, Get $get) => static::afterProductQtyUpdated($set, $get)),
+                                    ->disabled(fn ($record) => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL]))
+                                    ->afterStateUpdated(fn (Set $set, Get $get) => static::afterProductQtyUpdated($set, $get)),
                                 Select::make('uom_id')
                                     ->label(__('accounts::filament/resources/invoice.form.tabs.invoice-lines.repeater.products.fields.unit'))
                                     ->relationship(
                                         'uom',
                                         'name',
-                                        fn($query) => $query->where('category_id', 1)->orderBy('id'),
+                                        fn ($query) => $query->where('category_id', 1)->orderBy('id'),
                                     )
                                     ->required()
                                     ->live()
                                     ->selectablePlaceholder(false)
                                     ->dehydrated()
-                                    ->disabled(fn($record) => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL]))
-                                    ->afterStateUpdated(fn(Set $set, Get $get) => static::afterUOMUpdated($set, $get))
-                                    ->visible(fn(ProductSettings $settings) => $settings->enable_uom),
+                                    ->disabled(fn ($record) => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL]))
+                                    ->afterStateUpdated(fn (Set $set, Get $get) => static::afterUOMUpdated($set, $get))
+                                    ->visible(fn (ProductSettings $settings) => $settings->enable_uom),
                                 Select::make('taxes')
                                     ->label(__('accounts::filament/resources/invoice.form.tabs.invoice-lines.repeater.products.fields.taxes'))
                                     ->relationship(
@@ -159,9 +159,9 @@ class InvoiceResource extends Resource
                                     ->multiple()
                                     ->preload()
                                     ->dehydrated()
-                                    ->disabled(fn($record) => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL]))
-                                    ->afterStateHydrated(fn(Get $get, Set $set) => self::calculateLineTotals($set, $get))
-                                    ->afterStateUpdated(fn(Get $get, Set $set, $state) => self::calculateLineTotals($set, $get))
+                                    ->disabled(fn ($record) => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL]))
+                                    ->afterStateHydrated(fn (Get $get, Set $set) => self::calculateLineTotals($set, $get))
+                                    ->afterStateUpdated(fn (Get $get, Set $set, $state) => self::calculateLineTotals($set, $get))
                                     ->live(),
                                 TextInput::make('discount')
                                     ->label(__('Discount Percentage'))
@@ -172,8 +172,8 @@ class InvoiceResource extends Resource
                                     ->maxValue(99999999999)
                                     ->live()
                                     ->dehydrated()
-                                    ->disabled(fn($record) => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL]))
-                                    ->afterStateUpdated(fn(Set $set, Get $get) => self::calculateLineTotals($set, $get)),
+                                    ->disabled(fn ($record) => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL]))
+                                    ->afterStateUpdated(fn (Set $set, Get $get) => self::calculateLineTotals($set, $get)),
                                 TextInput::make('price_unit')
                                     ->label(__('accounts::filament/resources/invoice.form.tabs.invoice-lines.repeater.products.fields.unit-price'))
                                     ->numeric()
@@ -183,13 +183,13 @@ class InvoiceResource extends Resource
                                     ->required()
                                     ->live()
                                     ->dehydrated()
-                                    ->disabled(fn($record) => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL]))
-                                    ->afterStateUpdated(fn(Set $set, Get $get) => self::calculateLineTotals($set, $get)),
+                                    ->disabled(fn ($record) => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL]))
+                                    ->afterStateUpdated(fn (Set $set, Get $get) => self::calculateLineTotals($set, $get)),
                                 TextInput::make('price_subtotal')
                                     ->label(__('accounts::filament/resources/invoice.form.tabs.invoice-lines.repeater.products.fields.sub-total'))
                                     ->default(0)
                                     ->dehydrated()
-                                    ->disabled(fn($record) => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL])),
+                                    ->disabled(fn ($record) => $record && in_array($record->parent_state, [MoveState::POSTED, MoveState::CANCEL])),
                                 Hidden::make('product_uom_qty')
                                     ->default(0),
                                 Hidden::make('price_tax')
@@ -200,8 +200,8 @@ class InvoiceResource extends Resource
                     ])
                     ->columns(2),
             ])
-            ->mutateRelationshipDataBeforeCreateUsing(fn(array $data, $record) => static::mutateProductRelationship($data, $record))
-            ->mutateRelationshipDataBeforeSaveUsing(fn(array $data, $record) => static::mutateProductRelationship($data, $record));
+            ->mutateRelationshipDataBeforeCreateUsing(fn (array $data, $record) => static::mutateProductRelationship($data, $record))
+            ->mutateRelationshipDataBeforeSaveUsing(fn (array $data, $record) => static::mutateProductRelationship($data, $record));
     }
 
     public static function mutateProductRelationship(array $data, $record): array
@@ -213,7 +213,7 @@ class InvoiceResource extends Resource
 
     private static function afterProductUpdated(Set $set, Get $get): void
     {
-        if (!$get('product_id')) {
+        if (! $get('product_id')) {
             return;
         }
 
@@ -236,7 +236,7 @@ class InvoiceResource extends Resource
 
     private static function afterProductQtyUpdated(Set $set, Get $get): void
     {
-        if (!$get('product_id')) {
+        if (! $get('product_id')) {
             return;
         }
 
@@ -249,7 +249,7 @@ class InvoiceResource extends Resource
 
     private static function afterUOMUpdated(Set $set, Get $get): void
     {
-        if (!$get('product_id')) {
+        if (! $get('product_id')) {
             return;
         }
 
@@ -268,7 +268,7 @@ class InvoiceResource extends Resource
 
     private static function calculateUnitQuantity($uomId, $quantity)
     {
-        if (!$uomId) {
+        if (! $uomId) {
             return $quantity;
         }
 
@@ -279,7 +279,7 @@ class InvoiceResource extends Resource
 
     private static function calculateUnitPrice($uomId, $price)
     {
-        if (!$uomId) {
+        if (! $uomId) {
             return $price;
         }
 
@@ -290,7 +290,7 @@ class InvoiceResource extends Resource
 
     private static function calculateLineTotals(Set $set, Get $get): void
     {
-        if (!$get('product_id')) {
+        if (! $get('product_id')) {
             $set('price_unit', 0);
 
             $set('discount', 0);

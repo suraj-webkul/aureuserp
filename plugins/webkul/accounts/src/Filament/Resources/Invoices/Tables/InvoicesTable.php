@@ -19,7 +19,6 @@ use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Table;
 use Webkul\Account\Enums\PaymentState;
 
-
 class InvoicesTable
 {
     public static function configure(Table $table): Table
@@ -56,7 +55,7 @@ class InvoicesTable
                     ->searchable()
                     ->placeholder('-')
                     ->sortable()
-                    ->money(fn($record) => $record->currency->code)
+                    ->money(fn ($record) => $record->currency->code)
                     ->summarize(Sum::make()->label(__('accounts::filament/resources/invoice.table.total')))
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('amount_tax_signed')
@@ -64,7 +63,7 @@ class InvoicesTable
                     ->searchable()
                     ->placeholder('-')
                     ->sortable()
-                    ->money(fn($record) => $record->currency->code)
+                    ->money(fn ($record) => $record->currency->code)
                     ->summarize(Sum::make()->label(__('accounts::filament/resources/invoice.table.total')))
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('amount_total_in_currency_signed')
@@ -73,7 +72,7 @@ class InvoicesTable
                     ->placeholder('-')
                     ->sortable()
                     ->summarize(Sum::make()->label(__('accounts::filament/resources/invoice.table.total')))
-                    ->money(fn($record) => $record->currency->code)
+                    ->money(fn ($record) => $record->currency->code)
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('amount_residual_signed')
                     ->label(__('accounts::filament/resources/invoice.table.columns.amount-due'))
@@ -81,14 +80,14 @@ class InvoicesTable
                     ->placeholder('-')
                     ->sortable()
                     ->summarize(Sum::make()->label('Total'))
-                    ->money(fn($record) => $record->currency->code)
+                    ->money(fn ($record) => $record->currency->code)
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('payment_state')
                     ->label(__('Payment State'))
                     ->placeholder('-')
-                    ->color(fn(PaymentState $state) => $state->getColor())
-                    ->icon(fn(PaymentState $state) => $state->getIcon())
-                    ->formatStateUsing(fn(PaymentState $state) => $state->getLabel())
+                    ->color(fn (PaymentState $state) => $state->getColor())
+                    ->icon(fn (PaymentState $state) => $state->getIcon())
+                    ->formatStateUsing(fn (PaymentState $state) => $state->getLabel())
                     ->badge()
                     ->searchable()
                     ->sortable()

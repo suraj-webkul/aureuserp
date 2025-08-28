@@ -35,10 +35,10 @@ class ProductAttributeResource extends AttributeResource
     public static function getPages(): array
     {
         return [
-            'index' => ListProductAttributes::route('/'),
+            'index'  => ListProductAttributes::route('/'),
             'create' => CreateProductAttribute::route('/create'),
-            'view' => ViewProductAttribute::route('/{record}'),
-            'edit' => EditProductAttribute::route('/{record}/edit'),
+            'view'   => ViewProductAttribute::route('/{record}'),
+            'edit'   => EditProductAttribute::route('/{record}/edit'),
         ];
     }
 }

@@ -23,7 +23,7 @@ class JournalsTable
                     ->label(__('accounts::filament/resources/journal.table.columns.name')),
                 TextColumn::make('type')
                     ->searchable()
-                    ->formatStateUsing(fn($state) => JournalType::options()[$state] ?? $state)
+                    ->formatStateUsing(fn ($state) => JournalType::options()[$state] ?? $state)
                     ->sortable()
                     ->label(__('accounts::filament/resources/journal.table.columns.type')),
                 TextColumn::make('code')

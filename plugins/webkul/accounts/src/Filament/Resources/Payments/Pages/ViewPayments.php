@@ -6,8 +6,8 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
-use Webkul\Account\Filament\Resources\Payments\PaymentsResource;
 use Webkul\Account\Filament\Resources\Payments\Actions as BaseActions;
+use Webkul\Account\Filament\Resources\Payments\PaymentsResource;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 
 class ViewPayments extends ViewRecord

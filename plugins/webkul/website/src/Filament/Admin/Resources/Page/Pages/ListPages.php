@@ -13,8 +13,11 @@ class ListPages extends ListRecords
     use HasTableViews;
 
     protected static string $resource = PageResource::class;
+
     public ?string $tableSortColumn = null;
+
     public ?string $tableSortDirection = null;
+
     public ?array $toggledTableColumns = null;
 
     public function getPresetTableViews(): array

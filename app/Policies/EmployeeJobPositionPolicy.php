@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use Webkul\Security\Models\User;
-use Webkul\Employee\Models\EmployeeJobPosition;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Webkul\Employee\Models\EmployeeJobPosition;
+use Webkul\Security\Models\User;
 
 class EmployeeJobPositionPolicy
 {

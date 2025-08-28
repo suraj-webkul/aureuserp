@@ -67,7 +67,7 @@ class ProductCategoryResource extends CategoryResource
                     ])
                     ->columns(1),
             ])
-            ->visible(fn(WarehouseSettings $settings) => $settings->enable_multi_steps_routes);
+            ->visible(fn (WarehouseSettings $settings) => $settings->enable_multi_steps_routes);
 
         $components[1]->childComponents($childComponents);
 
@@ -100,7 +100,7 @@ class ProductCategoryResource extends CategoryResource
                     ->icon('heroicon-o-cog-6-tooth')
                     ->collapsible(),
             ])
-            ->visible(fn(WarehouseSettings $settings) => $settings->enable_multi_steps_routes);
+            ->visible(fn (WarehouseSettings $settings) => $settings->enable_multi_steps_routes);
 
         $components[0]->childComponents($firstGroupChildComponents);
 
@@ -119,7 +119,7 @@ class ProductCategoryResource extends CategoryResource
             $route = session('current_route');
         }
 
-        if ($route === self::getRouteBaseName() . '.index') {
+        if ($route === self::getRouteBaseName().'.index') {
             return SubNavigationPosition::Start;
         }
 
@@ -138,10 +138,10 @@ class ProductCategoryResource extends CategoryResource
     public static function getPages(): array
     {
         return [
-            'index' => ListProductCategories::route('/'),
-            'create' => CreateProductCategory::route('/create'),
-            'view' => ViewProductCategory::route('/{record}'),
-            'edit' => EditProductCategory::route('/{record}/edit'),
+            'index'    => ListProductCategories::route('/'),
+            'create'   => CreateProductCategory::route('/create'),
+            'view'     => ViewProductCategory::route('/{record}'),
+            'edit'     => EditProductCategory::route('/{record}/edit'),
             'products' => ManageProducts::route('/{record}/products'),
         ];
     }

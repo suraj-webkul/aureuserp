@@ -2,7 +2,6 @@
 
 namespace Webkul\Account\Filament\Resources\CashRounding\Tables;
 
-
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -27,12 +26,12 @@ class CashRoundingTable
                     ->sortable(),
                 TextColumn::make('strategy')
                     ->label(__('accounts::filament/resources/cash-rounding.table.columns.rounding-strategy'))
-                    ->formatStateUsing(fn($state) => RoundingStrategy::options()[$state] ?? $state)
+                    ->formatStateUsing(fn ($state) => RoundingStrategy::options()[$state] ?? $state)
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('rounding_method')
                     ->label(__('accounts::filament/resources/cash-rounding.table.columns.rounding-method'))
-                    ->formatStateUsing(fn($state) => RoundingMethod::options()[$state] ?? $state)
+                    ->formatStateUsing(fn ($state) => RoundingMethod::options()[$state] ?? $state)
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('createdBy.name')
