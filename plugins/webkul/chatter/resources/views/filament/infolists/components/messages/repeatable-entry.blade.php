@@ -23,7 +23,7 @@
             >
                 @foreach ($childComponentContainers as $container)
                     <article
-                        class="mb-4 rounded-xl bg-white/70 p-4 text-base shadow-sm transition-shadow hover:shadow-md dark:bg-gray-900/60"
+                        class="mb-4 rounded-xl bg-white/70 p-4 text-base shadow-sm ring-1 ring-black/5 transition-shadow hover:shadow-md dark:bg-gray-900/60 dark:ring-white/5"
                         @style([
                             'background-color: var(--color-200);' => data_get($container->getRecord(), 'type') === 'note',
                         ])

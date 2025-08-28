@@ -15,7 +15,7 @@
 
             <!-- Filters (messages tab only) -->
             @if ($this->tab === 'messages')
-                <div class="flex flex-wrap items-center w-full gap-2">
+                <div class="flex items-center justify-center w-full gap-2">
                     <div class="relative group">
                         <span class="absolute inset-y-0 flex items-center text-gray-400 pointer-events-none left-2 group-focus-within:text-primary-500">
                             <x-heroicon-m-magnifying-glass class="w-4 h-4" />
