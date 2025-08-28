@@ -10,7 +10,6 @@ use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Pages\SimplePage;
 use Filament\Schemas\Schema;
 use Illuminate\Validation\Rules\Password;
-use Webkul\Project\Filament\Pages\Dashboard;
 use Webkul\Security\Models\Invitation;
 use Webkul\Security\Models\User;
 use Webkul\Security\Settings\UserSettings;
@@ -42,22 +41,22 @@ class AcceptInvitation extends SimplePage
         return $schema
             ->components([
                 TextInput::make('name')
-                    ->label(__('filament-panels::pages/auth/register.form.name.label'))
+                    ->label(__('security::livewire/accept-invitation.form.name.label'))
                     ->required()
                     ->maxLength(255)
                     ->autofocus(),
                 TextInput::make('email')
-                    ->label(__('filament-panels::pages/auth/register.form.email.label'))
+                    ->label(__('security::livewire/accept-invitation.form.email.label'))
                     ->disabled(),
                 TextInput::make('password')
-                    ->label(__('filament-panels::pages/auth/register.form.password.label'))
+                    ->label(__('security::livewire/accept-invitation.form.password.label'))
                     ->password()
                     ->required()
                     ->rule(Password::default())
                     ->same('passwordConfirmation')
-                    ->validationAttribute(__('filament-panels::pages/auth/register.form.password.validation_attribute')),
+                    ->validationAttribute(__('security::livewire/accept-invitation.form.password.validation_attribute')),
                 TextInput::make('passwordConfirmation')
-                    ->label(__('filament-panels::pages/auth/register.form.password_confirmation.label'))
+                    ->label(__('security::livewire/accept-invitation.form.password_confirmation.label'))
                     ->password()
                     ->required()
                     ->dehydrated(false),
@@ -80,7 +79,7 @@ class AcceptInvitation extends SimplePage
 
         $this->invitationModel->delete();
 
-        $this->redirect(Dashboard::getUrl());
+        $this->redirect(filament()->getHomeUrl());
     }
 
     /**
@@ -96,8 +95,9 @@ class AcceptInvitation extends SimplePage
     public function getRegisterFormAction(): Action
     {
         return Action::make('register')
-            ->label(__('filament-panels::pages/auth/register.form.actions.register.label'))
-            ->submit('register');
+            ->color('primary')
+            ->label(__('security::livewire/accept-invitation.form.actions.register.label'))
+            ->submit('create');
     }
 
     public function getHeading(): string
