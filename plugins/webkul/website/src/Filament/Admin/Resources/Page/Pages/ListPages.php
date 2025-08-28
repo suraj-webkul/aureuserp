@@ -15,7 +15,7 @@ class ListPages extends ListRecords
     protected static string $resource = PageResource::class;
     public ?string $tableSortColumn = null;
     public ?string $tableSortDirection = null;
-    public ?string $toggledTableColumns = null;
+    public ?array $toggledTableColumns = null;
 
     public function getPresetTableViews(): array
     {

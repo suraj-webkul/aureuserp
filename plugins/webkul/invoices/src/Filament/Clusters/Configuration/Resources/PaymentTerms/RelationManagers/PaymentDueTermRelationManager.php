@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTermResource\RelationManagers;
+namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources\PaymentTerms\RelationManagers;
 
 use Webkul\Account\Filament\Resources\PaymentTerms\RelationManagers\PaymentDueTermRelationManager as BasePaymentDueTermRelationManager;
 
