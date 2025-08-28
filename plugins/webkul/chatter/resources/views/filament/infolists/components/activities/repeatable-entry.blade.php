@@ -21,7 +21,46 @@
                         ])
                 }}
             >
+                @php $lastDateLabel = null; @endphp
+
                 @foreach ($childComponentContainers as $container)
+                    @php
+                        $createdAt = data_get($container->getRecord(), 'created_at');
+                        try {
+                            $dt = $createdAt instanceof \Carbon\CarbonInterface ? $createdAt : \Carbon\Carbon::parse($createdAt);
+                        } catch (\Throwable $e) {
+                            $dt = null;
+                        }
+
+                        $currentLabel = '';
+
+                        if ($dt) {
+                            if ($dt->isToday()) {
+                                $currentLabel = __('Today');
+                            } elseif ($dt->isYesterday()) {
+                                $currentLabel = __('Yesterday');
+                            } else {
+                                $currentLabel = $dt->format('M j, Y');
+                            }
+                        }
+                    @endphp
+
+                    @if ($currentLabel && $currentLabel !== $lastDateLabel)
+                        <div class="relative mb-4" role="separator" aria-label="{{ $currentLabel }}">
+                            <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                                <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-gray-700"></div>
+                            </div>
+
+                            <div class="relative flex justify-center">
+                                <span class="inline-flex items-center bg-white/95 px-2 py-0 text-[11px] font-medium uppercase tracking-wide text-gray-600 dark:bg-gray-950/80 dark:text-gray-300">
+                                    {{ $currentLabel }}
+                                </span>
+                            </div>
+                        </div>
+
+                        @php $lastDateLabel = $currentLabel; @endphp
+                    @endif
+
                     <article
                         @class([
                             'mb-4 rounded-xl p-4 text-base shadow-sm ring-1 transition-shadow hover:shadow-md',

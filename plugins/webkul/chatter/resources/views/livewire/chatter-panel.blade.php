@@ -46,10 +46,13 @@
         </div>
     </div>
 
-    <div>
-        <div wire:key="activities-{{ $this->refreshTick }}">
-            {{ $this->activityInfolist }}
-        </div>
+    @php $hasActivities = $this->record->activities && $this->record->activities->isNotEmpty(); @endphp
+    <div class="{{ $hasActivities ? 'space-y-6' : '' }}">
+        @if ($hasActivities)
+            <div wire:key="activities-{{ $this->refreshTick }}">
+                {{ $this->activityInfolist }}
+            </div>
+        @endif
 
         <div wire:key="messages-{{ $this->refreshTick }}">
             {{ $this->chatInfolist }}

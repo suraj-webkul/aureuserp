@@ -46,7 +46,7 @@
                     @endphp
 
                     @if ($currentLabel && $currentLabel !== $lastDateLabel)
-                        <div class="relative my-8" role="separator" aria-label="{{ $currentLabel }}">
+                        <div class="relative mb-4" role="separator" aria-label="{{ $currentLabel }}">
                             <div class="absolute inset-0 flex items-center" aria-hidden="true">
                                 <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-gray-700"></div>
                             </div>

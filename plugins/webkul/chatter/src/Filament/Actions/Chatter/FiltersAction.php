@@ -56,7 +56,6 @@ class FiltersAction extends Action
                                 'all'          => __('All types'),
                                 'note'         => __('Notes'),
                                 'comment'      => __('Comments'),
-                                'notification' => __('Notifications'),
                                 'activity'     => __('Activities'),
                             ])
                             ->native(false),
