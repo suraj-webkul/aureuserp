@@ -14,21 +14,18 @@
             </div>
         @endif
 
-        <div class="mt-2 bg-white rounded-lg shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-800 dark:ring-white/10">
-            <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <x-heroicon-m-clipboard-document-check class="w-5 h-5 text-primary-500"/>
-
-                        <h3 class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                            @lang('chatter::views/filament/infolists/components/activities/content-text-entry.activity-details')
-                        </h3>
-                    </div>
-
-                    <span class="inline-flex items-center px-2 py-1 text-xs font-bold rounded-md bg-primary-50 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300">
-                        {{ ucfirst($record->activityType?->name) }}
-                    </span>
+        <div class="mt-3 rounded-xl border border-gray-200/80 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+            <div class="flex items-center justify-between border-b border-gray-200 px-4 py-3 dark:border-gray-700">
+                <div class="flex items-center gap-2">
+                    <x-heroicon-m-clipboard-document-check class="h-5 w-5 text-primary-500"/>
+                    <h3 class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                        @lang('chatter::views/filament/infolists/components/activities/content-text-entry.activity-details')
+                    </h3>
                 </div>
+
+                <span class="inline-flex items-center rounded-md bg-primary-50 px-2 py-1 text-xs font-bold text-primary-700 dark:bg-primary-900/50 dark:text-primary-300">
+                    {{ ucfirst($record->activityType?->name) }}
+                </span>
             </div>
 
             <div class="grid grid-cols-1 gap-4 p-4 md:grid-cols-2">
@@ -105,12 +102,10 @@
                                 <span class="text-sm font-bold" @style([$textColor])>
                                     <div class="flex items-center gap-2">
                                         {{ $deadlineDescription }}
-
                                         <x-filament::icon-button
                                             icon="heroicon-m-question-mark-circle"
                                             color="gray"
                                             :tooltip="$deadline->format('F j, Y')"
-                                            label="New label"
                                         />
                                     </div>
                                 </span>

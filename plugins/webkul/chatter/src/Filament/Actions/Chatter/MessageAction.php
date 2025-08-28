@@ -102,6 +102,9 @@ class MessageAction extends Action
                     ->hiddenLabel()
                     ->multiple()
                     ->directory('messages-attachments')
+                    ->disk('public')
+                    ->visibility('public')
+                    ->preserveFilenames()
                     ->previewable(true)
                     ->panelLayout('grid')
                     ->imagePreviewHeight('100')
@@ -147,6 +150,12 @@ class MessageAction extends Action
                         ->title(__('chatter::filament/resources/actions/chatter/message-action.setup.actions.notification.error.title'))
                         ->body(__('chatter::filament/resources/actions/chatter/message-action.setup.actions.notification.error.body'))
                         ->send();
+                }
+            })
+            ->after(function ($livewire) {
+                // Force the Chatter panel to refresh its list after sending a message
+                if (method_exists($livewire, 'dispatch')) {
+                    $livewire->dispatch('chatter.refresh');
                 }
             })
             ->label(__('chatter::filament/resources/actions/chatter/message-action.setup.title'))

@@ -26,12 +26,11 @@
                     </div>
                 @endif
 
-                <section class="mt-2 text-gray-700">
-                    <div class="container px-5 py-2 mx-auto lg:px-32 lg:pt-24">
-                        <div class="flex flex-wrap -m-1 md:-m-2">
-                            @foreach($record->attachments->chunk(4) as $chunk)
-                                <div class="grid gap-2">
-                                    @foreach($chunk as $attachment)
+                <section class="mt-3 text-gray-700">
+                    <div class="px-0">
+                        <div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                            @foreach($record->attachments->chunk(6) as $chunk)
+                                @foreach($chunk as $attachment)
                                         @php
                                             $fileExtension = strtolower(pathinfo($attachment->original_file_name, PATHINFO_EXTENSION));
 
@@ -53,22 +52,22 @@
                                             }
                                         @endphp
 
-                                        <div class="flex gap-2 px-3 py-2 bg-gray-100 rounded-md">
-                                            <div class="flex items-center justify-center w-8 h-8 rounded-md">
+                                        <div class="flex items-center gap-3 rounded-lg bg-white/60 px-3 py-2 shadow-sm ring-1 ring-black/5 dark:bg-gray-900/50 dark:ring-white/5">
+                                            <div class="flex h-9 w-9 items-center justify-center rounded-md bg-white shadow-sm ring-1 ring-black/5 dark:bg-gray-900 dark:ring-white/10">
                                                 <x-filament::icon
                                                     :icon="$icon"
-                                                    class="w-5 h-5"
+                                                    class="h-5 w-5"
                                                 />
                                             </div>
 
-                                            <div class="flex flex-col gap-2">
-                                                <div class="flex flex-col flex-1">
-                                                    <span class="text-sm font-medium text-gray-900">
+                                            <div class="flex flex-col gap-1">
+                                                <div class="flex flex-col">
+                                                    <span class="text-sm font-medium text-gray-900 dark:text-gray-100">
                                                         {{ $attachment->original_file_name }}
                                                     </span>
                                                 </div>
 
-                                                <div class="flex items-center gap-2">
+                                                <div class="flex items-center gap-1.5">
                                                     @if(in_array($fileExtension, ['pdf', 'jpg', 'jpeg', 'png', 'gif', 'svg', 'webp']))
                                                         <x-filament::button
                                                             size="xs"
@@ -97,8 +96,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    @endforeach
-                                </div>
+                                @endforeach
                             @endforeach
                         </div>
                     </div>
