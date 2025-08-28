@@ -1,9 +1,12 @@
 <?php
 
 return [
-    'header' => [
-        'sub-heading' => [
-            'accept-invitation' => 'Accept Invitation',
+    'title' => 'Register',
+    'heading' => 'Register',
+    'notifications' => [
+        'throttled' => [
+            'title' => 'Too many attempts. Try again in :seconds seconds.',
+            'body' => 'Please wait :seconds seconds (:minutes minutes) before trying again.',
         ],
     ],
     'form' => [
@@ -14,7 +17,7 @@ return [
             'label' => 'Email address',
         ],
         'password' => [
-            'label'                => 'Password',
+            'label' => 'Password',
             'validation_attribute' => 'password',
         ],
         'password_confirmation' => [
@@ -24,6 +27,12 @@ return [
             'register' => [
                 'label' => 'Create account',
             ],
+        ],
+    ],
+    'actions' => [
+        'login' => [
+            'before' => 'Already have an account?',
+            'label' => 'Log in',
         ],
     ],
 ];
