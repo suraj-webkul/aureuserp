@@ -2,6 +2,7 @@
 
 namespace Webkul\Account\Filament\Resources\Accounts;
 
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
@@ -13,7 +14,6 @@ use Webkul\Account\Filament\Resources\Accounts\Schemas\AccountForm;
 use Webkul\Account\Filament\Resources\Accounts\Schemas\AccountInfolist;
 use Webkul\Account\Filament\Resources\Accounts\Tables\AccountsTable;
 use Webkul\Account\Models\Account;
-use BackedEnum;
 
 class AccountResource extends Resource
 {
@@ -41,10 +41,10 @@ class AccountResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListAccounts::route('/'),
+            'index'  => ListAccounts::route('/'),
             'create' => CreateAccount::route('/create'),
-            'view' => ViewAccount::route('/{record}'),
-            'edit' => EditAccount::route('/{record}/edit'),
+            'view'   => ViewAccount::route('/{record}'),
+            'edit'   => EditAccount::route('/{record}/edit'),
         ];
     }
 }

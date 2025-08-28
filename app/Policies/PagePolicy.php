@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Webkul\Security\Models\User;
 use Webkul\Website\Models\Page;
-use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PagePolicy
 {

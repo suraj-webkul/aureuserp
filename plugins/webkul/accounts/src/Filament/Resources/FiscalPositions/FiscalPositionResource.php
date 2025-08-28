@@ -2,6 +2,7 @@
 
 namespace Webkul\Account\Filament\Resources\FiscalPositions;
 
+use BackedEnum;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\RelationManagers\RelationGroup;
 use Filament\Resources\Resource;
@@ -17,7 +18,6 @@ use Webkul\Account\Filament\Resources\FiscalPositions\Schemas\FiscalPositionForm
 use Webkul\Account\Filament\Resources\FiscalPositions\Schemas\FiscalPositionInfolist;
 use Webkul\Account\Filament\Resources\FiscalPositions\Tables\FiscalPositionsTable;
 use Webkul\Account\Models\FiscalPosition;
-use BackedEnum;
 
 class FiscalPositionResource extends Resource
 {
@@ -65,10 +65,10 @@ class FiscalPositionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListFiscalPositions::route('/'),
-            'create' => CreateFiscalPosition::route('/create'),
-            'view' => ViewFiscalPosition::route('/{record}'),
-            'edit' => EditFiscalPosition::route('/{record}/edit'),
+            'index'               => ListFiscalPositions::route('/'),
+            'create'              => CreateFiscalPosition::route('/create'),
+            'view'                => ViewFiscalPosition::route('/{record}'),
+            'edit'                => EditFiscalPosition::route('/{record}/edit'),
             'fiscal-position-tax' => ManageFiscalPositionTax::route('/{record}/fiscal-position-tax'),
         ];
     }

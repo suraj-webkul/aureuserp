@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
-use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CompanyPolicy
 {

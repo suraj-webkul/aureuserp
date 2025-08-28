@@ -2,9 +2,8 @@
 
 namespace Webkul\Chatter\Livewire;
 
-use Closure;
-use Throwable;
 use Carbon\Carbon;
+use Closure;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
@@ -29,8 +28,10 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Throwable;
 use Webkul\Chatter\Filament\Actions\Chatter\ActivityAction;
 use Webkul\Chatter\Filament\Actions\Chatter\FileAction;
+use Webkul\Chatter\Filament\Actions\Chatter\FiltersAction;
 use Webkul\Chatter\Filament\Actions\Chatter\FollowerAction;
 use Webkul\Chatter\Filament\Actions\Chatter\LogAction;
 use Webkul\Chatter\Filament\Actions\Chatter\MessageAction;
@@ -40,7 +41,6 @@ use Webkul\Chatter\Filament\Infolists\Components\Activities\TitleTextEntry as Ac
 use Webkul\Chatter\Filament\Infolists\Components\Messages\ContentTextEntry as MessageContentTextEntry;
 use Webkul\Chatter\Filament\Infolists\Components\Messages\MessageRepeatableEntry;
 use Webkul\Chatter\Filament\Infolists\Components\Messages\TitleTextEntry as MessageTitleTextEntry;
-use Webkul\Chatter\Filament\Actions\Chatter\FiltersAction;
 use Webkul\Chatter\Models\Message;
 use Webkul\Partner\Models\Partner;
 use Webkul\Security\Models\User;
@@ -52,23 +52,39 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
     use InteractsWithActions, InteractsWithForms, InteractsWithInfolists, WithFileUploads;
 
     public Model $record;
+
     public mixed $activityPlans = [];
+
     public string $resource = '';
+
     public mixed $followerViewMail = null;
+
     public mixed $messageViewMail = null;
+
     public bool $showMessageAction;
+
     public bool $showActivityAction;
+
     public bool $showFollowerAction;
+
     public bool $showLogAction;
+
     public bool $showFileAction;
+
     public array $filters;
 
     public string $search = '';
+
     public string $filterType = 'all';
+
     public ?string $dateRange = null;
+
     public bool $pinnedOnly = false;
+
     public string $viewMode = 'detailed';
+
     public string $sortBy = 'created_at_desc';
+
     public string $tab = 'messages';
 
     public int $refreshTick = 0;
@@ -135,14 +151,14 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
         if ($this->filterType !== 'all') {
             $filters[] = [
                 'key'   => 'filterType',
-                'label' => "Type: " . ucfirst($this->filterType),
+                'label' => 'Type: '.ucfirst($this->filterType),
             ];
         }
 
         if (filled($this->dateRange)) {
             $filters[] = [
                 'key'   => 'dateRange',
-                'label' => "Date: " . $this->getDateRangeLabel(),
+                'label' => 'Date: '.$this->getDateRangeLabel(),
             ];
         }
 
@@ -159,9 +175,9 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
     public function removeFilter(string $key): void
     {
         match ($key) {
-            'search' => $this->search = '',
+            'search'     => $this->search = '',
             'filterType' => $this->filterType = 'all',
-            'dateRange' => $this->dateRange = null,
+            'dateRange'  => $this->dateRange = null,
             'pinnedOnly' => $this->pinnedOnly = false,
         };
     }
@@ -215,13 +231,13 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
     private function getDateRangeLabel(): string
     {
         return match ($this->dateRange) {
-            'today' => 'Today',
+            'today'     => 'Today',
             'yesterday' => 'Yesterday',
-            'week' => 'Last 7 days',
-            'month' => 'Last 30 days',
-            'quarter' => 'Last 3 months',
-            'year' => 'Last year',
-            default => 'Unknown range',
+            'week'      => 'Last 7 days',
+            'month'     => 'Last 30 days',
+            'quarter'   => 'Last 3 months',
+            'year'      => 'Last year',
+            default     => 'Unknown range',
         };
     }
 
@@ -231,7 +247,8 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             $this->record->unsetRelation('messages');
 
             $this->record->unsetRelation('activities');
-        } catch (Throwable $e) {}
+        } catch (Throwable $e) {
+        }
 
         return $this->record->withFilters($this->filters);
     }
@@ -247,6 +264,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
                 $state = $state->filter(function ($m) use ($query) {
                     $subject = strtolower((string) data_get($m, 'subject', ''));
                     $body = strtolower(strip_tags((string) data_get($m, 'body', '')));
+
                     return str_contains($subject, $query) || str_contains($body, $query);
                 });
             }
@@ -260,7 +278,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             }
 
             if ($this->pinnedOnly) {
-                $state = $state->filter(fn ($m) => !empty($m->pinned_at));
+                $state = $state->filter(fn ($m) => ! empty($m->pinned_at));
             }
 
             $state = $this->applySorting($state);
@@ -299,10 +317,10 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             }
 
             return match ($this->sortBy) {
-                'created_at_asc' => $a->created_at <=> $b->created_at,
+                'created_at_asc'  => $a->created_at <=> $b->created_at,
                 'updated_at_desc' => $b->updated_at <=> $a->updated_at,
-                'priority' => $this->comparePriority($a, $b),
-                default => $b->created_at <=> $a->created_at,
+                'priority'        => $this->comparePriority($a, $b),
+                default           => $b->created_at <=> $a->created_at,
             };
         })->values();
     }
@@ -367,7 +385,8 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
 
         try {
             $this->record->unsetRelation('followers');
-        } catch (Throwable $e) {}
+        } catch (Throwable $e) {
+        }
 
         $this->dispatch('chatter.refresh');
     }
@@ -379,7 +398,8 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
         try {
             $this->record->unsetRelation('messages');
             $this->record->unsetRelation('activities');
-        } catch (Throwable $e) {}
+        } catch (Throwable $e) {
+        }
 
         $this->refreshTick++;
 
@@ -444,7 +464,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
         $this->record->addMessage([
             'type' => 'comment',
             'body' => collect([
-                $message->activityType?->name ? $message->activityType?->name . ' done' : null,
+                $message->activityType?->name ? $message->activityType?->name.' done' : null,
                 $message->summary ? $message->summary : null,
                 $message->body ? __('chatter::livewire/chatter-panel.process-message.original-note', ['body' => $message->body]) : null,
                 $feedback ? __('chatter::livewire/chatter-panel.process-message.feedback', ['feedback' => $feedback]) : null,
@@ -512,7 +532,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
                                                 $planDate = $get('date_deadline') ? Carbon::parse($get('date_deadline'))->format('m/d/Y') : '';
                                                 $html .= '<div class="flex items-center space-x-2" style="margin-left: 20px;">
                                                             <span>•</span>
-                                                            <span style="margin-left:2px;">' . $activityPlanTemplate->summary . ($planDate ? ' (' . $planDate . ')' : '') . '</span>
+                                                            <span style="margin-left:2px;">'.$activityPlanTemplate->summary.($planDate ? ' ('.$planDate.')' : '').'</span>
                                                           </div>';
                                             }
                                             $html .= '</div>';
@@ -625,7 +645,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             'pinned_at' => $message->pinned_at ? null : now(),
         ]);
 
-    $this->refreshMessages();
+        $this->refreshMessages();
     }
 
     public function activityInfolist(Schema $schema): Schema

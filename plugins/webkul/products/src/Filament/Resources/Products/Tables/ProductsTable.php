@@ -46,11 +46,11 @@ class ProductsTable
             ->columns([
                 IconColumn::make('is_favorite')
                     ->label('')
-                    ->icon(fn(Product $record): string => $record->is_favorite ? 'heroicon-s-star' : 'heroicon-o-star')
-                    ->color(fn(Product $record): string => $record->is_favorite ? 'warning' : 'gray')
+                    ->icon(fn (Product $record): string => $record->is_favorite ? 'heroicon-s-star' : 'heroicon-o-star')
+                    ->color(fn (Product $record): string => $record->is_favorite ? 'warning' : 'gray')
                     ->action(function (Product $record): void {
                         $record->update([
-                            'is_favorite' => !$record->is_favorite,
+                            'is_favorite' => ! $record->is_favorite,
                         ]);
                     }),
                 ImageColumn::make('images')
@@ -219,16 +219,16 @@ class ProductsTable
                     ])->filter()->values()->all()),
             ], layout: FiltersLayout::Modal)
             ->filtersTriggerAction(
-                fn(Action $action) => $action
+                fn (Action $action) => $action
                     ->slideOver(),
             )
             ->filtersFormColumns(2)
             ->recordActions([
                 ActionGroup::make([
                     ViewAction::make()
-                        ->hidden(fn($record) => $record->trashed()),
+                        ->hidden(fn ($record) => $record->trashed()),
                     EditAction::make()
-                        ->hidden(fn($record) => $record->trashed()),
+                        ->hidden(fn ($record) => $record->trashed()),
                     RestoreAction::make()
                         ->successNotification(
                             Notification::make()
@@ -278,10 +278,10 @@ class ProductsTable
                             Radio::make('format')
                                 ->label(__('products::filament/resources/product.table.bulk-actions.print.form.fields.format'))
                                 ->options([
-                                    'dymo' => __('products::filament/resources/product.table.bulk-actions.print.form.fields.format-options.dymo'),
-                                    '2x7_price' => __('products::filament/resources/product.table.bulk-actions.print.form.fields.format-options.2x7_price'),
-                                    '4x7_price' => __('products::filament/resources/product.table.bulk-actions.print.form.fields.format-options.4x7_price'),
-                                    '4x12' => __('products::filament/resources/product.table.bulk-actions.print.form.fields.format-options.4x12'),
+                                    'dymo'       => __('products::filament/resources/product.table.bulk-actions.print.form.fields.format-options.dymo'),
+                                    '2x7_price'  => __('products::filament/resources/product.table.bulk-actions.print.form.fields.format-options.2x7_price'),
+                                    '4x7_price'  => __('products::filament/resources/product.table.bulk-actions.print.form.fields.format-options.4x7_price'),
+                                    '4x12'       => __('products::filament/resources/product.table.bulk-actions.print.form.fields.format-options.4x12'),
                                     '4x12_price' => __('products::filament/resources/product.table.bulk-actions.print.form.fields.format-options.4x12_price'),
                                 ])
                                 ->default('2x7_price')
@@ -289,13 +289,13 @@ class ProductsTable
                         ])
                         ->action(function (array $data, $records) {
                             $pdf = PDF::loadView('products::filament.resources.products.actions.print', [
-                                'records' => $records,
+                                'records'  => $records,
                                 'quantity' => $data['quantity'],
-                                'format' => $data['format'],
+                                'format'   => $data['format'],
                             ]);
 
                             $paperSize = match ($data['format']) {
-                                'dymo' => [0, 0, 252.2, 144],
+                                'dymo'  => [0, 0, 252.2, 144],
                                 default => 'a4',
                             };
 
@@ -322,7 +322,7 @@ class ProductsTable
                     ForceDeleteBulkAction::make()
                         ->action(function (Collection $records) {
                             try {
-                                $records->each(fn(Model $record) => $record->forceDelete());
+                                $records->each(fn (Model $record) => $record->forceDelete());
                             } catch (QueryException $e) {
                                 Notification::make()
                                     ->danger()

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Webkul\Account\Filament\Resources\IncoTerms\Schemas;
 
 use Filament\Infolists\Components\TextEntry;

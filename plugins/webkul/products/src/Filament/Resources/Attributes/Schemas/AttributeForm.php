@@ -44,7 +44,7 @@ class AttributeForm
                                 ColorPicker::make('color')
                                     ->label(__('products::filament/resources/attribute.form.sections.options.fields.color'))
                                     ->hexColor()
-                                    ->visible(fn(Get $get): bool => $get('../../type') === AttributeType::COLOR->value),
+                                    ->visible(fn (Get $get): bool => $get('../../type') === AttributeType::COLOR->value),
                                 TextInput::make('extra_price')
                                     ->label(__('products::filament/resources/attribute.form.sections.options.fields.extra-price'))
                                     ->required()

@@ -31,17 +31,17 @@ class ListProducts extends ListRecords
             'goods_products' => PresetView::make(__('products::filament/resources/product/pages/list-products.tabs.goods'))
                 ->icon('heroicon-s-squares-plus')
                 ->favorite()
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('type', ProductType::GOODS)),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', ProductType::GOODS)),
 
             'services_products' => PresetView::make(__('products::filament/resources/product/pages/list-products.tabs.services'))
                 ->icon('heroicon-s-sparkles')
                 ->favorite()
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('type', ProductType::SERVICE)),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', ProductType::SERVICE)),
 
             'favorites_products' => PresetView::make(__('products::filament/resources/product/pages/list-products.tabs.favorites'))
                 ->icon('heroicon-s-star')
                 ->favorite()
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('is_favorite', true)),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('is_favorite', true)),
 
             'archived_products' => PresetView::make(__('products::filament/resources/product/pages/list-products.tabs.archived'))
                 ->icon('heroicon-s-archive-box')

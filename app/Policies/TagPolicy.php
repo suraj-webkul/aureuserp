@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use Webkul\Security\Models\User;
-use Webkul\Blog\Models\Tag;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Webkul\Blog\Models\Tag;
+use Webkul\Security\Models\User;
 
 class TagPolicy
 {

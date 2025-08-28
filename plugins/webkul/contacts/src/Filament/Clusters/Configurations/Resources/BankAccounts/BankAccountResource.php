@@ -2,10 +2,10 @@
 
 namespace Webkul\Contact\Filament\Clusters\Configurations\Resources\BankAccounts;
 
+use BackedEnum;
 use Webkul\Contact\Filament\Clusters\Configurations;
 use Webkul\Contact\Filament\Clusters\Configurations\Resources\BankAccounts\Pages\ManageBankAccounts;
 use Webkul\Partner\Filament\Resources\BankAccounts\BankAccountResource as BaseBankAccountResource;
-use BackedEnum;
 
 class BankAccountResource extends BaseBankAccountResource
 {

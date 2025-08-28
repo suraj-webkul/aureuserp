@@ -47,10 +47,10 @@ class PaymentForm
                                     ->relationship(
                                         'partnerBank',
                                         'account_number',
-                                        modifyQueryUsing: fn(Builder $query) => $query->withTrashed(),
+                                        modifyQueryUsing: fn (Builder $query) => $query->withTrashed(),
                                     )
                                     ->getOptionLabelFromRecordUsing(function ($record): string {
-                                        return $record->account_number . ($record->trashed() ? ' (Deleted)' : '');
+                                        return $record->account_number.($record->trashed() ? ' (Deleted)' : '');
                                     })
                                     ->disableOptionWhen(function ($label) {
                                         return str_contains($label, ' (Deleted)');
