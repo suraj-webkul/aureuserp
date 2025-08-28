@@ -4,7 +4,7 @@ namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource\Pag
 
 use Filament\Pages\Enums\SubNavigationPosition;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource;
-use Webkul\Product\Filament\Resources\ProductResource\Pages\ViewProduct as BaseViewProduct;
+use Webkul\Product\Filament\Resources\Products\Pages\ViewProduct as BaseViewProduct;
 
 class ViewProduct extends BaseViewProduct
 {

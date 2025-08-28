@@ -12,7 +12,7 @@ use Webkul\Invoice\Filament\Clusters\Customer\Resources\ProductResource\Pages\Ma
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\ProductResource\Pages\ManageVariants;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\ProductResource\Pages\ViewProduct;
 use Webkul\Invoice\Models\Product;
-use Webkul\Product\Filament\Resources\ProductResource as BaseProductResource;
+use Webkul\Product\Filament\Resources\Products\ProductResource as BaseProductResource;
 
 class ProductResource extends BaseProductResource
 {

@@ -10,7 +10,7 @@ use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Product\Enums\ProductType;
 use Webkul\Product\Filament\Resources\Categories\CategoryResource;
-use Webkul\Product\Filament\Resources\ProductResource;
+use Webkul\Product\Filament\Resources\Products\ProductResource;
 use Webkul\Support\Models\UOM;
 
 class ManageProducts extends ManageRelatedRecords
