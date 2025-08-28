@@ -58,9 +58,9 @@
                         </div>
                         @php $lastDateLabel = $currentLabel; @endphp
                     @endif
-                    <article
+            <article
                         @class([
-                            'mb-4 rounded-xl p-4 text-base shadow-sm ring-1 transition-shadow hover:shadow-md',
+                            'mb-4 rounded-xl p-4 text-base shadow-sm ring-1 transition-shadow hover:shadow-md overflow-x-hidden [overflow-wrap:anywhere]',
                             'bg-gray-50 ring-gray-200 dark:bg-gray-800/50 dark:ring-gray-800' => data_get($container->getRecord(), 'type') === 'note',
                             'bg-white/70 ring-black/5 dark:bg-gray-900/60 dark:ring-white/5' => data_get($container->getRecord(), 'type') !== 'note',
                         ])

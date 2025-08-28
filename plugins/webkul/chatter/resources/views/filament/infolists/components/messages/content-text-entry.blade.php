@@ -23,7 +23,7 @@
                 @endif
 
                 @if($record->body)
-                    <div class="text-sm leading-6 text-gray-700 [&_a]:text-primary-600 dark:[&_a]:text-primary-400 [&_a:hover]:underline [&_ul]:list-disc [&_ul]:ms-5 [&_ol]:list-decimal [&_ol]:ms-5 dark:text-white">
+                    <div class="text-sm leading-6 text-gray-700 [overflow-wrap:anywhere] overflow-x-hidden max-w-full [&_a]:[overflow-wrap:anywhere] [&_a]:text-primary-600 dark:[&_a]:text-primary-400 [&_a:hover]:underline [&_ul]:list-disc [&_ul]:ms-5 [&_ol]:list-decimal [&_ol]:ms-5 dark:text-white">
                         {!! $record->body !!}
                     </div>
                 @endif
@@ -117,7 +117,7 @@
                 @break
             @case('notification')
                 @if ($record->body)
-                    <div class="text-sm leading-6 text-gray-900 dark:text-gray-100">
+                    <div class="text-sm leading-6 text-gray-900 dark:text-gray-100 [overflow-wrap:anywhere] max-w-full overflow-x-hidden">
                         {!! $record->body !!}
                     </div>
                 @endif
