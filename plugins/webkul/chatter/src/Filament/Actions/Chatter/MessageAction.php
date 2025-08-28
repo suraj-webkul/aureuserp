@@ -97,13 +97,14 @@ class MessageAction extends Action
                     ->hiddenLabel()
                     ->placeholder(__('chatter::filament/resources/actions/chatter/message-action.setup.form.fields.write-message-here'))
                     ->fileAttachmentsDirectory('log-attachments')
-                    ->disableGrammarly()
                     ->required(),
                 FileUpload::make('attachments')
                     ->hiddenLabel()
                     ->multiple()
                     ->directory('messages-attachments')
-                    ->disableGrammarly()
+                    ->disk('public')
+                    ->visibility('public')
+                    ->preserveFilenames()
                     ->previewable(true)
                     ->panelLayout('grid')
                     ->imagePreviewHeight('100')
@@ -149,6 +150,11 @@ class MessageAction extends Action
                         ->title(__('chatter::filament/resources/actions/chatter/message-action.setup.actions.notification.error.title'))
                         ->body(__('chatter::filament/resources/actions/chatter/message-action.setup.actions.notification.error.body'))
                         ->send();
+                }
+            })
+            ->after(function ($livewire) {
+                if (method_exists($livewire, 'dispatch')) {
+                    $livewire->dispatch('chatter.refresh');
                 }
             })
             ->label(__('chatter::filament/resources/actions/chatter/message-action.setup.title'))

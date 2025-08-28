@@ -97,7 +97,6 @@ class ChatterAction extends Action
                 'messageViewMail'  => $this->getMessageMailView(),
             ]), fn () => $record->markAsRead()))
             ->modalHeading(__('chatter::filament/resources/actions/chatter-action.title'))
-            ->modalDescription(__('chatter::filament/resources/actions/chatter-action.description'))
             ->badge(fn (Model $record): int => $record->unRead()->count())
             ->modalWidth(Width::TwoExtraLarge)
             ->modalSubmitAction(false)

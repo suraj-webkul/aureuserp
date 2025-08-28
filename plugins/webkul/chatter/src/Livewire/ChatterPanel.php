@@ -2,8 +2,9 @@
 
 namespace Webkul\Chatter\Livewire;
 
-use Carbon\Carbon;
 use Closure;
+use Throwable;
+use Carbon\Carbon;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
@@ -24,6 +25,7 @@ use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -38,6 +40,7 @@ use Webkul\Chatter\Filament\Infolists\Components\Activities\TitleTextEntry as Ac
 use Webkul\Chatter\Filament\Infolists\Components\Messages\ContentTextEntry as MessageContentTextEntry;
 use Webkul\Chatter\Filament\Infolists\Components\Messages\MessageRepeatableEntry;
 use Webkul\Chatter\Filament\Infolists\Components\Messages\TitleTextEntry as MessageTitleTextEntry;
+use Webkul\Chatter\Filament\Actions\Chatter\FiltersAction;
 use Webkul\Chatter\Models\Message;
 use Webkul\Partner\Models\Partner;
 use Webkul\Security\Models\User;
@@ -49,26 +52,30 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
     use InteractsWithActions, InteractsWithForms, InteractsWithInfolists, WithFileUploads;
 
     public Model $record;
-
     public mixed $activityPlans = [];
-
     public string $resource = '';
-
     public mixed $followerViewMail = null;
-
     public mixed $messageViewMail = null;
-
     public bool $showMessageAction;
-
     public bool $showActivityAction;
-
     public bool $showFollowerAction;
-
     public bool $showLogAction;
-
     public bool $showFileAction;
-
     public array $filters;
+
+    public string $search = '';
+    public string $filterType = 'all';
+    public ?string $dateRange = null;
+    public bool $pinnedOnly = false;
+    public string $viewMode = 'detailed';
+    public string $sortBy = 'created_at_desc';
+    public string $tab = 'messages';
+
+    public int $refreshTick = 0;
+
+    protected $listeners = [
+        'chatter.refresh' => 'refreshMessages',
+    ];
 
     public function mount(
         Model $record,
@@ -84,26 +91,231 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
         array $filters = [],
     ): void {
         $this->record = $record;
-
         $this->activityPlans = $activityPlans;
-
         $this->followerViewMail = $followerViewMail;
-
         $this->messageViewMail = $messageViewMail;
-
         $this->resource = $resource;
-
         $this->showMessageAction = $showMessageAction;
-
         $this->showActivityAction = $showActivityAction;
-
         $this->showFollowerAction = $showFollowerAction;
-
         $this->showLogAction = $showLogAction;
-
         $this->showFileAction = $showFileAction;
-
         $this->filters = $filters;
+    }
+
+    public function getTotalMessages(): int
+    {
+        return $this->getBaseQuery()->count();
+    }
+
+    public function getUnreadCount(): int
+    {
+        return $this->getBaseQuery()->whereNull('read_at')->count();
+    }
+
+    public function hasActiveFilters(): bool
+    {
+        return filled($this->search)
+            || $this->filterType !== 'all'
+            || filled($this->dateRange)
+            || $this->pinnedOnly;
+    }
+
+    public function getActiveFilters(): array
+    {
+        $filters = [];
+
+        if (filled($this->search)) {
+            $filters[] = [
+                'key'   => 'search',
+                'label' => "Search: \"{$this->search}\"",
+            ];
+        }
+
+        if ($this->filterType !== 'all') {
+            $filters[] = [
+                'key'   => 'filterType',
+                'label' => "Type: " . ucfirst($this->filterType),
+            ];
+        }
+
+        if (filled($this->dateRange)) {
+            $filters[] = [
+                'key'   => 'dateRange',
+                'label' => "Date: " . $this->getDateRangeLabel(),
+            ];
+        }
+
+        if ($this->pinnedOnly) {
+            $filters[] = [
+                'key'   => 'pinnedOnly',
+                'label' => 'Pinned only',
+            ];
+        }
+
+        return $filters;
+    }
+
+    public function removeFilter(string $key): void
+    {
+        match ($key) {
+            'search' => $this->search = '',
+            'filterType' => $this->filterType = 'all',
+            'dateRange' => $this->dateRange = null,
+            'pinnedOnly' => $this->pinnedOnly = false,
+        };
+    }
+
+    public function clearAllFilters(): void
+    {
+        $this->reset(['search', 'filterType', 'dateRange', 'pinnedOnly']);
+    }
+
+    public function setViewMode(string $mode): void
+    {
+        $this->viewMode = $mode;
+    }
+
+    public function setTab(string $tab): void
+    {
+        $this->tab = in_array($tab, ['messages', 'activities'], true) ? $tab : 'messages';
+    }
+
+    public function isEmpty(): bool
+    {
+        return $this->getFilteredQuery()->isEmpty();
+    }
+
+    public function hasFilters(): bool
+    {
+        return $this->hasActiveFilters();
+    }
+
+    public function getFilteredCount(): int
+    {
+        return $this->getFilteredQuery()->count();
+    }
+
+    public function getTotalCount(): int
+    {
+        return $this->getBaseQuery()->count();
+    }
+
+    public function canViewAllActivities(): bool
+    {
+        return true;
+    }
+
+    public function filtersAction(): FiltersAction
+    {
+        return FiltersAction::make('filters')
+            ->visible(fn () => $this->tab === 'messages');
+    }
+
+    private function getDateRangeLabel(): string
+    {
+        return match ($this->dateRange) {
+            'today' => 'Today',
+            'yesterday' => 'Yesterday',
+            'week' => 'Last 7 days',
+            'month' => 'Last 30 days',
+            'quarter' => 'Last 3 months',
+            'year' => 'Last year',
+            default => 'Unknown range',
+        };
+    }
+
+    private function getBaseQuery()
+    {
+        try {
+            $this->record->unsetRelation('messages');
+
+            $this->record->unsetRelation('activities');
+        } catch (Throwable $e) {}
+
+        return $this->record->withFilters($this->filters);
+    }
+
+    private function getFilteredQuery()
+    {
+        $state = $this->getBaseQuery();
+
+        if ($state instanceof Collection) {
+            $query = trim(strtolower($this->search));
+
+            if ($query !== '') {
+                $state = $state->filter(function ($m) use ($query) {
+                    $subject = strtolower((string) data_get($m, 'subject', ''));
+                    $body = strtolower(strip_tags((string) data_get($m, 'body', '')));
+                    return str_contains($subject, $query) || str_contains($body, $query);
+                });
+            }
+
+            if ($this->filterType !== 'all') {
+                $state = $state->where('type', $this->filterType);
+            }
+
+            if (filled($this->dateRange)) {
+                $state = $this->applyDateRangeFilter($state);
+            }
+
+            if ($this->pinnedOnly) {
+                $state = $state->filter(fn ($m) => !empty($m->pinned_at));
+            }
+
+            $state = $this->applySorting($state);
+        }
+
+        return $state;
+    }
+
+    private function applyDateRangeFilter($state)
+    {
+        $now = now();
+
+        return $state->filter(function ($message) use ($now) {
+            $createdAt = Carbon::parse($message->created_at);
+
+            return match ($this->dateRange) {
+                'today'     => $createdAt->isToday(),
+                'yesterday' => $createdAt->isYesterday(),
+                'week'      => $createdAt->gte($now->copy()->subWeek()),
+                'month'     => $createdAt->gte($now->copy()->subMonth()),
+                'quarter'   => $createdAt->gte($now->copy()->subMonths(3)),
+                'year'      => $createdAt->gte($now->copy()->subYear()),
+                default     => true,
+            };
+        });
+    }
+
+    private function applySorting($state)
+    {
+        return $state->sort(function ($a, $b) {
+            $pa = ! empty($a->pinned_at);
+            $pb = ! empty($b->pinned_at);
+
+            if ($pa !== $pb) {
+                return $pa ? -1 : 1;
+            }
+
+            return match ($this->sortBy) {
+                'created_at_asc' => $a->created_at <=> $b->created_at,
+                'updated_at_desc' => $b->updated_at <=> $a->updated_at,
+                'priority' => $this->comparePriority($a, $b),
+                default => $b->created_at <=> $a->created_at,
+            };
+        })->values();
+    }
+
+    private function comparePriority($a, $b): int
+    {
+        $priorityOrder = ['notification' => 4, 'activity' => 3, 'note' => 2, 'comment' => 1];
+
+        $priorityA = $priorityOrder[$a->type] ?? 0;
+
+        $priorityB = $priorityOrder[$b->type] ?? 0;
+
+        return $priorityB <=> $priorityA;
     }
 
     public function messageAction(): MessageAction
@@ -152,6 +364,26 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
         $partner = Partner::findOrFail($partnerId);
 
         $this->record->removeFollower($partner);
+
+        try {
+            $this->record->unsetRelation('followers');
+        } catch (Throwable $e) {}
+
+        $this->dispatch('chatter.refresh');
+    }
+
+    public function refreshMessages(): void
+    {
+        $this->record->refresh();
+
+        try {
+            $this->record->unsetRelation('messages');
+            $this->record->unsetRelation('activities');
+        } catch (Throwable $e) {}
+
+        $this->refreshTick++;
+
+        $this->dispatch('$refresh');
     }
 
     public function markAsDoneAction(): Action
@@ -164,6 +396,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             ->schema(fn (Schema $schema) => $schema->components([
                 TextInput::make('feedback')
                     ->label(__('chatter::livewire/chatter-panel.mark-as-done.form.fields.feedback')),
+
                 Hidden::make('type'),
             ]))
             ->modalFooterActions(fn ($livewire, $arguments): array => [
@@ -171,8 +404,8 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
                     ->icon('heroicon-o-arrow-uturn-right')
                     ->label(__('chatter::livewire/chatter-panel.mark-as-done.footer-actions.label'))
                     ->modalIcon('heroicon-o-arrow-uturn-right')
-                    ->action(function () use ($livewire, $arguments) {
-                        $this->processMessage($arguments['id'], $livewire->mountedActionsData[0]['feedback'] ?? null);
+                    ->action(function (array $data) use ($arguments) {
+                        $this->processMessage($arguments['id'], $data['feedback'] ?? null);
 
                         $this->replaceMountedAction('activity');
 
@@ -187,8 +420,8 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
                     ->icon('heroicon-o-check-circle')
                     ->label('Done')
                     ->modalIcon('heroicon-o-check-circle')
-                    ->action(function () use ($livewire, $arguments) {
-                        $this->processMessage($arguments['id'], $livewire->mountedActionsData[0]['feedback'] ?? null);
+                    ->action(function (array $data) use ($arguments) {
+                        $this->processMessage($arguments['id'], $data['feedback'] ?? null);
 
                         Notification::make()
                             ->success()
@@ -200,9 +433,6 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             ]);
     }
 
-    /**
-     * Process the message, add a comment, and delete the message.
-     */
     protected function processMessage(int $messageId, ?string $feedback): void
     {
         $message = Message::find($messageId);
@@ -214,7 +444,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
         $this->record->addMessage([
             'type' => 'comment',
             'body' => collect([
-                $message->activityType?->name ? $message->activityType?->name.' done' : null,
+                $message->activityType?->name ? $message->activityType?->name . ' done' : null,
                 $message->summary ? $message->summary : null,
                 $message->body ? __('chatter::livewire/chatter-panel.process-message.original-note', ['body' => $message->body]) : null,
                 $feedback ? __('chatter::livewire/chatter-panel.process-message.feedback', ['feedback' => $feedback]) : null,
@@ -233,7 +463,6 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             ->label(__('chatter::livewire/chatter-panel.edit-activity.title'))
             ->mountUsing(function (Schema $schema, $livewire) {
                 $activityId = $livewire->mountedActionsArguments[0]['id'];
-
                 $record = Message::find($activityId);
 
                 $schema->fill([
@@ -283,7 +512,7 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
                                                 $planDate = $get('date_deadline') ? Carbon::parse($get('date_deadline'))->format('m/d/Y') : '';
                                                 $html .= '<div class="flex items-center space-x-2" style="margin-left: 20px;">
                                                             <span>•</span>
-                                                            <span style="margin-left:2px;">'.$activityPlanTemplate->summary.($planDate ? ' ('.$planDate.')' : '').'</span>
+                                                            <span style="margin-left:2px;">' . $activityPlanTemplate->summary . ($planDate ? ' (' . $planDate . ')' : '') . '</span>
                                                           </div>';
                                             }
                                             $html .= '</div>';
@@ -335,7 +564,6 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
 
                 Notification::make()
                     ->success()
-                    ->title('Activity updated successfully')
                     ->title(__('chatter::livewire/chatter-panel.edit-activity.action.notification.success.title'))
                     ->body(__('chatter::livewire/chatter-panel.edit-activity.action.notification.success.body'))
                     ->send();
@@ -346,7 +574,10 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
     {
         return Action::make('deleteMessage')
             ->requiresConfirmation()
-            ->action(fn (array $arguments) => $this->record->removeMessage($arguments['id']));
+            ->action(function (array $arguments) {
+                $this->record->removeMessage($arguments['id']);
+                $this->refreshMessages();
+            });
     }
 
     public function cancelActivityAction(): Action
@@ -356,17 +587,18 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             ->label(__('chatter::livewire/chatter-panel.cancel-activity-plan-action.title'))
             ->color('danger')
             ->requiresConfirmation()
-            ->action(fn (array $arguments) => $this->record->removeMessage($arguments['id'], 'activities'));
+            ->action(function (array $arguments) {
+                $this->record->removeMessage($arguments['id'], 'activities');
+                $this->refreshMessages();
+            });
     }
 
     public function chatInfolist(Schema $schema): Schema
     {
-        $record = $this->record;
-
-        $state = $record->withFilters($this->filters);
+        $state = $this->getFilteredQuery();
 
         return $schema
-            ->record($record)
+            ->record($this->record)
             ->components([
                 MessageRepeatableEntry::make('messages')
                     ->state($state)
@@ -381,17 +613,27 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
             ]);
     }
 
+    public function pinMessage(int $id): void
+    {
+        $message = Message::find($id);
+
+        if (! $message) {
+            return;
+        }
+
+        $message->update([
+            'pinned_at' => $message->pinned_at ? null : now(),
+        ]);
+
+    $this->refreshMessages();
+    }
+
     public function activityInfolist(Schema $schema): Schema
     {
         return $schema
             ->record($this->record)
             ->components(function () {
-
-                if ($this->record->activities->isEmpty()) {
-                    return [];
-                }
-
-                return [
+                return $this->record->activities->isEmpty() ? [] : [
                     Section::make(__('chatter::livewire/chatter-panel.activity-infolist.title'))
                         ->collapsible()
                         ->compact()

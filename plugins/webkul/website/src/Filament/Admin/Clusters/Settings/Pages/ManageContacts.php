@@ -59,7 +59,7 @@ class ManageContacts extends SettingsPage
                             ->placeholder('+1234567890')
                             ->tel(),
                     ])
-                    ->columns(2),
+                    ->columns(2)->columnSpanFull(),
                 Section::make(__('website::filament/admin/clusters/settings/pages/manage-contacts.form.sections.social-links.title'))
                     ->schema([
                         TextInput::make('twitter')
@@ -103,7 +103,7 @@ class ManageContacts extends SettingsPage
                             ->placeholder('username')
                             ->prefix('https://slack.com/'),
                     ])
-                    ->columns(2),
+                    ->columns(2)->columnSpanFull(),
             ]);
     }
 }

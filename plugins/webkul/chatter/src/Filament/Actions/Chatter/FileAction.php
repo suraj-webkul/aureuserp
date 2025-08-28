@@ -9,6 +9,7 @@ use Filament\Notifications\Notification;
 use Filament\Support\Enums\IconPosition;
 use Filament\Support\Enums\Width;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class FileAction extends Action
 {
@@ -31,6 +32,9 @@ class FileAction extends Action
                     ->hiddenLabel()
                     ->multiple()
                     ->directory('chats-attachments')
+                    ->disk('public')
+                    ->visibility('public')
+                    ->preserveFilenames()
                     ->downloadable()
                     ->openable()
                     ->reorderable()
@@ -39,19 +43,33 @@ class FileAction extends Action
                     ->panelLayout('grid')
                     ->imagePreviewHeight('100')
                     ->deleteUploadedFileUsing(function ($file, ?Model $record) {
-                        $attachment = $record->attachments()
-                            ->where('file_path', $file)
-                            ->first();
-
-                        if ($attachment) {
-                            $attachment->delete();
-
-                            Notification::make()
-                                ->success()
-                                ->title(__('chatter::filament/resources/actions/chatter/file-action.setup.form.fields.actions.delete.title'))
-                                ->body(__('chatter::filament/resources/actions/chatter/file-action.setup.form.fields.actions.delete.body'))
-                                ->send();
+                        if (! $record) {
+                            return;
                         }
+
+                        if (method_exists($record, 'removeAttachment')) {
+                            $attachment = $record->attachments()->where('file_path', $file)->first();
+
+                            if ($attachment) {
+                                $record->removeAttachment($attachment->id);
+                            } else {
+                                Storage::disk('public')->delete($file);
+                            }
+                        } else {
+                            $attachment = $record->attachments()->where('file_path', $file)->first();
+
+                            if ($attachment) {
+                                $attachment->delete();
+                            }
+
+                            Storage::disk('public')->delete($file);
+                        }
+
+                        Notification::make()
+                            ->success()
+                            ->title(__('chatter::filament/resources/actions/chatter/file-action.setup.form.fields.actions.delete.title'))
+                            ->body(__('chatter::filament/resources/actions/chatter/file-action.setup.form.fields.actions.delete.body'))
+                            ->send();
                     })
                     ->acceptedFileTypes([
                         'image/*',
@@ -101,8 +119,6 @@ class FileAction extends Action
                     } else {
                         Notification::make()
                             ->info()
-                            ->title('No New Files')
-                            ->body('All files have already been uploaded')
                             ->title(__('chatter::filament/resources/actions/chatter/file-action.setup.actions.notification.warning.title'))
                             ->body(__('chatter::filament/resources/actions/chatter/file-action.setup.actions.notification.warning.body'))
                             ->send();
@@ -123,12 +139,17 @@ class FileAction extends Action
             ->icon('heroicon-o-paper-clip')
             ->modalIcon('heroicon-o-paper-clip')
             ->iconPosition(IconPosition::Before)
+            ->after(function ($livewire) {
+                if (method_exists($livewire, 'dispatch')) {
+                    $livewire->dispatch('chatter.refresh');
+                }
+            })
             ->modalSubmitAction(
                 fn ($action) => $action
                     ->label('Upload')
                     ->icon('heroicon-m-paper-airplane')
             )
-            ->modalWidth(Width::ThreeExtraLarge)
+            ->modalWidth(Width::TwoExtraLarge)
             ->slideOver(false);
     }
 }
