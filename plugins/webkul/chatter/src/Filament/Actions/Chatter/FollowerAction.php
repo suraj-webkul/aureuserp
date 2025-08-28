@@ -85,7 +85,6 @@ class FollowerAction extends Action
                             ->live()
                             ->label(__('chatter::filament/resources/actions/chatter/follower-action.setup.form.fields.notify-user')),
                         RichEditor::make('note')
-                            ->disableGrammarly()
                             ->toolbarButtons([
                                 'attachFiles',
                                 'blockquote',

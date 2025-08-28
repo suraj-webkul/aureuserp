@@ -66,7 +66,6 @@ class LogAction extends Action
                         ->placeholder(__('chatter::filament/resources/actions/chatter/log-action.setup.form.fields.write-message-here'))
                         ->required()
                         ->fileAttachmentsDirectory('log-attachments')
-                        ->disableGrammarly()
                         ->columnSpanFull(),
                     FileUpload::make('attachments')
                         ->hiddenLabel()
@@ -75,7 +74,6 @@ class LogAction extends Action
                         ->previewable(true)
                         ->panelLayout('grid')
                         ->imagePreviewHeight('100')
-                        ->disableGrammarly()
                         ->acceptedFileTypes([
                             'image/*',
                             'application/pdf',

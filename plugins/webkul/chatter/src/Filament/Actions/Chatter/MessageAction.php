@@ -97,13 +97,11 @@ class MessageAction extends Action
                     ->hiddenLabel()
                     ->placeholder(__('chatter::filament/resources/actions/chatter/message-action.setup.form.fields.write-message-here'))
                     ->fileAttachmentsDirectory('log-attachments')
-                    ->disableGrammarly()
                     ->required(),
                 FileUpload::make('attachments')
                     ->hiddenLabel()
                     ->multiple()
                     ->directory('messages-attachments')
-                    ->disableGrammarly()
                     ->previewable(true)
                     ->panelLayout('grid')
                     ->imagePreviewHeight('100')

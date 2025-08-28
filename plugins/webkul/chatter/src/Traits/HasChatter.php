@@ -78,6 +78,7 @@ trait HasChatter
 
         if (! empty($filters['search'])) {
             $searchTerm = '%'.$filters['search'].'%';
+
             $query->where(function ($query) use ($searchTerm) {
                 $query->where('subject', 'like', $searchTerm)
                     ->orWhere('body', 'like', $searchTerm)
