@@ -364,6 +364,12 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
         $partner = Partner::findOrFail($partnerId);
 
         $this->record->removeFollower($partner);
+
+        try {
+            $this->record->unsetRelation('followers');
+        } catch (Throwable $e) {}
+
+        $this->dispatch('chatter.refresh');
     }
 
     public function refreshMessages(): void
@@ -398,8 +404,8 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
                     ->icon('heroicon-o-arrow-uturn-right')
                     ->label(__('chatter::livewire/chatter-panel.mark-as-done.footer-actions.label'))
                     ->modalIcon('heroicon-o-arrow-uturn-right')
-                    ->action(function () use ($livewire, $arguments) {
-                        $this->processMessage($arguments['id'], $livewire->mountedActionsData[0]['feedback'] ?? null);
+                    ->action(function (array $data) use ($arguments) {
+                        $this->processMessage($arguments['id'], $data['feedback'] ?? null);
 
                         $this->replaceMountedAction('activity');
 
@@ -414,8 +420,8 @@ class ChatterPanel extends Component implements HasActions, HasForms, HasInfolis
                     ->icon('heroicon-o-check-circle')
                     ->label('Done')
                     ->modalIcon('heroicon-o-check-circle')
-                    ->action(function () use ($livewire, $arguments) {
-                        $this->processMessage($arguments['id'], $livewire->mountedActionsData[0]['feedback'] ?? null);
+                    ->action(function (array $data) use ($arguments) {
+                        $this->processMessage($arguments['id'], $data['feedback'] ?? null);
 
                         Notification::make()
                             ->success()
