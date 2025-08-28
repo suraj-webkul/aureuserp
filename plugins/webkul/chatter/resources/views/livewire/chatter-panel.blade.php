@@ -1,7 +1,7 @@
 <div class="w-full h-full">
     <!-- Toolbar -->
     <div class="sticky top-0 z-10 -mx-4 -mt-4 mb-4 bg-white/85 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:bg-gray-950/75">
-        <div class="flex flex-col items-center gap-3">
+        <div class="flex flex-col items-center">
             <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <!-- Primary actions -->
                 <div class="flex flex-wrap items-center gap-2">

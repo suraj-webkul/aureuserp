@@ -21,7 +21,40 @@
                         ])
                 }}
             >
+                @php $lastDateLabel = null; @endphp
                 @foreach ($childComponentContainers as $container)
+                    @php
+                        $createdAt = data_get($container->getRecord(), 'created_at');
+                        try {
+                            $dt = $createdAt instanceof \Carbon\CarbonInterface ? $createdAt : \Carbon\Carbon::parse($createdAt);
+                        } catch (\Throwable $e) {
+                            $dt = null;
+                        }
+                        $currentLabel = '';
+                        if ($dt) {
+                            if ($dt->isToday()) {
+                                $currentLabel = __('Today');
+                            } elseif ($dt->isYesterday()) {
+                                $currentLabel = __('Yesterday');
+                            } else {
+                                $currentLabel = $dt->format('M j, Y');
+                            }
+                        }
+                    @endphp
+
+                    @if ($currentLabel && $currentLabel !== $lastDateLabel)
+                        <div class="relative my-6">
+                            <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                                <div class="w-full border-t border-gray-200 dark:border-gray-800"></div>
+                            </div>
+                            <div class="relative flex justify-center">
+                                <span class="px-3 text-xs font-medium text-gray-500 bg-white/90 dark:bg-gray-950/75 dark:text-gray-400">
+                                    {{ $currentLabel }}
+                                </span>
+                            </div>
+                        </div>
+                        @php $lastDateLabel = $currentLabel; @endphp
+                    @endif
                     <article
                         @class([
                             'mb-4 rounded-xl p-4 text-base shadow-sm ring-1 transition-shadow hover:shadow-md',
