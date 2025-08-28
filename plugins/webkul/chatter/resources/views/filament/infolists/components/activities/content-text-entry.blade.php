@@ -9,22 +9,22 @@
 >
     <div {{ $attributes->merge($getExtraAttributes())->class('') }}>
         @if($record->body)
-            <div class="text-sm">
+            <div class="text-sm leading-6 text-gray-700 dark:text-gray-300 [&_a]:text-primary-600 dark:[&_a]:text-primary-400 [&_a:hover]:underline [&_ul]:list-disc [&_ul]:ms-5 [&_ol]:list-decimal [&_ol]:ms-5">
                 {!! $record->body !!}
             </div>
         @endif
 
-        <div class="mt-3 rounded-xl bg-white/70 ring-1 ring-black/5 shadow-sm dark:bg-gray-900/60 dark:ring-white/5">
+        <div class="mt-3 shadow-sm rounded-xl bg-white/70 ring-1 ring-black/5 dark:bg-gray-900/60 dark:ring-white/5">
             <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200/80 dark:border-gray-800">
                 <div class="flex items-center gap-2">
-                    <x-heroicon-m-clipboard-document-check class="h-5 w-5 text-primary-500"/>
+                    <x-heroicon-m-clipboard-document-check class="w-5 h-5 text-primary-500"/>
 
                     <h3 class="text-sm font-medium text-gray-900 dark:text-gray-100">
                         @lang('chatter::views/filament/infolists/components/activities/content-text-entry.activity-details')
                     </h3>
                 </div>
 
-                <span class="inline-flex items-center rounded-md bg-primary-50 px-2 py-1 text-xs font-bold text-primary-700 dark:bg-primary-900/50 dark:text-primary-300">
+                <span class="inline-flex items-center px-2 py-1 text-xs font-bold rounded-md bg-primary-50 text-primary-700 dark:bg-primary-900/50 dark:text-primary-300">
                     {{ ucfirst($record->activityType?->name) }}
                 </span>
             </div>
@@ -35,7 +35,7 @@
                     <!-- Created By -->
                     @if($record->causer)
                         <div class="flex items-center gap-3">
-                            <x-heroicon-m-user-circle class="h-5 w-5 text-gray-400"/>
+                            <x-heroicon-m-user-circle class="w-5 h-5 text-gray-400"/>
 
                             <div>
                                 <span class="block text-xs font-medium text-gray-500 dark:text-gray-400">
@@ -49,7 +49,7 @@
                     <!-- Summary -->
                     @if($record->summary)
                         <div class="flex items-center gap-3">
-                            <x-heroicon-m-document class="h-5 w-5 text-gray-400"/>
+                            <x-heroicon-m-document class="w-5 h-5 text-gray-400"/>
 
                             <div>
                                 <span class="block text-xs font-medium text-gray-500 dark:text-gray-400">
@@ -66,7 +66,7 @@
                     <!-- Due Date -->
                     @if($record->date_deadline)
                         <div class="flex items-center gap-3">
-                            <x-heroicon-m-calendar class="h-5 w-5 text-gray-400"/>
+                            <x-heroicon-m-calendar class="w-5 h-5 text-gray-400"/>
 
                             <div>
                                 <span class="block text-xs font-medium text-gray-500 dark:text-gray-400">
@@ -117,7 +117,7 @@
                     <!-- Assigned To -->
                     @if($record->assignedTo)
                         <div class="flex items-center gap-3">
-                            <x-heroicon-m-user-group class="h-5 w-5 text-gray-400"/>
+                            <x-heroicon-m-user-group class="w-5 h-5 text-gray-400"/>
 
                             <div>
                                 <span class="block text-xs font-medium text-gray-500 dark:text-gray-400">

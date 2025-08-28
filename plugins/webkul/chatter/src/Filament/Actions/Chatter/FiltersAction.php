@@ -24,6 +24,15 @@ class FiltersAction extends Action
             ->icon('heroicon-o-funnel')
             ->color('gray')
             ->outlined()
+            ->badge(function ($livewire) {
+                try {
+                    return method_exists($livewire, 'getActiveFilters')
+                        ? (count($livewire->getActiveFilters()) ?: null)
+                        : null;
+                } catch (\Throwable $e) {
+                    return null;
+                }
+            })
             ->slideOver(false)
             ->tooltip(__('Filters'))
             ->mountUsing(function ($livewire, $arguments, $form, $schema) {

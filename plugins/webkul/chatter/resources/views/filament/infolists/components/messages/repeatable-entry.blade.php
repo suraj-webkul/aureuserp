@@ -25,12 +25,15 @@
                 @foreach ($childComponentContainers as $container)
                     @php
                         $createdAt = data_get($container->getRecord(), 'created_at');
+
                         try {
                             $dt = $createdAt instanceof \Carbon\CarbonInterface ? $createdAt : \Carbon\Carbon::parse($createdAt);
                         } catch (\Throwable $e) {
                             $dt = null;
                         }
+
                         $currentLabel = '';
+
                         if ($dt) {
                             if ($dt->isToday()) {
                                 $currentLabel = __('Today');
@@ -43,12 +46,12 @@
                     @endphp
 
                     @if ($currentLabel && $currentLabel !== $lastDateLabel)
-                        <div class="relative my-6">
+                        <div class="relative my-8" role="separator" aria-label="{{ $currentLabel }}">
                             <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                                <div class="w-full border-t border-gray-200 dark:border-gray-800"></div>
+                                <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-gray-700"></div>
                             </div>
                             <div class="relative flex justify-center">
-                                <span class="px-3 text-xs font-medium text-gray-500 bg-white/90 dark:bg-gray-950/75 dark:text-gray-400">
+                                <span class="inline-flex items-center bg-white/95 px-2 py-0 text-[11px] font-medium uppercase tracking-wide text-gray-600 dark:bg-gray-950/80 dark:text-gray-300">
                                     {{ $currentLabel }}
                                 </span>
                             </div>

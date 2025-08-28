@@ -23,7 +23,7 @@
                 @endif
 
                 @if($record->body)
-                    <div class="text-sm leading-6 text-gray-700 dark:text-gray-300 [&_a]:text-primary-600 dark:[&_a]:text-primary-400 [&_a:hover]:underline [&_ul]:list-disc [&_ul]:ms-5 [&_ol]:list-decimal [&_ol]:ms-5">
+                    <div class="text-sm leading-6 text-gray-700 [&_a]:text-primary-600 dark:[&_a]:text-primary-400 [&_a:hover]:underline [&_ul]:list-disc [&_ul]:ms-5 [&_ol]:list-decimal [&_ol]:ms-5 dark:text-white">
                         {!! $record->body !!}
                     </div>
                 @endif
@@ -126,8 +126,8 @@
                     count($changes) > 0
                     && $record->event !== 'created'
                 )
-                    <div class="mt-3 overflow-hidden bg-white border border-gray-200 shadow-sm rounded-xl dark:border-white/10 dark:bg-gray-900">
-                        <div class="px-4 py-3 border-b border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-800/60">
+                    <div class="mt-3 overflow-hidden shadow-sm rounded-xl bg-white/70 ring-1 ring-black/5 dark:bg-gray-900/60 dark:ring-white/5">
+                        <div class="px-4 py-3 border-b border-gray-200 bg-gray-50/80 dark:border-gray-800 dark:bg-gray-800/60">
                             <div class="flex items-center gap-2">
                                 <x-heroicon-m-arrow-path class="w-5 h-5 text-primary-600 dark:text-primary-400"/>
 
@@ -143,11 +143,11 @@
                                     <div class="p-4">
                                         <div class="flex items-center gap-2 mb-3">
                                             @if($field === 'title')
-                                                <x-heroicon-m-pencil-square class="w-4 h-4 text-gray-500"/>
+                                                <x-heroicon-m-pencil-square class="w-4 h-4 text-gray-500 dark:text-gray-400"/>
                                             @elseif($field === 'due_date')
-                                                <x-heroicon-m-calendar class="w-4 h-4 text-gray-500"/>
+                                                <x-heroicon-m-calendar class="w-4 h-4 text-gray-500 dark:text-gray-400"/>
                                             @else
-                                                <x-heroicon-m-arrow-path class="w-4 h-4 text-gray-500"/>
+                                                <x-heroicon-m-arrow-path class="w-4 h-4 text-gray-500 dark:text-gray-400"/>
                                             @endif
 
                                             <span class="text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">

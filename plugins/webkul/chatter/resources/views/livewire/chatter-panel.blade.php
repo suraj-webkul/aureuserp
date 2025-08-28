@@ -15,7 +15,7 @@
 
             <!-- Filters (messages tab only) -->
             @if ($this->tab === 'messages')
-                <div class="flex flex-col w-full gap-2">
+                <div class="flex flex-col w-full gap-2 mt-1">
                     <div class="flex flex-wrap items-center w-full gap-2">
                         @if ($this->hasFilters())
                             <span class="text-xs text-gray-500 dark:text-gray-400">{{ count($this->getActiveFilters()) }} active</span>
@@ -46,7 +46,7 @@
         </div>
     </div>
 
-    <div class="space-y-6">
+    <div>
         <div wire:key="activities-{{ $this->refreshTick }}">
             {{ $this->activityInfolist }}
         </div>
