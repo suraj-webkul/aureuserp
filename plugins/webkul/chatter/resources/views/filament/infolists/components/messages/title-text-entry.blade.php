@@ -23,7 +23,7 @@
                     @if($getRecord()->pinned_at)
                         <span class="inline-flex items-center gap-1 rounded-full bg-primary-50 px-2 py-0.5 text-[10px] font-semibold text-primary-700 ring-1 ring-primary-600/10 dark:bg-primary-900/30 dark:text-primary-300 dark:ring-primary-400/20">
                             <x-heroicon-m-bookmark class="h-3.5 w-3.5" />
-                            @lang('Pinned')
+                            {{ __('chatter::views/filament/infolists/components/messages/title-text-entry.pinned') }}
                         </span>
                     @endif
                 </div>
@@ -33,8 +33,8 @@
                         wire:click="pinMessage({{ $getRecord()->id }})"
                         :icon="$getRecord()->pinned_at ? 'heroicon-m-bookmark' : 'heroicon-m-bookmark'"
                         :color="$getRecord()->pinned_at ? 'primary' : 'gray'"
-                        :tooltip="$getRecord()->pinned_at ? __('Unpin') : __('Pin')"
-                        :label="$getRecord()->pinned_at ? __('Unpin') : __('Pin')"
+                        :tooltip="$getRecord()->pinned_at ? __('chatter::views/filament/infolists/components/messages/title-text-entry.unpin') : __('chatter::views/filament/infolists/components/messages/title-text-entry.pin')"
+                        :label="$getRecord()->pinned_at ? __('chatter::views/filament/infolists/components/messages/title-text-entry.unpin') : __('chatter::views/filament/infolists/components/messages/title-text-entry.pin')"
                         class="!p-1.5"
                     />
                 </div>

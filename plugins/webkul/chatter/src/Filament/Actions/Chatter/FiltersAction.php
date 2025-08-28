@@ -34,7 +34,7 @@ class FiltersAction extends Action
                 }
             })
             ->slideOver(false)
-            ->tooltip(__('Filters'))
+            ->tooltip(__('chatter::filament/resources/actions/chatter/filters-action.tooltip'))
             ->mountUsing(function ($livewire, $arguments, $form, $schema) {
                 $schema->fill([
                     'search'     => $livewire->search ?? '',
@@ -48,45 +48,46 @@ class FiltersAction extends Action
                 Group::make()
                     ->schema([
                         TextInput::make('search')
-                            ->label(__('Search'))
-                            ->placeholder(__('Search messages...')),
+                            ->label(__('chatter::filament/resources/actions/chatter/filters-action.fields.search'))
+                            ->placeholder(__('chatter::filament/resources/actions/chatter/filters-action.fields.search-placeholder')),
                         Select::make('filterType')
-                            ->label(__('Type'))
+                            ->label(__('chatter::filament/resources/actions/chatter/filters-action.fields.type'))
                             ->options([
-                                'all'          => __('All types'),
-                                'note'         => __('Notes'),
-                                'comment'      => __('Comments'),
-                                'activity'     => __('Activities'),
+                                'all'          => __('chatter::filament/resources/actions/chatter/filters-action.type-options.all'),
+                                'note'         => __('chatter::filament/resources/actions/chatter/filters-action.type-options.note'),
+                                'comment'      => __('chatter::filament/resources/actions/chatter/filters-action.type-options.comment'),
+                                'notification' => __('chatter::filament/resources/actions/chatter/filters-action.type-options.notification'),
+                                'activity'     => __('chatter::filament/resources/actions/chatter/filters-action.type-options.activity'),
                             ])
                             ->native(false),
                         Select::make('dateRange')
-                            ->label(__('Date'))
+                            ->label(__('chatter::filament/resources/actions/chatter/filters-action.fields.date'))
                             ->options([
-                                ''          => __('Any time'),
-                                'today'     => __('Today'),
-                                'yesterday' => __('Yesterday'),
-                                'week'      => __('Last 7 days'),
-                                'month'     => __('Last 30 days'),
-                                'quarter'   => __('Last 3 months'),
-                                'year'      => __('Last year'),
+                                ''          => __('chatter::filament/resources/actions/chatter/filters-action.date-options.'),
+                                'today'     => __('chatter::filament/resources/actions/chatter/filters-action.date-options.today'),
+                                'yesterday' => __('chatter::filament/resources/actions/chatter/filters-action.date-options.yesterday'),
+                                'week'      => __('chatter::filament/resources/actions/chatter/filters-action.date-options.week'),
+                                'month'     => __('chatter::filament/resources/actions/chatter/filters-action.date-options.month'),
+                                'quarter'   => __('chatter::filament/resources/actions/chatter/filters-action.date-options.quarter'),
+                                'year'      => __('chatter::filament/resources/actions/chatter/filters-action.date-options.year'),
                             ])
                             ->native(false),
                         Select::make('sortBy')
-                            ->label(__('Sort by'))
+                            ->label(__('chatter::filament/resources/actions/chatter/filters-action.fields.sort-by'))
                             ->options([
-                                'created_at_desc' => __('Newest first'),
-                                'created_at_asc'  => __('Oldest first'),
-                                'updated_at_desc' => __('Recently updated'),
-                                'priority'        => __('Priority'),
+                                'created_at_desc' => __('chatter::filament/resources/actions/chatter/filters-action.sort-options.created_at_desc'),
+                                'created_at_asc'  => __('chatter::filament/resources/actions/chatter/filters-action.sort-options.created_at_asc'),
+                                'updated_at_desc' => __('chatter::filament/resources/actions/chatter/filters-action.sort-options.updated_at_desc'),
+                                'priority'        => __('chatter::filament/resources/actions/chatter/filters-action.sort-options.priority'),
                             ])
                             ->native(false),
                         Toggle::make('pinnedOnly')
-                            ->label(__('Pinned only')),
+                            ->label(__('chatter::filament/resources/actions/chatter/filters-action.fields.pinned-only')),
                     ])
                     ->columns(2),
             ])
             ->modalSubmitAction(function ($action) {
-                $action->label(__('Apply filters'))->icon('heroicon-m-check');
+                $action->label(__('chatter::filament/resources/actions/chatter/filters-action.actions.apply'))->icon('heroicon-m-check');
             })
             ->action(function (array $data, $livewire) {
                 $livewire->search = (string) ($data['search'] ?? '');

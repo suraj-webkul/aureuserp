@@ -36,9 +36,9 @@
 
                         if ($dt) {
                             if ($dt->isToday()) {
-                                $currentLabel = __('Today');
+                                $currentLabel = __('chatter::views/filament/infolists/components/activities/repeatable-entry.today');
                             } elseif ($dt->isYesterday()) {
-                                $currentLabel = __('Yesterday');
+                                $currentLabel = __('chatter::views/filament/infolists/components/activities/repeatable-entry.yesterday');
                             } else {
                                 $currentLabel = $dt->format('M j, Y');
                             }
