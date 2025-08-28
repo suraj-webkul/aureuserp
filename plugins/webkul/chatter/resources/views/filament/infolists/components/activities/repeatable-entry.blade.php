@@ -12,30 +12,31 @@
         }}
     >
         @if (count($childComponentContainers = $getChildComponentContainers()))
-            <x-filament::grid
-                :default="$getGridColumns('default')"
-                :sm="$getGridColumns('sm')"
-                :md="$getGridColumns('md')"
-                :lg="$getGridColumns('lg')"
-                :xl="$getGridColumns('xl')"
-                :two-xl="$getGridColumns('2xl')"
-                class="gap-2"
+            <div
+                {{
+                    \Filament\Support\prepare_inherited_attributes($attributes)
+                        ->merge($getExtraAttributes(), escape: false)
+                        ->class([
+                            'gap-2',
+                        ])
+                }}
             >
                 @foreach ($childComponentContainers as $container)
                     <article
-                        class="mb-4 rounded-xl bg-white/70 p-4 text-base shadow-sm ring-1 ring-black/5 transition-shadow hover:shadow-md dark:bg-gray-900/60 dark:ring-white/5"
-                        @style([
-                            'background-color: rgba(var(--primary-200), 0.1);' => $container->record->type == 'note',
+                        @class([
+                            'mb-4 rounded-xl p-4 text-base shadow-sm ring-1 transition-shadow hover:shadow-md',
+                            'bg-gray-50 ring-gray-200 dark:bg-gray-800/50 dark:ring-gray-800' => data_get($container->getRecord(), 'type') === 'note',
+                            'bg-white/70 ring-black/5 dark:bg-gray-900/60 dark:ring-white/5' => data_get($container->getRecord(), 'type') !== 'note',
                         ])
                     >
                         {{ $container }}
                     </article>
                 @endforeach
-            </x-filament::grid>
+            </div>
         @elseif (($placeholder = $getPlaceholder()) !== null)
-            <x-filament-infolists::entries.placeholder>
+            <div class="text-sm leading-6 text-gray-400 fi-in-placeholder dark:text-gray-500">
                 {{ $placeholder }}
-            </x-filament-infolists::entries.placeholder>
+            </div>
         @endif
     </div>
 </x-dynamic-component>
