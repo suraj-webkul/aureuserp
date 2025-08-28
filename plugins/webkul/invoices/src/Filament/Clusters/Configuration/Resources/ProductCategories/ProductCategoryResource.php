@@ -1,15 +1,15 @@
 <?php
 
-namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources;
+namespace Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategories;
 
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Webkul\Invoice\Filament\Clusters\Configuration;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource\Pages\CreateProductCategory;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource\Pages\EditProductCategory;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource\Pages\ListProductCategories;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource\Pages\ManageProducts;
-use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource\Pages\ViewProductCategory;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategories\Pages\CreateProductCategory;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategories\Pages\EditProductCategory;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategories\Pages\ListProductCategories;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategories\Pages\ManageProducts;
+use Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategories\Pages\ViewProductCategory;
 use Webkul\Invoice\Models\Category;
 use Webkul\Product\Filament\Resources\Categories\CategoryResource as BaseProductCategoryResource;
 
