@@ -2,6 +2,7 @@
 
 namespace Webkul\Project\Filament\Resources\Tasks;
 
+use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\RelationManagers\RelationGroup;
@@ -18,6 +19,9 @@ use Webkul\Project\Filament\Resources\Tasks\Pages\ManageTimesheets;
 use Webkul\Project\Filament\Resources\Tasks\Pages\ViewTask;
 use Webkul\Project\Filament\Resources\Tasks\RelationManagers\SubTasksRelationManager;
 use Webkul\Project\Filament\Resources\Tasks\RelationManagers\TimesheetsRelationManager;
+use Webkul\Project\Filament\Resources\Tasks\Schemas\TaskForm;
+use Webkul\Project\Filament\Resources\Tasks\Schemas\TaskInfolist;
+use Webkul\Project\Filament\Resources\Tasks\Tables\TasksTable;
 use Webkul\Project\Models\Task;
 
 class TaskResource extends Resource
@@ -28,7 +32,7 @@ class TaskResource extends Resource
 
     protected static ?string $slug = 'project/tasks';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-list';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-list';
 
     protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 

@@ -2,6 +2,7 @@
 
 namespace Webkul\Project\Filament\Resources\Projects\Pages;
 
+use BackedEnum;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
@@ -30,7 +31,7 @@ class ManageTasks extends ManageRelatedRecords
 
     protected static string $relationship = 'tasks';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-list';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-list';
 
     public static function getNavigationLabel(): string
     {

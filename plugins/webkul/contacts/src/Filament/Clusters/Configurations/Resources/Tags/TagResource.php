@@ -2,13 +2,14 @@
 
 namespace Webkul\Contact\Filament\Clusters\Configurations\Resources\Tags;
 
+use BackedEnum;
 use Webkul\Contact\Filament\Clusters\Configurations;
 use Webkul\Contact\Filament\Clusters\Configurations\Resources\Tags\Pages\ManageTags;
 use Webkul\Partner\Filament\Resources\Tags\TagResource as BaseTagResource;
 
 class TagResource extends BaseTagResource
 {
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-tag';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-tag';
 
     protected static bool $shouldRegisterNavigation = true;
 

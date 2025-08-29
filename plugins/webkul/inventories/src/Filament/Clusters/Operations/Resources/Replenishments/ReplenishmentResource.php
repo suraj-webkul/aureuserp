@@ -2,6 +2,7 @@
 
 namespace Webkul\Inventory\Filament\Clusters\Operations\Resources\Replenishments;
 
+use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
@@ -19,7 +20,7 @@ class ReplenishmentResource extends Resource
 {
     protected static ?string $model = OrderPoint::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-arrows-up-down';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrows-up-down';
 
     protected static ?int $navigationSort = 4;
 

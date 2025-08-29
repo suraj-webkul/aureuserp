@@ -2,6 +2,7 @@
 
 namespace Webkul\Recruitment\Filament\Clusters\Configurations\Resources\UTMSources;
 
+use BackedEnum;
 use Filament\Panel;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -17,7 +18,7 @@ class UTMSourceResource extends Resource
 {
     protected static ?string $model = UTMSource::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-globe-americas';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-globe-americas';
 
     protected static ?string $cluster = Configurations::class;
 

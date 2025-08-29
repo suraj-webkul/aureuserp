@@ -2,6 +2,7 @@
 
 namespace Webkul\Security\Filament\Clusters\Settings\Pages;
 
+use BackedEnum;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Placeholder;
@@ -17,7 +18,7 @@ class ManageActivity extends SettingsPage
 
     protected static ?string $cluster = Settings::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
 
     protected static string $settings = UserSettings::class;
 

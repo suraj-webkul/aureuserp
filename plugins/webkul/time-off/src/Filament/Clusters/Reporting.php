@@ -2,12 +2,13 @@
 
 namespace Webkul\TimeOff\Filament\Clusters;
 
+use BackedEnum;
 use Filament\Clusters\Cluster;
 use Filament\Panel;
 
 class Reporting extends Cluster
 {
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-chart-pie';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-chart-pie';
 
     protected static ?int $navigationSort = 4;
 

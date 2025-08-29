@@ -2,6 +2,7 @@
 
 namespace Webkul\Sale\Filament\Clusters\Configuration\Resources\OrderTemplateProducts;
 
+use BackedEnum;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
@@ -22,7 +23,7 @@ class OrderTemplateProductResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-arrow-path-rounded-square';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrow-path-rounded-square';
 
     public static function getModelLabel(): string
     {

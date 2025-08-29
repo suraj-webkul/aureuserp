@@ -2,6 +2,7 @@
 
 namespace Webkul\Invoice\Filament\Clusters\Customer\Resources\Partners\Pages;
 
+use BackedEnum;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ManageRelatedRecords;
 use Filament\Schemas\Schema;
@@ -15,7 +16,7 @@ class ManageBankAccounts extends ManageRelatedRecords
 
     protected static string $relationship = 'bankAccounts';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-banknotes';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-banknotes';
 
     public static function getNavigationLabel(): string
     {

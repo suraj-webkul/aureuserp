@@ -2,6 +2,7 @@
 
 namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources\StorageCategories\Pages;
 
+use BackedEnum;
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRelatedRecords;
@@ -18,7 +19,7 @@ class ManageLocations extends ManageRelatedRecords
 
     protected static string $relationship = 'locations';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-map-pin';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-map-pin';
 
     /**
      * @param  array<string, mixed>  $parameters

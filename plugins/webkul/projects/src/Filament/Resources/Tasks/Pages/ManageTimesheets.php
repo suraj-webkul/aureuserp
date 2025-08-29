@@ -2,6 +2,7 @@
 
 namespace Webkul\Project\Filament\Resources\Tasks\Pages;
 
+use BackedEnum;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
@@ -25,7 +26,7 @@ class ManageTimesheets extends ManageRelatedRecords
 
     protected static string $relationship = 'timesheets';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-clock';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clock';
 
     public static function getNavigationLabel(): string
     {

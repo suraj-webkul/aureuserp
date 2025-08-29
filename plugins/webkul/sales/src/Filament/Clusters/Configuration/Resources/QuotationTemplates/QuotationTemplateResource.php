@@ -2,6 +2,7 @@
 
 namespace Webkul\Sale\Filament\Clusters\Configuration\Resources\QuotationTemplates;
 
+use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Repeater;
@@ -29,7 +30,7 @@ class QuotationTemplateResource extends Resource
 {
     protected static ?string $model = OrderTemplate::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document';
 
     protected static ?string $cluster = Configuration::class;
 

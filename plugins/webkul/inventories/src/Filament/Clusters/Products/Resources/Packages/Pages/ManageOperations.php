@@ -2,6 +2,7 @@
 
 namespace Webkul\Inventory\Filament\Clusters\Products\Resources\Packages\Pages;
 
+use BackedEnum;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
@@ -23,7 +24,7 @@ class ManageOperations extends ManageRelatedRecords
 
     protected static string $relationship = 'operations';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-arrows-right-left';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrows-right-left';
 
     public static function getNavigationLabel(): string
     {

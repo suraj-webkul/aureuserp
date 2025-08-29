@@ -2,6 +2,7 @@
 
 namespace Webkul\Account\Filament\Resources\Taxes\Pages;
 
+use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\ManageRelatedRecords;
 use Webkul\Account\Enums\DocumentType;
@@ -16,7 +17,7 @@ class ManageDistributionForRefund extends ManageRelatedRecords
 
     protected static string $relationship = 'distributionForRefund';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document';
 
     public function getDocumentType(): string
     {

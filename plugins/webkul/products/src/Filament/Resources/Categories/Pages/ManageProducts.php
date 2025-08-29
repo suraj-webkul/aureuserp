@@ -2,6 +2,7 @@
 
 namespace Webkul\Product\Filament\Resources\Categories\Pages;
 
+use BackedEnum;
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRelatedRecords;
@@ -19,7 +20,7 @@ class ManageProducts extends ManageRelatedRecords
 
     protected static string $relationship = 'products';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-shopping-bag';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-shopping-bag';
 
     public static function getNavigationLabel(): string
     {

@@ -2,6 +2,7 @@
 
 namespace Webkul\Sale\Filament\Clusters\Orders\Resources\Customers;
 
+use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Tables\Table;
@@ -20,7 +21,7 @@ class CustomerResource extends BaseCustomerResource
 {
     protected static ?string $model = Partner::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     protected static bool $shouldRegisterNavigation = true;
 
@@ -44,9 +45,9 @@ class CustomerResource extends BaseCustomerResource
     {
         return BaseCustomerResource::table($table)
             ->contentGrid([
-                'sm' => 1,
-                'md' => 2,
-                'xl' => 3,
+                'sm'  => 1,
+                'md'  => 2,
+                'xl'  => 3,
                 '2xl' => 3,
             ]);
     }
@@ -65,12 +66,12 @@ class CustomerResource extends BaseCustomerResource
     public static function getPages(): array
     {
         return [
-            'index' => ListCustomers::route('/'),
-            'create' => CreateCustomer::route('/create'),
-            'view' => ViewCustomer::route('/{record}'),
-            'edit' => EditCustomer::route('/{record}/edit'),
-            'contacts' => ManageContacts::route('/{record}/contacts'),
-            'addresses' => ManageAddresses::route('/{record}/addresses'),
+            'index'        => ListCustomers::route('/'),
+            'create'       => CreateCustomer::route('/create'),
+            'view'         => ViewCustomer::route('/{record}'),
+            'edit'         => EditCustomer::route('/{record}/edit'),
+            'contacts'     => ManageContacts::route('/{record}/contacts'),
+            'addresses'    => ManageAddresses::route('/{record}/addresses'),
             'bank-account' => ManageBankAccounts::route('/{record}/bank-accounts'),
         ];
     }

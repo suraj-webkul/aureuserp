@@ -2,13 +2,14 @@
 
 namespace Webkul\Contact\Filament\Clusters\Configurations\Resources\Banks;
 
+use BackedEnum;
 use Webkul\Contact\Filament\Clusters\Configurations;
 use Webkul\Contact\Filament\Clusters\Configurations\Resources\Banks\Pages\ManageBanks;
 use Webkul\Partner\Filament\Resources\Banks\BankResource as BaseBankResource;
 
 class BankResource extends BaseBankResource
 {
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-building-library';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-building-library';
 
     protected static bool $shouldRegisterNavigation = true;
 

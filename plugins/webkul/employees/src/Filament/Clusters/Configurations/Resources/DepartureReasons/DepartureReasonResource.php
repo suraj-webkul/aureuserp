@@ -2,6 +2,7 @@
 
 namespace Webkul\Employee\Filament\Clusters\Configurations\Resources\DepartureReasons;
 
+use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
@@ -29,7 +30,7 @@ class DepartureReasonResource extends Resource
 {
     protected static ?string $model = DepartureReason::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-fire';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-fire';
 
     protected static ?string $cluster = Configurations::class;
 

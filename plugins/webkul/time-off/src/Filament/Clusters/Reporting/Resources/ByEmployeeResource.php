@@ -2,6 +2,7 @@
 
 namespace Webkul\TimeOff\Filament\Clusters\Reporting\Resources;
 
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
@@ -16,7 +17,7 @@ class ByEmployeeResource extends Resource
 {
     protected static ?string $model = Leave::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     protected static ?string $cluster = Reporting::class;
 

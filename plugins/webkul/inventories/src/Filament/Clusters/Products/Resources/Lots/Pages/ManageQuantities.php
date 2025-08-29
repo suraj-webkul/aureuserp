@@ -2,6 +2,7 @@
 
 namespace Webkul\Inventory\Filament\Clusters\Products\Resources\Lots\Pages;
 
+use BackedEnum;
 use Filament\Actions\DeleteAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRelatedRecords;
@@ -25,7 +26,7 @@ class ManageQuantities extends ManageRelatedRecords
 
     protected static string $relationship = 'quantities';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-map-pin';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-map-pin';
 
     /**
      * @param  array<string, mixed>  $parameters

@@ -2,6 +2,7 @@
 
 namespace Webkul\Security\Filament\Clusters\Settings\Pages;
 
+use BackedEnum;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
@@ -18,7 +19,7 @@ class ManageUsers extends SettingsPage
 
     protected static ?string $cluster = Settings::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-user-group';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-user-group';
 
     protected static string $settings = UserSettings::class;
 

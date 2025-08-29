@@ -2,6 +2,7 @@
 
 namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources\Warehouses\Pages;
 
+use BackedEnum;
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRelatedRecords;
@@ -17,7 +18,7 @@ class ManageRoutes extends ManageRelatedRecords
 
     protected static string $relationship = 'routes';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-arrow-path';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrow-path';
 
     public static function getNavigationLabel(): string
     {
