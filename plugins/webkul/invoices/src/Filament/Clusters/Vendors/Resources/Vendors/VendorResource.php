@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources;
+namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\Vendors;
 
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\RichEditor;
@@ -23,20 +23,21 @@ use Webkul\Invoice\Enums\InvoiceFormat;
 use Webkul\Invoice\Enums\InvoiceSendingMethod;
 use Webkul\Invoice\Enums\PartyIdentificationScheme;
 use Webkul\Invoice\Filament\Clusters\Vendors;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\CreateVendor;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\EditVendor;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\ListVendors;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\ManageAddresses;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\ManageBankAccounts;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\ManageContacts;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\ViewVendor;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\RelationManagers\BankAccountsRelationManager;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Vendors\Pages\CreateVendor;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Vendors\Pages\EditVendor;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Vendors\Pages\ListVendors;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Vendors\Pages\ManageAddresses;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Vendors\Pages\ManageBankAccounts;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Vendors\Pages\ManageContacts;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Vendors\Pages\ViewVendor;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Vendors\RelationManagers\BankAccountsRelationManager;
 use Webkul\Invoice\Models\Partner;
 use Webkul\Partner\Filament\Resources\Partners\PartnerResource as BaseVendorResource;
+use BackedEnum;
 
 class VendorResource extends BaseVendorResource
 {
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     protected static ?string $model = Partner::class;
 
@@ -48,7 +49,7 @@ class VendorResource extends BaseVendorResource
 
     protected static ?string $cluster = Vendors::class;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getModelLabel(): string
     {
@@ -155,12 +156,12 @@ class VendorResource extends BaseVendorResource
                                 Select::make('peppol_eas')
                                     ->label(__('invoices::filament/clusters/vendors/resources/vendor.form.tabs.invoicing.fields.peppol-eas'))
                                     ->live()
-                                    ->visible(fn (Get $get) => $get('invoice_edi_format_store') !== InvoiceFormat::FACTURX_X_CII->value && ! empty($get('invoice_edi_format_store')))
+                                    ->visible(fn(Get $get) => $get('invoice_edi_format_store') !== InvoiceFormat::FACTURX_X_CII->value && !empty($get('invoice_edi_format_store')))
                                     ->options(PartyIdentificationScheme::class),
                                 TextInput::make('peppol_endpoint')
                                     ->label(__('invoices::filament/clusters/vendors/resources/vendor.form.tabs.invoicing.fields.endpoint'))
                                     ->live()
-                                    ->visible(fn (Get $get) => $get('invoice_edi_format_store') !== InvoiceFormat::FACTURX_X_CII->value && ! empty($get('invoice_edi_format_store'))),
+                                    ->visible(fn(Get $get) => $get('invoice_edi_format_store') !== InvoiceFormat::FACTURX_X_CII->value && !empty($get('invoice_edi_format_store'))),
                             ])->columns(2),
                     ]),
 
@@ -200,13 +201,13 @@ class VendorResource extends BaseVendorResource
         $table = parent::table($table);
 
         $table->contentGrid([
-            'sm'  => 1,
-            'md'  => 2,
-            'xl'  => 3,
+            'sm' => 1,
+            'md' => 2,
+            'xl' => 3,
             '2xl' => 3,
         ]);
 
-        $table->modifyQueryUsing(fn ($query) => $query->where('sub_type', 'supplier'));
+        $table->modifyQueryUsing(fn($query) => $query->where('sub_type', 'supplier'));
 
         return $table;
     }
@@ -364,12 +365,12 @@ class VendorResource extends BaseVendorResource
     public static function getPages(): array
     {
         return [
-            'index'        => ListVendors::route('/'),
-            'create'       => CreateVendor::route('/create'),
-            'edit'         => EditVendor::route('/{record}/edit'),
-            'view'         => ViewVendor::route('/{record}'),
-            'contacts'     => ManageContacts::route('/{record}/contacts'),
-            'addresses'    => ManageAddresses::route('/{record}/addresses'),
+            'index' => ListVendors::route('/'),
+            'create' => CreateVendor::route('/create'),
+            'edit' => EditVendor::route('/{record}/edit'),
+            'view' => ViewVendor::route('/{record}'),
+            'contacts' => ManageContacts::route('/{record}/contacts'),
+            'addresses' => ManageAddresses::route('/{record}/addresses'),
             'bank-account' => ManageBankAccounts::route('/{record}/bank-accounts'),
         ];
     }

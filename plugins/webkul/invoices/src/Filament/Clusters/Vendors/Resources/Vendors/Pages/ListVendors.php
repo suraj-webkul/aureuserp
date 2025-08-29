@@ -1,10 +1,10 @@
 <?php
 
-namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages;
+namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\Vendors\Pages;
 
 use Filament\Actions\CreateAction;
 use Illuminate\Contracts\Support\Htmlable;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Vendors\VendorResource;
 use Webkul\Partner\Filament\Resources\Partners\Pages\ListPartners as BaseListVendors;
 
 class ListVendors extends BaseListVendors

@@ -1,9 +1,9 @@
 <?php
 
-namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages;
+namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\Vendors\Pages;
 
 use Illuminate\Contracts\Support\Htmlable;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Vendors\VendorResource;
 use Webkul\Partner\Filament\Resources\Partners\Pages\ViewPartner as BaseViewPartner;
 
 class ViewVendor extends BaseViewPartner

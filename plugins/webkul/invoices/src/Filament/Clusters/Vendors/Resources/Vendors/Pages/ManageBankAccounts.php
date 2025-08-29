@@ -1,12 +1,13 @@
 <?php
 
-namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages;
+namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\Vendors\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ManageRelatedRecords;
 use Filament\Schemas\Schema;
+use BackedEnum;
 use Filament\Tables\Table;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Vendors\VendorResource;
 use Webkul\Partner\Filament\Resources\BankAccounts\BankAccountResource;
 
 class ManageBankAccounts extends ManageRelatedRecords
@@ -15,7 +16,7 @@ class ManageBankAccounts extends ManageRelatedRecords
 
     protected static string $relationship = 'bankAccounts';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-banknotes';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-banknotes';
 
     public static function getNavigationLabel(): string
     {

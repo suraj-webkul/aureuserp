@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\RelationManagers;
+namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\Vendors\RelationManagers;
 
 use Filament\Actions\CreateAction;
 use Filament\Resources\RelationManagers\RelationManager;

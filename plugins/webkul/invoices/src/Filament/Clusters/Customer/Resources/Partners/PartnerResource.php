@@ -13,7 +13,7 @@ use Webkul\Invoice\Filament\Clusters\Customer\Resources\Partners\Pages\ManageAdd
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\Partners\Pages\ManageBankAccounts;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\Partners\Pages\ManageContacts;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\Partners\Pages\ViewPartner;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource as BasePartnerResource;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Vendors\VendorResource as BasePartnerResource;
 use Webkul\Invoice\Models\Partner;
 use Webkul\Partner\Filament\Resources\Partners\PartnerResource as BaseVendorResource;
 use BackedEnum;

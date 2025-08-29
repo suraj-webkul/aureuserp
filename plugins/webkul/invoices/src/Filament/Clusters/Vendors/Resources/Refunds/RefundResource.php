@@ -1,15 +1,15 @@
 <?php
 
-namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources;
+namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\Refunds;
 
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Webkul\Account\Filament\Resources\Refunds\RefundResource as BaseRefundResource;
 use Webkul\Invoice\Filament\Clusters\Vendors;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\RefundResource\Pages\CreateRefund;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\RefundResource\Pages\EditRefund;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\RefundResource\Pages\ListRefunds;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\RefundResource\Pages\ViewRefund;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Refunds\Pages\CreateRefund;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Refunds\Pages\EditRefund;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Refunds\Pages\ListRefunds;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Refunds\Pages\ViewRefund;
 use Webkul\Invoice\Models\Refund;
 
 class RefundResource extends BaseRefundResource
@@ -50,10 +50,10 @@ class RefundResource extends BaseRefundResource
     public static function getPages(): array
     {
         return [
-            'index'  => ListRefunds::route('/'),
+            'index' => ListRefunds::route('/'),
             'create' => CreateRefund::route('/create'),
-            'edit'   => EditRefund::route('/{record}/edit'),
-            'view'   => ViewRefund::route('/{record}'),
+            'edit' => EditRefund::route('/{record}/edit'),
+            'view' => ViewRefund::route('/{record}'),
         ];
     }
 }

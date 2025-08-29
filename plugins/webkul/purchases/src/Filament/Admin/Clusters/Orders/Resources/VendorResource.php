@@ -6,7 +6,7 @@ use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\RelationManagers\RelationGroup;
 use Webkul\Field\Filament\Traits\HasCustomFields;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource as BaseVendorResource;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Vendors\VendorResource as BaseVendorResource;
 use Webkul\Partner\Filament\Resources\Partners\RelationManagers\AddressesRelationManager;
 use Webkul\Partner\Filament\Resources\Partners\RelationManagers\ContactsRelationManager;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders;
@@ -73,13 +73,13 @@ class VendorResource extends BaseVendorResource
     public static function getPages(): array
     {
         return [
-            'index'     => ListVendors::route('/'),
-            'create'    => CreateVendor::route('/create'),
-            'view'      => ViewVendor::route('/{record}'),
-            'edit'      => EditVendor::route('/{record}/edit'),
-            'contacts'  => ManageContacts::route('/{record}/contacts'),
+            'index' => ListVendors::route('/'),
+            'create' => CreateVendor::route('/create'),
+            'view' => ViewVendor::route('/{record}'),
+            'edit' => EditVendor::route('/{record}/edit'),
+            'contacts' => ManageContacts::route('/{record}/contacts'),
             'addresses' => ManageAddresses::route('/{record}/addresses'),
-            'bills'     => ManageBills::route('/{record}/bills'),
+            'bills' => ManageBills::route('/{record}/bills'),
             'purchases' => ManagePurchases::route('/{record}/purchases'),
         ];
     }

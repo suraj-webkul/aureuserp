@@ -4,7 +4,7 @@ namespace Webkul\Invoice\Filament\Clusters\Customer\Resources\Partners\Pages;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\Partners\PartnerResource;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\VendorResource\Pages\ViewVendor as BaseViewPartner;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Vendors\Pages\ViewVendor as BaseViewPartner;
 
 class ViewPartner extends BaseViewPartner
 {

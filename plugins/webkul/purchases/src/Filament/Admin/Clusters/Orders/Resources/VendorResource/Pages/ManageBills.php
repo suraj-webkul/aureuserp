@@ -6,7 +6,7 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\ManageRelatedRecords;
 use Filament\Tables\Table;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\BillResource;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Bills\BillResource;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\VendorResource;
 
 class ManageBills extends ManageRelatedRecords
@@ -25,14 +25,14 @@ class ManageBills extends ManageRelatedRecords
     public function table(Table $table): Table
     {
         return BillResource::table($table)
-            ->modifyQueryUsing(fn ($query) => $query->where('partner_id', $this->record->getKey()))
+            ->modifyQueryUsing(fn($query) => $query->where('partner_id', $this->record->getKey()))
             ->recordActions([
                 ViewAction::make()
-                    ->url(fn ($record) => BillResource::getUrl('view', ['record' => $record]))
+                    ->url(fn($record) => BillResource::getUrl('view', ['record' => $record]))
                     ->openUrlInNewTab(false),
 
                 EditAction::make()
-                    ->url(fn ($record) => BillResource::getUrl('edit', ['record' => $record]))
+                    ->url(fn($record) => BillResource::getUrl('edit', ['record' => $record]))
                     ->openUrlInNewTab(false),
             ]);
     }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\RefundResource\Pages;
+namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\Refunds\Pages;
 
 use Filament\Pages\Enums\SubNavigationPosition;
 use Webkul\Account\Filament\Resources\Refunds\Pages\EditRefund as BaseEditRefund;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\RefundResource;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Refunds\RefundResource;
 
 class EditRefund extends BaseEditRefund
 {

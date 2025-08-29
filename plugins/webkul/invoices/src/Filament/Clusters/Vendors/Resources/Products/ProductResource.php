@@ -24,6 +24,7 @@ use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Products\Pages\ViewProduc
 use Webkul\Invoice\Models\Product;
 use Webkul\Product\Filament\Resources\Products\ProductResource as BaseProductResource;
 use Webkul\Support\Models\UOM;
+use BackedEnum;
 
 class ProductResource extends BaseProductResource
 {
@@ -31,7 +32,7 @@ class ProductResource extends BaseProductResource
 
     protected static ?string $model = Product::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-shopping-bag';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-shopping-bag';
 
     protected static bool $shouldRegisterNavigation = true;
 
