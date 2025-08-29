@@ -2,6 +2,7 @@
 
 namespace Webkul\Recruitment\Filament\Clusters\Configurations\Resources\RefuseReasons;
 
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
@@ -16,7 +17,7 @@ class RefuseReasonResource extends Resource
 {
     protected static ?string $model = RefuseReason::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-arrow-uturn-left';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrow-uturn-left';
 
     protected static ?string $cluster = Configurations::class;
 

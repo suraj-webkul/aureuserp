@@ -2,7 +2,8 @@
 
 namespace Webkul\TimeOff\Filament\Clusters\Configurations\Resources;
 
-use Webkul\Support\Filament\Resources\ActivityTypeResource as BaseActivityTypeResource;
+use BackedEnum;
+use Webkul\Support\Filament\Resources\ActivityTypes\ActivityTypeResource as BaseActivityTypeResource;
 use Webkul\TimeOff\Filament\Clusters\Configurations;
 use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\ActivityTypeResource\Pages\CreateActivityType;
 use Webkul\TimeOff\Filament\Clusters\Configurations\Resources\ActivityTypeResource\Pages\EditActivityType;
@@ -14,7 +15,7 @@ class ActivityTypeResource extends BaseActivityTypeResource
 {
     protected static ?string $model = ActivityType::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-clock';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clock';
 
     protected static bool $shouldRegisterNavigation = true;
 

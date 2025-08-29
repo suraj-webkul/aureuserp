@@ -2,6 +2,7 @@
 
 namespace Webkul\Employee\Filament\Clusters\Configurations\Resources\EmploymentTypes;
 
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
@@ -16,7 +17,7 @@ class EmploymentTypeResource extends Resource
 {
     protected static ?string $model = EmploymentType::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-cube-transparent';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-cube-transparent';
 
     public static function getModelLabel(): string
     {

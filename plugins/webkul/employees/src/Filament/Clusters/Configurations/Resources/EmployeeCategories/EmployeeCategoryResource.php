@@ -2,6 +2,7 @@
 
 namespace Webkul\Employee\Filament\Clusters\Configurations\Resources\EmployeeCategories;
 
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
@@ -16,7 +17,7 @@ class EmployeeCategoryResource extends Resource
 {
     protected static ?string $model = EmployeeCategory::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-tag';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-tag';
 
     protected static ?string $cluster = Configurations::class;
 

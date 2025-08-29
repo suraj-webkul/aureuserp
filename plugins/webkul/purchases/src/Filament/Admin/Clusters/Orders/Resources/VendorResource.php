@@ -2,6 +2,7 @@
 
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources;
 
+use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\RelationManagers\RelationGroup;
@@ -26,7 +27,7 @@ class VendorResource extends BaseVendorResource
 
     protected static ?string $model = Partner::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     protected static bool $shouldRegisterNavigation = true;
 
@@ -73,13 +74,13 @@ class VendorResource extends BaseVendorResource
     public static function getPages(): array
     {
         return [
-            'index' => ListVendors::route('/'),
-            'create' => CreateVendor::route('/create'),
-            'view' => ViewVendor::route('/{record}'),
-            'edit' => EditVendor::route('/{record}/edit'),
-            'contacts' => ManageContacts::route('/{record}/contacts'),
+            'index'     => ListVendors::route('/'),
+            'create'    => CreateVendor::route('/create'),
+            'view'      => ViewVendor::route('/{record}'),
+            'edit'      => EditVendor::route('/{record}/edit'),
+            'contacts'  => ManageContacts::route('/{record}/contacts'),
             'addresses' => ManageAddresses::route('/{record}/addresses'),
-            'bills' => ManageBills::route('/{record}/bills'),
+            'bills'     => ManageBills::route('/{record}/bills'),
             'purchases' => ManagePurchases::route('/{record}/purchases'),
         ];
     }

@@ -2,6 +2,7 @@
 
 namespace Webkul\Employee\Filament\Clusters\Reportings\Resources\EmployeeSkills;
 
+use BackedEnum;
 use Filament\Panel;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -16,7 +17,7 @@ class EmployeeSkillResource extends Resource
 {
     protected static ?string $model = EmployeeSkill::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-academic-cap';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-academic-cap';
 
     protected static ?string $pluralModelLabel = 'Skills';
 

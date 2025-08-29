@@ -2,6 +2,7 @@
 
 namespace Webkul\Sale\Filament\Clusters\ToInvoice\Resources\OrderToInvoices;
 
+use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
@@ -19,7 +20,7 @@ class OrderToInvoiceResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document-arrow-down';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-arrow-down';
 
     protected static ?string $cluster = ToInvoice::class;
 

@@ -2,6 +2,7 @@
 
 namespace Webkul\Project\Filament\Clusters\Configurations\Resources\Milestones;
 
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
@@ -15,7 +16,7 @@ class MilestoneResource extends Resource
 {
     protected static ?string $model = Milestone::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-flag';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-flag';
 
     protected static ?int $navigationSort = 3;
 

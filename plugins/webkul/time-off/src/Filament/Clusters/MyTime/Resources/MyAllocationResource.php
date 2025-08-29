@@ -2,6 +2,7 @@
 
 namespace Webkul\TimeOff\Filament\Clusters\MyTime\Resources;
 
+use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
@@ -40,7 +41,7 @@ class MyAllocationResource extends Resource
 {
     protected static ?string $model = LeaveAllocation::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-calendar';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-calendar';
 
     protected static ?string $cluster = MyTime::class;
 

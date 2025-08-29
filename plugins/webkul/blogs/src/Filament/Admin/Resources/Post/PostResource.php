@@ -2,6 +2,7 @@
 
 namespace Webkul\Blog\Filament\Admin\Resources\Post;
 
+use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
@@ -22,7 +23,7 @@ class PostResource extends Resource
 
     protected static ?string $slug = 'website/posts';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-newspaper';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-newspaper';
 
     protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 

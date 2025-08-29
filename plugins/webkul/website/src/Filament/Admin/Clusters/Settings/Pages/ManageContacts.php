@@ -2,6 +2,7 @@
 
 namespace Webkul\Website\Filament\Admin\Clusters\Settings\Pages;
 
+use BackedEnum;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\SettingsPage;
@@ -15,7 +16,7 @@ class ManageContacts extends SettingsPage
 {
     use HasPageShield;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-truck';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-truck';
 
     protected static ?string $slug = 'website/manage-contacts';
 

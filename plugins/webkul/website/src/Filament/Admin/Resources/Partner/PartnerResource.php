@@ -2,6 +2,7 @@
 
 namespace Webkul\Website\Filament\Admin\Resources\Partner;
 
+use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\RelationManagers\RelationGroup;
@@ -22,7 +23,7 @@ class PartnerResource extends BasePartnerResource
 
     protected static ?string $slug = 'website/contacts';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     protected static bool $shouldRegisterNavigation = true;
 

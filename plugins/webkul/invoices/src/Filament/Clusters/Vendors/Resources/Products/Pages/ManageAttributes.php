@@ -2,6 +2,7 @@
 
 namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\Products\Pages;
 
+use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Products\ProductResource;
 use Webkul\Product\Filament\Resources\Products\Pages\ManageAttributes as BaseManageAttributes;
@@ -12,7 +13,7 @@ class ManageAttributes extends BaseManageAttributes
 
     protected static string $relationship = 'attributes';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-swatch';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-swatch';
 
     public static function getSubNavigationPosition(): SubNavigationPosition
     {

@@ -2,6 +2,7 @@
 
 namespace Webkul\Project\Filament\Clusters\Configurations\Resources\ActivityPlans;
 
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
@@ -19,7 +20,7 @@ class ActivityPlanResource extends Resource
 {
     protected static ?string $model = ActivityPlan::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-briefcase';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-briefcase';
 
     protected static ?int $navigationSort = 5;
 

@@ -2,6 +2,7 @@
 
 namespace Webkul\Inventory\Filament\Clusters\Products\Resources\Products;
 
+use BackedEnum;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -42,7 +43,7 @@ class ProductResource extends BaseProductResource
 
     protected static ?string $model = Product::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-shopping-bag';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-shopping-bag';
 
     protected static bool $shouldRegisterNavigation = true;
 

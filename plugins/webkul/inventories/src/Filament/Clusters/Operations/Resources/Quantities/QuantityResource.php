@@ -2,6 +2,7 @@
 
 namespace Webkul\Inventory\Filament\Clusters\Operations\Resources\Quantities;
 
+use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -16,7 +17,7 @@ class QuantityResource extends Resource
 {
     protected static ?string $model = ProductQuantity::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-arrows-up-down';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrows-up-down';
 
     protected static ?int $navigationSort = 4;
 

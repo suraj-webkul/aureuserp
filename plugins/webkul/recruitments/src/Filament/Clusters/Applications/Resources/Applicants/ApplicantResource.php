@@ -2,6 +2,7 @@
 
 namespace Webkul\Recruitment\Filament\Clusters\Applications\Resources\Applicants;
 
+use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Pages\Page;
 use Filament\Resources\RelationManagers\RelationGroup;
@@ -26,7 +27,7 @@ class ApplicantResource extends Resource
 {
     protected static ?string $model = Applicant::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-user-group';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?string $cluster = Applications::class;
 

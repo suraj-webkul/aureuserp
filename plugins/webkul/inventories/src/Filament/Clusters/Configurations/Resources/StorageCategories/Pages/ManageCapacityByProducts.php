@@ -2,6 +2,7 @@
 
 namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources\StorageCategories\Pages;
 
+use BackedEnum;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
@@ -23,7 +24,7 @@ class ManageCapacityByProducts extends ManageRelatedRecords
 
     protected static string $relationship = 'storageCategoryCapacitiesByProduct';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-check';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-check';
 
     public static function getNavigationLabel(): string
     {

@@ -2,6 +2,7 @@
 
 namespace Webkul\Sale\Filament\Clusters\Configuration\Resources\Packagings;
 
+use BackedEnum;
 use Webkul\Product\Filament\Resources\Packaging\PackagingResource as BasePackagingResource;
 use Webkul\Sale\Filament\Clusters\Configuration;
 use Webkul\Sale\Filament\Clusters\Configuration\Resources\Packagings\Pages\ManagePackagings;
@@ -12,7 +13,7 @@ class PackagingResource extends BasePackagingResource
 {
     protected static ?string $model = Packaging::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-gift';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-gift';
 
     protected static bool $shouldRegisterNavigation = true;
 

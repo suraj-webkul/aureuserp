@@ -2,6 +2,7 @@
 
 namespace Webkul\Project\Filament\Resources\Projects\Pages;
 
+use BackedEnum;
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRelatedRecords;
@@ -18,7 +19,7 @@ class ManageMilestones extends ManageRelatedRecords
 
     protected static string $relationship = 'milestones';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-flag';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-flag';
 
     /**
      * @param  array<string, mixed>  $parameters

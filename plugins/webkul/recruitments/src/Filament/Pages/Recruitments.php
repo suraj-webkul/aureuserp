@@ -2,6 +2,7 @@
 
 namespace Webkul\Recruitment\Filament\Pages;
 
+use BackedEnum;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Pages\Dashboard as BaseDashboard;
@@ -23,7 +24,7 @@ class Recruitments extends BaseDashboard
 
     protected static string $routePath = 'recruitment';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-folder';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-folder';
 
     protected static ?string $cluster = DashboardCluster::class;
 

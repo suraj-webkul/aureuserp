@@ -2,6 +2,7 @@
 
 namespace Webkul\Purchase\Filament\Admin\Clusters\Products\Resources\ProductResource\Pages;
 
+use BackedEnum;
 use Filament\Actions\CreateAction;
 use Filament\Forms\Components\Select;
 use Filament\Notifications\Notification;
@@ -20,7 +21,7 @@ class ManageVendors extends ManageRelatedRecords
 
     protected static string $relationship = 'supplierInformation';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     public static function getNavigationLabel(): string
     {

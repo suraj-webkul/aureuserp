@@ -2,6 +2,7 @@
 
 namespace Webkul\Product\Filament\Resources\PriceLists;
 
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
@@ -19,7 +20,7 @@ class PriceListResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-list-bullet';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-list-bullet';
 
     public static function getNavigationLabel(): string
     {

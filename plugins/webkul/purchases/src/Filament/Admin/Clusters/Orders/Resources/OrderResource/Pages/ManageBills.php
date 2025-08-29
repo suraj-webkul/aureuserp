@@ -2,12 +2,13 @@
 
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource\Pages;
 
+use BackedEnum;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\ManageRelatedRecords;
 use Filament\Tables\Table;
 use Livewire\Livewire;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\BillResource;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Bills\BillResource;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource;
 
 class ManageBills extends ManageRelatedRecords
@@ -16,7 +17,7 @@ class ManageBills extends ManageRelatedRecords
 
     protected static string $relationship = 'accountMoves';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-banknotes';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-banknotes';
 
     public static function getNavigationLabel(): string
     {

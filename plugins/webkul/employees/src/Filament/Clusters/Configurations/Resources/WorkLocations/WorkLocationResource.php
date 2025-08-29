@@ -2,6 +2,7 @@
 
 namespace Webkul\Employee\Filament\Clusters\Configurations\Resources\WorkLocations;
 
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
@@ -16,7 +17,7 @@ class WorkLocationResource extends Resource
 {
     protected static ?string $model = WorkLocation::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-map-pin';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-map-pin';
 
     protected static ?string $cluster = Configurations::class;
 

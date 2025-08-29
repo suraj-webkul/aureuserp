@@ -2,6 +2,7 @@
 
 namespace Webkul\Inventory\Filament\Clusters\Settings\Pages;
 
+use BackedEnum;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -10,6 +11,7 @@ use Filament\Pages\SettingsPage;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\HtmlString;
+use UnitEnum;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\Packages\PackageResource;
 use Webkul\Inventory\Settings\OperationSettings;
 use Webkul\Support\Filament\Clusters\Settings;
@@ -18,11 +20,11 @@ class ManageOperations extends SettingsPage
 {
     use HasPageShield;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-arrows-right-left';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrows-right-left';
 
     protected static ?string $slug = 'inventory/manage-operations';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Inventory';
+    protected static string|UnitEnum|null $navigationGroup = 'Inventory';
 
     protected static ?int $navigationSort = 1;
 

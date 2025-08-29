@@ -2,6 +2,7 @@
 
 namespace Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductAttributes;
 
+use BackedEnum;
 use Webkul\Inventory\Filament\Clusters\Configurations;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductAttributes\Pages\CreateProductAttribute;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductAttributes\Pages\EditProductAttribute;
@@ -15,7 +16,7 @@ class ProductAttributeResource extends AttributeResource
 {
     protected static ?string $model = Attribute::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-swatch';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-swatch';
 
     protected static bool $shouldRegisterNavigation = true;
 

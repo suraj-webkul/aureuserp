@@ -2,6 +2,7 @@
 
 namespace Webkul\Sale\Filament\Clusters\Orders\Resources\Quotations\Pages;
 
+use BackedEnum;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\ManageRelatedRecords;
@@ -17,7 +18,7 @@ class ManageDeliveries extends ManageRelatedRecords
 
     protected static string $relationship = 'operations';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-truck';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-truck';
 
     /**
      * @param  array<string, mixed>  $parameters

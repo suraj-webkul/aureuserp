@@ -2,6 +2,7 @@
 
 namespace Webkul\TimeOff\Filament\Clusters\Configurations\Resources;
 
+use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -45,7 +46,7 @@ class AccrualPlanResource extends Resource
 {
     protected static ?string $model = LeaveAccrualPlan::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-paper-airplane';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-paper-airplane';
 
     protected static ?string $cluster = Configurations::class;
 

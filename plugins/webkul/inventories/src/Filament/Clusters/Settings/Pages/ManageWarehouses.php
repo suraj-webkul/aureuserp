@@ -2,6 +2,7 @@
 
 namespace Webkul\Inventory\Filament\Clusters\Settings\Pages;
 
+use BackedEnum;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
@@ -11,6 +12,7 @@ use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\HtmlString;
+use UnitEnum;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\Locations\LocationResource;
 use Webkul\Inventory\Filament\Clusters\Configurations\Resources\Warehouses\WarehouseResource;
 use Webkul\Inventory\Models\OperationType;
@@ -22,11 +24,11 @@ class ManageWarehouses extends SettingsPage
 {
     use HasPageShield;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-building-storefront';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-building-storefront';
 
     protected static ?string $slug = 'inventory/manage-warehouses';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Inventory';
+    protected static string|UnitEnum|null $navigationGroup = 'Inventory';
 
     protected static ?int $navigationSort = 3;
 

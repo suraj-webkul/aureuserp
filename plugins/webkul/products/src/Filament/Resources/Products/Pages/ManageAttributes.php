@@ -2,6 +2,7 @@
 
 namespace Webkul\Product\Filament\Resources\Products\Pages;
 
+use BackedEnum;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
@@ -32,7 +33,7 @@ class ManageAttributes extends ManageRelatedRecords
         return SubNavigationPosition::Top;
     }
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-swatch';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-swatch';
 
     public static function getNavigationLabel(): string
     {

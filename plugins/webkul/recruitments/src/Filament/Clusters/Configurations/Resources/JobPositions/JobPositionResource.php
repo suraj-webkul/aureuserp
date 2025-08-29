@@ -2,6 +2,7 @@
 
 namespace Webkul\Recruitment\Filament\Clusters\Configurations\Resources\JobPositions;
 
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
@@ -20,7 +21,7 @@ class JobPositionResource extends Resource
 {
     protected static ?string $model = JobPosition::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-briefcase';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-briefcase';
 
     protected static ?int $navigationSort = 2;
 

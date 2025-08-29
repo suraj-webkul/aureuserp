@@ -2,12 +2,14 @@
 
 namespace Webkul\Purchase\Filament\Admin\Clusters\Settings\Pages;
 
+use BackedEnum;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms\Components\Toggle;
 use Filament\Pages\SettingsPage;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\HtmlString;
+use UnitEnum;
 use Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\PackagingResource;
 use Webkul\Purchase\Settings\ProductSettings;
 use Webkul\Support\Filament\Clusters\Settings;
@@ -16,11 +18,11 @@ class ManageProducts extends SettingsPage
 {
     use HasPageShield;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-cube';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-cube';
 
     protected static ?string $slug = 'purchase/manage-products';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Purchase';
+    protected static string|UnitEnum|null $navigationGroup = 'Purchase';
 
     protected static ?int $navigationSort = 2;
 

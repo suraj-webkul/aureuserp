@@ -2,6 +2,7 @@
 
 namespace Webkul\Project\Filament\Resources\Projects;
 
+use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\RelationManagers\RelationGroup;
@@ -15,11 +16,11 @@ use Webkul\Project\Filament\Resources\Projects\Pages\EditProject;
 use Webkul\Project\Filament\Resources\Projects\Pages\ListProjects;
 use Webkul\Project\Filament\Resources\Projects\Pages\ManageMilestones;
 use Webkul\Project\Filament\Resources\Projects\Pages\ManageTasks;
-use Webkul\Project\Filament\Resources\Projects\Schemas\ProjectInfolist;
 use Webkul\Project\Filament\Resources\Projects\Pages\ViewProject;
 use Webkul\Project\Filament\Resources\Projects\RelationManagers\MilestonesRelationManager;
 use Webkul\Project\Filament\Resources\Projects\RelationManagers\TaskStagesRelationManager;
 use Webkul\Project\Filament\Resources\Projects\Schemas\ProjectForm;
+use Webkul\Project\Filament\Resources\Projects\Schemas\ProjectInfolist;
 use Webkul\Project\Filament\Resources\Projects\Tables\ProjectsTable;
 use Webkul\Project\Models\Project;
 
@@ -31,7 +32,7 @@ class ProjectResource extends Resource
 
     protected static ?string $slug = 'project/projects';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-folder';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-folder';
 
     protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
@@ -56,7 +57,7 @@ class ProjectResource extends Resource
     {
         return [
             __('projects::filament/resources/project.global-search.project-manager') => $record->user?->name ?? '—',
-            __('projects::filament/resources/project.global-search.customer') => $record->partner?->name ?? '—',
+            __('projects::filament/resources/project.global-search.customer')        => $record->partner?->name ?? '—',
         ];
     }
 
@@ -103,12 +104,12 @@ class ProjectResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListProjects::route('/'),
-            'create' => CreateProject::route('/create'),
-            'edit' => EditProject::route('/{record}/edit'),
-            'view' => ViewProject::route('/{record}'),
+            'index'      => ListProjects::route('/'),
+            'create'     => CreateProject::route('/create'),
+            'edit'       => EditProject::route('/{record}/edit'),
+            'view'       => ViewProject::route('/{record}'),
             'milestones' => ManageMilestones::route('/{record}/milestones'),
-            'tasks' => ManageTasks::route('/{record}/tasks'),
+            'tasks'      => ManageTasks::route('/{record}/tasks'),
         ];
     }
 }

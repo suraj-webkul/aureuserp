@@ -8,7 +8,7 @@ use Webkul\Partner\Filament\Resources\Industries\IndustryResource as BaseIndustr
 
 class IndustryResource extends BaseIndustryResource
 {
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-building-office';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-building-office';
 
     protected static bool $shouldRegisterNavigation = true;
 
