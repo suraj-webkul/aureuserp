@@ -72,10 +72,10 @@ class InvoiceForm
                     ->schema([
                         Actions::make([
                             Action::make('payment_state')
-                                ->icon(fn ($record) => $record->payment_state->getIcon())
-                                ->color(fn ($record) => $record->payment_state->getColor())
-                                ->visible(fn ($record) => $record && in_array($record->payment_state, [PaymentState::PAID, PaymentState::REVERSED]))
-                                ->label(fn ($record) => $record->payment_state->getLabel())
+                                ->icon(fn($record) => $record->payment_state->getIcon())
+                                ->color(fn($record) => $record->payment_state->getColor())
+                                ->visible(fn($record) => $record && in_array($record->payment_state, [PaymentState::PAID, PaymentState::REVERSED]))
+                                ->label(fn($record) => $record->payment_state->getLabel())
                                 ->size(Size::ExtraLarge->value),
                         ]),
                         Group::make()
@@ -91,33 +91,33 @@ class InvoiceForm
                                             ->searchable()
                                             ->preload()
                                             ->live()
-                                            ->disabled(fn ($record) => $record && in_array($record->state, [MoveState::POSTED, MoveState::CANCEL])),
+                                            ->disabled(fn($record) => $record && in_array($record->state, [MoveState::POSTED, MoveState::CANCEL])),
                                     ]),
                                 DatePicker::make('invoice_date')
                                     ->label(__('accounts::filament/resources/invoice.form.section.general.fields.invoice-date'))
                                     ->default(now())
                                     ->native(false)
-                                    ->disabled(fn ($record) => $record && in_array($record->state, [MoveState::POSTED, MoveState::CANCEL])),
+                                    ->disabled(fn($record) => $record && in_array($record->state, [MoveState::POSTED, MoveState::CANCEL])),
                                 DatePicker::make('invoice_date_due')
                                     ->required()
                                     ->default(now())
                                     ->native(false)
                                     ->live()
-                                    ->hidden(fn (Get $get) => $get('invoice_payment_term_id') !== null)
+                                    ->hidden(fn(Get $get) => $get('invoice_payment_term_id') !== null)
                                     ->label(__('accounts::filament/resources/invoice.form.section.general.fields.due-date')),
                                 Select::make('invoice_payment_term_id')
                                     ->relationship(
                                         'invoicePaymentTerm',
                                         'name',
-                                        modifyQueryUsing: fn (Builder $query) => $query->withTrashed(),
+                                        modifyQueryUsing: fn(Builder $query) => $query->withTrashed(),
                                     )
                                     ->getOptionLabelFromRecordUsing(function ($record): string {
-                                        return $record->name.($record->trashed() ? ' (Deleted)' : '');
+                                        return $record->name . ($record->trashed() ? ' (Deleted)' : '');
                                     })
                                     ->disableOptionWhen(function ($label) {
                                         return str_contains($label, ' (Deleted)');
                                     })
-                                    ->required(fn (Get $get) => $get('invoice_date_due') === null)
+                                    ->required(fn(Get $get) => $get('invoice_date_due') === null)
                                     ->live()
                                     ->searchable()
                                     ->preload()
@@ -157,14 +157,14 @@ class InvoiceForm
                                             ->searchable()
                                             ->preload()
                                             ->label(__('accounts::filament/resources/invoice.form.tabs.other-information.fieldset.invoice.fields.recipient-bank'))
-                                            ->createOptionForm(fn ($form) => BankAccountResource::form($form))
-                                            ->disabled(fn ($record) => $record && in_array($record->state, [MoveState::POSTED, MoveState::CANCEL])),
+                                            ->createOptionForm(fn($form) => BankAccountResource::form($form))
+                                            ->disabled(fn($record) => $record && in_array($record->state, [MoveState::POSTED, MoveState::CANCEL])),
                                         TextInput::make('payment_reference')
                                             ->label(__('accounts::filament/resources/invoice.form.tabs.other-information.fieldset.invoice.fields.payment-reference')),
                                         DatePicker::make('delivery_date')
                                             ->native(false)
                                             ->label(__('accounts::filament/resources/invoice.form.tabs.other-information.fieldset.invoice.fields.delivery-date'))
-                                            ->disabled(fn ($record) => $record && in_array($record->state, [MoveState::POSTED, MoveState::CANCEL])),
+                                            ->disabled(fn($record) => $record && in_array($record->state, [MoveState::POSTED, MoveState::CANCEL])),
                                     ]),
                                 Fieldset::make(__('accounts::filament/resources/invoice.form.tabs.other-information.fieldset.accounting.title'))
                                     ->schema([
@@ -184,7 +184,7 @@ class InvoiceForm
                                             ->default(0)
                                             ->inline(false)
                                             ->label(__('accounts::filament/resources/invoice.form.tabs.other-information.fieldset.accounting.fieldset.auto-post'))
-                                            ->disabled(fn ($record) => $record && in_array($record->state, [MoveState::POSTED, MoveState::CANCEL])),
+                                            ->disabled(fn($record) => $record && in_array($record->state, [MoveState::POSTED, MoveState::CANCEL])),
                                         Toggle::make('checked')
                                             ->inline(false)
                                             ->label(__('accounts::filament/resources/invoice.form.tabs.other-information.fieldset.accounting.fieldset.checked')),
