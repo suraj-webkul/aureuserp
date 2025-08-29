@@ -106,9 +106,9 @@ class InvoiceResource extends Resource
                                     ->relationship(
                                         'product',
                                         'name',
-                                        fn ($query) => $query->where('is_configurable', null),
+                                        fn (Builder $query) => $query->where('is_configurable', null),
                                     )
-                                    ->getOptionLabelUsing(function ($record) {
+                                    ->getOptionLabelFromRecordUsing(function (Model $record) {
                                         if ($record->product) {
                                             return $record->product->name;
                                         }
