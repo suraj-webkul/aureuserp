@@ -1,10 +1,10 @@
 <?php
 
-namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\PaymentsResource\Pages;
+namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\Payments\Pages;
 
 use Illuminate\Database\Eloquent\Builder;
 use Webkul\Account\Filament\Resources\Payments\Pages\ListPayments as BaseListPayments;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\PaymentsResource;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Payments\PaymentsResource;
 use Webkul\TableViews\Filament\Components\PresetView;
 
 class ListPayments extends BaseListPayments

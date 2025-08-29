@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource\Pages;
+namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\Products\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Notifications\Notification;
@@ -12,7 +12,7 @@ use Webkul\Inventory\Enums\ProductTracking;
 use Webkul\Inventory\Settings\OperationSettings;
 use Webkul\Inventory\Settings\TraceabilitySettings;
 use Webkul\Inventory\Settings\WarehouseSettings;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Products\ProductResource;
 
 class ManageMoves extends ManageRelatedRecords
 {

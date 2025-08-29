@@ -1,14 +1,14 @@
 <?php
 
-namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources;
+namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources\Payments;
 
 use Filament\Pages\Enums\SubNavigationPosition;
 use Webkul\Account\Filament\Resources\Payments\PaymentsResource as BasePaymentsResource;
 use Webkul\Invoice\Filament\Clusters\Vendors;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\PaymentsResource\Pages\CreatePayments;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\PaymentsResource\Pages\EditPayments;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\PaymentsResource\Pages\ListPayments;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\PaymentsResource\Pages\ViewPayments;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Payments\Pages\CreatePayments;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Payments\Pages\EditPayments;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Payments\Pages\ListPayments;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Payments\Pages\ViewPayments;
 use Webkul\Invoice\Models\Payment;
 
 class PaymentsResource extends BasePaymentsResource
@@ -41,10 +41,10 @@ class PaymentsResource extends BasePaymentsResource
     public static function getPages(): array
     {
         return [
-            'index'  => ListPayments::route('/'),
+            'index' => ListPayments::route('/'),
             'create' => CreatePayments::route('/create'),
-            'view'   => ViewPayments::route('/{record}'),
-            'edit'   => EditPayments::route('/{record}/edit'),
+            'view' => ViewPayments::route('/{record}'),
+            'edit' => EditPayments::route('/{record}/edit'),
         ];
     }
 }
