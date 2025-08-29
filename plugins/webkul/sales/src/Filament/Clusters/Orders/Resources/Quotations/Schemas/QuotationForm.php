@@ -408,7 +408,7 @@ class QuotationForm
                                     ->default(0),
                             ]),
                     ])
-                    ->columns(2),
+                    ->columns(1),
             ])
             ->mutateRelationshipDataBeforeCreateUsing(fn (array $data, $record, $livewire) => static::mutateProductRelationship($data, $record, $livewire))
             ->mutateRelationshipDataBeforeSaveUsing(fn (array $data, $record, $livewire) => static::mutateProductRelationship($data, $record, $livewire));
