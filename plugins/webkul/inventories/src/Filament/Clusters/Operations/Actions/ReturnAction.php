@@ -6,7 +6,7 @@ use Filament\Actions\Action;
 use Livewire\Component;
 use Webkul\Inventory\Enums\OperationState;
 use Webkul\Inventory\Facades\Inventory;
-use Webkul\Inventory\Filament\Clusters\Operations\Resources\OperationResource;
+use Webkul\Inventory\Filament\Clusters\Operations\Resources\Operations\OperationResource;
 use Webkul\Inventory\Models\Operation;
 
 class ReturnAction extends Action

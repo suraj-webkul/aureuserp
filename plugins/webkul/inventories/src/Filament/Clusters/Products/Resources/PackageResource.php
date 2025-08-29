@@ -31,7 +31,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
-use Webkul\Inventory\Filament\Clusters\Configurations\Resources\PackageTypeResource;
+use Webkul\Inventory\Filament\Clusters\Configurations\Resources\PackageTypes\PackageTypeResource;
 use Webkul\Inventory\Filament\Clusters\Products;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\Pages\CreatePackage;
 use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource\Pages\EditPackage;
