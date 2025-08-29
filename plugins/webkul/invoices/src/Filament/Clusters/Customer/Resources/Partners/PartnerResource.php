@@ -2,6 +2,7 @@
 
 namespace Webkul\Invoice\Filament\Clusters\Customer\Resources\Partners;
 
+use BackedEnum;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Tables\Table;
@@ -16,7 +17,6 @@ use Webkul\Invoice\Filament\Clusters\Customer\Resources\Partners\Pages\ViewPartn
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Vendors\VendorResource as BasePartnerResource;
 use Webkul\Invoice\Models\Partner;
 use Webkul\Partner\Filament\Resources\Partners\PartnerResource as BaseVendorResource;
-use BackedEnum;
 
 class PartnerResource extends BasePartnerResource
 {
@@ -47,13 +47,13 @@ class PartnerResource extends BasePartnerResource
         $table = BaseVendorResource::table($table);
 
         $table->contentGrid([
-            'sm' => 1,
-            'md' => 2,
-            'xl' => 3,
+            'sm'  => 1,
+            'md'  => 2,
+            'xl'  => 3,
             '2xl' => 3,
         ]);
 
-        $table->modifyQueryUsing(fn($query) => $query->where('sub_type', 'customer'));
+        $table->modifyQueryUsing(fn ($query) => $query->where('sub_type', 'customer'));
 
         return $table;
     }
