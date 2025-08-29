@@ -92,6 +92,6 @@ class PaymentForm
                             ])->columns(2),
                     ]),
             ])
-            ->columns('full');
+            ->columns(1);
     }
 }

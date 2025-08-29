@@ -17,7 +17,7 @@ use Webkul\Account\Facades\Account as AccountFacade;
 use Webkul\Account\Models\Move;
 use Webkul\Account\Models\MoveLine;
 use Webkul\Account\Models\MoveReversal;
-use Webkul\Invoice\Filament\Clusters\Customer\Resources\CreditNotesResource;
+use Webkul\Invoice\Filament\Clusters\Customer\Resources\CreditNotes\CreditNotesResource;
 use Webkul\Support\Traits\PDFHandler;
 
 class CreditNoteAction extends Action

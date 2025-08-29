@@ -116,7 +116,7 @@ class ProductInfolist
                         Section::make(__('products::filament/resources/product.infolist.sections.pricing.title'))
                             ->schema([
                                 TextEntry::make('price')
-                                    ->label(__('products::filament/Attributesresources/product.infolist.sections.pricing.entries.price'))
+                                    ->label(__('products::filament/resources/product.infolist.sections.pricing.entries.price'))
                                     ->placeholder('—')
                                     ->icon('heroicon-o-banknotes'),
 

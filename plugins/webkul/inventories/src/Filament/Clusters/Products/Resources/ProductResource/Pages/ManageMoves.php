@@ -43,7 +43,7 @@ class ManageMoves extends ManageRelatedRecords
                 ->modifyQueryUsing(fn (Builder $query) => $query->whereNotIn('state', [MoveState::DRAFT, MoveState::DONE, MoveState::CANCELED])),
             'done_moves' => PresetView::make(__('inventories::filament/clusters/products/resources/product/pages/manage-moves.tabs.done'))
                 ->favorite()
-                ->default()
+                ->setAsDefault()
                 ->icon('heroicon-o-check-circle')
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('state', MoveState::DONE)),
             'incoming_moves' => PresetView::make(__('inventories::filament/clusters/products/resources/product/pages/manage-moves.tabs.incoming'))
