@@ -24,7 +24,7 @@ class ValidateAction extends Action
         parent::setUp();
 
         $this->label(__('inventories::filament/clusters/operations/actions/validate.label'))
-            ->color(function ($record) {
+            ->color(function (Operation $record) {
                 if (in_array($record->state, [OperationState::DRAFT, OperationState::CONFIRMED])) {
                     return 'gray';
                 }
@@ -35,7 +35,31 @@ class ValidateAction extends Action
                 return $record->operationType->create_backorder === CreateBackorder::ASK
                     && Inventory::canCreateBackOrder($record);
             })
-            ->configureModal($this->getRecord())
+            ->modalHeading(fn (Operation $record) => (
+                $record->operationType->create_backorder === CreateBackorder::ASK
+                && Inventory::canCreateBackOrder($record)
+            ) ? __('inventories::filament/clusters/operations/actions/validate.modal-heading') : null)
+            ->modalDescription(fn (Operation $record) => (
+                $record->operationType->create_backorder === CreateBackorder::ASK
+                && Inventory::canCreateBackOrder($record)
+            ) ? __('inventories::filament/clusters/operations/actions/validate.modal-description') : null)
+            ->extraModalFooterActions(fn (Operation $record) => (
+                $record->operationType->create_backorder === CreateBackorder::ASK
+                && Inventory::canCreateBackOrder($record)
+            ) ? [
+                Action::make('no-backorder')
+                    ->label(__('inventories::filament/clusters/operations/actions/validate.extra-modal-footer-actions.no-backorder.label'))
+                    ->color('danger')
+                    ->action(function (Operation $record, Component $livewire): void {
+                        if ($this->hasMoveErrors($record)) {
+                            return;
+                        }
+
+                        Inventory::validateTransfer($record);
+
+                        $livewire->updateForm();
+                    }),
+            ] : [])
             ->action(function (Operation $record, Component $livewire): void {
                 if ($this->hasMoveErrors($record)) {
                     return;
@@ -47,44 +71,18 @@ class ValidateAction extends Action
 
                 $livewire->updateForm();
             })
-            ->hidden(fn () => in_array($this->getRecord()->state, [
-                OperationState::DONE,
-                OperationState::CANCELED,
-            ]));
-    }
-
-    protected function configureModal(Operation $record): self
-    {
-        if (
-            $record->operationType->create_backorder === CreateBackorder::ASK
-            && Inventory::canCreateBackOrder($record)
-        ) {
-            $this->modalHeading(__('inventories::filament/clusters/operations/actions/validate.modal-heading'))
-                ->modalDescription(__('inventories::filament/clusters/operations/actions/validate.modal-description'))
-                ->extraModalFooterActions([
-                    Action::make('no-backorder')
-                        ->label(__('inventories::filament/clusters/operations/actions/validate.extra-modal-footer-actions.no-backorder.label'))
-                        ->color('danger')
-                        ->action(function (Operation $record, Component $livewire): void {
-                            if ($this->hasMoveErrors($record)) {
-                                return;
-                            }
-
-                            Inventory::validateTransfer($record);
-
-                            $livewire->updateForm();
-                        }),
+            ->hidden(function (Operation $record) {
+                return in_array($record->state, [
+                    OperationState::DONE,
+                    OperationState::CANCELED,
                 ]);
-        }
-
-        return $this;
+            });
     }
 
     protected function hasMoveErrors(Operation $record): bool
     {
         $record = Inventory::computeTransfer($record);
 
-        // Validate moves and notify on warnings.
         foreach ($record->moves as $move) {
             if ($this->hasMoveLineErrors($move)) {
                 return true;
