@@ -70,7 +70,7 @@ class PackageTypeForm
                             ->relationship('company', 'name')
                             ->searchable()
                             ->preload(),
-                    ]),
+                    ])->columnSpanFull(),
             ]);
     }
 }
