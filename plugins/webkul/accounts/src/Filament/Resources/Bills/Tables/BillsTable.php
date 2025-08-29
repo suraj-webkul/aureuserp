@@ -3,7 +3,7 @@
 namespace Webkul\Account\Filament\Resources\Bills\Tables;
 
 use Filament\Tables\Table;
-use Webkul\Invoice\Filament\Clusters\Customer\Resources\InvoiceResource;
+use Webkul\Invoice\Filament\Clusters\Customer\Resources\Invoices\InvoiceResource;
 
 class BillsTable
 {

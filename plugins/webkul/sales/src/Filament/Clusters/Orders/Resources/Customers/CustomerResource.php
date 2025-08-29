@@ -5,7 +5,7 @@ namespace Webkul\Sale\Filament\Clusters\Orders\Resources\Customers;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Tables\Table;
-use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource as BaseCustomerResource;
+use Webkul\Invoice\Filament\Clusters\Customer\Resources\Partners\PartnerResource as BaseCustomerResource;
 use Webkul\Sale\Filament\Clusters\Orders;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\Customers\Pages\CreateCustomer;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\Customers\Pages\EditCustomer;
@@ -28,7 +28,7 @@ class CustomerResource extends BaseCustomerResource
 
     protected static ?int $navigationSort = 3;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getModelLabel(): string
     {
@@ -44,9 +44,9 @@ class CustomerResource extends BaseCustomerResource
     {
         return BaseCustomerResource::table($table)
             ->contentGrid([
-                'sm'  => 1,
-                'md'  => 2,
-                'xl'  => 3,
+                'sm' => 1,
+                'md' => 2,
+                'xl' => 3,
                 '2xl' => 3,
             ]);
     }
@@ -65,12 +65,12 @@ class CustomerResource extends BaseCustomerResource
     public static function getPages(): array
     {
         return [
-            'index'        => ListCustomers::route('/'),
-            'create'       => CreateCustomer::route('/create'),
-            'view'         => ViewCustomer::route('/{record}'),
-            'edit'         => EditCustomer::route('/{record}/edit'),
-            'contacts'     => ManageContacts::route('/{record}/contacts'),
-            'addresses'    => ManageAddresses::route('/{record}/addresses'),
+            'index' => ListCustomers::route('/'),
+            'create' => CreateCustomer::route('/create'),
+            'view' => ViewCustomer::route('/{record}'),
+            'edit' => EditCustomer::route('/{record}/edit'),
+            'contacts' => ManageContacts::route('/{record}/contacts'),
+            'addresses' => ManageAddresses::route('/{record}/addresses'),
             'bank-account' => ManageBankAccounts::route('/{record}/bank-accounts'),
         ];
     }
