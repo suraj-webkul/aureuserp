@@ -46,8 +46,6 @@ class PreviewAction extends Action
             ->icon('heroicon-o-viewfinder-circle')
             ->modalHeading(__('accounts::filament/resources/invoice/actions/preview.modal.title'))
             ->modalSubmitAction(false)
-            ->modalContent(function ($record) {
-                return view($this->getTemplate(), ['record' => $record]);
-            });
+            ->modalContent(fn (Move $record) => view($this->getTemplate(), ['record' => $record]));
     }
 }
