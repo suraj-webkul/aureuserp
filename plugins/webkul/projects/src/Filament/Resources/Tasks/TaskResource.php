@@ -16,8 +16,12 @@ use Webkul\Project\Filament\Resources\Tasks\Pages\ListTasks;
 use Webkul\Project\Filament\Resources\Tasks\Pages\ManageSubTasks;
 use Webkul\Project\Filament\Resources\Tasks\Pages\ManageTimesheets;
 use Webkul\Project\Filament\Resources\Tasks\Pages\ViewTask;
+use BackedEnum;
 use Webkul\Project\Filament\Resources\Tasks\RelationManagers\SubTasksRelationManager;
 use Webkul\Project\Filament\Resources\Tasks\RelationManagers\TimesheetsRelationManager;
+use Webkul\Project\Filament\Resources\Tasks\Schemas\TaskForm;
+use Webkul\Project\Filament\Resources\Tasks\Schemas\TaskInfolist;
+use Webkul\Project\Filament\Resources\Tasks\Tables\TasksTable;
 use Webkul\Project\Models\Task;
 
 class TaskResource extends Resource
@@ -28,9 +32,9 @@ class TaskResource extends Resource
 
     protected static ?string $slug = 'project/tasks';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-list';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-list';
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     protected static ?string $recordTitleAttribute = 'title';
 
@@ -52,8 +56,8 @@ class TaskResource extends Resource
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         return [
-            __('projects::filament/resources/task.global-search.project')   => $record->project?->name ?? '—',
-            __('projects::filament/resources/task.global-search.customer')  => $record->partner?->name ?? '—',
+            __('projects::filament/resources/task.global-search.project') => $record->project?->name ?? '—',
+            __('projects::filament/resources/task.global-search.customer') => $record->partner?->name ?? '—',
             __('projects::filament/resources/task.global-search.milestone') => $record->milestone?->name ?? '—',
         ];
     }
@@ -101,12 +105,12 @@ class TaskResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'      => ListTasks::route('/'),
-            'create'     => CreateTask::route('/create'),
-            'edit'       => EditTask::route('/{record}/edit'),
-            'view'       => ViewTask::route('/{record}'),
+            'index' => ListTasks::route('/'),
+            'create' => CreateTask::route('/create'),
+            'edit' => EditTask::route('/{record}/edit'),
+            'view' => ViewTask::route('/{record}'),
             'timesheets' => ManageTimesheets::route('/{record}/timesheets'),
-            'sub-tasks'  => ManageSubTasks::route('/{record}/sub-tasks'),
+            'sub-tasks' => ManageSubTasks::route('/{record}/sub-tasks'),
         ];
     }
 }

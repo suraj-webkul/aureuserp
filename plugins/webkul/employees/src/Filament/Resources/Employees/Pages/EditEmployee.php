@@ -14,6 +14,12 @@ class EditEmployee extends EditRecord
 {
     protected static string $resource = EmployeeResource::class;
 
+
+    public static function getNavigationLabel(): string
+    {
+        return __('employees::filament/resources/employee/pages/edit-employee.sub-navigation.edit-employee');
+    }
+
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('view', ['record' => $this->getRecord()]);
