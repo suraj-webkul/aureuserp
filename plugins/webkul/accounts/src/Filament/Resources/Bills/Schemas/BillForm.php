@@ -241,7 +241,7 @@ class BillForm
                                     ->searchable()
                                     ->preload()
                                     ->live()
-                                    ->getOptionLabelUsing(function ($record) {
+                                    ->getOptionLabelFromRecordUsing(function ($record) {
                                         if ($record->product) {
                                             return $record->product->name;
                                         }

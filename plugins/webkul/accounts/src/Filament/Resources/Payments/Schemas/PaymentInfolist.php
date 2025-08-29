@@ -62,7 +62,8 @@ class PaymentInfolist
                                     ->icon('heroicon-o-document-text')
                                     ->placeholder('—'),
                             ])->columns(2),
-                    ]),
+                    ])
+                    ->columnSpanFull(),
             ]);
     }
 }

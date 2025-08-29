@@ -217,7 +217,8 @@ class PartnerForm
                                             })
                                             ->searchable()
                                             ->preload(),
-                                    ]),
+                                    ])
+                                    ->columnSpanFull(),
                             ])
                             ->columns(2),
                     ])->columnSpanFull(),
