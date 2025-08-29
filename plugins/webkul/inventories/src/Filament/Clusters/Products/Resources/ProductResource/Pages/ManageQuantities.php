@@ -76,7 +76,7 @@ class ManageQuantities extends ManageRelatedRecords
         return [
             'internal_locations' => PresetView::make(__('inventories::filament/clusters/products/resources/product/pages/manage-quantities.tabs.internal-locations'))
                 ->favorite()
-                ->default()
+                ->setAsDefault()
                 ->icon('heroicon-s-building-office')
                 ->modifyQueryUsing(function (Builder $query) {
                     $query->whereHas('location', function (Builder $query) {

@@ -8,7 +8,7 @@ use Filament\Pages\SettingsPage;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\HtmlString;
-use Webkul\Inventory\Filament\Clusters\Configurations\Resources\PackagingResource;
+use Webkul\Inventory\Filament\Clusters\Configurations\Resources\Packagings\PackagingResource;
 use Webkul\Inventory\Settings\ProductSettings;
 use Webkul\Support\Filament\Clusters\Settings;
 

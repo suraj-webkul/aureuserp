@@ -6,9 +6,9 @@ use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\Categories\Tables\CategoryTable;
 use Webkul\Product\Filament\Resources\Categories\Schemas\CategoryForm;
 use Webkul\Product\Filament\Resources\Categories\Schemas\CategoryInfolist;
+use Webkul\Product\Filament\Resources\Categories\Tables\CategoriesTable;
 use Webkul\Product\Models\Category;
 
 class CategoryResource extends Resource
@@ -26,7 +26,7 @@ class CategoryResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return CategoryTable::configure($table);
+        return CategoriesTable::configure($table);
     }
 
     public static function infolist(Schema $schema): Schema

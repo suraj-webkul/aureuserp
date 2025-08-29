@@ -21,7 +21,7 @@ class ListPackages extends ListRecords
         return [
             'internal_locations' => PresetView::make(__('inventories::filament/clusters/products/resources/package/pages/list-packages.tabs.internal'))
                 ->favorite()
-                ->default()
+                ->setAsDefault()
                 ->icon('heroicon-s-map-pin')
                 ->modifyQueryUsing(function ($query) {
                     return $query->whereHas('location', function (Builder $query) {
