@@ -10,7 +10,7 @@ use Filament\Pages\SettingsPage;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\HtmlString;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\PackageResource;
+use Webkul\Inventory\Filament\Clusters\Products\Resources\Packages\PackageResource;
 use Webkul\Inventory\Settings\OperationSettings;
 use Webkul\Support\Filament\Clusters\Settings;
 

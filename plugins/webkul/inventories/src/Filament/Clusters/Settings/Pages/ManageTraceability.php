@@ -11,7 +11,7 @@ use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\HtmlString;
 use Webkul\Inventory\Enums\ProductTracking;
-use Webkul\Inventory\Filament\Clusters\Products\Resources\LotResource;
+use Webkul\Inventory\Filament\Clusters\Products\Resources\Lots\LotResource;
 use Webkul\Inventory\Models\Product;
 use Webkul\Inventory\Settings\TraceabilitySettings;
 use Webkul\Support\Filament\Clusters\Settings;
