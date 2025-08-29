@@ -8,4 +8,9 @@ use Webkul\Product\Filament\Resources\Products\Pages\EditProduct as BaseEditProd
 class EditProduct extends BaseEditProduct
 {
     protected static string $resource = ProductResource::class;
+
+    public static function getNavigationLabel(): string
+    {
+        return __('invoices::filament/clusters/customers/resources/products.sub_navigation.edit-product');
+    }
 }

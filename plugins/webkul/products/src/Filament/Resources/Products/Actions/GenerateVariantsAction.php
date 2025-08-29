@@ -19,7 +19,7 @@ class GenerateVariantsAction extends Action
 {
     use CanCustomizeProcess;
 
-    protected Model|string|array|Closure|null $record;
+    protected Model|string|array|Closure|null $record = null;
 
     public static function getDefaultName(): ?string
     {

@@ -14,4 +14,9 @@ class EditVendor extends BaseEditVendor
     {
         return __('invoices::filament/clusters/vendors/resources/vendor/pages/edit-vendor.title');
     }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('invoices::filament/clusters/vendors/resources/vendor/pages/edit-vendor.sub-navigation.edit-vendor');
+    }
 }

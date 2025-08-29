@@ -20,6 +20,11 @@ class ViewQuotation extends ViewRecord
         return SubNavigationPosition::Top;
     }
 
+    public static function getNavigationLabel(): string
+    {
+        return __('sales::filament/clusters/orders/resources/quotation/pages/view-quotation.sub-navigation.view-quotation');
+    }
+
     protected function getHeaderActions(): array
     {
         return [

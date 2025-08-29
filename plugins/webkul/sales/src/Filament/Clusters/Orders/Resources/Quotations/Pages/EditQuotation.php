@@ -26,6 +26,11 @@ class EditQuotation extends EditRecord
         return SubNavigationPosition::Top;
     }
 
+    public static function getNavigationLabel(): string
+    {
+        return __('sales::filament/clusters/orders/resources/quotation/pages/edit-quotation.sub-navigation.edit-quotation');
+    }
+
     protected function getSavedNotification(): ?Notification
     {
         return Notification::make()

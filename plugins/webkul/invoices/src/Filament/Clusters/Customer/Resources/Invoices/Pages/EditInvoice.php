@@ -10,6 +10,11 @@ class EditInvoice extends BaseEditInvoice
 {
     protected static string $resource = InvoiceResource::class;
 
+    public static function getNavigationLabel(): string
+    {
+        return __('invoices::filament/clusters/customers/resources/invoice.sub_navigation.edit-invoice');
+    }
+
     public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;

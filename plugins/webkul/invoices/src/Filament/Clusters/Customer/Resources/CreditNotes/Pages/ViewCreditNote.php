@@ -10,6 +10,11 @@ class ViewCreditNote extends BaseViewInvoice
 {
     protected static string $resource = CreditNotesResource::class;
 
+    public static function getNavigationLabel(): string
+    {
+        return __('invoices::filament/clusters/customers/resources/credit-note.sub_navigation.view-credit-note');
+    }
+
     public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;

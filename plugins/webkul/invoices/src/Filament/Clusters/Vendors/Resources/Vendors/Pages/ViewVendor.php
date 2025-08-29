@@ -14,4 +14,9 @@ class ViewVendor extends BaseViewPartner
     {
         return __('invoices::filament/clusters/vendors/resources/vendor/pages/view-vendor.title');
     }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('invoices::filament/clusters/vendors/resources/vendor/pages/view-vendor.sub-navigation.view-vendor');
+    }
 }

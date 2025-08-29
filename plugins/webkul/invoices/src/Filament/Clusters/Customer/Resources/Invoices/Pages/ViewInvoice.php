@@ -10,6 +10,11 @@ class ViewInvoice extends BaseViewInvoice
 {
     protected static string $resource = InvoiceResource::class;
 
+    public static function getNavigationLabel(): string
+    {
+        return __('invoices::filament/clusters/customers/resources/invoice.sub_navigation.view-invoice');
+    }
+
     public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
