@@ -2,7 +2,7 @@
 
 namespace Webkul\Sale\Filament\Clusters\Products\Resources\Products\Pages;
 
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource\Pages\ManageVariants as BaseManageVariants;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\Products\Pages\ManageVariants as BaseManageVariants;
 use Webkul\Sale\Filament\Clusters\Products\Resources\Products\ProductResource;
 use Webkul\Sale\Settings\ProductSettings;
 

@@ -3,7 +3,7 @@
 namespace Webkul\Sale\Filament\Clusters\Orders\Resources\Customers\Pages;
 
 use Filament\Pages\Enums\SubNavigationPosition;
-use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource\Pages\ManageAddresses as BaseManageAddresses;
+use Webkul\Invoice\Filament\Clusters\Customer\Resources\Partners\Pages\ManageAddresses as BaseManageAddresses;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\Customers\CustomerResource;
 
 class ManageAddresses extends BaseManageAddresses

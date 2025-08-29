@@ -4,7 +4,7 @@ namespace Webkul\Sale\Filament\Clusters\Products\Resources\Products;
 
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
-use Webkul\Invoice\Filament\Clusters\Customer\Resources\ProductResource as BaseProductResource;
+use Webkul\Invoice\Filament\Clusters\Customer\Resources\Products\ProductResource as BaseProductResource;
 use Webkul\Sale\Filament\Clusters\Products;
 use Webkul\Sale\Filament\Clusters\Products\Resources\Products\Pages\CreateProduct;
 use Webkul\Sale\Filament\Clusters\Products\Resources\Products\Pages\EditProduct;
@@ -13,18 +13,19 @@ use Webkul\Sale\Filament\Clusters\Products\Resources\Products\Pages\ManageAttrib
 use Webkul\Sale\Filament\Clusters\Products\Resources\Products\Pages\ManageVariants;
 use Webkul\Sale\Filament\Clusters\Products\Resources\Products\Pages\ViewProduct;
 use Webkul\Sale\Models\Product;
+use BackedEnum;
 
 class ProductResource extends BaseProductResource
 {
     protected static ?string $model = Product::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-shopping-bag';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-shopping-bag';
 
     protected static bool $shouldRegisterNavigation = true;
 
     protected static ?string $cluster = Products::class;
 
-    protected static ?\Filament\Pages\Enums\SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getRecordSubNavigation(Page $page): array
     {
@@ -39,12 +40,12 @@ class ProductResource extends BaseProductResource
     public static function getPages(): array
     {
         return [
-            'index'      => ListProducts::route('/'),
-            'create'     => CreateProduct::route('/create'),
-            'view'       => ViewProduct::route('/{record}'),
-            'edit'       => EditProduct::route('/{record}/edit'),
+            'index' => ListProducts::route('/'),
+            'create' => CreateProduct::route('/create'),
+            'view' => ViewProduct::route('/{record}'),
+            'edit' => EditProduct::route('/{record}/edit'),
             'attributes' => ManageAttributes::route('/{record}/attributes'),
-            'variants'   => ManageVariants::route('/{record}/variants'),
+            'variants' => ManageVariants::route('/{record}/variants'),
         ];
     }
 }
