@@ -360,7 +360,7 @@ class InvoiceForm
                                     ->default(0),
                             ]),
                     ])
-                    ->columns(2),
+                    ->columns(1),
             ])
             ->mutateRelationshipDataBeforeCreateUsing(fn (array $data, $record) => static::mutateProductRelationship($data, $record))
             ->mutateRelationshipDataBeforeSaveUsing(fn (array $data, $record) => static::mutateProductRelationship($data, $record));
