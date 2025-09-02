@@ -24,38 +24,47 @@ return [
 
         'filters' => [
             'is-published' => 'Is Published',
-            'author'       => 'Author',
-            'creator'      => 'Created By',
-            'category'     => 'Category',
+            'author' => 'Author',
+            'creator' => 'Created By',
+            'category' => 'Category',
         ],
 
         'actions' => [
             'edit' => [
                 'notification' => [
                     'title' => 'Category updated',
-                    'body'  => 'The category has been updated successfully.',
+                    'body' => 'The category has been updated successfully.',
                 ],
             ],
 
             'restore' => [
                 'notification' => [
                     'title' => 'Category restored',
-                    'body'  => 'The category has been restored successfully.',
+                    'body' => 'The category has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Category deleted',
-                    'body'  => 'The category has been deleted successfully.',
+                    'body' => 'The category has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Category force deleted',
-                    'body'  => 'The category has been force deleted successfully.',
+                    'body' => 'The category has been force deleted successfully.',
                 ],
+            ],
+
+            'force-delete-error' => [
+                'notification' => [
+                    'title' => 'Cannot delete category',
+                    'body' => 'You cannot delete this category as it is associated with some posts.',
+                ],
+
+                'exception' => 'You cannot force delete this category as it is associated with some posts.'
             ],
         ],
 
@@ -63,21 +72,28 @@ return [
             'restore' => [
                 'notification' => [
                     'title' => 'Categories restored',
-                    'body'  => 'The categories has been restored successfully.',
+                    'body' => 'The categories has been restored successfully.',
                 ],
             ],
 
             'delete' => [
                 'notification' => [
                     'title' => 'Categories deleted',
-                    'body'  => 'The categories has been deleted successfully.',
+                    'body' => 'The categories has been deleted successfully.',
                 ],
             ],
 
             'force-delete' => [
                 'notification' => [
                     'title' => 'Categories force deleted',
-                    'body'  => 'The categories has been force deleted successfully.',
+                    'body' => 'The categories has been force deleted successfully.',
+                ],
+            ],
+
+            'force-delete-error' => [
+                'notification' => [
+                    'title' => 'Cannot delete category',
+                    'body' => 'You cannot delete this category as it is associated with some posts.',
                 ],
             ],
         ],

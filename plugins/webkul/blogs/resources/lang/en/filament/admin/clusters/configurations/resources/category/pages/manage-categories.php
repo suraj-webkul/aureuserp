@@ -7,8 +7,12 @@ return [
 
             'notification' => [
                 'title' => 'Category created',
-                'body'  => 'The category has been created successfully.',
+                'body' => 'The category has been created successfully.',
             ],
         ],
+    ],
+    'tabs' => [
+        'all' => 'All',
+        'archived' => 'Archived',
     ],
 ];
