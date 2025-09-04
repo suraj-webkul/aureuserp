@@ -74,6 +74,8 @@ class AccountServiceProvider extends PackageServiceProvider
                 '2025_08_11_044603_alter_accounts_bank_statement_lines_table',
                 '2025_08_11_044842_alter_accounts_account_move_lines_table',
                 '2025_08_11_044931_alter_accounts_partial_reconciles_table',
+                '2025_08_04_062050_alter_accounts_taxes_table',
+                '2025_08_01_091957_alter_accounts_payment_terms_table',
             ])
             ->runsMigrations()
             ->hasDependencies([

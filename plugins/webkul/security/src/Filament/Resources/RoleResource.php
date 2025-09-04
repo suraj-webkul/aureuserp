@@ -56,7 +56,8 @@ class RoleResource extends Resource implements HasShieldPermissions
                                 Forms\Components\TextInput::make('guard_name')
                                     ->label(__('filament-shield::filament-shield.field.guard_name'))
                                     ->default(Utils::getFilamentAuthGuard())
-                                    ->nullable()
+                                    ->dehydrated()
+                                    ->readOnly()
                                     ->maxLength(255),
 
                                 ShieldSelectAllToggle::make('select_all')
@@ -106,25 +107,19 @@ class RoleResource extends Resource implements HasShieldPermissions
                     ->label(__('filament-shield::filament-shield.column.updated_at'))
                     ->dateTime(),
             ])
-            ->filters([
-                //
-            ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->hidden(fn (Model $record) => $record->name == config('filament-shield.panel_user.name')),
                 Tables\Actions\DeleteAction::make()
                     ->hidden(fn (Model $record) => $record->name == config('filament-shield.panel_user.name')),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ])
-            ->defaultSort('created_at', 'asc');
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
+            ->defaultSort('created_at', 'asc')
+            ->checkIfRecordIsSelectableUsing(
+                fn (Model $record): bool => $record->name != config('filament-shield.panel_user.name'),
+            );
     }
 
     public static function getPages(): array
