@@ -410,7 +410,7 @@ class CompanyResource extends Resource
                     ->where('creator_id', Auth::user()->id)
                     ->whereNull('parent_id');
             })
-            ->reorderable('sequence');
+            ->reorderable('sort');
     }
 
     public static function infolist(Infolist $infolist): Infolist
