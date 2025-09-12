@@ -76,6 +76,10 @@ class OrderResource extends Resource
                                     ->relationship(
                                         'partner',
                                         'name',
+                                        modifyQueryUsing: fn (Builder $query) => $query
+                                            ->withTrashed()
+                                            ->where('sub_type', 'supplier')
+                                            ->orderBy('id')
                                     )
                                     ->searchable()
                                     ->required()

@@ -2,9 +2,9 @@
 
 namespace Webkul\Sale;
 
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Webkul\Account\Enums as AccountEnums;
 use Webkul\Account\Facades\Account as AccountFacade;
 use Webkul\Account\Facades\Tax;
@@ -201,8 +201,6 @@ class SaleManager
 
         $line->state = $line->order->state;
 
-        $line = $this->computeOrderLineWarehouseId($line);
-
         $line = $this->computeOrderLineDeliveryMethod($line);
 
         $line = $this->computeOrderLineInvoiceStatus($line);
@@ -283,6 +281,11 @@ class SaleManager
 
         $order->warehouse_id = Warehouse::where('company_id', $order->company_id)->first()?->id;
 
+        optional($order->lines)->each(function ($line) use ($order) {
+            $line->warehouse_id = $order->warehouse_id;
+            $line->save();
+        });
+
         return $order;
     }
 
@@ -311,8 +314,6 @@ class SaleManager
         }
 
         return $order;
-
-        return $record;
     }
 
     public function computeInvoiceStatus(Order $order): Order
@@ -340,17 +341,6 @@ class SaleManager
         }
 
         return $order;
-    }
-
-    public function computeOrderLineWarehouseId(OrderLine $line): OrderLine
-    {
-        if (! Package::isPluginInstalled('inventories')) {
-            return $line;
-        }
-
-        $line->warehouse_id = $line->order->warehouse_id;
-
-        return $line;
     }
 
     public function computeOrderLineDeliveryMethod(OrderLine $line): OrderLine
@@ -446,9 +436,18 @@ class SaleManager
         $partners = Partner::whereIn('id', $data['partners'])->get();
 
         foreach ($partners as $key => $partner) {
+            if (empty($partner?->email)) {
+                Notification::make()
+                    ->title('Email not sent')
+                    ->body("Partner '{$partner->name}' does not have an email address.")
+                    ->danger()
+                    ->send();
+
+                return $record;
+            }
             $payload = [
                 'record_name'    => $record->name,
-                'model_name'     => Enums\OrderState::options()[$record->state],
+                'model_name'     => $record->state->getLabel(),
                 'subject'        => $data['subject'],
                 'description'    => $data['description'],
                 'to'             => [
@@ -463,7 +462,7 @@ class SaleManager
                 payload: $payload,
                 attachments: [
                     [
-                        'path' => asset(Storage::url($data['file'])),
+                        'path' => $data['file'],
                         'name' => basename($data['file']),
                     ],
                 ]

@@ -16,6 +16,7 @@ class ViewCompany extends ViewRecord
         return [
             Actions\EditAction::make(),
             Actions\DeleteAction::make()
+               ->hidden(fn () => \App\Models\User::where('default_company_id', $this->record->id)->exists())
                 ->successNotification(
                     Notification::make()
                         ->success()
