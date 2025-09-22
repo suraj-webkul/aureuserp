@@ -3,3 +3,4 @@
 
 @source '../../../../app/Filament';
 @source '../../resources/views';
+@source '../../../../../vendor/guava/filament-icon-picker/resources/views';

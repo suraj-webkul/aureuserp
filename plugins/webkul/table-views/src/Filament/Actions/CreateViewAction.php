@@ -33,7 +33,9 @@ class CreateViewAction extends Action
                     ->required(),
                 IconPicker::make('icon')
                     ->label(__('table-views::filament/actions/create-view.form.icon'))
-                    ->sets(['heroicons']),
+                    ->sets(['heroicons'])
+                    ->gridSearchResults()
+                    ->iconsSearchResults(),
                 Toggle::make('is_favorite')
                     ->label(__('table-views::filament/actions/create-view.form.add-to-favorites'))
                     ->helperText(__('table-views::filament/actions/create-view.form.add-to-favorites-help')),

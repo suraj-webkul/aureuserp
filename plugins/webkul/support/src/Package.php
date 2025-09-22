@@ -182,6 +182,7 @@ class Package extends BasePackage
 
     public static function isPluginInstalled(string $name): bool
     {
+        // return in_array($name, ['support', 'invoices']);
         if (count(static::$plugins) == 0) {
             if (Schema::hasTable('plugins') === false) {
                 return false;
