@@ -24,6 +24,8 @@ use Webkul\FullCalendar\Filament\Widgets\FullCalendarWidget;
 use Webkul\TimeOff\Enums\RequestDateFromPeriod;
 use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Models\Leave;
+use Webkul\TimeOff\Models\LeaveAllocation;
+use Webkul\TimeOff\Models\LeaveType;
 
 class OverviewCalendarWidget extends FullCalendarWidget
 {
@@ -185,7 +187,55 @@ class OverviewCalendarWidget extends FullCalendarWidget
 
                         $data['number_of_days'] = $startDate->diffInDays($endDate) + 1;
                         $data['date_to'] = $data['request_date_to'];
+                    }
 
+                    $requestedDays = $data['number_of_days'];
+                    $leaveTypeId = $data['holiday_status_id'] ?? null;
+
+                    if ($leaveTypeId) {
+                        $leaveType = LeaveType::find($leaveTypeId);
+
+                        if ($leaveType && $leaveType->requires_allocation) {
+                            $endDate = Carbon::now()->endOfYear();
+
+                            $totalAllocated = LeaveAllocation::where('employee_id', $employee->id)
+                                ->where('holiday_status_id', $leaveTypeId)
+                                ->where(function ($query) use ($endDate) {
+                                    $query->where('date_to', '<=', $endDate)
+                                        ->orWhereNull('date_to');
+                                })
+                                ->sum('number_of_days');
+
+                            $totalTaken = Leave::where('employee_id', $employee->id)
+                                ->where('holiday_status_id', $leaveTypeId)
+                                ->where('state', '!=', State::REFUSE->value)
+                                ->sum('number_of_days');
+
+                            $availableBalance = round($totalAllocated - $totalTaken, 1);
+
+                            if ($totalAllocated <= 0) {
+                                Notification::make()
+                                    ->danger()
+                                    ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_no_allocation.title'))
+                                    ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_no_allocation.body', ['leaveType' => $leaveType->name]))
+                                    ->send();
+                                $action->halt();
+                            }
+
+                            if ($requestedDays > $availableBalance) {
+                                Notification::make()
+                                    ->danger()
+                                    ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_insufficient_balance.title'))
+                                    ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_insufficient_balance.body', [
+                                        'available_balance' => $availableBalance,
+                                        'requested_days'    => $requestedDays,
+                                    ]))
+
+                                    ->send();
+
+                                $action->halt();
+                            }
+                        }
                     }
 
                     $data['creator_id'] = Auth::user()->id;
@@ -203,7 +253,6 @@ class OverviewCalendarWidget extends FullCalendarWidget
                         ->send();
 
                     $action->cancel();
-
                 })
                 ->mountUsing(
                     function (Schema $schema, array $arguments) {
@@ -234,6 +283,7 @@ class OverviewCalendarWidget extends FullCalendarWidget
                     DatePicker::make('request_date_from')
                         ->native(false)
                         ->label(__('time-off::filament/widgets/overview-calendar-widget.form.fields.request-date-from'))
+                        ->live()
                         ->default(now())
                         ->required(),
                     DatePicker::make('request_date_to')
@@ -241,7 +291,17 @@ class OverviewCalendarWidget extends FullCalendarWidget
                         ->label(__('time-off::filament/widgets/overview-calendar-widget.form.fields.request-date-to'))
                         ->default(now())
                         ->hidden(fn (Get $get) => $get('request_unit_half'))
-                        ->required(),
+                        ->required()
+                        ->minDate(fn (Get $get) => $get('request_date_from'))
+                        ->disabled(fn (Get $get) => blank($get('request_date_from')))
+                        ->rule(function (Get $get) {
+                            return function (string $attribute, $value, \Closure $fail) use ($get) {
+                                $from = $get('request_date_from');
+                                if ($from && $value && Carbon::parse($value)->lt(Carbon::parse($from))) {
+                                    $fail(__('The end date cannot be earlier than the start date.'));
+                                }
+                            };
+                        }),
                     Select::make('request_date_from_period')
                         ->label(__('time-off::filament/widgets/overview-calendar-widget.form.fields.period'))
                         ->options(RequestDateFromPeriod::class)

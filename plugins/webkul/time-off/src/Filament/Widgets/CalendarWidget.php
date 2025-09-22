@@ -28,6 +28,9 @@ use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Filament\Actions\HolidayAction;
 use Webkul\TimeOff\Models\Leave;
 
+use Webkul\TimeOff\Models\LeaveAllocation;
+use Webkul\TimeOff\Models\LeaveType;
+
 class CalendarWidget extends FullCalendarWidget
 {
     public Model|string|null $model = Leave::class;
@@ -289,6 +292,54 @@ class CalendarWidget extends FullCalendarWidget
                     $durationInfo = $this->getDurationInfo($data);
                     $data = array_merge($data, $durationInfo);
 
+                    $requestedDays = $data['number_of_days'];
+                    $leaveTypeId = $data['holiday_status_id'] ?? null;
+
+                    if ($leaveTypeId) {
+                        $leaveType = LeaveType::find($leaveTypeId);
+
+                        if ($leaveType && $leaveType->requires_allocation) {
+                            $endDate = Carbon::now()->endOfYear();
+
+                            $totalAllocated = LeaveAllocation::where('employee_id', $employee->id)
+                                ->where('holiday_status_id', $leaveTypeId)
+                                ->where(function ($query) use ($endDate) {
+                                    $query->where('date_to', '<=', $endDate)
+                                        ->orWhereNull('date_to');
+                                })
+                                ->sum('number_of_days');
+
+                            $totalTaken = Leave::where('employee_id', $employee->id)
+                                ->where('holiday_status_id', $leaveTypeId)
+                                ->where('state', '!=', State::REFUSE->value)
+                                ->sum('number_of_days');
+
+                            $availableBalance = round($totalAllocated - $totalTaken, 1);
+
+                            if ($totalAllocated <= 0) {
+                                Notification::make()
+                                    ->danger()
+                                    ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_no_allocation.title'))
+                                    ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_no_allocation.body', ['leaveType' => $leaveType->name]))
+                                    ->send();
+                                $action->halt();
+                            }
+
+                            if ($requestedDays > $availableBalance) {
+                                Notification::make()
+                                    ->danger()
+                                    ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_insufficient_balance.title'))
+                                    ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_insufficient_balance.body', [
+                                        'available_balance' => $availableBalance,
+                                        'requested_days'    => $requestedDays,
+                                    ]))
+
+                                    ->send();
+
+                                $action->halt();
+                            }
+                        }
+                    }
                     $data['creator_id'] = Auth::user()->id;
                     $data['state'] = State::CONFIRM->value;
                     $data['date_from'] = $data['request_date_from'];
@@ -304,7 +355,7 @@ class CalendarWidget extends FullCalendarWidget
 
                     $action->cancel();
                 })
-                ->mountUsing(fn (Schema $schema, array $arguments) => $schema->fill($arguments)),
+                ->mountUsing(fn(Schema $schema, array $arguments) => $schema->fill($arguments)),
         ];
     }
 
@@ -345,12 +396,12 @@ class CalendarWidget extends FullCalendarWidget
                             DatePicker::make('request_date_to')
                                 ->native(false)
                                 ->label('To Date')
-                                ->hidden(fn (Get $get) => $get('request_unit_half'))
-                                ->required(fn (Get $get) => ! $get('request_unit_half'))
+                                ->hidden(fn(Get $get) => $get('request_unit_half'))
+                                ->required(fn(Get $get) => ! $get('request_unit_half'))
                                 ->live()
                                 ->prefixIcon('heroicon-o-calendar')
-                                ->disabled(fn (Get $get) => blank($get('request_date_from')))
-                                ->minDate(fn (Get $get) => $get('request_date_from'))
+                                ->disabled(fn(Get $get) => blank($get('request_date_from')))
+                                ->minDate(fn(Get $get) => $get('request_date_from'))
                                 ->afterStateUpdated(function ($state, Set $set, Get $get) {
                                     if ($state && $get('request_date_from')) {
                                         $this->updateDurationCalculation($set, $get);
@@ -377,8 +428,8 @@ class CalendarWidget extends FullCalendarWidget
                                 ->options(RequestDateFromPeriod::class)
                                 ->default(RequestDateFromPeriod::MORNING)
                                 ->native(false)
-                                ->visible(fn (Get $get) => $get('request_unit_half'))
-                                ->required(fn (Get $get) => $get('request_unit_half'))
+                                ->visible(fn(Get $get) => $get('request_unit_half'))
+                                ->required(fn(Get $get) => $get('request_unit_half'))
                                 ->prefixIcon('heroicon-o-sun'),
                         ]),
 
@@ -404,10 +455,10 @@ class CalendarWidget extends FullCalendarWidget
                             $totalDays = $this->calculateTotalDays($start, $end);
                             $weekendDays = $totalDays - $businessDays;
 
-                            $duration = $businessDays.' working day'.($businessDays !== 1 ? 's' : '');
+                            $duration = $businessDays . ' working day' . ($businessDays !== 1 ? 's' : '');
 
                             if ($weekendDays > 0) {
-                                $duration .= ' (+ '.$weekendDays.' weekend day'.($weekendDays !== 1 ? 's' : '').')';
+                                $duration .= ' (+ ' . $weekendDays . ' weekend day' . ($weekendDays !== 1 ? 's' : '') . ')';
                             }
 
                             return $duration;
@@ -442,10 +493,10 @@ class CalendarWidget extends FullCalendarWidget
         $totalDays = $this->calculateTotalDays($start, $end);
         $weekendDays = $totalDays - $businessDays;
 
-        $duration = $businessDays.' working day'.($businessDays !== 1 ? 's' : '');
+        $duration = $businessDays . ' working day' . ($businessDays !== 1 ? 's' : '');
 
         if ($weekendDays > 0) {
-            $duration .= ' (+ '.$weekendDays.' weekend day'.($weekendDays !== 1 ? 's' : '').')';
+            $duration .= ' (+ ' . $weekendDays . ' weekend day' . ($weekendDays !== 1 ? 's' : '') . ')';
         }
 
         $set('duration_info', $duration);
@@ -472,9 +523,9 @@ class CalendarWidget extends FullCalendarWidget
                                 ->label(__('time-off::filament/widgets/calendar-widget.infolist.entries.status'))
                                 ->badge()
                                 ->size('lg')
-                                ->formatStateUsing(fn ($state) => $this->getStateLabel($state))
-                                ->color(fn ($state) => $this->getStateColor($state, true))
-                                ->icon(fn ($state) => $this->getStateIcon($state)),
+                                ->formatStateUsing(fn($state) => $this->getStateLabel($state))
+                                ->color(fn($state) => $this->getStateColor($state, true))
+                                ->icon(fn($state) => $this->getStateIcon($state)),
                         ]),
 
                     Grid::make(2)
@@ -508,10 +559,10 @@ class CalendarWidget extends FullCalendarWidget
                             $totalDays = $this->calculateTotalDays($startDate, $endDate);
                             $weekendDays = $totalDays - $businessDays;
 
-                            $duration = $businessDays.' working day'.($businessDays !== 1 ? 's' : '');
+                            $duration = $businessDays . ' working day' . ($businessDays !== 1 ? 's' : '');
 
                             if ($weekendDays > 0) {
-                                $duration .= ' (+ '.$weekendDays.' weekend day'.($weekendDays !== 1 ? 's' : '').')';
+                                $duration .= ' (+ ' . $weekendDays . ' weekend day' . ($weekendDays !== 1 ? 's' : '') . ')';
                             }
 
                             return $duration;
@@ -556,9 +607,9 @@ class CalendarWidget extends FullCalendarWidget
                 if ($leave->request_unit_half) {
                     $title .= ' (0.5 day)';
                 } else {
-                    $title .= ' ('.$businessDays.'d)';
+                    $title .= ' (' . $businessDays . 'd)';
                     if ($weekendDays > 0) {
-                        $title .= ' +'.$weekendDays;
+                        $title .= ' +' . $weekendDays;
                     }
                 }
 
