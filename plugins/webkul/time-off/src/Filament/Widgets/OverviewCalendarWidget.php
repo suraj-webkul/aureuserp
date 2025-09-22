@@ -48,7 +48,7 @@ class OverviewCalendarWidget extends FullCalendarWidget
         return [
             EditAction::make()
                 ->label(__('time-off::filament/widgets/overview-calendar-widget.modal-actions.edit.title'))
-                ->action(function ($data, $record) {
+                ->action(function ($data, $record, EditAction $action) {
                     $user = Auth::user();
                     $employee = $user->employee;
 
@@ -83,10 +83,62 @@ class OverviewCalendarWidget extends FullCalendarWidget
                         $startDate = Carbon::parse($data['request_date_from']);
                         $endDate = $data['request_date_to'] ? Carbon::parse($data['request_date_to']) : $startDate;
 
-                        $data['duration_display'] = $startDate->diffInDays($endDate) + 1 .' day(s)';
+                        $data['duration_display'] = $startDate->diffInDays($endDate) + 1 . ' day(s)';
 
                         $data['number_of_days'] = $startDate->diffInDays($endDate) + 1;
                     }
+
+                    $requestedDays = $data['number_of_days'];
+                    $leaveTypeId = $data['holiday_status_id'] ?? null;
+
+                    if ($leaveTypeId) {
+                        $leaveType = LeaveType::find($leaveTypeId);
+
+                        if ($leaveType && $leaveType->requires_allocation) {
+                            $endDate = Carbon::now()->endOfYear();
+
+                            $totalAllocated = LeaveAllocation::where('employee_id', $employee->id)
+                                ->where('holiday_status_id', $leaveTypeId)
+                                ->where(function ($query) use ($endDate) {
+                                    $query->where('date_to', '<=', $endDate)
+                                        ->orWhereNull('date_to');
+                                })
+                                ->sum('number_of_days');
+
+                            $totalTaken = Leave::where('employee_id', $employee->id)
+                                ->where('holiday_status_id', $leaveTypeId)
+                                ->where('state', '!=', State::REFUSE->value)
+                                ->where('id', '!=', $record->id)
+                                ->sum('number_of_days');
+
+
+                            $availableBalance = round($totalAllocated - $totalTaken, 1);
+
+                            if ($totalAllocated <= 0) {
+                                Notification::make()
+                                    ->danger()
+                                    ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_no_allocation.title'))
+                                    ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_no_allocation.body', ['leaveType' => $leaveType->name]))
+                                    ->send();
+                                $action->halt();
+                            }
+
+                            if ($requestedDays > $availableBalance) {
+                                Notification::make()
+                                    ->danger()
+                                    ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_insufficient_balance.title'))
+                                    ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_insufficient_balance.body', [
+                                        'available_balance' => $availableBalance,
+                                        'requested_days'    => $requestedDays,
+                                    ]))
+
+                                    ->send();
+
+                                $action->halt();
+                            }
+                        }
+                    }
+
 
                     $data['creator_id'] = Auth::user()->id;
 
@@ -102,6 +154,7 @@ class OverviewCalendarWidget extends FullCalendarWidget
                         ->title(__('time-off::filament/widgets/overview-calendar-widget.modal-actions.edit.notification.title'))
                         ->body(__('time-off::filament/widgets/overview-calendar-widget.modal-actions.edit.notification.body'))
                         ->send();
+                    $action->cancel();
                 })
                 ->mountUsing(
                     function (Schema $schema, array $arguments, $livewire) {
@@ -183,7 +236,7 @@ class OverviewCalendarWidget extends FullCalendarWidget
                         $startDate = Carbon::parse($data['request_date_from']);
                         $endDate = $data['request_date_to'] ? Carbon::parse($data['request_date_to']) : $startDate;
 
-                        $data['duration_display'] = $startDate->diffInDays($endDate) + 1 .' day(s)';
+                        $data['duration_display'] = $startDate->diffInDays($endDate) + 1 . ' day(s)';
 
                         $data['number_of_days'] = $startDate->diffInDays($endDate) + 1;
                         $data['date_to'] = $data['request_date_to'];
@@ -290,10 +343,10 @@ class OverviewCalendarWidget extends FullCalendarWidget
                         ->native(false)
                         ->label(__('time-off::filament/widgets/overview-calendar-widget.form.fields.request-date-to'))
                         ->default(now())
-                        ->hidden(fn (Get $get) => $get('request_unit_half'))
+                        ->hidden(fn(Get $get) => $get('request_unit_half'))
                         ->required()
-                        ->minDate(fn (Get $get) => $get('request_date_from'))
-                        ->disabled(fn (Get $get) => blank($get('request_date_from')))
+                        ->minDate(fn(Get $get) => $get('request_date_from'))
+                        ->disabled(fn(Get $get) => blank($get('request_date_from')))
                         ->rule(function (Get $get) {
                             return function (string $attribute, $value, \Closure $fail) use ($get) {
                                 $from = $get('request_date_from');
@@ -307,7 +360,7 @@ class OverviewCalendarWidget extends FullCalendarWidget
                         ->options(RequestDateFromPeriod::class)
                         ->default(RequestDateFromPeriod::MORNING)
                         ->native(false)
-                        ->visible(fn (Get $get) => $get('request_unit_half'))
+                        ->visible(fn(Get $get) => $get('request_unit_half'))
                         ->required(),
                 ]),
             Toggle::make('request_unit_half')
@@ -359,7 +412,7 @@ class OverviewCalendarWidget extends FullCalendarWidget
                 ->icon('heroicon-o-calendar-days'),
             TextEntry::make('number_of_days')
                 ->label(__('time-off::filament/widgets/overview-calendar-widget.infolist.entries.duration'))
-                ->formatStateUsing(fn ($state) => $state.' day(s)')
+                ->formatStateUsing(fn($state) => $state . ' day(s)')
                 ->icon('heroicon-o-clock'),
             TextEntry::make('private_name')
                 ->label(__('time-off::filament/widgets/overview-calendar-widget.infolist.entries.description'))
@@ -368,7 +421,7 @@ class OverviewCalendarWidget extends FullCalendarWidget
             TextEntry::make('state')
                 ->placeholder(__('time-off::filament/widgets/overview-calendar-widget.infolist.entries.status'))
                 ->badge()
-                ->formatStateUsing(fn ($state) => State::options()[$state->value])
+                ->formatStateUsing(fn($state) => State::options()[$state->value])
                 ->icon('heroicon-o-check-circle'),
         ];
     }

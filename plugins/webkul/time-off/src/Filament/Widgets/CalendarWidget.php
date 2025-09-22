@@ -171,7 +171,7 @@ class CalendarWidget extends FullCalendarWidget
                 ->label(__('time-off::filament/widgets/calendar-widget.modal-actions.edit.title'))
                 ->icon('heroicon-o-pencil-square')
                 ->color('warning')
-                ->action(function ($data, $record) {
+                ->action(function ($data, $record, EditAction $action) {
                     $user = Auth::user();
                     $employee = $user->employee;
 
@@ -199,6 +199,57 @@ class CalendarWidget extends FullCalendarWidget
                     $durationInfo = $this->getDurationInfo($data);
                     $data = array_merge($data, $durationInfo);
 
+                    $requestedDays = $data['number_of_days'];
+                    $leaveTypeId = $data['holiday_status_id'] ?? null;
+
+                    if ($leaveTypeId) {
+                        $leaveType = LeaveType::find($leaveTypeId);
+
+                        if ($leaveType && $leaveType->requires_allocation) {
+                            $endDate = Carbon::now()->endOfYear();
+
+                            $totalAllocated = LeaveAllocation::where('employee_id', $employee->id)
+                                ->where('holiday_status_id', $leaveTypeId)
+                                ->where(function ($query) use ($endDate) {
+                                    $query->where('date_to', '<=', $endDate)
+                                        ->orWhereNull('date_to');
+                                })
+                                ->sum('number_of_days');
+
+                            $totalTaken = Leave::where('employee_id', $employee->id)
+                                ->where('holiday_status_id', $leaveTypeId)
+                                ->where('state', '!=', State::REFUSE->value)
+                                ->where('id', '!=', $record->id)
+                                ->sum('number_of_days');
+
+
+                            $availableBalance = round($totalAllocated - $totalTaken, 1);
+
+                            if ($totalAllocated <= 0) {
+                                Notification::make()
+                                    ->danger()
+                                    ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_no_allocation.title'))
+                                    ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_no_allocation.body', ['leaveType' => $leaveType->name]))
+                                    ->send();
+                                $action->halt();
+                            }
+
+                            if ($requestedDays > $availableBalance) {
+                                Notification::make()
+                                    ->danger()
+                                    ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_insufficient_balance.title'))
+                                    ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_insufficient_balance.body', [
+                                        'available_balance' => $availableBalance,
+                                        'requested_days'    => $requestedDays,
+                                    ]))
+
+                                    ->send();
+
+                                $action->halt();
+                            }
+                        }
+                    }
+
                     $data['creator_id'] = Auth::user()->id;
                     $data['state'] = State::CONFIRM->value;
                     $data['request_date_from'] = $data['request_date_from'] ?? null;
@@ -211,6 +262,7 @@ class CalendarWidget extends FullCalendarWidget
                         ->title(__('time-off::filament/widgets/calendar-widget.modal-actions.edit.notification.title'))
                         ->body(__('time-off::filament/widgets/calendar-widget.modal-actions.edit.notification.body'))
                         ->send();
+                    $action->cancel();
                 })
                 ->mountUsing(
                     function (Schema $schema, array $arguments, $livewire) {
