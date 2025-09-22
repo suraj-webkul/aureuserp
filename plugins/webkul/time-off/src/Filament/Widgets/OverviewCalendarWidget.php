@@ -245,7 +245,7 @@ class OverviewCalendarWidget extends FullCalendarWidget
                     Select::make('request_date_from_period')
                         ->label(__('time-off::filament/widgets/overview-calendar-widget.form.fields.period'))
                         ->options(RequestDateFromPeriod::class)
-                        ->default(RequestDateFromPeriod::MORNING->value)
+                        ->default(RequestDateFromPeriod::MORNING)
                         ->native(false)
                         ->visible(fn (Get $get) => $get('request_unit_half'))
                         ->required(),

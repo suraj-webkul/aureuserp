@@ -63,6 +63,7 @@ class MyTimeOffResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema
+            ->disabled(fn (?Leave $record) => ! static::isEditableState($record))
             ->components([
                 Section::make()
                     ->schema([
@@ -110,7 +111,7 @@ class MyTimeOffResource extends Resource
                                             }),
                                         Select::make('request_date_from_period')
                                             ->options(RequestDateFromPeriod::class)
-                                            ->default(RequestDateFromPeriod::MORNING->value)
+                                            ->default(RequestDateFromPeriod::MORNING)
                                             ->native(false)
                                             ->label(__('time-off::filament/clusters/my-time/resources/my-time-off.form.fields.period'))
                                             ->visible(fn (Get $get) => $get('request_unit_half'))
@@ -294,6 +295,15 @@ class MyTimeOffResource extends Resource
             'edit'   => EditMyTimeOff::route('/{record}/edit'),
             'view'   => ViewMyTimeOff::route('/{record}'),
         ];
+    }
+
+    public static function isEditableState(?Leave $record): bool
+    {
+        return ! in_array($record?->state, [
+            State::REFUSE,
+            State::VALIDATE_ONE,
+            State::VALIDATE_TWO,
+        ]);
     }
 
     public static function infolist(Schema $schema): Schema

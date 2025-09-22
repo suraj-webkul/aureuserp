@@ -80,6 +80,7 @@ class CreateMyTimeOff extends CreateRecord
 
             $data['duration_display'] = "{$days} day(s)";
             $data['number_of_days'] = $days;
+            $data['date_to'] = $data['request_date_to'];
         }
 
         $requestedDays = $data['number_of_days'];
@@ -141,8 +142,6 @@ class CreateMyTimeOff extends CreateRecord
         $data['state'] = State::CONFIRM->value;
 
         $data['date_from'] = $data['request_date_from'];
-
-        $data['date_to'] = $data['request_date_to'];
 
         return $data;
     }

@@ -9,7 +9,6 @@ use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
-use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Filament\Clusters\MyTime\Resources\MyTimeOffResource;
 
 class EditMyTimeOff extends EditRecord
@@ -47,6 +46,19 @@ class EditMyTimeOff extends EditRecord
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
+        $record = $this->record;
+
+        if ($record && ! MyTimeOffResource::isEditableState($record)) {
+            Notification::make()
+                ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/edit-time-off.notification.action_not_allowed.title'))
+                ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/edit-time-off.notification.action_not_allowed.body'))
+                ->danger()
+                ->send();
+            $this->redirect(route('filament.admin.time-off.dashboard.resources.my-time-offs.view', $record));
+            $this->halt();
+
+            return $record->toArray();
+        }
         $user = Auth::user();
 
         $employee = $user->employee;
@@ -85,10 +97,6 @@ class EditMyTimeOff extends EditRecord
 
             $data['number_of_days'] = $startDate->diffInDays($endDate) + 1;
         }
-
-        $data['creator_id'] = Auth::user()->id;
-
-        $data['state'] = State::CONFIRM->value;
 
         $data['date_from'] = $data['request_date_from'];
         $data['date_to'] = isset($data['request_date_to']) ? $data['request_date_to'] : null;
