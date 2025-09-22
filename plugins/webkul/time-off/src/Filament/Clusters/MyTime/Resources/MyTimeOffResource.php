@@ -87,15 +87,27 @@ class MyTimeOffResource extends Resource
                                     ->schema([
                                         DatePicker::make('request_date_from')
                                             ->native(false)
+                                            ->live()
                                             ->default(now())
                                             ->label(__('time-off::filament/clusters/my-time/resources/my-time-off.form.fields.request-date-from'))
                                             ->required(),
                                         DatePicker::make('request_date_to')
                                             ->native(false)
+                                            ->live()
                                             ->default(now())
                                             ->label(__('time-off::filament/clusters/my-time/resources/my-time-off.form.fields.request-date-to'))
                                             ->hidden(fn (Get $get) => $get('request_unit_half'))
-                                            ->required(),
+                                            ->required()
+                                            ->minDate(fn (Get $get) => $get('request_date_from'))
+                                            ->disabled(fn (Get $get) => blank($get('request_date_from')))
+                                            ->rule(function (Get $get) {
+                                                return function (string $attribute, $value, \Closure $fail) use ($get) {
+                                                    $from = $get('request_date_from');
+                                                    if ($from && $value && Carbon::parse($value)->lt(Carbon::parse($from))) {
+                                                        $fail(__('The end date cannot be earlier than the start date.'));
+                                                    }
+                                                };
+                                            }),
                                         Select::make('request_date_from_period')
                                             ->options(RequestDateFromPeriod::class)
                                             ->default(RequestDateFromPeriod::MORNING->value)

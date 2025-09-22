@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use Webkul\Employee\Models\Employee;
 use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Filament\Clusters\MyTime\Resources\MyTimeOffResource;
+use Webkul\TimeOff\Models\Leave;
+use Webkul\TimeOff\Models\LeaveAllocation;
+use Webkul\TimeOff\Models\LeaveType;
 
 class CreateMyTimeOff extends CreateRecord
 {
@@ -65,7 +68,7 @@ class CreateMyTimeOff extends CreateRecord
             $data['employee_company_id'] = $user->default_company_id;
         }
 
-        if (isset($data['request_unit_half'])) {
+        if (! empty($data['request_unit_half'])) {
             $data['duration_display'] = '0.5 day';
 
             $data['number_of_days'] = 0.5;
@@ -73,10 +76,64 @@ class CreateMyTimeOff extends CreateRecord
             $startDate = Carbon::parse($data['request_date_from']);
 
             $endDate = $data['request_date_to'] ? Carbon::parse($data['request_date_to']) : $startDate;
+            $days = $startDate->diffInDays($endDate) + 1;
 
-            $data['duration_display'] = $startDate->diffInDays($endDate) + 1 .' day(s)';
+            $data['duration_display'] = "{$days} day(s)";
+            $data['number_of_days'] = $days;
+        }
 
-            $data['number_of_days'] = $startDate->diffInDays($endDate) + 1;
+        $requestedDays = $data['number_of_days'];
+        $leaveTypeId = $data['holiday_status_id'] ?? null;
+
+        if ($leaveTypeId) {
+            $leaveType = LeaveType::find($leaveTypeId);
+
+            if ($leaveType && $leaveType->requires_allocation) {
+                $endDate = Carbon::now()->endOfYear();
+
+                $totalAllocated = LeaveAllocation::where('employee_id', $employee->id)
+                    ->where('holiday_status_id', $leaveTypeId)
+                    ->where(function ($query) use ($endDate) {
+                        $query->where('date_to', '<=', $endDate)
+                            ->orWhereNull('date_to');
+                    })
+                    ->sum('number_of_days');
+
+                $totalTaken = Leave::where('employee_id', $employee->id)
+                    ->where('holiday_status_id', $leaveTypeId)
+                    ->where('state', '!=', State::REFUSE->value)
+                    ->sum('number_of_days');
+
+                $availableBalance = round($totalAllocated - $totalTaken, 1);
+
+                if ($totalAllocated <= 0) {
+                    Notification::make()
+                        ->danger()
+                        ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_no_allocation.title'))
+                        ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_no_allocation.body', ['leaveType' => $leaveType->name]))
+                        ->send();
+
+                    $this->halt();
+
+                    return $data;
+                }
+
+                if ($requestedDays > $availableBalance) {
+                    Notification::make()
+                        ->danger()
+                        ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_insufficient_balance.title'))
+                        ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_insufficient_balance.body', [
+                            'available_balance' => $availableBalance,
+                            'requested_days'    => $requestedDays,
+                        ]))
+
+                        ->send();
+
+                    $this->halt();
+
+                    return $data;
+                }
+            }
         }
 
         $data['creator_id'] = $user->id;
