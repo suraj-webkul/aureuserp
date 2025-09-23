@@ -153,24 +153,25 @@ class TimeOffResource extends Resource
                                     ->reactive()
                                     ->state(function (Get $get): string {
                                         if ($get('request_unit_half')) {
-                                            return __('time-off::filament/clusters/management/resources/time-off.form.fields.day', ['day' => '0.5']);
+                                            return __('time-off::filament/clusters/my-time/resources/my-time-off.form.fields.day', ['day' => '0.5']);
                                         }
 
-                                        $startDate = Carbon::parse($get('request_date_from'));
-                                        $endDate = $get('request_date_to') ? Carbon::parse($get('request_date_to')) : $startDate;
+                                        $startDate = $get('request_date_from');
+                                        $endDate = $get('request_date_to');
 
-                                        $businessDays = 0;
-                                        $currentDate = $startDate->copy();
-
-                                        while ($currentDate->lte($endDate)) {
-                                            if (! in_array($currentDate->dayOfWeek, [0, 6])) {
-                                                $businessDays++;
-                                            }
-
-                                            $currentDate->addDay();
+                                        if (! $startDate) {
+                                            return __('time-off::filament/clusters/my-time/resources/my-time-off.form.fields.days', ['days' => 0]);
                                         }
 
-                                        return __('time-off::filament/clusters/management/resources/time-off.form.fields.days', ['days' => $businessDays]);
+                                        try {
+                                            $startDate = Carbon::parse($startDate);
+                                            $endDate = $endDate ? Carbon::parse($endDate) : $startDate;
+                                            $days = $startDate->diffInDays($endDate) + 1;
+
+                                            return __('time-off::filament/clusters/my-time/resources/my-time-off.form.fields.days', ['days' => $days]);
+                                        } catch (\Exception $e) {
+                                            return __('time-off::filament/clusters/my-time/resources/my-time-off.form.fields.days', ['days' => 0]);
+                                        }
                                     }),
                                 Textarea::make('private_name')
                                     ->label(__('time-off::filament/clusters/management/resources/time-off.form.fields.description'))
@@ -365,17 +366,7 @@ class TimeOffResource extends Resource
                                         $startDate = Carbon::parse($record->request_date_from);
                                         $endDate = $record->request_date_to ? Carbon::parse($record->request_date_to) : $startDate;
 
-                                        $businessDays = 0;
-                                        $currentDate = $startDate->copy();
-
-                                        while ($currentDate->lte($endDate)) {
-                                            if (! in_array($currentDate->dayOfWeek, [0, 6])) {
-                                                $businessDays++;
-                                            }
-                                            $currentDate->addDay();
-                                        }
-
-                                        return __('time-off::filament/clusters/my-time/resources/my-time-off.infolist.entries.days', ['days' => $businessDays]);
+                                        return __('time-off::filament/clusters/my-time/resources/my-time-off.infolist.entries.days', ['days' => ($startDate->diffInDays($endDate) + 1)]);
                                     })
                                     ->icon('heroicon-o-calendar-days'),
 

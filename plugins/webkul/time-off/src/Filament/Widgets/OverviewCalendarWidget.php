@@ -24,11 +24,12 @@ use Webkul\FullCalendar\Filament\Widgets\FullCalendarWidget;
 use Webkul\TimeOff\Enums\RequestDateFromPeriod;
 use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Models\Leave;
-use Webkul\TimeOff\Models\LeaveAllocation;
-use Webkul\TimeOff\Models\LeaveType;
+use Webkul\TimeOff\Traits\TimeOffHelper;
 
 class OverviewCalendarWidget extends FullCalendarWidget
 {
+    use TimeOffHelper;
+
     public Model|string|null $model = Leave::class;
 
     public function getHeading(): string|Htmlable|null
@@ -74,93 +75,8 @@ class OverviewCalendarWidget extends FullCalendarWidget
 
                         $data['employee_company_id'] = $user->default_company_id;
                     }
+                    $data = $this->mutateTimeOffData($data, $this->record?->id, $action);
 
-                    if ($data['request_unit_half']) {
-                        $data['duration_display'] = '0.5 day';
-
-                        $data['number_of_days'] = 0.5;
-                    } else {
-                        $startDate = Carbon::parse($data['request_date_from']);
-                        $endDate = $data['request_date_to'] ? Carbon::parse($data['request_date_to']) : $startDate;
-
-                        $data['duration_display'] = $startDate->diffInDays($endDate) + 1 .' day(s)';
-
-                        $data['number_of_days'] = $startDate->diffInDays($endDate) + 1;
-                    }
-
-                    $requestedDays = $data['number_of_days'];
-                    $leaveTypeId = $data['holiday_status_id'] ?? null;
-
-                    if ($leaveTypeId) {
-                        $leaveType = LeaveType::find($leaveTypeId);
-
-                        if ($leaveType && $leaveType->requires_allocation) {
-                            $endDate = Carbon::now()->endOfYear();
-
-                            $totalAllocated = LeaveAllocation::where('employee_id', $employee->id)
-                                ->where('holiday_status_id', $leaveTypeId)
-                                ->where(function ($query) use ($endDate) {
-                                    $query->where('date_to', '<=', $endDate)
-                                        ->orWhereNull('date_to');
-                                })
-                                ->sum('number_of_days');
-
-                            $totalTaken = Leave::where('employee_id', $employee->id)
-                                ->where('holiday_status_id', $leaveTypeId)
-                                ->where('state', '!=', State::REFUSE->value)
-                                ->where('id', '!=', $record->id)
-                                ->sum('number_of_days');
-
-                            $availableBalance = round($totalAllocated - $totalTaken, 1);
-
-                            if ($totalAllocated <= 0) {
-                                Notification::make()
-                                    ->danger()
-                                    ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_no_allocation.title'))
-                                    ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_no_allocation.body', ['leaveType' => $leaveType->name]))
-                                    ->send();
-                                $action->halt();
-                            }
-
-                            if ($requestedDays > $availableBalance) {
-                                Notification::make()
-                                    ->danger()
-                                    ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_insufficient_balance.title'))
-                                    ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_insufficient_balance.body', [
-                                        'available_balance' => $availableBalance,
-                                        'requested_days'    => $requestedDays,
-                                    ]))
-
-                                    ->send();
-
-                                $action->halt();
-                            }
-                        }
-                    }
-
-                    $data['creator_id'] = Auth::user()->id;
-
-                    $data['state'] = State::CONFIRM->value;
-
-                    $data['date_from'] = $data['request_date_from'] ?? null;
-                    $data['date_to'] = $data['request_date_to'] ?? null;
-                    $overlap = $this->checkForOverlappingLeave(
-                        $employee->id,
-                        $data['request_date_from'],
-                        $data['request_date_to'] ?? $data['request_date_from'],
-                        $this->record?->id
-                    );
-
-                    if ($overlap) {
-
-                        Notification::make()
-                            ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/edit-time-off.notification.overlap.title'))
-                            ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/edit-time-off.notification.overlap.body'))
-                            ->danger()
-                            ->send();
-
-                        $action->halt();
-                    }
                     $record->update($data);
 
                     Notification::make()
@@ -241,91 +157,7 @@ class OverviewCalendarWidget extends FullCalendarWidget
 
                         $data['employee_company_id'] = $user->default_company_id;
                     }
-
-                    if ($data['request_unit_half']) {
-                        $data['duration_display'] = '0.5 day';
-
-                        $data['number_of_days'] = 0.5;
-                    } else {
-                        $startDate = Carbon::parse($data['request_date_from']);
-                        $endDate = $data['request_date_to'] ? Carbon::parse($data['request_date_to']) : $startDate;
-
-                        $data['duration_display'] = $startDate->diffInDays($endDate) + 1 .' day(s)';
-
-                        $data['number_of_days'] = $startDate->diffInDays($endDate) + 1;
-                        $data['date_to'] = $data['request_date_to'];
-                    }
-
-                    $requestedDays = $data['number_of_days'];
-                    $leaveTypeId = $data['holiday_status_id'] ?? null;
-
-                    if ($leaveTypeId) {
-                        $leaveType = LeaveType::find($leaveTypeId);
-
-                        if ($leaveType && $leaveType->requires_allocation) {
-                            $endDate = Carbon::now()->endOfYear();
-
-                            $totalAllocated = LeaveAllocation::where('employee_id', $employee->id)
-                                ->where('holiday_status_id', $leaveTypeId)
-                                ->where(function ($query) use ($endDate) {
-                                    $query->where('date_to', '<=', $endDate)
-                                        ->orWhereNull('date_to');
-                                })
-                                ->sum('number_of_days');
-
-                            $totalTaken = Leave::where('employee_id', $employee->id)
-                                ->where('holiday_status_id', $leaveTypeId)
-                                ->where('state', '!=', State::REFUSE->value)
-                                ->sum('number_of_days');
-
-                            $availableBalance = round($totalAllocated - $totalTaken, 1);
-
-                            if ($totalAllocated <= 0) {
-                                Notification::make()
-                                    ->danger()
-                                    ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_no_allocation.title'))
-                                    ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_no_allocation.body', ['leaveType' => $leaveType->name]))
-                                    ->send();
-                                $action->halt();
-                            }
-
-                            if ($requestedDays > $availableBalance) {
-                                Notification::make()
-                                    ->danger()
-                                    ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_insufficient_balance.title'))
-                                    ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_insufficient_balance.body', [
-                                        'available_balance' => $availableBalance,
-                                        'requested_days'    => $requestedDays,
-                                    ]))
-
-                                    ->send();
-
-                                $action->halt();
-                            }
-                        }
-                    }
-
-                    $data['creator_id'] = Auth::user()->id;
-
-                    $data['state'] = State::CONFIRM->value;
-
-                    $data['date_from'] = $data['request_date_from'];
-                    $overlap = $this->checkForOverlappingLeave(
-                        $employee->id,
-                        $data['request_date_from'],
-                        $data['request_date_to'] ?? $data['request_date_from'],
-                    );
-
-                    if ($overlap) {
-
-                        Notification::make()
-                            ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/edit-time-off.notification.overlap.title'))
-                            ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/edit-time-off.notification.overlap.body'))
-                            ->danger()
-                            ->send();
-
-                        $action->halt();
-                    }
+                    $data = $this->mutateTimeOffData($data, $this->record?->id, $action);
                     Leave::create($data);
 
                     Notification::make()
@@ -441,7 +273,7 @@ class OverviewCalendarWidget extends FullCalendarWidget
                 ->icon('heroicon-o-calendar-days'),
             TextEntry::make('number_of_days')
                 ->label(__('time-off::filament/widgets/overview-calendar-widget.infolist.entries.duration'))
-                ->formatStateUsing(fn ($state) => $state.' day(s)')
+                ->formatStateUsing(fn ($state) => round($state, 1).' day(s)')
                 ->icon('heroicon-o-clock'),
             TextEntry::make('private_name')
                 ->label(__('time-off::filament/widgets/overview-calendar-widget.infolist.entries.description'))
@@ -488,27 +320,5 @@ class OverviewCalendarWidget extends FullCalendarWidget
             'request_date_from' => $startDate->toDateString(),
             'request_date_to'   => $endDate->toDateString(),
         ]);
-    }
-
-    protected function checkForOverlappingLeave(int $employeeId, string $startDate, ?string $endDate, ?int $excludeRecordId = null): bool
-    {
-        $start = Carbon::parse($startDate);
-        $end = $endDate ? Carbon::parse($endDate) : $start;
-
-        $query = Leave::where('employee_id', $employeeId)
-            ->where(function ($query) use ($start, $end) {
-                $query->whereBetween('date_from', [$start, $end])
-                    ->orWhereBetween('date_to', [$start, $end])
-                    ->orWhere(function ($query) use ($start, $end) {
-                        $query->where('date_from', '<=', $start)
-                            ->where('date_to', '>=', $end);
-                    });
-            });
-
-        if ($excludeRecordId) {
-            $query->where('id', '!=', $excludeRecordId);
-        }
-
-        return $query->exists();
     }
 }

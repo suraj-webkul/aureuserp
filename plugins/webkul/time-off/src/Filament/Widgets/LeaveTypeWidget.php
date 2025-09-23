@@ -2,6 +2,7 @@
 
 namespace Webkul\TimeOff\Filament\Widgets;
 
+use Carbon\Carbon;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Contracts\Support\Htmlable;
 use Webkul\TimeOff\Models\Leave;

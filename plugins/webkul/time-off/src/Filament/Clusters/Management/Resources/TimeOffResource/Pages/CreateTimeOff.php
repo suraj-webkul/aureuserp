@@ -4,17 +4,13 @@ namespace Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource\
 
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Webkul\Employee\Models\Employee;
-use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource;
-use Webkul\TimeOff\Models\Leave;
-use Webkul\TimeOff\Models\LeaveAllocation;
-use Webkul\TimeOff\Models\LeaveType as ModelsLeaveType;
+use Webkul\TimeOff\Traits\TimeOffHelper;
 
 class CreateTimeOff extends CreateRecord
 {
+    use TimeOffHelper;
+
     protected static string $resource = TimeOffResource::class;
 
     protected function getCreatedNotification(): Notification
@@ -27,151 +23,7 @@ class CreateTimeOff extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        if (isset($data['employee_id'])) {
-            $employee = Employee::find($data['employee_id']);
+        return $this->mutateTimeOffData($data, $this->record?->id);
 
-            if ($employee->department) {
-                $data['department_id'] = $employee->department?->id;
-            } else {
-                $data['department_id'] = null;
-            }
-
-            if ($employee->calendar) {
-                $data['calendar_id'] = $employee->calendar->id;
-                $data['number_of_hours'] = $employee->calendar->hours_per_day;
-            }
-
-            $user = $employee?->user;
-
-            if ($user) {
-                $data['user_id'] = $user->id;
-
-                $data['company_id'] = $user->default_company_id;
-
-                $data['employee_company_id'] = $user->default_company_id;
-            }
-        }
-
-        if (isset($data['request_unit_half']) && $data['request_unit_half']) {
-            $data['duration_display'] = '0.5 day';
-            $data['number_of_days'] = 0.5;
-        } else {
-            $startDate = Carbon::parse($data['request_date_from']);
-            $endDate = $data['request_date_to'] ? Carbon::parse($data['request_date_to']) : $startDate;
-            $businessDays = 0;
-            $currentDate = $startDate->copy();
-
-            while ($currentDate->lte($endDate)) {
-                if (! in_array($currentDate->dayOfWeek, [0, 6])) {
-                    $businessDays++;
-                }
-
-                $currentDate->addDay();
-            }
-
-            $data['duration_display'] = $businessDays.' day(s)';
-            $data['number_of_days'] = $businessDays;
-        }
-        $overlap = $this->checkForOverlappingLeave(
-            $employee->id,
-            $data['request_date_from'],
-            $data['request_date_to'] ?? $data['request_date_from']
-        );
-
-        if ($overlap) {
-            Notification::make()
-                ->danger()
-                ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.overlap.title'))
-                ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.overlap.body'))
-                ->send();
-
-            $this->halt();
-
-            return $data;
-        }
-        $requestedDays = $data['number_of_days'];
-        $leaveTypeId = $data['holiday_status_id'] ?? null;
-
-        if ($leaveTypeId) {
-            $leaveType = ModelsLeaveType::find($leaveTypeId);
-
-            if ($leaveType && $leaveType->requires_allocation) {
-                $endDate = Carbon::now()->endOfYear();
-
-                $totalAllocated = LeaveAllocation::where('employee_id', $employee->id)
-                    ->where('holiday_status_id', $leaveTypeId)
-                    ->where(function ($query) use ($endDate) {
-                        $query->where('date_to', '<=', $endDate)
-                            ->orWhereNull('date_to');
-                    })
-                    ->sum('number_of_days');
-
-                $totalTaken = Leave::where('employee_id', $employee->id)
-                    ->where('holiday_status_id', $leaveTypeId)
-                    ->where('state', '!=', State::REFUSE->value)
-                    ->sum('number_of_days');
-
-                $availableBalance = round($totalAllocated - $totalTaken, 1);
-
-                if ($totalAllocated <= 0) {
-                    Notification::make()
-                        ->danger()
-                        ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_no_allocation.title'))
-                        ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_no_allocation.body', ['leaveType' => $leaveType->name]))
-                        ->send();
-
-                    $this->halt();
-
-                    return $data;
-                }
-
-                if ($requestedDays > $availableBalance) {
-                    Notification::make()
-                        ->danger()
-                        ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_insufficient_balance.title'))
-                        ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_insufficient_balance.body', [
-                            'available_balance' => $availableBalance,
-                            'requested_days'    => $requestedDays,
-                        ]))
-
-                        ->send();
-
-                    $this->halt();
-
-                    return $data;
-                }
-            }
-        }
-
-        $data['creator_id'] = Auth::user()->id;
-
-        $data['state'] = State::CONFIRM->value;
-
-        $data['date_from'] = $data['request_date_from'] ?? null;
-        $data['date_to'] = $data['request_date_to'] ?? null;
-
-        return $data;
-    }
-
-    protected function checkForOverlappingLeave(int $employeeId, string $startDate, ?string $endDate, ?int $excludeRecordId = null): bool
-    {
-        $start = Carbon::parse($startDate);
-        $end = $endDate ? Carbon::parse($endDate) : $start;
-
-        $query = Leave::where('employee_id', $employeeId)
-            ->where(function ($query) use ($start, $end) {
-                $query->whereBetween('date_from', [$start, $end])
-                    ->orWhereBetween('date_to', [$start, $end])
-                    ->orWhere(function ($query) use ($start, $end) {
-                        $query->where('date_from', '<=', $start)
-                            ->where('date_to', '>=', $end);
-                    });
-            });
-
-        if ($excludeRecordId) {
-            $query->where('id', '!=', $excludeRecordId);
-        }
-
-        return $query->exists();
     }
 }
