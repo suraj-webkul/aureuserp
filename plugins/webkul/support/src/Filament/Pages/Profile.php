@@ -126,7 +126,7 @@ class Profile extends Page implements HasForms
                             ->autocomplete('current-password')
                             ->validationAttribute(__('support::filament/pages/profile.password.current'))
                             ->currentPassword()
-                            ->helperText(__('support::filament/pages/profile.password.current_helper')),
+                            ->helperText(__('support::filament/pages/profile.password.current-helper')),
 
                         TextInput::make('password')
                             ->label(__('support::filament/pages/profile.password.new'))

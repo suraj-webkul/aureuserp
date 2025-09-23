@@ -47,13 +47,9 @@ return [
             'same-as-current'   => 'The new password must be different from your current password.',
         ],
 
-        'current_helper' => 'Enter your current password to verify your identity.',
+        'current-helper' => 'Enter your current password to verify your identity.',
 
         'notification' => [
-            'validation-error' => [
-                'title' => 'Validation Error',
-            ],
-
             'success' => [
                 'title' => 'Password Updated',
                 'body'  => 'Your password has been updated successfully.',
