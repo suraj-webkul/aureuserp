@@ -1,3 +1,22 @@
+# 🚀 CHANGELOG — v1.0.1
+
+### 🐛 Fixes
+
+* #748 [fixed] - Internal server error when opening the dashboard calendar in Time-off plugin.
+* #754 [fixed] - Fixed installation issue.
+* #756 [fixed] - Added Missing Translation.
+* #757 [fixed] - Form table repeater.
+* #759 [fixed] - remove redundant theme imports from plugins to reduce CSS size.
+* #762 [fixed] - Updated Readme.md.
+* #763 [fixed] - enhance ERP installation command with admin user options.
+* #764 [fixed] - updated permissions for various resources in filament-shield.
+* #770 [fixed] - Optimized role performance issue.
+* #771 [fixed] - Refactor TableView plugin.
+* #772 [fixed] - Refactored IconPicker.
+* #777 [fixed] - Terminal error during composer install due to missing SQLite database file.
+
+
+
 
 # 🚀 CHANGELOG — v1.0.0
 
