@@ -36,11 +36,12 @@ class ProjectPlugin implements Plugin
                     ->discoverWidgets(in: $this->getPluginBasePath('/Filament/Widgets'), for: 'Webkul\\Project\\Filament\\Widgets')
                     ->navigationItems([
                         NavigationItem::make('settings')
-                            ->label(fn () => __('projects::app.navigation.settings.label'))
-                            ->url(fn () => ManageTasks::getUrl())
+                            ->label(fn() => __('projects::app.navigation.settings.label'))
+                            ->url(fn() => ManageTasks::getUrl())
                             ->icon('heroicon-o-wrench')
                             ->group('Project')
-                            ->sort(3),
+                            ->sort(3)
+                            ->visible(fn() => ManageTasks::canAccess()),
                     ]);
             });
     }
@@ -54,6 +55,6 @@ class ProjectPlugin implements Plugin
     {
         $reflector = new ReflectionClass(get_class($this));
 
-        return dirname($reflector->getFileName()).($path ?? '');
+        return dirname($reflector->getFileName()) . ($path ?? '');
     }
 }
