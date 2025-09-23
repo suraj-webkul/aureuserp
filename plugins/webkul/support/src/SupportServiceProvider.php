@@ -102,7 +102,7 @@ class SupportServiceProvider extends PackageServiceProvider
                                 height="24"
                             />
 
-                            {{ __('support::support.version') }} {{$version}}
+                            {{ __('support::support.version', ['version' => $version]) }} 
                         </div>
                     </x-filament::dropdown.list.item>
                 </x-filament::dropdown.list>

@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'version' => 'Version',
+    'version' => 'Version :version',
 ];
