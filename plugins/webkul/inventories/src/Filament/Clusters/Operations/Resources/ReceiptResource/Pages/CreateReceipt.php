@@ -10,9 +10,12 @@ use Webkul\Inventory\Enums;
 use Webkul\Inventory\Enums\OperationState;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource;
 use Webkul\Inventory\Models\OperationType;
+use Webkul\Support\Concerns\HasRepeaterColumnManager;
 
 class CreateReceipt extends CreateRecord
 {
+    use HasRepeaterColumnManager;
+
     protected static string $resource = ReceiptResource::class;
 
     public function getTitle(): string|Htmlable

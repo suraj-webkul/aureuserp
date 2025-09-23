@@ -2,6 +2,8 @@
 
 namespace Webkul\Support;
 
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Spatie\LaravelPackageTools\Package as BasePackage;
 use Webkul\Support\Console\Commands\InstallCommand;
@@ -182,19 +184,24 @@ class Package extends BasePackage
 
     public static function isPluginInstalled(string $name): bool
     {
-        // return in_array($name, ['support', 'invoices']);
-        if (count(static::$plugins) == 0) {
-            if (Schema::hasTable('plugins') === false) {
-                return false;
+        try {
+            if (count(static::$plugins) == 0) {
+                DB::connection()->getPdo();
+
+                if (Schema::hasTable('plugins') === false) {
+                    return false;
+                }
+
+                static::$plugins = Plugin::all()->keyBy('name');
             }
 
-            static::$plugins = Plugin::all()->keyBy('name');
-        }
+            if (isset(static::$plugins[$name]) && static::$plugins[$name]->is_installed) {
+                return true;
+            }
 
-        if (isset(static::$plugins[$name]) && static::$plugins[$name]->is_installed) {
-            return true;
+            return false;
+        } catch (Exception) {
+            return false;
         }
-
-        return false;
     }
 }
