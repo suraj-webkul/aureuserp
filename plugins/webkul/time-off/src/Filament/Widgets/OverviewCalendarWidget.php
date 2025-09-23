@@ -4,14 +4,8 @@ namespace Webkul\TimeOff\Filament\Widgets;
 
 use Carbon\Carbon;
 use Filament\Actions\Action;
-use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Toggle;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
-use Filament\Schemas\Components\Fieldset;
-use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
@@ -21,7 +15,6 @@ use Webkul\FullCalendar\Filament\Actions\DeleteAction;
 use Webkul\FullCalendar\Filament\Actions\EditAction;
 use Webkul\FullCalendar\Filament\Actions\ViewAction;
 use Webkul\FullCalendar\Filament\Widgets\FullCalendarWidget;
-use Webkul\TimeOff\Enums\RequestDateFromPeriod;
 use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Models\Leave;
 use Webkul\TimeOff\Traits\TimeOffHelper;
@@ -50,31 +43,6 @@ class OverviewCalendarWidget extends FullCalendarWidget
             EditAction::make()
                 ->label(__('time-off::filament/widgets/overview-calendar-widget.modal-actions.edit.title'))
                 ->action(function ($data, $record, EditAction $action) {
-                    $user = Auth::user();
-                    $employee = $user->employee;
-
-                    if ($employee) {
-                        $data['employee_id'] = $employee->id;
-                    }
-
-                    if ($employee->department) {
-                        $data['department_id'] = $employee->department?->id;
-                    } else {
-                        $data['department_id'] = null;
-                    }
-
-                    if ($employee->calendar) {
-                        $data['calendar_id'] = $employee->calendar->id;
-                        $data['number_of_hours'] = $employee->calendar->hours_per_day;
-                    }
-
-                    if ($user) {
-                        $data['user_id'] = $user->id;
-
-                        $data['company_id'] = $user->default_company_id;
-
-                        $data['employee_company_id'] = $user->default_company_id;
-                    }
                     $data = $this->mutateTimeOffData($data, $this->record?->id, $action);
 
                     $record->update($data);
@@ -122,41 +90,6 @@ class OverviewCalendarWidget extends FullCalendarWidget
                 ->label(__('time-off::filament/widgets/overview-calendar-widget.header-actions.create.title'))
                 ->modalDescription(__('time-off::filament/widgets/overview-calendar-widget.header-actions.create.description'))
                 ->action(function ($data, CreateAction $action) {
-                    $user = Auth::user();
-                    $employee = $user->employee;
-
-                    if ($employee) {
-                        $data['employee_id'] = $employee->id;
-                    } else {
-                        Notification::make()
-                            ->danger()
-                            ->title(__('time-off::filament/widgets/overview-calendar-widget.header-actions.create.employee-not-found.notification.title'))
-                            ->body(__('time-off::filament/widgets/overview-calendar-widget.header-actions.create.employee-not-found.notification.body'))
-                            ->send();
-
-                        $action->cancel();
-
-                        return;
-                    }
-
-                    if ($employee?->department) {
-                        $data['department_id'] = $employee->department?->id;
-                    } else {
-                        $data['department_id'] = null;
-                    }
-
-                    if ($employee?->calendar) {
-                        $data['calendar_id'] = $employee->calendar->id;
-                        $data['number_of_hours'] = $employee->calendar->hours_per_day;
-                    }
-
-                    if ($user) {
-                        $data['user_id'] = $user->id;
-
-                        $data['company_id'] = $user->default_company_id;
-
-                        $data['employee_company_id'] = $user->default_company_id;
-                    }
                     $data = $this->mutateTimeOffData($data, $this->record?->id, $action);
                     Leave::create($data);
 
@@ -173,87 +106,6 @@ class OverviewCalendarWidget extends FullCalendarWidget
                         $schema->fill($arguments);
                     }
                 ),
-        ];
-    }
-
-    public function getFormSchema(): array
-    {
-        return [
-            Select::make('holiday_status_id')
-                ->label(__('time-off::filament/widgets/overview-calendar-widget.form.fields.time-off-type'))
-                ->relationship('holidayStatus', 'name')
-                ->native(false)
-                ->required(),
-            Fieldset::make()
-                ->label(function (Get $get) {
-                    if ($get('request_unit_half')) {
-                        return 'Date';
-                    } else {
-                        return 'Dates';
-                    }
-                })
-                ->live()
-                ->schema([
-                    DatePicker::make('request_date_from')
-                        ->native(false)
-                        ->label(__('time-off::filament/widgets/overview-calendar-widget.form.fields.request-date-from'))
-                        ->live()
-                        ->default(now())
-                        ->required(),
-                    DatePicker::make('request_date_to')
-                        ->native(false)
-                        ->label(__('time-off::filament/widgets/overview-calendar-widget.form.fields.request-date-to'))
-                        ->default(now())
-                        ->hidden(fn (Get $get) => $get('request_unit_half'))
-                        ->required()
-                        ->minDate(fn (Get $get) => $get('request_date_from'))
-                        ->disabled(fn (Get $get) => blank($get('request_date_from')))
-                        ->rule(function (Get $get) {
-                            return function (string $attribute, $value, \Closure $fail) use ($get) {
-                                $from = $get('request_date_from');
-                                if ($from && $value && Carbon::parse($value)->lt(Carbon::parse($from))) {
-                                    $fail(__('The end date cannot be earlier than the start date.'));
-                                }
-                            };
-                        }),
-                    Select::make('request_date_from_period')
-                        ->label(__('time-off::filament/widgets/overview-calendar-widget.form.fields.period'))
-                        ->options(RequestDateFromPeriod::class)
-                        ->default(RequestDateFromPeriod::MORNING)
-                        ->native(false)
-                        ->visible(fn (Get $get) => $get('request_unit_half'))
-                        ->required(),
-                ]),
-            Toggle::make('request_unit_half')
-                ->live()
-                ->label(__('time-off::filament/widgets/overview-calendar-widget.form.fields.half-day')),
-            TextEntry::make('duration_info')
-                ->label(__('time-off::filament/clusters/my-time/resources/my-time-off.form.fields.requested-days'))
-                ->live()
-                ->state(function (Get $get): string {
-                    if ($get('request_unit_half')) {
-                        return __('time-off::filament/clusters/my-time/resources/my-time-off.form.fields.day', ['day' => '0.5']);
-                    }
-
-                    $startDate = $get('request_date_from');
-                    $endDate = $get('request_date_to');
-
-                    if (! $startDate) {
-                        return __('time-off::filament/clusters/my-time/resources/my-time-off.form.fields.days', ['days' => 0]);
-                    }
-
-                    try {
-                        $startDate = Carbon::parse($startDate);
-                        $endDate = $endDate ? Carbon::parse($endDate) : $startDate;
-                        $days = $startDate->diffInDays($endDate) + 1;
-
-                        return __('time-off::filament/clusters/my-time/resources/my-time-off.form.fields.days', ['days' => $days]);
-                    } catch (\Exception $e) {
-                        return __('time-off::filament/clusters/my-time/resources/my-time-off.form.fields.days', ['days' => 0]);
-                    }
-                }),
-            Textarea::make('private_name')
-                ->label(__('time-off::filament/widgets/overview-calendar-widget.form.fields.description')),
         ];
     }
 
