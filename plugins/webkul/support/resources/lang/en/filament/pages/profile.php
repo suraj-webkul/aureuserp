@@ -17,13 +17,17 @@ return [
             'title' => 'Profile Update Failed',
             'body'  => 'There was an error updating your profile.',
         ],
+
+        'validation-error' => [
+            'title' => 'Validation Error',
+        ],
     ],
 
-    'actions'                 => [
+    'actions' => [
         'save' => 'Save Changes',
     ],
 
-    'fields'                  => [
+    'fields' => [
         'avatar' => 'Profile Photo',
         'name'   => 'Name',
         'email'  => 'Email',
@@ -37,7 +41,19 @@ return [
         'confirm'     => 'Confirm Password',
         'helper'      => 'Must be at least 8 characters long.',
 
+        'errors' => [
+            'current-required'  => 'Current password is required.',
+            'current-incorrect' => 'The current password is incorrect. Please try again.',
+            'same-as-current'   => 'The new password must be different from your current password.',
+        ],
+
+        'current_helper' => 'Enter your current password to verify your identity.',
+
         'notification' => [
+            'validation-error' => [
+                'title' => 'Validation Error',
+            ],
+
             'success' => [
                 'title' => 'Password Updated',
                 'body'  => 'Your password has been updated successfully.',
