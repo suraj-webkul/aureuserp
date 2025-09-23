@@ -12,6 +12,9 @@ use Webkul\Chatter\Filament\Actions as ChatterActions;
 use Webkul\Employee\Models\Employee;
 use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Filament\Clusters\Management\Resources\TimeOffResource;
+use Webkul\TimeOff\Models\Leave;
+use Webkul\TimeOff\Models\LeaveAllocation;
+use Webkul\TimeOff\Models\LeaveType;
 
 class EditTimeOff extends EditRecord
 {
@@ -48,6 +51,8 @@ class EditTimeOff extends EditRecord
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
+        $record = $this->record;
+
         if (isset($data['employee_id'])) {
             $employee = Employee::find($data['employee_id']);
 
@@ -90,7 +95,7 @@ class EditTimeOff extends EditRecord
                 $currentDate->addDay();
             }
 
-            $data['duration_display'] = $businessDays . ' day(s)';
+            $data['duration_display'] = $businessDays.' day(s)';
             $data['number_of_days'] = $businessDays;
         }
 
@@ -100,7 +105,102 @@ class EditTimeOff extends EditRecord
 
         $data['date_from'] = $data['request_date_from'] ?? null;
         $data['date_to'] = $data['request_date_to'] ?? null;
+        $requestedDays = $data['number_of_days'];
+        $leaveTypeId = $data['holiday_status_id'] ?? null;
+
+        if ($leaveTypeId) {
+            $leaveType = LeaveType::find($leaveTypeId);
+
+            if ($leaveType && $leaveType->requires_allocation) {
+                $endDate = Carbon::now()->endOfYear();
+
+                $totalAllocated = LeaveAllocation::where('employee_id', $employee->id)
+                    ->where('holiday_status_id', $leaveTypeId)
+                    ->where(function ($query) use ($endDate) {
+                        $query->where('date_to', '<=', $endDate)
+                            ->orWhereNull('date_to');
+                    })
+                    ->sum('number_of_days');
+
+                $totalTaken = Leave::where('employee_id', $employee->id)
+                    ->where('holiday_status_id', $leaveTypeId)
+                    ->where('state', '!=', State::REFUSE->value)
+                    ->where('id', '!=', $record->id)
+                    ->sum('number_of_days');
+
+                $availableBalance = round($totalAllocated - $totalTaken, 1);
+
+                if ($totalAllocated <= 0) {
+                    Notification::make()
+                        ->danger()
+                        ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_no_allocation.title'))
+                        ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_no_allocation.body', ['leaveType' => $leaveType->name]))
+                        ->send();
+
+                    $this->halt();
+
+                    return $data;
+                }
+
+                if ($requestedDays > $availableBalance) {
+                    Notification::make()
+                        ->danger()
+                        ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_insufficient_balance.title'))
+                        ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_insufficient_balance.body', [
+                            'available_balance' => $availableBalance,
+                            'requested_days'    => $requestedDays,
+                        ]))
+
+                        ->send();
+
+                    $this->halt();
+
+                    return $data;
+                }
+            }
+        }
+
+        $overlap = $this->checkForOverlappingLeave(
+            $employee->id,
+            $data['request_date_from'],
+            $data['request_date_to'] ?? $data['request_date_from'],
+            $this->record?->id
+        );
+
+        if ($overlap) {
+
+            Notification::make()
+                ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/edit-time-off.notification.overlap.title'))
+                ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/edit-time-off.notification.overlap.body'))
+                ->danger()
+                ->send();
+            $this->halt();
+
+            return $data;
+        }
 
         return $data;
+    }
+
+    protected function checkForOverlappingLeave(int $employeeId, string $startDate, ?string $endDate, ?int $excludeRecordId = null): bool
+    {
+        $start = Carbon::parse($startDate);
+        $end = $endDate ? Carbon::parse($endDate) : $start;
+
+        $query = Leave::where('employee_id', $employeeId)
+            ->where(function ($query) use ($start, $end) {
+                $query->whereBetween('date_from', [$start, $end])
+                    ->orWhereBetween('date_to', [$start, $end])
+                    ->orWhere(function ($query) use ($start, $end) {
+                        $query->where('date_from', '<=', $start)
+                            ->where('date_to', '>=', $end);
+                    });
+            });
+
+        if ($excludeRecordId) {
+            $query->where('id', '!=', $excludeRecordId);
+        }
+
+        return $query->exists();
     }
 }

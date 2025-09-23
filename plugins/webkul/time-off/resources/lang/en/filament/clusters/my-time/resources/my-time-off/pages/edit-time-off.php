@@ -8,6 +8,10 @@ return [
             'title' => 'Action Not Allowed',
             'body'  => 'You cannot modify this leave request as it is in a locked state.',
         ],
+        'overlap' => [
+            'title' => 'Overlapping Leave Request',
+            'body'  => 'The selected leave dates overlap with an existing request. Please choose different dates.',
+        ],
     ],
 
     'header-actions' => [

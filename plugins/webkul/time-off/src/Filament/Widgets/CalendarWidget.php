@@ -27,7 +27,6 @@ use Webkul\TimeOff\Enums\RequestDateFromPeriod;
 use Webkul\TimeOff\Enums\State;
 use Webkul\TimeOff\Filament\Actions\HolidayAction;
 use Webkul\TimeOff\Models\Leave;
-
 use Webkul\TimeOff\Models\LeaveAllocation;
 use Webkul\TimeOff\Models\LeaveType;
 
@@ -222,7 +221,6 @@ class CalendarWidget extends FullCalendarWidget
                                 ->where('id', '!=', $record->id)
                                 ->sum('number_of_days');
 
-
                             $availableBalance = round($totalAllocated - $totalTaken, 1);
 
                             if ($totalAllocated <= 0) {
@@ -254,7 +252,23 @@ class CalendarWidget extends FullCalendarWidget
                     $data['state'] = State::CONFIRM->value;
                     $data['request_date_from'] = $data['request_date_from'] ?? null;
                     $data['request_date_to'] = $data['request_date_to'] ?? null;
+                    $overlap = $this->checkForOverlappingLeave(
+                        $employee->id,
+                        $data['request_date_from'],
+                        $data['request_date_to'] ?? $data['request_date_from'],
+                        $this->record?->id
+                    );
 
+                    if ($overlap) {
+
+                        Notification::make()
+                            ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/edit-time-off.notification.overlap.title'))
+                            ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/edit-time-off.notification.overlap.body'))
+                            ->danger()
+                            ->send();
+
+                        $action->halt();
+                    }
                     $record->update($data);
 
                     Notification::make()
@@ -396,7 +410,22 @@ class CalendarWidget extends FullCalendarWidget
                     $data['state'] = State::CONFIRM->value;
                     $data['date_from'] = $data['request_date_from'];
                     $data['date_to'] = isset($data['request_date_to']) ? $data['request_date_to'] : null;
+                    $overlap = $this->checkForOverlappingLeave(
+                        $employee->id,
+                        $data['request_date_from'],
+                        $data['request_date_to'] ?? $data['request_date_from'],
+                    );
 
+                    if ($overlap) {
+
+                        Notification::make()
+                            ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/edit-time-off.notification.overlap.title'))
+                            ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/edit-time-off.notification.overlap.body'))
+                            ->danger()
+                            ->send();
+
+                        $action->halt();
+                    }
                     Leave::create($data);
 
                     Notification::make()
@@ -407,7 +436,7 @@ class CalendarWidget extends FullCalendarWidget
 
                     $action->cancel();
                 })
-                ->mountUsing(fn(Schema $schema, array $arguments) => $schema->fill($arguments)),
+                ->mountUsing(fn (Schema $schema, array $arguments) => $schema->fill($arguments)),
         ];
     }
 
@@ -448,12 +477,12 @@ class CalendarWidget extends FullCalendarWidget
                             DatePicker::make('request_date_to')
                                 ->native(false)
                                 ->label('To Date')
-                                ->hidden(fn(Get $get) => $get('request_unit_half'))
-                                ->required(fn(Get $get) => ! $get('request_unit_half'))
+                                ->hidden(fn (Get $get) => $get('request_unit_half'))
+                                ->required(fn (Get $get) => ! $get('request_unit_half'))
                                 ->live()
                                 ->prefixIcon('heroicon-o-calendar')
-                                ->disabled(fn(Get $get) => blank($get('request_date_from')))
-                                ->minDate(fn(Get $get) => $get('request_date_from'))
+                                ->disabled(fn (Get $get) => blank($get('request_date_from')))
+                                ->minDate(fn (Get $get) => $get('request_date_from'))
                                 ->afterStateUpdated(function ($state, Set $set, Get $get) {
                                     if ($state && $get('request_date_from')) {
                                         $this->updateDurationCalculation($set, $get);
@@ -480,8 +509,8 @@ class CalendarWidget extends FullCalendarWidget
                                 ->options(RequestDateFromPeriod::class)
                                 ->default(RequestDateFromPeriod::MORNING)
                                 ->native(false)
-                                ->visible(fn(Get $get) => $get('request_unit_half'))
-                                ->required(fn(Get $get) => $get('request_unit_half'))
+                                ->visible(fn (Get $get) => $get('request_unit_half'))
+                                ->required(fn (Get $get) => $get('request_unit_half'))
                                 ->prefixIcon('heroicon-o-sun'),
                         ]),
 
@@ -507,10 +536,10 @@ class CalendarWidget extends FullCalendarWidget
                             $totalDays = $this->calculateTotalDays($start, $end);
                             $weekendDays = $totalDays - $businessDays;
 
-                            $duration = $businessDays . ' working day' . ($businessDays !== 1 ? 's' : '');
+                            $duration = $businessDays.' working day'.($businessDays !== 1 ? 's' : '');
 
                             if ($weekendDays > 0) {
-                                $duration .= ' (+ ' . $weekendDays . ' weekend day' . ($weekendDays !== 1 ? 's' : '') . ')';
+                                $duration .= ' (+ '.$weekendDays.' weekend day'.($weekendDays !== 1 ? 's' : '').')';
                             }
 
                             return $duration;
@@ -545,10 +574,10 @@ class CalendarWidget extends FullCalendarWidget
         $totalDays = $this->calculateTotalDays($start, $end);
         $weekendDays = $totalDays - $businessDays;
 
-        $duration = $businessDays . ' working day' . ($businessDays !== 1 ? 's' : '');
+        $duration = $businessDays.' working day'.($businessDays !== 1 ? 's' : '');
 
         if ($weekendDays > 0) {
-            $duration .= ' (+ ' . $weekendDays . ' weekend day' . ($weekendDays !== 1 ? 's' : '') . ')';
+            $duration .= ' (+ '.$weekendDays.' weekend day'.($weekendDays !== 1 ? 's' : '').')';
         }
 
         $set('duration_info', $duration);
@@ -575,9 +604,9 @@ class CalendarWidget extends FullCalendarWidget
                                 ->label(__('time-off::filament/widgets/calendar-widget.infolist.entries.status'))
                                 ->badge()
                                 ->size('lg')
-                                ->formatStateUsing(fn($state) => $this->getStateLabel($state))
-                                ->color(fn($state) => $this->getStateColor($state, true))
-                                ->icon(fn($state) => $this->getStateIcon($state)),
+                                ->formatStateUsing(fn ($state) => $this->getStateLabel($state))
+                                ->color(fn ($state) => $this->getStateColor($state, true))
+                                ->icon(fn ($state) => $this->getStateIcon($state)),
                         ]),
 
                     Grid::make(2)
@@ -611,10 +640,10 @@ class CalendarWidget extends FullCalendarWidget
                             $totalDays = $this->calculateTotalDays($startDate, $endDate);
                             $weekendDays = $totalDays - $businessDays;
 
-                            $duration = $businessDays . ' working day' . ($businessDays !== 1 ? 's' : '');
+                            $duration = $businessDays.' working day'.($businessDays !== 1 ? 's' : '');
 
                             if ($weekendDays > 0) {
-                                $duration .= ' (+ ' . $weekendDays . ' weekend day' . ($weekendDays !== 1 ? 's' : '') . ')';
+                                $duration .= ' (+ '.$weekendDays.' weekend day'.($weekendDays !== 1 ? 's' : '').')';
                             }
 
                             return $duration;
@@ -659,9 +688,9 @@ class CalendarWidget extends FullCalendarWidget
                 if ($leave->request_unit_half) {
                     $title .= ' (0.5 day)';
                 } else {
-                    $title .= ' (' . $businessDays . 'd)';
+                    $title .= ' ('.$businessDays.'d)';
                     if ($weekendDays > 0) {
-                        $title .= ' +' . $weekendDays;
+                        $title .= ' +'.$weekendDays;
                     }
                 }
 
@@ -751,5 +780,27 @@ class CalendarWidget extends FullCalendarWidget
             'request_date_from' => $startDate->toDateString(),
             'request_date_to'   => $endDate->toDateString(),
         ]);
+    }
+
+    protected function checkForOverlappingLeave(int $employeeId, string $startDate, ?string $endDate, ?int $excludeRecordId = null): bool
+    {
+        $start = Carbon::parse($startDate);
+        $end = $endDate ? Carbon::parse($endDate) : $start;
+
+        $query = Leave::where('employee_id', $employeeId)
+            ->where(function ($query) use ($start, $end) {
+                $query->whereBetween('date_from', [$start, $end])
+                    ->orWhereBetween('date_to', [$start, $end])
+                    ->orWhere(function ($query) use ($start, $end) {
+                        $query->where('date_from', '<=', $start)
+                            ->where('date_to', '>=', $end);
+                    });
+            });
+
+        if ($excludeRecordId) {
+            $query->where('id', '!=', $excludeRecordId);
+        }
+
+        return $query->exists();
     }
 }

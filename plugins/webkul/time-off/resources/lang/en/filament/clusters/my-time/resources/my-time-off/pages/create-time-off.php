@@ -7,6 +7,11 @@ return [
             'body'  => 'The time off has been created successfully.',
         ],
 
+        'overlap' => [
+            'title' => 'Overlapping Leave Request',
+            'body'  => 'The selected leave dates overlap with an existing request. Please choose different dates.',
+        ],
+
         'warning' => [
             'title' => 'You don\'t have an employee account',
             'body'  => 'You don\'t have an employee account. Please contact your administrator.',
