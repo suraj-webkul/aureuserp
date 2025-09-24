@@ -2,8 +2,6 @@
 
 namespace Webkul\Support;
 
-use BezhanSalleh\FilamentShield\Facades\FilamentShield;
-use Illuminate\Support\Str;
 use Filament\Support\Assets\Css;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentView;
@@ -63,7 +61,7 @@ class SupportServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        include __DIR__.'/helpers.php';
+        include __DIR__ . '/helpers.php';
 
         Livewire::component('accept-invitation', AcceptInvitation::class);
 
@@ -80,19 +78,26 @@ class SupportServiceProvider extends PackageServiceProvider
         ])->where(['filename' => '[ \w\\.\\/\\-\\@\(\)\=]+']);
 
         FilamentAsset::register([
-            Css::make('support', __DIR__.'/../resources/dist/support.css'),
+            Css::make('support', __DIR__ . '/../resources/dist/support.css'),
         ], 'support');
 
-        $this->managePermissions();
+        $this->app->make(PermissionManager::class)->managePermissions();
     }
 
     public function packageRegistered(): void
+    {
+        $this->registerHooks();
+
+        $this->app->singleton(PermissionManager::class, fn () => new PermissionManager());
+    }
+
+    protected function registerHooks(): void
     {
         $version = '1.0.0';
 
         FilamentView::registerRenderHook(
             PanelsRenderHook::USER_MENU_PROFILE_BEFORE,
-            fn (): string => Blade::render(<<<'BLADE'
+            fn(): string => Blade::render(<<<'BLADE'
                 <x-filament::dropdown.list>
                     <x-filament::dropdown.list.item>
                         <div class="flex items-center gap-2">
@@ -110,41 +115,5 @@ class SupportServiceProvider extends PackageServiceProvider
                 'version' => $version,
             ]),
         );
-    }
-
-    public function managePermissions()
-    {
-        FilamentShield::buildPermissionKeyUsing(function (string $entity, string $affix, string $subject) {
-            $affix = Str::snake($affix);
-
-            if (
-                $entity == 'BezhanSalleh\FilamentShield\Resources\Roles\RoleResource'
-                || $entity == 'App\Filament\Resources\RoleResource'
-            ) {
-                return $affix . '_role';
-            }
-
-            if (class_exists($entity) && method_exists($entity, 'getModel')) {
-                $resourceIdentifier = Str::of($entity)
-                    ->afterLast('Resources\\')
-                    ->beforeLast('Resource')
-                    ->replace('\\', '')
-                    ->snake()
-                    ->replace('_', '::')
-                    ->toString();
-
-                return $affix . '_' . $resourceIdentifier;
-            }
-
-            if (Str::contains($entity, 'Pages\\')) {
-                return 'page_' . Str::snake(class_basename($entity));
-            }
-
-            if (Str::contains($entity, 'Widgets\\') || Str::endsWith($entity, 'Widget')) {
-                return 'widget_' . Str::snake(class_basename($entity));
-            }
-
-            return $affix . '_' . Str::snake($subject);
-        });
     }
 }
