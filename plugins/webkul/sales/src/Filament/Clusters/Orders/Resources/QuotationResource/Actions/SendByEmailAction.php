@@ -8,6 +8,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -79,10 +80,46 @@ class SendByEmailAction extends Action
             ->modalHeading(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.modal.heading'))
             ->hidden(fn (Order $record) => $record->state == OrderState::SALE)
             ->action(function (Order $record, array $data, Component $livewire) {
-                SaleOrder::sendQuotationOrOrderByEmail($record, $data);
+                $result = SaleOrder::sendQuotationOrOrderByEmail($record, $data);
+
+                $this->handleEmailResults($result);
 
                 $livewire->refreshFormData(['state']);
-
             });
+    }
+
+    private function handleEmailResults(array $result): void
+    {
+        $sent = $result['sent'];
+        $failed = $result['failed'];
+
+        if (! empty($sent)) {
+            Notification::make()
+                ->success()
+                ->title('Emails Sent Successfully')
+                ->body('Quotation sent to: '.implode(', ', $sent))
+                ->send();
+        }
+
+        if (! empty($failed)) {
+            $failedMessages = [];
+            foreach ($failed as $partner => $reason) {
+                $failedMessages[] = "$partner: $reason";
+            }
+
+            Notification::make()
+                ->warning()
+                ->title('Some Emails Failed')
+                ->body('Failed to send to: '.implode('; ', $failedMessages))
+                ->send();
+        }
+
+        if (empty($sent)) {
+            Notification::make()
+                ->danger()
+                ->title('No Emails Sent')
+                ->body('Unable to send quotation to any selected partners.')
+                ->send();
+        }
     }
 }
