@@ -74,13 +74,17 @@ class PermissionManager
             'Webkul\Recruitment\Filament\Clusters\Configurations\Resources\SkillTypeResource',
             'Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityPlanResource',
             'Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityTypeResource',
+            'Webkul\Sale\Filament\Clusters\Products\Resources\ProductResource',
             'Webkul\Sale\Filament\Clusters\Configuration\Resources\TagResource',
             'Webkul\TimeOff\Filament\Clusters\Configurations\Resources\ActivityTypeResource',
             'Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductCategoryResource',
+            'Webkul\Inventory\Filament\Clusters\Products\Resources\ProductResource',
             'Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductCategoryResource',
             'Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductCategoryResource',
+            'Webkul\Purchase\Filament\Admin\Clusters\Products\Resources\ProductResource',
             'Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource',
-            'Webkul\Invoice\Filament\Clusters\Configuration\Resources\BankAccountResource'
+            'Webkul\Invoice\Filament\Clusters\Configuration\Resources\BankAccountResource',
+            'Webkul\Invoice\Filament\Clusters\Vendors\Resources\ProductResource'
         ];
     }
 }
