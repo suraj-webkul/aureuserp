@@ -58,7 +58,10 @@ class PermissionManager
                 return 'page_' . Str::snake(class_basename($entity));
             }
 
-            if (Str::contains($entity, 'Widgets\\') || Str::endsWith($entity, 'Widget')) {
+            if (
+                Str::contains($entity, 'Widgets\\') 
+                || Str::endsWith($entity, 'Widget')
+            ) {
                 return 'widget_' . Str::snake(class_basename($entity));
             }
 
