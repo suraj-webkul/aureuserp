@@ -486,6 +486,12 @@ class SaleManager
         $record->state = OrderState::SENT;
         $record->save();
 
+        Notification::make()
+            ->success()
+            ->title(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.actions.notification.title'))
+            ->body(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.actions.notification.body'))
+            ->send();
+
         return $record;
     }
 

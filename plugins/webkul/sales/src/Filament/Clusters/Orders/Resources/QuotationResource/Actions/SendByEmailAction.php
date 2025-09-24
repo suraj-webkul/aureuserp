@@ -8,7 +8,6 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Notifications\Notification;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -79,16 +78,11 @@ class SendByEmailAction extends Action
             ->modalIcon('heroicon-s-envelope')
             ->modalHeading(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.modal.heading'))
             ->hidden(fn (Order $record) => $record->state == OrderState::SALE)
-            ->action(function (Order $record, array $data,Component $livewire) {
+            ->action(function (Order $record, array $data, Component $livewire) {
                 SaleOrder::sendQuotationOrOrderByEmail($record, $data);
 
                 $livewire->refreshFormData(['state']);
 
-                Notification::make()
-                    ->success()
-                    ->title(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.actions.notification.title'))
-                    ->body(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.actions.notification.body'))
-                    ->send();
             });
     }
 }
