@@ -113,7 +113,7 @@ class ProjectResource extends Resource
                             ->hiddenLabel()
                             ->inline()
                             ->required()
-                            ->visible(fn (TaskSettings $taskSettings) => $taskSettings->enable_project_stages)
+                            ->visible(static::getTaskSettings()->enable_project_stages)
                             ->options(fn () => ProjectStage::orderBy('sort')->get()->mapWithKeys(fn ($stage) => [$stage->id => $stage->name]))
                             ->default(ProjectStage::first()?->id),
                         Section::make(__('projects::filament/resources/project.form.sections.general.title'))
@@ -162,7 +162,7 @@ class ProjectResource extends Resource
                                     ->minValue(0)
                                     ->numeric()
                                     ->helperText(__('projects::filament/resources/project.form.sections.additional.fields.allocated-hours-helper-text'))
-                                    ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets)
+                                    ->visible(static::getTimeSettings()->enable_timesheets)
                                     ->rules(['nullable', 'numeric', 'min:0']),
                                 Select::make('tags')
                                     ->label(__('projects::filament/resources/project.form.sections.additional.fields.tags'))
@@ -202,22 +202,22 @@ class ProjectResource extends Resource
                                         Toggle::make('allow_timesheets')
                                             ->label(__('projects::filament/resources/project.form.sections.settings.fields.allow-timesheets'))
                                             ->helperText(__('projects::filament/resources/project.form.sections.settings.fields.allow-timesheets-helper-text'))
-                                            ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                                            ->visible(static::getTimeSettings()->enable_timesheets),
                                     ])
                                     ->columns(1)
-                                    ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets)
-                                    ->default(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                                    ->visible(static::getTimeSettings()->enable_timesheets)
+                                    ->default(static::getTimeSettings()->enable_timesheets),
 
                                 Fieldset::make(__('projects::filament/resources/project.form.sections.settings.fields.task-management'))
                                     ->schema([
                                         Toggle::make('allow_milestones')
                                             ->label(__('projects::filament/resources/project.form.sections.settings.fields.allow-milestones'))
                                             ->helperText(__('projects::filament/resources/project.form.sections.settings.fields.allow-milestones-helper-text'))
-                                            ->visible(fn (TaskSettings $taskSettings) => $taskSettings->enable_milestones)
-                                            ->default(fn (TaskSettings $taskSettings) => $taskSettings->enable_milestones),
+                                            ->visible(static::getTaskSettings()->enable_milestones)
+                                            ->default(static::getTaskSettings()->enable_milestones),
                                     ])
                                     ->columns(1)
-                                    ->visible(fn (TaskSettings $taskSettings) => $taskSettings->enable_milestones),
+                                    ->visible(static::getTaskSettings()->enable_milestones),
                             ]),
                     ])
                     ->columnSpan(['lg' => 1]),
@@ -269,7 +269,7 @@ class ProjectResource extends Resource
                             ->state(fn (Project $record): string => $record->remaining_hours.' Hours')
                             ->tooltip(__('projects::filament/resources/project.table.columns.remaining-hours')),
                     ])
-                        ->visible(fn (TimeSettings $timeSettings, Project $record) => $timeSettings->enable_timesheets && $record->allow_milestones && $record->remaining_hours),
+                        ->visible(fn (Project $record) => static::getTimeSettings()->enable_timesheets && $record->allow_milestones && $record->remaining_hours),
                     Stack::make([
                         TextColumn::make('user.name')
                             ->label(__('projects::filament/resources/project.table.columns.project-manager'))
@@ -436,7 +436,7 @@ class ProjectResource extends Resource
                     ->tooltip(fn (Project $record): string => __('projects::filament/resources/project.table.actions.milestones', ['completed' => $record->milestones->where('is_completed', true)->count(), 'all' => $record->milestones->count()]))
                     ->url('https:example.com/tasks/{record}')
                     ->hidden(fn (Project $record) => $record->trashed())
-                    ->visible(fn (TaskSettings $taskSettings, Project $record) => $taskSettings->enable_milestones && $record->allow_milestones)
+                    ->visible(fn (Project $record) => static::getTaskSettings()->enable_milestones && $record->allow_milestones)
                     ->url(fn (Project $record): string => ManageMilestones::getUrl(['record' => $record])),
 
                 ActionGroup::make([
@@ -486,7 +486,7 @@ class ProjectResource extends Resource
             ])
             ->modifyQueryUsing(function (Builder $query) {
                 $query->with([
-                    'tags',
+                    'milestones',
                     'favoriteUsers' => function ($query) {
                         $query->where('user_id', Auth::id());
                     },
@@ -542,20 +542,20 @@ class ProjectResource extends Resource
                                             ->icon('heroicon-o-clock')
                                             ->placeholder('—')
                                             ->suffix(__('projects::filament/resources/project.infolist.sections.additional.entries.allocated-hours-suffix'))
-                                            ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                                            ->visible(static::getTimeSettings()->enable_timesheets),
 
                                         TextEntry::make('remaining_hours')
                                             ->label(__('projects::filament/resources/project.infolist.sections.additional.entries.remaining-hours'))
                                             ->icon('heroicon-o-clock')
                                             ->suffix(__('projects::filament/resources/project.infolist.sections.additional.entries.remaining-hours-suffix'))
                                             ->color(fn (Project $record): string => $record->remaining_hours < 0 ? 'danger' : 'success')
-                                            ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                                            ->visible(static::getTimeSettings()->enable_timesheets),
 
                                         TextEntry::make('stage.name')
                                             ->label(__('projects::filament/resources/project.infolist.sections.additional.entries.current-stage'))
                                             ->icon('heroicon-o-flag')
                                             ->badge()
-                                            ->visible(fn (TaskSettings $taskSettings) => $taskSettings->enable_project_stages),
+                                            ->visible(static::getTaskSettings()->enable_project_stages),
 
                                         TextEntry::make('tags.name')
                                             ->label(__('projects::filament/resources/project.infolist.sections.additional.entries.tags'))
@@ -599,7 +599,7 @@ class ProjectResource extends Resource
                                             ->iconColor('primary')
                                             ->color('primary')
                                             ->url(fn (Project $record): string => ManageMilestones::getUrl(['record' => $record]))
-                                            ->visible(fn (TaskSettings $taskSettings, Project $record) => $taskSettings->enable_milestones && $record->allow_milestones),
+                                            ->visible(fn (Project $record) => static::getTaskSettings()->enable_milestones && $record->allow_milestones),
                                     ]),
                             ]),
                     ])
@@ -636,17 +636,27 @@ class ProjectResource extends Resource
                                 IconEntry::make('allow_timesheets')
                                     ->label(__('projects::filament/resources/project.infolist.sections.settings.entries.timesheets-enabled'))
                                     ->boolean()
-                                    ->visible(fn (TimeSettings $timeSettings) => $timeSettings->enable_timesheets),
+                                    ->visible(static::getTimeSettings()->enable_timesheets),
 
                                 IconEntry::make('allow_milestones')
                                     ->label(__('projects::filament/resources/project.infolist.sections.settings.entries.milestones-enabled'))
                                     ->boolean()
-                                    ->visible(fn (TaskSettings $taskSettings) => $taskSettings->enable_milestones),
+                                    ->visible(static::getTaskSettings()->enable_milestones),
                             ]),
                     ])
                     ->columnSpan(['lg' => 1]),
             ])
             ->columns(3);
+    }
+
+    static public function getTaskSettings(): TaskSettings
+    {
+        return once(fn () => app(TaskSettings::class));
+    }
+
+    static public function getTimeSettings(): TimeSettings
+    {
+        return once(fn () => app(TimeSettings::class));
     }
 
     public static function getRecordSubNavigation(Page $page): array
