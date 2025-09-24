@@ -493,7 +493,10 @@ class InvoiceResource extends Resource
                                 ->body(__('accounts::filament/resources/invoice.table.bulk-actions.delete.notification.body'))
                         ),
                 ]),
-            ]);
+            ])
+            ->modifyQueryUsing(function (Builder $query) {
+                $query->with('currency');
+            });
     }
 
     public static function infolist(Schema $schema): Schema
