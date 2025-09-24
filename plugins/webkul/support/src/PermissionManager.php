@@ -19,7 +19,10 @@ class PermissionManager
                 return $affix . '_role';
             }
 
-            if (class_exists($entity) && method_exists($entity, 'getModel')) {
+            if (
+                class_exists($entity) 
+                && method_exists($entity, 'getModel')
+            ) {
                 $resourceIdentifier = Str::of($entity)
                     ->afterLast('Resources\\')
                     ->beforeLast('Resource')
@@ -28,7 +31,11 @@ class PermissionManager
                     ->replace('_', '::')
                     ->toString();
 
-                if (in_array($entity, $this->getConflictingResources(), true)) {
+                if (in_array(
+                    needle: $entity,
+                    haystack: $this->getConflictingResources(),
+                    strict: true
+                )) {
                     $pluginPrefix = '';
 
                     if (Str::contains($entity, 'Webkul\\')) {
