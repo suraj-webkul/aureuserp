@@ -42,6 +42,7 @@ use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint\Oper
 use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
@@ -281,7 +282,7 @@ class ProjectResource extends Resource
                         TextColumn::make('tags.name')
                             ->badge()
                             ->state(function (Project $record): array {
-                                return $record->tags()->get()->map(fn ($tag) => [
+                                return $record->tags->map(fn ($tag) => [
                                     'label' => $tag->name,
                                     'color' => $tag->color ?? '#808080',
                                 ])->toArray();
@@ -291,7 +292,7 @@ class ProjectResource extends Resource
                             ->color(fn ($state) => Color::generateV3Palette($state['color']))
                             ->weight(FontWeight::Bold),
                     ])
-                        ->visible(fn (Project $record): bool => (bool) $record->tags()->get()?->count()),
+                        ->visible(fn (Project $record): bool => (bool) $record->tags?->count()),
                 ])
                     ->space(3),
             ]))
@@ -416,6 +417,10 @@ class ProjectResource extends Resource
                     ->size('xl')
                     ->action(function (Project $record): void {
                         $record->favoriteUsers()->toggle([Auth::id()]);
+
+                        $record->load(['favoriteUsers' => function ($query) {
+                            $query->where('user_id', Auth::id());
+                        }]);
                     }),
                 Action::make('tasks')
                     ->label(fn (Project $record): string => __('projects::filament/resources/project.table.actions.tasks', ['count' => $record->tasks->whereNull('parent_id')->count()]))
@@ -478,7 +483,15 @@ class ProjectResource extends Resource
                 'md'  => 2,
                 'xl'  => 3,
                 '2xl' => 4,
-            ]);
+            ])
+            ->modifyQueryUsing(function (Builder $query) {
+                $query->with([
+                    'tags',
+                    'favoriteUsers' => function ($query) {
+                        $query->where('user_id', Auth::id());
+                    },
+                ]);
+            });
     }
 
     public static function infolist(Schema $schema): Schema
@@ -548,7 +561,7 @@ class ProjectResource extends Resource
                                             ->label(__('projects::filament/resources/project.infolist.sections.additional.entries.tags'))
                                             ->badge()
                                             ->state(function (Project $record): array {
-                                                return $record->tags()->get()->map(fn ($tag) => [
+                                                return $record->tags->map(fn ($tag) => [
                                                     'label' => $tag->name,
                                                     'color' => $tag->color ?? '#808080',
                                                 ])->toArray();

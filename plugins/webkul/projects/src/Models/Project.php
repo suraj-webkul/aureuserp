@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Webkul\Chatter\Traits\HasChatter;
@@ -147,7 +148,11 @@ class Project extends Model implements Sortable
 
     public function getIsFavoriteByUserAttribute(): bool
     {
-        return $this->favoriteUsers()->where('user_id', auth()->id())->exists();
+        if ($this->relationLoaded('favoriteUsers')) {
+            return $this->favoriteUsers->contains('id', Auth::id());
+        }
+
+        return $this->favoriteUsers()->where('user_id', Auth::id())->exists();
     }
 
     public function getRemainingHoursAttribute(): float
