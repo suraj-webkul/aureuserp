@@ -225,13 +225,13 @@ class TaskResource extends Resource
                                             return true;
                                         }
 
-                                        if (! static::isMilestoneEnabled()) {
+                                        if (! static::getTaskSettings()->enable_milestones) {
                                             return true;
                                         }
 
                                         return ! $project->allow_milestones;
                                     })
-                                    ->visible(static::isMilestoneEnabled()),
+                                    ->visible(static::getTaskSettings()->enable_milestones),
                                 Select::make('partner_id')
                                     ->label(__('projects::filament/resources/task.form.sections.settings.fields.customer'))
                                     ->relationship('partner', 'name')
@@ -258,7 +258,7 @@ class TaskResource extends Resource
                                     ->suffixIcon('heroicon-o-clock')
                                     ->helperText(__('projects::filament/resources/task.form.sections.settings.fields.allocated-hours-helper-text'))
                                     ->dehydrateStateUsing(fn ($state) => $state ?: 0)
-                                    ->visible(static::isTimesheetEnabled()),
+                                    ->visible(static::getTimeSettings()->enable_timesheets),
                             ]),
                     ]),
             ])
@@ -325,7 +325,7 @@ class TaskResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true)
-                    ->visible(static::isMilestoneEnabled()),
+                    ->visible(static::getTaskSettings()->enable_milestones),
                 TextColumn::make('partner.name')
                     ->label(__('projects::filament/resources/task.table.columns.customer'))
                     ->searchable()
@@ -357,7 +357,7 @@ class TaskResource extends Resource
                                 return $hours.':'.$minutes;
                             })
                     )
-                    ->visible(static::isTimesheetEnabled()),
+                    ->visible(static::getTimeSettings()->enable_timesheets),
                 TextColumn::make('total_hours_spent')
                     ->label(__('projects::filament/resources/task.table.columns.time-spent'))
                     ->sortable()
@@ -380,7 +380,7 @@ class TaskResource extends Resource
                                 return $hours.':'.$minutes;
                             })
                     )
-                    ->visible(static::isTimesheetEnabled()),
+                    ->visible(static::getTimeSettings()->enable_timesheets),
                 TextColumn::make('remaining_hours')
                     ->label(__('projects::filament/resources/task.table.columns.time-remaining'))
                     ->sortable()
@@ -403,13 +403,13 @@ class TaskResource extends Resource
                                 return $hours.':'.$minutes;
                             })
                     )
-                    ->visible(static::isTimesheetEnabled()),
+                    ->visible(static::getTimeSettings()->enable_timesheets),
                 ProgressBarEntry::make('progress')
                     ->label(__('projects::filament/resources/task.table.columns.progress'))
                     ->sortable()
                     ->toggleable()
                     ->color(fn (Task $record): string => $record->progress > 100 ? 'danger' : ($record->progress < 100 ? 'warning' : 'success'))
-                    ->visible(static::isTimesheetEnabled()),
+                    ->visible(static::getTimeSettings()->enable_timesheets),
                 TextColumn::make('deadline')
                     ->label(__('projects::filament/resources/task.table.columns.deadline'))
                     ->sortable()
@@ -481,27 +481,27 @@ class TaskResource extends Resource
                                     ->preload(),
                             )
                             ->icon('heroicon-o-tag'),
-                        static::isTimesheetEnabled()
+                        static::getTimeSettings()->enable_timesheets
                             ? NumberConstraint::make('allocated_hours')
                                 ->label(__('projects::filament/resources/task.table.filters.allocated-hours'))
                                 ->icon('heroicon-o-clock')
                             : null,
-                        static::isTimesheetEnabled()
+                        static::getTimeSettings()->enable_timesheets
                             ? NumberConstraint::make('total_hours_spent')
                                 ->label(__('projects::filament/resources/task.table.filters.total-hours-spent'))
                                 ->icon('heroicon-o-clock')
                             : null,
-                        static::isTimesheetEnabled()
+                        static::getTimeSettings()->enable_timesheets
                             ? NumberConstraint::make('remaining_hours')
                                 ->label(__('projects::filament/resources/task.table.filters.remaining-hours'))
                                 ->icon('heroicon-o-clock')
                             : null,
-                        static::isTimesheetEnabled()
+                        static::getTimeSettings()->enable_timesheets
                             ? NumberConstraint::make('overtime')
                                 ->label(__('projects::filament/resources/task.table.filters.overtime'))
                                 ->icon('heroicon-o-clock')
                             : null,
-                        static::isTimesheetEnabled()
+                        static::getTimeSettings()->enable_timesheets
                             ? NumberConstraint::make('progress')
                                 ->label(__('projects::filament/resources/task.table.filters.progress'))
                                 ->icon('heroicon-o-bars-2')
@@ -716,7 +716,7 @@ class TaskResource extends Resource
                                             ->label(__('projects::filament/resources/task.infolist.sections.project-information.entries.milestone'))
                                             ->icon('heroicon-o-flag')
                                             ->placeholder('—')
-                                            ->visible(static::isMilestoneEnabled()),
+                                            ->visible(static::getTaskSettings()->enable_milestones),
 
                                         TextEntry::make('stage.name')
                                             ->label(__('projects::filament/resources/task.infolist.sections.project-information.entries.stage'))
@@ -759,7 +759,7 @@ class TaskResource extends Resource
 
                                                 return $hours.':'.$minutes;
                                             })
-                                            ->visible(static::isTimesheetEnabled()),
+                                            ->visible(static::getTimeSettings()->enable_timesheets),
 
                                         TextEntry::make('total_hours_spent')
                                             ->label(__('projects::filament/resources/task.infolist.sections.time-tracking.entries.time-spent'))
@@ -771,7 +771,7 @@ class TaskResource extends Resource
 
                                                 return $hours.':'.$minutes;
                                             })
-                                            ->visible(static::isTimesheetEnabled()),
+                                            ->visible(static::getTimeSettings()->enable_timesheets),
 
                                         TextEntry::make('remaining_hours')
                                             ->label(__('projects::filament/resources/task.infolist.sections.time-tracking.entries.time-remaining'))
@@ -784,7 +784,7 @@ class TaskResource extends Resource
                                                 return $hours.':'.$minutes;
                                             })
                                             ->color(fn ($state): string => $state < 0 ? 'danger' : 'success')
-                                            ->visible(static::isTimesheetEnabled()),
+                                            ->visible(static::getTimeSettings()->enable_timesheets),
 
                                         TextEntry::make('progress')
                                             ->label(__('projects::filament/resources/task.infolist.sections.time-tracking.entries.progress'))
@@ -795,10 +795,10 @@ class TaskResource extends Resource
                                                     ? 'danger'
                                                     : ($record->progress < 100 ? 'warning' : 'success')
                                             )
-                                            ->visible(static::isTimesheetEnabled()),
+                                            ->visible(static::getTimeSettings()->enable_timesheets),
                                     ]),
                             ])
-                            ->visible(static::isTimesheetEnabled()),
+                            ->visible(static::getTimeSettings()->enable_timesheets),
 
                         Section::make(__('projects::filament/resources/task.infolist.sections.additional-information.title'))
                             ->visible(! empty($customInfolistEntries = static::getCustomInfolistEntries()))
@@ -836,7 +836,7 @@ class TaskResource extends Resource
                                     ->label(__('projects::filament/resources/task.infolist.sections.statistics.entries.timesheet-entries'))
                                     ->state(fn (Task $record): int => $record->timesheets()->count())
                                     ->icon('heroicon-o-clock')
-                                    ->visible(static::isTimesheetEnabled()),
+                                    ->visible(static::getTimeSettings()->enable_timesheets),
                             ]),
                     ])
                     ->columnSpan(['lg' => 1]),
@@ -844,18 +844,14 @@ class TaskResource extends Resource
             ->columns(3);
     }
 
-    static private function isTimesheetEnabled(): bool
+    static private function getTimeSettings(): TimeSettings
     {
-        $timeSettings = once(fn () => app(TimeSettings::class));
-
-        return $timeSettings->enable_timesheets;
+        return once(fn () => app(TimeSettings::class));
     }
 
-    static private function isMilestoneEnabled(): bool
+    static private function getTaskSettings(): TaskSettings
     {
-        $taskSettings = once(fn () => app(TaskSettings::class));
-
-        return $taskSettings->enable_milestones;
+        return once(fn () => app(TaskSettings::class));
     }
 
     public static function getRecordSubNavigation(Page $page): array
