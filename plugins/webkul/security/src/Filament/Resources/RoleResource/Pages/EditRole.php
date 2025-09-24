@@ -3,26 +3,16 @@
 namespace Webkul\Security\Filament\Resources\RoleResource\Pages;
 
 use BezhanSalleh\FilamentShield\Support\Utils;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Webkul\Security\Filament\Resources\RoleResource;
 use Spatie\Permission\PermissionRegistrar;
+use Webkul\Security\Filament\Resources\RoleResource;
 
 class EditRole extends EditRecord
 {
-    public function mount($record): void
-    {
-        parent::mount($record);
-
-        if ($this->record->name == config('filament-shield.panel_user.name')) {
-            abort(403, 'The admin role cannot be edited.');
-        }
-    }
-
     protected static string $resource = RoleResource::class;
 
     public Collection $permissions;
@@ -30,7 +20,7 @@ class EditRole extends EditRecord
     protected function getActions(): array
     {
         return [
-            Actions\DeleteAction::make()
+            DeleteAction::make()
                 ->hidden(fn (Model $record) => $record->name == config('filament-shield.panel_user.name')),
         ];
     }
@@ -83,8 +73,8 @@ class EditRole extends EditRecord
             $missingPermissions = $chunk->diff($existingPermissions->keys());
 
             if ($missingPermissions->isNotEmpty()) {
-                $insertData = $missingPermissions->map(fn($name) => [
-                    'name' => $name,
+                $insertData = $missingPermissions->map(fn ($name) => [
+                    'name'       => $name,
                     'guard_name' => $guard,
                     'created_at' => now(),
                     'updated_at' => now(),

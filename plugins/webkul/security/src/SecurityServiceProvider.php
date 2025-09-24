@@ -49,5 +49,6 @@ class SecurityServiceProvider extends PackageServiceProvider
         $loader->alias('bouncer', BouncerFacade::class);
 
         $this->app->singleton('bouncer', Bouncer::class);
+        $this->app->singleton(PermissionRegistrar::class);
     }
 }

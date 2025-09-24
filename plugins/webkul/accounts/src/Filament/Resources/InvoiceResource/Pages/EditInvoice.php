@@ -2,7 +2,7 @@
 
 namespace Webkul\Account\Filament\Resources\InvoiceResource\Pages;
 
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Auth;
@@ -11,9 +11,12 @@ use Webkul\Account\Filament\Resources\InvoiceResource;
 use Webkul\Account\Filament\Resources\InvoiceResource\Actions as BaseActions;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
 use Webkul\Partner\Models\Partner;
+use Webkul\Support\Concerns\HasRepeaterColumnManager;
 
 class EditInvoice extends EditRecord
 {
+    use HasRepeaterColumnManager;
+
     protected static string $resource = InvoiceResource::class;
 
     protected function getRedirectUrl(): string
@@ -43,7 +46,7 @@ class EditInvoice extends EditRecord
                 ->setTemplate('accounts::invoice/actions/preview.index'),
             BaseActions\PrintAndSendAction::make(),
             BaseActions\CreditNoteAction::make(),
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
         ];
     }
 

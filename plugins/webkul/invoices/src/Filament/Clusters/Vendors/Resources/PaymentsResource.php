@@ -3,12 +3,14 @@
 namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources;
 
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Infolists\Infolist;
-use Filament\Pages\SubNavigationPosition;
+use Filament\Pages\Enums\SubNavigationPosition;
+use Filament\Schemas\Schema;
 use Webkul\Account\Filament\Resources\PaymentsResource as BasePaymentsResource;
 use Webkul\Invoice\Filament\Clusters\Vendors;
-use Webkul\Invoice\Filament\Clusters\Vendors\Resources\PaymentsResource\Pages;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\PaymentsResource\Pages\CreatePayments;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\PaymentsResource\Pages\EditPayments;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\PaymentsResource\Pages\ListPayments;
+use Webkul\Invoice\Filament\Clusters\Vendors\Resources\PaymentsResource\Pages\ViewPayments;
 use Webkul\Invoice\Models\Payment;
 
 class PaymentsResource extends BasePaymentsResource
@@ -21,7 +23,7 @@ class PaymentsResource extends BasePaymentsResource
 
     protected static ?string $cluster = Vendors::class;
 
-    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getModelLabel(): string
     {
@@ -38,9 +40,9 @@ class PaymentsResource extends BasePaymentsResource
         return null;
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        $form = parent::form($form);
+        $form = parent::form($schema);
 
         $components = $form->getComponents();
 
@@ -68,9 +70,9 @@ class PaymentsResource extends BasePaymentsResource
         return $form->components($components);
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        $infolist = parent::infolist($infolist);
+        $infolist = parent::infolist($schema);
 
         $components = $infolist->getComponents();
 
@@ -92,10 +94,10 @@ class PaymentsResource extends BasePaymentsResource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListPayments::route('/'),
-            'create' => Pages\CreatePayments::route('/create'),
-            'view'   => Pages\ViewPayments::route('/{record}'),
-            'edit'   => Pages\EditPayments::route('/{record}/edit'),
+            'index'  => ListPayments::route('/'),
+            'create' => CreatePayments::route('/create'),
+            'view'   => ViewPayments::route('/{record}'),
+            'edit'   => EditPayments::route('/{record}/edit'),
         ];
     }
 }

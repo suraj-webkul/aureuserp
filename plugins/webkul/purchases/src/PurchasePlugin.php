@@ -5,6 +5,7 @@ namespace Webkul\Purchase;
 use Filament\Contracts\Plugin;
 use Filament\Navigation\NavigationItem;
 use Filament\Panel;
+use ReflectionClass;
 use Webkul\Purchase\Filament\Admin\Clusters\Settings\Pages\ManageProducts;
 use Webkul\Support\Package;
 
@@ -42,7 +43,7 @@ class PurchasePlugin implements Plugin
                     ->discoverWidgets(in: $this->getPluginBasePath('/Filament/Admin/Widgets'), for: 'Webkul\\Purchase\\Filament\\Admin\\Widgets')
                     ->navigationItems([
                         NavigationItem::make('settings')
-                            ->label('Settings')
+                            ->label(fn () => __('purchases::app.navigation.settings.label'))
                             ->url(fn () => ManageProducts::getUrl())
                             ->icon('heroicon-o-wrench')
                             ->group('Purchase')
@@ -58,7 +59,7 @@ class PurchasePlugin implements Plugin
 
     protected function getPluginBasePath($path = null): string
     {
-        $reflector = new \ReflectionClass(get_class($this));
+        $reflector = new ReflectionClass(get_class($this));
 
         return dirname($reflector->getFileName()).($path ?? '');
     }

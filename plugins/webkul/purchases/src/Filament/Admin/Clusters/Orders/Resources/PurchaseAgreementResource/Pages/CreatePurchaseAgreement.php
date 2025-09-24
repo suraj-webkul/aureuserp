@@ -6,11 +6,14 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Purchase\Enums;
+use Webkul\Purchase\Enums\RequisitionState;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\PurchaseAgreementResource;
+use Webkul\Support\Concerns\HasRepeaterColumnManager;
 
 class CreatePurchaseAgreement extends CreateRecord
 {
+    use HasRepeaterColumnManager;
+
     protected static string $resource = PurchaseAgreementResource::class;
 
     public function getTitle(): string|Htmlable
@@ -35,7 +38,7 @@ class CreatePurchaseAgreement extends CreateRecord
     {
         $data['creator_id'] = Auth::id();
 
-        $data['state'] ??= Enums\RequisitionState::DRAFT;
+        $data['state'] ??= RequisitionState::DRAFT;
 
         return $data;
     }

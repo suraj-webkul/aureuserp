@@ -109,24 +109,4 @@ class UserPolicy
     {
         return $user->can('restore_any_user');
     }
-
-    /**
-     * Determine whether the user can replicate.
-     */
-    public function replicate(User $user, User $record): bool
-    {
-        if (! $user->can('replicate_user')) {
-            return false;
-        }
-
-        return $this->hasAccess($user, $record, 'createdBy');
-    }
-
-    /**
-     * Determine whether the user can reorder.
-     */
-    public function reorder(User $user): bool
-    {
-        return $user->can('reorder_user');
-    }
 }

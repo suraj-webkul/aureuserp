@@ -4,12 +4,15 @@ namespace Webkul\Account\Filament\Resources\InvoiceResource\Pages;
 
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
-use Webkul\Account\Enums;
+use Webkul\Account\Enums\MoveType;
 use Webkul\Account\Facades\Account;
 use Webkul\Account\Filament\Resources\InvoiceResource;
+use Webkul\Support\Concerns\HasRepeaterColumnManager;
 
 class CreateInvoice extends CreateRecord
 {
+    use HasRepeaterColumnManager;
+
     protected static string $resource = InvoiceResource::class;
 
     protected function getRedirectUrl(): string
@@ -27,7 +30,7 @@ class CreateInvoice extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $data['move_type'] ??= Enums\MoveType::OUT_INVOICE;
+        $data['move_type'] ??= MoveType::OUT_INVOICE;
 
         $data['date'] = now();
 

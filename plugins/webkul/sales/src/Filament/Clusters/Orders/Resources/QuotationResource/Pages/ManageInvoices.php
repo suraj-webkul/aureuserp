@@ -2,9 +2,10 @@
 
 namespace Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource\Pages;
 
-use Filament\Pages\SubNavigationPosition;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\ManageRelatedRecords;
-use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Webkul\Account\Filament\Resources\InvoiceResource;
@@ -16,9 +17,9 @@ class ManageInvoices extends ManageRelatedRecords
 
     protected static string $relationship = 'accountMoves';
 
-    protected static ?string $navigationIcon = 'heroicon-o-banknotes';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-banknotes';
 
-    public function getSubNavigationPosition(): SubNavigationPosition
+    public static function getSubNavigationPosition(): SubNavigationPosition
     {
         return SubNavigationPosition::Top;
     }
@@ -32,12 +33,12 @@ class ManageInvoices extends ManageRelatedRecords
     {
         return InvoiceResource::table($table)
             ->query($this->getTableQuery())
-            ->actions([
-                Tables\Actions\ViewAction::make()
+            ->recordActions([
+                ViewAction::make()
                     ->url(fn ($record) => InvoiceResource::getUrl('view', ['record' => $record]))
                     ->openUrlInNewTab(false),
 
-                Tables\Actions\EditAction::make()
+                EditAction::make()
                     ->url(fn ($record) => InvoiceResource::getUrl('edit', ['record' => $record]))
                     ->openUrlInNewTab(false),
             ]);
