@@ -5,7 +5,7 @@ namespace Webkul\Support;
 use BezhanSalleh\FilamentShield\Facades\FilamentShield;
 use Illuminate\Support\Str;
 
-class PermissionManager 
+class PermissionManager
 {
     public function managePermissions(): void
     {
@@ -62,12 +62,25 @@ class PermissionManager
     protected function getConflictingResources(): array
     {
         return [
-            'Webkul\Blog\Filament\Customer\Resources\CategoryResource',
-            'Webkul\Product\Filament\Resources\CategoryResource',
+            'Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\CategoryResource',
+            'Webkul\Blog\Filament\Admin\Clusters\Configurations\Resources\TagResource',
+            'Webkul\Employee\Filament\Clusters\Configurations\Resources\ActivityPlanResource',
+            'Webkul\Project\Filament\Clusters\Configurations\Resources\TagResource',
+            'Webkul\Recruitment\Filament\Clusters\Configurations\Resources\ActivityPlanResource',
+            'Webkul\Recruitment\Filament\Clusters\Configurations\Resources\ActivityTypeResource',
+            'Webkul\Recruitment\Filament\Clusters\Configurations\Resources\DepartmentResource',
+            'Webkul\Recruitment\Filament\Clusters\Configurations\Resources\EmploymentTypeResource',
+            'Webkul\Recruitment\Filament\Clusters\Configurations\Resources\JobPositionResource',
+            'Webkul\Recruitment\Filament\Clusters\Configurations\Resources\SkillTypeResource',
+            'Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityPlanResource',
+            'Webkul\Sale\Filament\Clusters\Configuration\Resources\ActivityTypeResource',
+            'Webkul\Sale\Filament\Clusters\Configuration\Resources\TagResource',
+            'Webkul\TimeOff\Filament\Clusters\Configurations\Resources\ActivityTypeResource',
             'Webkul\Inventory\Filament\Clusters\Configurations\Resources\ProductCategoryResource',
             'Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductCategoryResource',
             'Webkul\Purchase\Filament\Admin\Clusters\Configurations\Resources\ProductCategoryResource',
             'Webkul\Invoice\Filament\Clusters\Configuration\Resources\ProductCategoryResource',
+            'Webkul\Invoice\Filament\Clusters\Configuration\Resources\BankAccountResource'
         ];
     }
 }
