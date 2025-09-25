@@ -14,6 +14,7 @@
 * #771 [fixed] - Refactor TableView plugin.
 * #772 [fixed] - Refactored IconPicker.
 * #777 [fixed] - Terminal error during composer install due to missing SQLite database file.
+* #784 [fixed] - Fixed dashboard issue.
 
 
 
