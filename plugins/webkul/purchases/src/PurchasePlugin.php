@@ -41,11 +41,15 @@ class PurchasePlugin implements Plugin
                     ->discoverPages(in: $this->getPluginBasePath('/Filament/Admin/Pages'), for: 'Webkul\\Purchase\\Filament\\Admin\\Pages')
                     ->discoverClusters(in: $this->getPluginBasePath('/Filament/Admin/Clusters'), for: 'Webkul\\Purchase\\Filament\\Admin\\Clusters')
                     ->discoverWidgets(in: $this->getPluginBasePath('/Filament/Admin/Widgets'), for: 'Webkul\\Purchase\\Filament\\Admin\\Widgets')
+                    ->navigationGroups([
+                        \Filament\Navigation\NavigationGroup::make()
+                            ->label('Purchase')
+                            ->icon('icon-purchases'),
+                    ])
                     ->navigationItems([
                         NavigationItem::make('settings')
                             ->label(fn () => __('purchases::app.navigation.settings.label'))
                             ->url(fn () => ManageProducts::getUrl())
-                            ->icon('heroicon-o-wrench')
                             ->group('Purchase')
                             ->sort(4),
                     ]);
