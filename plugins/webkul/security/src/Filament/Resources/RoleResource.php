@@ -32,6 +32,8 @@ class RoleResource extends RolesRoleResource
 {
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static string|\BackedEnum|null $navigationIcon = null;
+
     protected static ?int $navigationSort = 1;
 
     protected static $permissionsCollection;

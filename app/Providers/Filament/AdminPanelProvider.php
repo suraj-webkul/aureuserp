@@ -51,8 +51,6 @@ class AdminPanelProvider extends PanelProvider
             ->navigationGroups([
                 NavigationGroup::make()
                     ->label('Dashboard'),
-                NavigationGroup::make()
-                    ->label('Settings'),
             ])
             ->userMenuItems([
                 'profile' => Action::make('profile')
