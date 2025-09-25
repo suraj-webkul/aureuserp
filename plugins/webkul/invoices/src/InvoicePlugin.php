@@ -33,11 +33,15 @@ class InvoicePlugin implements Plugin
                     ->discoverPages(in: $this->getPluginBasePath('/Filament/Pages'), for: 'Webkul\\Invoice\\Filament\\Pages')
                     ->discoverClusters(in: $this->getPluginBasePath('/Filament/Clusters'), for: 'Webkul\\Invoice\\Filament\\Clusters')
                     ->discoverWidgets(in: $this->getPluginBasePath('/Filament/Widgets'), for: 'Webkul\\Invoice\\Filament\\Widgets')
+                    ->navigationGroups([
+                        \Filament\Navigation\NavigationGroup::make()
+                            ->label('Invoices')
+                            ->icon('icon-invoices'),
+                    ])
                     ->navigationItems([
                         NavigationItem::make('settings')
                             ->label(fn () => __('invoices::app.navigation.settings.label'))
                             ->url(fn () => Products::getUrl())
-                            ->icon('heroicon-o-wrench')
                             ->group('Invoices')
                             ->sort(4),
                     ]);

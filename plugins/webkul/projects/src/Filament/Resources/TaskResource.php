@@ -82,8 +82,6 @@ class TaskResource extends Resource
 
     protected static ?string $slug = 'project/tasks';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-list';
-
     protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     protected static ?string $recordTitleAttribute = 'title';

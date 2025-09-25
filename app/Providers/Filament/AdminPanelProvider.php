@@ -45,7 +45,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->unsavedChangesAlerts()
             // ->spa()
-            ->sidebarCollapsibleOnDesktop()
+            // ->sidebarCollapsibleOnDesktop()
+            ->topNavigation()
             ->maxContentWidth(Width::Full)
             ->navigationGroups([
                 NavigationGroup::make()

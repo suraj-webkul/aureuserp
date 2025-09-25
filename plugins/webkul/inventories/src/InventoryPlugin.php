@@ -34,11 +34,15 @@ class InventoryPlugin implements Plugin
                     ->discoverPages(in: $this->getPluginBasePath('/Filament/Pages'), for: 'Webkul\\Inventory\\Filament\\Pages')
                     ->discoverClusters(in: $this->getPluginBasePath('/Filament/Clusters'), for: 'Webkul\\Inventory\\Filament\\Clusters')
                     ->discoverWidgets(in: $this->getPluginBasePath('/Filament/Widgets'), for: 'Webkul\\Inventory\\Filament\\Widgets')
+                    ->navigationGroups([
+                        \Filament\Navigation\NavigationGroup::make()
+                            ->label('Inventory')
+                            ->icon('icon-inventories'),
+                    ])
                     ->navigationItems([
                         NavigationItem::make('settings')
                             ->label(fn () => __('inventories::app.navigation.settings.label'))
                             ->url(fn () => ManageOperations::getUrl())
-                            ->icon('heroicon-o-wrench')
                             ->group('Inventory')
                             ->sort(4),
                     ]);

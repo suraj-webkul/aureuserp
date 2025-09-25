@@ -34,11 +34,15 @@ class ProjectPlugin implements Plugin
                     ->discoverPages(in: $this->getPluginBasePath('/Filament/Pages'), for: 'Webkul\\Project\\Filament\\Pages')
                     ->discoverClusters(in: $this->getPluginBasePath('/Filament/Clusters'), for: 'Webkul\\Project\\Filament\\Clusters')
                     ->discoverWidgets(in: $this->getPluginBasePath('/Filament/Widgets'), for: 'Webkul\\Project\\Filament\\Widgets')
+                    ->navigationGroups([
+                        \Filament\Navigation\NavigationGroup::make()
+                            ->label('Project')
+                            ->icon('icon-projects'),
+                    ])
                     ->navigationItems([
                         NavigationItem::make('settings')
                             ->label(fn () => __('projects::app.navigation.settings.label'))
                             ->url(fn () => ManageTasks::getUrl())
-                            ->icon('heroicon-o-wrench')
                             ->group('Project')
                             ->sort(3),
                     ]);

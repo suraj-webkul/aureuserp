@@ -26,8 +26,6 @@ class Dashboard extends BaseDashboard
 
     protected static string $routePath = 'project';
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-folder';
-
     protected static ?string $cluster = DashboardCluster::class;
 
     public static function getNavigationLabel(): string
