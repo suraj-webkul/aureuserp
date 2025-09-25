@@ -171,10 +171,6 @@ class SaleManager
 
         $line = $this->computeQtyDelivered($line);
 
-        if ($line->qty_delivered_method == QtyDeliveredMethod::MANUAL) {
-            $line->qty_delivered = $line->qty_delivered ?? 0;
-        }
-
         $line->qty_to_invoice = $line->qty_delivered - $line->qty_invoiced;
 
         $subTotal = $line->price_unit * $line->product_qty;
@@ -354,7 +350,7 @@ class SaleManager
         if ($line->is_expense) {
             $line->qty_delivered_method = 'analytic';
         } else {
-            $line->qty_delivered_method = 'manual';
+            $line->qty_delivered_method = 'stock_move';
         }
 
         return $line;
@@ -368,25 +364,32 @@ class SaleManager
             return $line;
         }
 
+        $policy = $line->product?->invoice_policy ?? $this->invoiceSettings->invoice_policy->value;
+
         if (
             $line->is_downpayment
             && $line->untaxed_amount_to_invoice == 0
         ) {
             $line->invoice_status = InvoiceStatus::INVOICED;
-        } elseif ($line->qty_to_invoice != 0) {
-            $line->invoice_status = InvoiceStatus::TO_INVOICE;
-        } elseif (
-            $line->product->invoice_policy === InvoiceEnums\InvoicePolicy::ORDER->value
-            && $line->product_uom_qty >= 0
-            && $line->qty_delivered > $line->product_uom_qty
-        ) {
-            $line->invoice_status = InvoiceStatus::UP_SELLING;
-        } elseif ($line->qty_invoiced >= $line->product_uom_qty) {
-            $line->invoice_status = InvoiceStatus::INVOICED;
+        } elseif ($policy === InvoiceEnums\InvoicePolicy::ORDER->value) {
+            if ($line->qty_invoiced >= $line->product_uom_qty) {
+                $line->invoice_status = InvoiceStatus::INVOICED;
+            } elseif ($line->qty_delivered > $line->product_uom_qty) {
+                $line->invoice_status = InvoiceStatus::UP_SELLING;
+            } else {
+                $line->invoice_status = InvoiceStatus::TO_INVOICE;
+            }
+        } elseif ($policy === InvoiceEnums\InvoicePolicy::DELIVERY->value) {
+            if ($line->qty_invoiced >= $line->product_uom_qty) {
+                $line->invoice_status = InvoiceStatus::INVOICED;
+            } elseif ($line->qty_to_invoice != 0 || $line->qty_delivered == $line->product_uom_qty) {
+                $line->invoice_status = InvoiceStatus::TO_INVOICE;
+            } else {
+                $line->invoice_status = InvoiceStatus::NO;
+            }
         } else {
             $line->invoice_status = InvoiceStatus::NO;
         }
-
         return $line;
     }
 
@@ -550,11 +553,11 @@ class SaleManager
         }
 
         foreach ($moves as $move) {
-            $isOutgoingStrict = $strict && $move->destinationLocation == InventoryEnums\LocationType::CUSTOMER;
+            $isOutgoingStrict = $strict && $move->destinationLocation->type == InventoryEnums\LocationType::CUSTOMER;
 
             $isOutgoingNonStrict = ! $strict
                 && in_array($move->rule_id, $triggeringRuleIds)
-                && ($move->finalLocation ?? $move->destinationLocation) == InventoryEnums\LocationType::CUSTOMER;
+                && ($move->finalLocation ?? $move->destinationLocation->type) == InventoryEnums\LocationType::CUSTOMER;
 
             if ($isOutgoingStrict || $isOutgoingNonStrict) {
                 if (
