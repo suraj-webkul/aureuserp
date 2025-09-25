@@ -607,7 +607,7 @@ class SaleManager
     private function createAccountMoveLine(AccountMove $accountMove, OrderLine $orderLine): void
     {
         $productInvoicePolicy = $orderLine->product?->invoice_policy;
-        $invoiceSetting = $this->invoiceSettings->invoice_policy;
+        $invoiceSetting = $this->invoiceSettings->invoice_policy->value;
 
         $quantity = ($productInvoicePolicy ?? $invoiceSetting) === InvoiceEnums\InvoicePolicy::ORDER->value
             ? $orderLine->product_uom_qty
