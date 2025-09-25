@@ -30,7 +30,12 @@ class ContactPlugin implements Plugin
                 $panel->discoverResources(in: $this->getPluginBasePath('/Filament/Resources'), for: 'Webkul\\Contact\\Filament\\Resources')
                     ->discoverPages(in: $this->getPluginBasePath('/Filament/Pages'), for: 'Webkul\\Contact\\Filament\\Pages')
                     ->discoverClusters(in: $this->getPluginBasePath('/Filament/Clusters'), for: 'Webkul\\Contact\\Filament\\Clusters')
-                    ->discoverWidgets(in: $this->getPluginBasePath('/Filament/Widgets'), for: 'Webkul\\Contact\\Filament\\Widgets');
+                    ->discoverWidgets(in: $this->getPluginBasePath('/Filament/Widgets'), for: 'Webkul\\Contact\\Filament\\Widgets')
+                    ->navigationGroups([
+                        \Filament\Navigation\NavigationGroup::make()
+                            ->label('Contact')
+                            ->icon('icon-contacts'),
+                    ]);
             });
     }
 

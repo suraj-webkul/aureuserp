@@ -2,6 +2,8 @@
 
 namespace Webkul\TimeOff\Filament\Pages;
 
+use BackedEnum;
+use Illuminate\Contracts\Support\Htmlable;
 use Filament\Pages\Dashboard as BaseDashboard;
 use Webkul\TimeOff\Filament\Widgets\OverviewCalendarWidget;
 
@@ -9,9 +11,12 @@ class Overview extends BaseDashboard
 {
     protected static string $routePath = 'time-off';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-calendar';
-
     protected static ?int $navigationSort = 2;
+
+    public static function getNavigationIcon(): string | BackedEnum | Htmlable | null
+    {
+        return null;
+    }
 
     public function getTitle(): string
     {

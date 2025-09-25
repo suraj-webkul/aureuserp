@@ -31,7 +31,12 @@ class TimeOffPlugin implements Plugin
                 $panel->discoverResources(in: $this->getPluginBasePath('/Filament/Resources'), for: 'Webkul\\TimeOff\\Filament\\Resources')
                     ->discoverPages(in: $this->getPluginBasePath('/Filament/Pages'), for: 'Webkul\\TimeOff\\Filament\\Pages')
                     ->discoverClusters(in: $this->getPluginBasePath('/Filament/Clusters'), for: 'Webkul\\TimeOff\\Filament\\Clusters')
-                    ->discoverWidgets(in: $this->getPluginBasePath('/Filament/Widgets'), for: 'Webkul\\TimeOff\\Filament\\Widgets');
+                    ->discoverWidgets(in: $this->getPluginBasePath('/Filament/Widgets'), for: 'Webkul\\TimeOff\\Filament\\Widgets')
+                    ->navigationGroups([
+                        \Filament\Navigation\NavigationGroup::make()
+                            ->label('Time Off')
+                            ->icon('icon-time-offs'),
+                    ]);
             })
             ->plugin(
                 FullCalendarPlugin::make()
