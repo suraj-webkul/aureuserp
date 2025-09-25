@@ -181,59 +181,6 @@ trait TimeOffHelper
         ];
     }
 
-    /**
-     * Check if leave balance is sufficient
-     */
-    private function checkLeaveBalance(Employee $employee, array &$data, int $leaveTypeId, $leaveType, $action): void
-    {
-        $requestedDays = $data['number_of_days'];
-
-        $endDate = Carbon::now()->endOfYear();
-        $totalAllocated = LeaveAllocation::where('employee_id', $employee->id)
-            ->where('holiday_status_id', $leaveTypeId)
-            ->where(function ($query) use ($endDate) {
-                $query->where('date_to', '<=', $endDate)
-                    ->orWhereNull('date_to');
-            })
-            ->sum('number_of_days');
-
-        $totalTaken = Leave::where('employee_id', $employee->id)
-            ->where('holiday_status_id', $leaveTypeId)
-            ->where('state', '!=', State::REFUSE->value)
-            ->sum('number_of_days');
-
-        $availableBalance = round($totalAllocated - $totalTaken, 1);
-
-        if ($totalAllocated <= 0) {
-            Notification::make()
-                ->danger()
-                ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_no_allocation.title'))
-                ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_no_allocation.body', ['leaveType' => $leaveType->name]))
-                ->send();
-            if ($action) {
-                $action->halt();
-            } else {
-                $this->halt();
-            }
-        }
-
-        if ($requestedDays > $availableBalance) {
-            Notification::make()
-                ->danger()
-                ->title(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_insufficient_balance.title'))
-                ->body(__('time-off::filament/clusters/my-time/resources/my-time-off/pages/create-time-off.notification.leave_request_denied_insufficient_balance.body', [
-                    'available_balance' => $availableBalance,
-                    'requested_days'    => $requestedDays,
-                ]))
-                ->send();
-            if ($action) {
-                $action->halt();
-            } else {
-                $this->halt();
-            }
-        }
-    }
-
     public function getDurationInfo(array $data): array
     {
         if (! empty($data['request_unit_half'])) {
@@ -343,6 +290,7 @@ trait TimeOffHelper
 
         $totalAllocated = LeaveAllocation::where('employee_id', $employee->id)
             ->where('holiday_status_id', $leaveTypeId)
+            ->where('state', State::VALIDATE_TWO->value)
             ->where(function ($q) use ($endOfYear) {
                 $q->where('date_to', '<=', $endOfYear)
                     ->orWhereNull('date_to');
@@ -352,7 +300,7 @@ trait TimeOffHelper
         $totalTaken = Leave::where('employee_id', $employee->id)
             ->where('holiday_status_id', $leaveTypeId)
             ->where('state', '!=', State::REFUSE->value)
-            ->where(fn ($q) => true)  // maybe filtering out exclude record logic if passed
+            ->where(fn ($q) => true)  
             ->sum('number_of_days');
 
         $availableBalance = round($totalAllocated - $totalTaken, 1);
@@ -485,6 +433,7 @@ trait TimeOffHelper
 
         if (! empty($data['employee_id'])) {
             $employee = Employee::find($data['employee_id']);
+            $user = $employee->user;
         } else {
             $user = Auth::user();
             $employee = $user->employee;
