@@ -47,7 +47,7 @@ class WebsiteServiceProvider extends PackageServiceProvider
 
         if (! Package::isPluginInstalled(self::$name)) {
             Route::get('/', function () {
-                return redirect()->route('filament.admin..');
+                return redirect()->route('filament.admin.auth.login');
             });
         }
     }
