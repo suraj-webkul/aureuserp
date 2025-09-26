@@ -4,6 +4,7 @@
 
 * #748 [fixed] - Internal server error when opening the dashboard calendar in Time-off plugin.
 * #754 [fixed] - Fixed installation issue.
+* #755 [fixed] - Exception error after changing admin password – "Route [login] not defined.
 * #756 [fixed] - Added Missing Translation.
 * #757 [fixed] - Form table repeater.
 * #759 [fixed] - remove redundant theme imports from plugins to reduce CSS size.
@@ -13,8 +14,14 @@
 * #770 [fixed] - Optimized role performance issue.
 * #771 [fixed] - Refactor TableView plugin.
 * #772 [fixed] - Refactored IconPicker.
+* #774 [fixed] - Database not wiped during reinstallation, causing duplicate UOM (Unit of Measure) entries.
 * #777 [fixed] - Terminal error during composer install due to missing SQLite database file.
+* #781 [fixed] - Update accept invitation translations.
+* #783 [fixed] - Added 'buy' action placeholder text in RuleResource.
 * #784 [fixed] - Fixed dashboard issue.
+* #786 [fixed] - remove the unused imports.
+* #787 [fixed] - fix label translation key.
+* #789 [fixed] - Navigation refactor.
 
 
 
