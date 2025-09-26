@@ -3,7 +3,6 @@
 namespace Webkul\Recruitment\Filament\Pages;
 
 use BackedEnum;
-use Illuminate\Contracts\Support\Htmlable;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Pages\Dashboard as BaseDashboard;
@@ -11,6 +10,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\View\LegacyComponents\Widget;
+use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Employee\Models\Department;
 use Webkul\Employee\Models\EmployeeJobPosition;
 use Webkul\Recruitment\Filament\Widgets\ApplicantChartWidget;
@@ -34,7 +34,7 @@ class Recruitments extends BaseDashboard
         return __('recruitments::filament/pages/recruitment.navigation.group');
     }
 
-    public static function getNavigationIcon(): string | BackedEnum | Htmlable | null
+    public static function getNavigationIcon(): string|BackedEnum|Htmlable|null
     {
         return null;
     }
@@ -96,7 +96,13 @@ class Recruitments extends BaseDashboard
                             ->default(now())
                             ->native(false),
                     ])
-                    ->columns(3)->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->columns([
+                        'default' => 1,
+                        'sm'      => 2,
+                        'md'      => 3,
+                        'xl'      => 7,
+                    ]),
             ]);
     }
 
