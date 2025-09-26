@@ -90,36 +90,100 @@ class SendByEmailAction extends Action
 
     private function handleEmailResults(array $result): void
     {
-        $sent = $result['sent'];
-        $failed = $result['failed'];
+        $sent = $result['sent'] ?? [];
+        $failed = $result['failed'] ?? [];
 
-        if (! empty($sent)) {
-            Notification::make()
-                ->success()
-                ->title('Emails Sent Successfully')
-                ->body('Quotation sent to: '.implode(', ', $sent))
-                ->send();
-        }
+        $sentCount = count($sent);
+        $failedCount = count($failed);
+        $totalCount = $sentCount + $failedCount;
 
-        if (! empty($failed)) {
-            $failedMessages = [];
-            foreach ($failed as $partner => $reason) {
-                $failedMessages[] = "$partner: $reason";
-            }
-
+        if ($totalCount === 0) {
             Notification::make()
                 ->warning()
-                ->title('Some Emails Failed')
-                ->body('Failed to send to: '.implode('; ', $failedMessages))
+                ->title(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.actions.notification.email.no_recipients.title'))
+                ->body(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.actions.notification.email.no_recipients.body'))
                 ->send();
+
+            return;
         }
 
-        if (empty($sent)) {
+        if ($sentCount > 0 && $failedCount === 0) {
+            Notification::make()
+                ->success()
+                ->title(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.actions.notification.email.all_success.title'))
+                ->body($this->formatSuccessMessage($sent, $sentCount))
+                ->send();
+
+            return;
+        }
+
+        if ($sentCount === 0 && $failedCount > 0) {
             Notification::make()
                 ->danger()
-                ->title('No Emails Sent')
-                ->body('Unable to send quotation to any selected partners.')
+                ->title(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.actions.notification.email.all_failed.title'))
+                ->body($this->formatFailureMessage($failed))
+                ->send();
+
+            return;
+        }
+
+        if ($sentCount > 0 && $failedCount > 0) {
+            Notification::make()
+                ->warning()
+                ->title(__('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.actions.notification.email.partial_success.title'))
+                ->body($this->formatMixedMessage($sent, $failed, $sentCount, $failedCount))
                 ->send();
         }
+    }
+
+    private function formatSuccessMessage(array $sent, int $count): string
+    {
+        $recipients = implode(', ', $sent);
+
+        return __('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.actions.notification.email.all_success.body', [
+            'count'      => $count,
+            'recipients' => $recipients,
+            'plural'     => $count === 1
+                ? __('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.quotation')
+                : __('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.quotations'),
+        ]);
+    }
+
+    private function formatFailureMessage(array $failed): string
+    {
+        $failedMessages = [];
+        foreach ($failed as $partner => $reason) {
+            $failedMessages[] = __('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.actions.notification.email.failure_item', [
+                'partner' => $partner,
+                'reason'  => $reason,
+            ]);
+        }
+
+        return __('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.actions.notification.email.all_failed.body', [
+            'failures' => implode('; ', $failedMessages),
+        ]);
+    }
+
+    private function formatMixedMessage(array $sent, array $failed, int $sentCount, int $failedCount): string
+    {
+        $successPart = __('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.actions.notification.email.partial_success.sent_part', [
+            'count'      => $sentCount,
+            'recipients' => implode(', ', $sent),
+        ]);
+
+        $failedMessages = [];
+        foreach ($failed as $partner => $reason) {
+            $failedMessages[] = __('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.actions.notification.email.failure_item', [
+                'partner' => $partner,
+                'reason'  => $reason,
+            ]);
+        }
+
+        $failurePart = __('sales::filament/clusters/orders/resources/quotation/actions/send-by-email.actions.notification.email.partial_success.failed_part', [
+            'count'    => $failedCount,
+            'failures' => implode('; ', $failedMessages),
+        ]);
+
+        return $successPart."\n\n".$failurePart;
     }
 }
