@@ -17,6 +17,7 @@
 * #772 [fixed] - Refactored IconPicker.
 * #774 [fixed] - Database not wiped during reinstallation, causing duplicate UOM (Unit of Measure) entries.
 * #777 [fixed] - Terminal error during composer install due to missing SQLite database file.
+* #780 [fixed] - Access Control Failure: Users Can View Restricted Sections Without Proper Permissions.
 * #781 [fixed] - Update accept invitation translations.
 * #783 [fixed] - Added 'buy' action placeholder text in RuleResource.
 * #784 [fixed] - Fixed dashboard issue.
@@ -24,9 +25,11 @@
 * #786 [fixed] - remove the unused imports.
 * #787 [fixed] - fix label translation key.
 * #789 [fixed] - Navigation refactor.
+* #790 [fixed] - sale Invoice Creation Issue.
 * #794 [fixed] - made dashboard form responsive.
 * #795 [fixed] - Fixed logout issue.
 * #796 [fixed] - Fixed website login route issue.
+* #797 [fixed] - Removed double section from project dashboard.
 
 
 
