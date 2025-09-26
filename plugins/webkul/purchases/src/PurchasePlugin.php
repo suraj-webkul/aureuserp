@@ -45,7 +45,6 @@ class PurchasePlugin implements Plugin
                         NavigationItem::make('settings')
                             ->label(fn () => __('purchases::app.navigation.settings.label'))
                             ->url(fn () => ManageProducts::getUrl())
-                            ->icon('heroicon-o-wrench')
                             ->group('Purchase')
                             ->sort(4),
                     ]);

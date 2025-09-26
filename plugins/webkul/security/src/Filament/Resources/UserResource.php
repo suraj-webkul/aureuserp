@@ -53,8 +53,6 @@ class UserResource extends Resource
 
     protected static ?string $model = User::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-user-group';
-
     protected static ?int $navigationSort = 4;
 
     public static function getNavigationLabel(): string
@@ -266,7 +264,8 @@ class UserResource extends Resource
                     ->sortable(),
                 TextColumn::make('teams.name')
                     ->label(__('security::filament/resources/user.table.columns.teams'))
-                    ->badge(),
+                    ->badge()
+                    ->listWithLineBreaks(),
                 TextColumn::make('roles.name')
                     ->sortable()
                     ->label(__('security::filament/resources/user.table.columns.role')),
@@ -279,11 +278,14 @@ class UserResource extends Resource
                     ->sortable(),
                 TextColumn::make('allowedCompanies.name')
                     ->label(__('security::filament/resources/user.table.columns.allowed-company'))
-                    ->badge(),
+                    ->badge()
+                     ->listWithLineBreaks(),
                 TextColumn::make('createdBy.name')
                     ->label(__('security::filament/resources/user.table.columns.created-by'))
                     ->default('—')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->badge()
+                    ->listWithLineBreaks(),
                 TextColumn::make('created_at')
                     ->label(__('security::filament/resources/user.table.columns.created-at'))
                     ->dateTime()
@@ -460,9 +462,9 @@ class UserResource extends Resource
                                                     PermissionType::GLOBAL->value     => 'heroicon-o-globe-alt',
                                                     PermissionType::INDIVIDUAL->value => 'heroicon-o-user',
                                                     PermissionType::GROUP->value      => 'heroicon-o-user-group',
-                                                ][$record->resource_permission];
+                                                ][$record->resource_permission->value];
                                             })
-                                            ->formatStateUsing(fn ($state) => PermissionType::options()[$state] ?? $state)
+                                            ->formatStateUsing(fn ($state) => PermissionType::options()[$state->value ?? $state] ?? $state)
                                             ->placeholder('-')
                                             ->label(__('security::filament/resources/user.infolist.sections.permissions.entries.resource-permission')),
                                     ])

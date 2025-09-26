@@ -596,7 +596,10 @@ class QuotationResource extends Resource
             ])
             ->checkIfRecordIsSelectableUsing(
                 fn (Model $record): bool => static::can('delete', $record) && $record->state !== OrderState::SALE,
-            );
+            )
+            ->modifyQueryUsing(function (Builder $query) {
+                $query->with('currency');
+            });
     }
 
     public static function infolist(Schema $schema): Schema

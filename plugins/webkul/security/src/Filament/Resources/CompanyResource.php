@@ -58,8 +58,6 @@ class CompanyResource extends Resource
 
     protected static ?string $model = Company::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-building-office';
-
     protected static ?int $navigationSort = 2;
 
     public static function getNavigationLabel(): string
@@ -281,7 +279,7 @@ class CompanyResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
+            ->columns(static::mergeCustomTableColumns([
                 ImageColumn::make('partner.avatar')
                     ->circular()
                     ->imageSize(50)
@@ -332,7 +330,7 @@ class CompanyResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])
+            ]))
             ->columnManagerColumns(2)
             ->groups([
                 Tables\Grouping\Group::make('name')
@@ -367,7 +365,7 @@ class CompanyResource extends Resource
                     ->date()
                     ->collapsible(),
             ])
-            ->filters([
+            ->filters(static::mergeCustomTableFilters([
                 Tables\Filters\SelectFilter::make('is_active')
                     ->label(__('security::filament/resources/company.table.filters.status'))
                     ->options(CompanyStatus::options()),
@@ -377,7 +375,7 @@ class CompanyResource extends Resource
                     ->options(function () {
                         return Country::pluck('name', 'name');
                     }),
-            ])
+            ]))
             ->filtersFormColumns(2)
             ->recordActions([
                 ActionGroup::make([
@@ -515,6 +513,7 @@ class CompanyResource extends Resource
                                         IconEntry::make('is_active')
                                             ->label(__('security::filament/resources/company.infolist.sections.additional-information.entries.status'))
                                             ->boolean(),
+                                        ...static::getCustomInfolistEntries(),
                                     ])
                                     ->columns(2),
                             ])

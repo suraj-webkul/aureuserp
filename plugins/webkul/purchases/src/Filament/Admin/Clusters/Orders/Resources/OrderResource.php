@@ -159,7 +159,7 @@ class OrderResource extends Resource
                                     ->relationship('requisition', 'name')
                                     ->searchable()
                                     ->preload()
-                                    ->visible(fn (OrderSettings $setting): bool => $setting->enable_purchase_agreements),
+                                    ->visible(static::getOrderSettings()->enable_purchase_agreements),
                                 Select::make('currency_id')
                                     ->label(__('purchases::filament/admin/clusters/orders/resources/order.form.sections.general.fields.currency'))
                                     ->relationship('currency', 'name')
@@ -498,7 +498,10 @@ class OrderResource extends Resource
             ])
             ->checkIfRecordIsSelectableUsing(
                 fn (Model $record): bool => static::can('delete', $record) && $record->state !== OrderState::DONE,
-            );
+            )
+            ->modifyQueryUsing(function (Builder $query) {
+                return $query->with('currency');
+            });
     }
 
     public static function infolist(Schema $schema): Schema
@@ -528,7 +531,7 @@ class OrderResource extends Resource
                                         ->label(__('purchases::filament/admin/clusters/orders/resources/order.infolist.sections.general.entries.agreement'))
                                         ->placeholder('—')
                                         ->icon('heroicon-o-document-check')
-                                        ->visible(fn (OrderSettings $setting): bool => $setting->enable_purchase_agreements),
+                                        ->visible(static::getOrderSettings()->enable_purchase_agreements),
                                     TextEntry::make('currency.name')
                                         ->label(__('purchases::filament/admin/clusters/orders/resources/order.infolist.sections.general.entries.currency'))
                                         ->icon('heroicon-o-currency-dollar'),
@@ -586,15 +589,15 @@ class OrderResource extends Resource
                                                 TextEntry::make('uom.name')
                                                     ->label(__('purchases::filament/admin/clusters/orders/resources/order.infolist.tabs.products.repeater.products.entries.unit'))
                                                     ->icon('heroicon-o-beaker')
-                                                    ->visible(fn (ProductSettings $settings) => $settings->enable_uom),
+                                                    ->visible(static::getProductSettings()->enable_uom),
                                                 TextEntry::make('product_packaging_qty')
                                                     ->label(__('purchases::filament/admin/clusters/orders/resources/order.infolist.tabs.products.repeater.products.entries.packaging-qty'))
                                                     ->icon('heroicon-o-calculator')
-                                                    ->visible(fn (ProductSettings $settings) => $settings->enable_packagings),
+                                                    ->visible(static::getProductSettings()->enable_packagings),
                                                 TextEntry::make('productPackaging.name')
                                                     ->label(__('purchases::filament/admin/clusters/orders/resources/order.infolist.tabs.products.repeater.products.entries.packaging'))
                                                     ->icon('heroicon-o-gift')
-                                                    ->visible(fn (ProductSettings $settings) => $settings->enable_packagings),
+                                                    ->visible(static::getProductSettings()->enable_packagings),
                                                 TextEntry::make('price_unit')
                                                     ->label(__('purchases::filament/admin/clusters/orders/resources/order.infolist.tabs.products.repeater.products.entries.unit-price'))
                                                     ->money(fn ($record) => $record->order->currency->code),
@@ -724,17 +727,17 @@ class OrderResource extends Resource
                     ->label(__('purchases::filament/admin/clusters/orders/resources/order.form.tabs.products.repeater.products.columns.unit'))
                     ->width(150)
                     ->markAsRequired()
-                    ->visible(fn () => resolve(ProductSettings::class)->enable_uom)
+                    ->visible(static::getProductSettings()->enable_uom)
                     ->toggleable(),
                 TableColumn::make('product_packaging_qty')
                     ->label(__('purchases::filament/admin/clusters/orders/resources/order.form.tabs.products.repeater.products.columns.packaging-qty'))
                     ->width(150)
-                    ->visible(fn () => resolve(ProductSettings::class)->enable_packagings)
+                    ->visible(static::getProductSettings()->enable_packagings)
                     ->toggleable(),
                 TableColumn::make('product_packaging_id')
                     ->label(__('purchases::filament/admin/clusters/orders/resources/order.form.tabs.products.repeater.products.columns.packaging'))
                     ->width(250)
-                    ->visible(fn () => resolve(ProductSettings::class)->enable_packagings)
+                    ->visible(static::getProductSettings()->enable_packagings)
                     ->toggleable(),
                 TableColumn::make('price_unit')
                     ->label(__('purchases::filament/admin/clusters/orders/resources/order.form.tabs.products.repeater.products.columns.unit-price'))
@@ -824,7 +827,7 @@ class OrderResource extends Resource
                     ->afterStateUpdated(function (Set $set, Get $get) {
                         static::afterUOMUpdated($set, $get);
                     })
-                    ->visible(fn (ProductSettings $settings) => $settings->enable_uom)
+                    ->visible(static::getProductSettings()->enable_uom)
                     ->disabled(fn ($record): bool => in_array($record?->order->state, [OrderState::PURCHASE, OrderState::DONE, OrderState::CANCELED])),
                 TextInput::make('product_packaging_qty')
                     ->label(__('purchases::filament/admin/clusters/orders/resources/order.form.tabs.products.repeater.products.fields.packaging-qty'))
@@ -834,7 +837,7 @@ class OrderResource extends Resource
                     ->afterStateUpdated(function (Set $set, Get $get) {
                         static::afterProductPackagingQtyUpdated($set, $get);
                     })
-                    ->visible(fn (ProductSettings $settings) => $settings->enable_packagings)
+                    ->visible(static::getProductSettings()->enable_packagings)
                     ->disabled(fn ($record): bool => in_array($record?->order->state, [OrderState::DONE, OrderState::CANCELED])),
                 Select::make('product_packaging_id')
                     ->label(__('purchases::filament/admin/clusters/orders/resources/order.form.tabs.products.repeater.products.fields.packaging'))
@@ -848,7 +851,7 @@ class OrderResource extends Resource
                     ->afterStateUpdated(function (Set $set, Get $get) {
                         static::afterProductPackagingUpdated($set, $get);
                     })
-                    ->visible(fn (ProductSettings $settings) => $settings->enable_packagings)
+                    ->visible(static::getProductSettings()->enable_packagings)
                     ->disabled(fn ($record): bool => in_array($record?->order->state, [OrderState::DONE, OrderState::CANCELED])),
                 TextInput::make('price_unit')
                     ->label(__('purchases::filament/admin/clusters/orders/resources/order.form.tabs.products.repeater.products.fields.unit-price'))
@@ -1140,5 +1143,15 @@ class OrderResource extends Resource
         $set($prefix.'price_tax', $taxAmount);
 
         $set($prefix.'price_total', $subTotal + $taxAmount);
+    }
+
+    static public function getOrderSettings(): OrderSettings
+    {
+        return once(fn () => app(OrderSettings::class));
+    }
+
+    static public function getProductSettings(): ProductSettings
+    {
+        return once(fn () => app(ProductSettings::class));
     }
 }

@@ -30,8 +30,6 @@ class TimesheetResource extends Resource
 {
     protected static ?string $model = Timesheet::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-clock';
-
     public static function getNavigationLabel(): string
     {
         return __('timesheets::filament/resources/timesheet.navigation.title');

@@ -169,7 +169,7 @@ class OperationResource extends Resource
                             ->searchable()
                             ->preload()
                             ->required()
-                            ->visible(fn (WarehouseSettings $settings, Get $get): bool => $settings->enable_locations && OperationType::withTrashed()->find($get('operation_type_id'))?->type != Enums\OperationType::INCOMING)
+                            ->visible(fn (Get $get): bool => static::getWarehouseSettings()->enable_locations && OperationType::withTrashed()->find($get('operation_type_id'))?->type != Enums\OperationType::INCOMING)
                             ->disabled(fn ($record): bool => in_array($record?->state, [OperationState::DONE, OperationState::CANCELED])),
                         Select::make('destination_location_id')
                             ->label(__('inventories::filament/clusters/operations/resources/operation.form.sections.general.fields.destination-location'))
@@ -187,7 +187,7 @@ class OperationResource extends Resource
                             ->searchable()
                             ->preload()
                             ->required()
-                            ->visible(fn (WarehouseSettings $settings, Get $get): bool => $settings->enable_locations && OperationType::withTrashed()->find($get('operation_type_id'))?->type != Enums\OperationType::OUTGOING)
+                            ->visible(fn (Get $get): bool => static::getWarehouseSettings()->enable_locations && OperationType::withTrashed()->find($get('operation_type_id'))?->type != Enums\OperationType::OUTGOING)
                             ->disabled(fn ($record): bool => in_array($record?->state, [OperationState::DONE, OperationState::CANCELED])),
                     ])
                     ->columns(2),
@@ -260,12 +260,12 @@ class OperationResource extends Resource
                     ->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.from'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true)
-                    ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_locations),
+                    ->visible(static::getWarehouseSettings()->enable_locations),
                 TextColumn::make('destinationLocation.full_name')
                     ->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.to'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true)
-                    ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_locations),
+                    ->visible(static::getWarehouseSettings()->enable_locations),
                 TextColumn::make('partner.name')
                     ->label(__('inventories::filament/clusters/operations/resources/operation.table.columns.contact'))
                     ->placeholder('—')
@@ -368,7 +368,7 @@ class OperationResource extends Resource
                                     ->preload(),
                             )
                             ->icon('heroicon-o-user'),
-                        app(WarehouseSettings::class)->enable_locations
+                        static::getWarehouseSettings()->enable_locations
                             ? RelationshipConstraint::make('sourceLocation')
                                 ->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.source-location'))
                                 ->multiple()
@@ -381,7 +381,7 @@ class OperationResource extends Resource
                                 )
                                 ->icon('heroicon-o-map-pin')
                             : null,
-                        app(WarehouseSettings::class)->enable_locations
+                        static::getWarehouseSettings()->enable_locations
                             ? RelationshipConstraint::make('destinationLocation')
                                 ->label(__('inventories::filament/clusters/operations/resources/operation.table.filters.destination-location'))
                                 ->multiple()
@@ -470,12 +470,12 @@ class OperationResource extends Resource
                                 TextEntry::make('sourceLocation.full_name')
                                     ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.sections.general.entries.source-location'))
                                     ->icon('heroicon-o-arrow-up-tray')
-                                    ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_locations),
+                                    ->visible(static::getWarehouseSettings()->enable_locations),
 
                                 TextEntry::make('destinationLocation.full_name')
                                     ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.sections.general.entries.destination-location'))
                                     ->icon('heroicon-o-arrow-down-tray')
-                                    ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_locations),
+                                    ->visible(static::getWarehouseSettings()->enable_locations),
                             ]),
                     ]),
 
@@ -497,7 +497,7 @@ class OperationResource extends Resource
                                                     ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.final-location'))
                                                     ->icon('heroicon-o-map-pin')
                                                     ->placeholder('—')
-                                                    ->visible(fn (WarehouseSettings $settings) => $settings->enable_locations),
+                                                    ->visible(static::getWarehouseSettings()->enable_locations),
 
                                                 TextEntry::make('description_picking')
                                                     ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.description'))
@@ -519,7 +519,7 @@ class OperationResource extends Resource
                                                 TextEntry::make('productPackaging.name')
                                                     ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.packaging'))
                                                     ->icon('heroicon-o-gift')
-                                                    ->visible(fn (ProductSettings $settings) => $settings->enable_packagings)
+                                                    ->visible(static::getProductSettings()->enable_packagings)
                                                     ->placeholder('—'),
 
                                                 TextEntry::make('product_qty')
@@ -534,7 +534,7 @@ class OperationResource extends Resource
                                                 TextEntry::make('uom.name')
                                                     ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.unit'))
                                                     ->icon('heroicon-o-beaker')
-                                                    ->visible(fn (ProductSettings $settings) => $settings->enable_uom),
+                                                    ->visible(static::getProductSettings()->enable_uom),
 
                                                 IconEntry::make('is_picked')
                                                     ->label(__('inventories::filament/clusters/operations/resources/operation.infolist.tabs.operations.entries.picked'))
@@ -615,7 +615,7 @@ class OperationResource extends Resource
                 TableColumn::make('final_location_id')
                     ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.columns.final-location'))
                     ->width(250)
-                    ->visible(fn () => resolve(WarehouseSettings::class)->enable_locations)
+                    ->visible(static::getWarehouseSettings()->enable_locations)
                     ->toggleable(isToggledHiddenByDefault: true),
                 TableColumn::make('description_picking')
                     ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.columns.description'))
@@ -632,7 +632,7 @@ class OperationResource extends Resource
                 TableColumn::make('product_packaging_id')
                     ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.columns.packaging'))
                     ->width(250)
-                    ->visible(fn () => resolve(ProductSettings::class)->enable_packagings),
+                    ->visible(static::getProductSettings()->enable_packagings),
                 TableColumn::make('product_uom_qty')
                     ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.columns.demand'))
                     ->width(150)
@@ -646,7 +646,7 @@ class OperationResource extends Resource
                     ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.columns.unit'))
                     ->width(200)
                     ->markAsRequired()
-                    ->visible(fn () => resolve(ProductSettings::class)->enable_uom),
+                    ->visible(static::getProductSettings()->enable_uom),
                 TableColumn::make('is_picked')
                     ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.columns.picked'))
                     ->width(80)
@@ -710,7 +710,7 @@ class OperationResource extends Resource
                     })
                     ->searchable()
                     ->preload()
-                    ->visible(fn (WarehouseSettings $settings) => $settings->enable_locations)
+                    ->visible(static::getWarehouseSettings()->enable_locations)
                     ->disabled(fn ($record): bool => in_array($record?->state, [MoveState::DONE, MoveState::CANCELED])),
                 TextInput::make('description_picking')
                     ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.description'))
@@ -732,7 +732,7 @@ class OperationResource extends Resource
                     ->relationship('productPackaging', 'name')
                     ->searchable()
                     ->preload()
-                    ->visible(fn (ProductSettings $settings) => $settings->enable_packagings)
+                    ->visible(static::getProductSettings()->enable_packagings)
                     ->disabled(fn ($record): bool => in_array($record?->state, [MoveState::DONE, MoveState::CANCELED])),
                 TextInput::make('product_uom_qty')
                     ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.demand'))
@@ -768,7 +768,7 @@ class OperationResource extends Resource
                     ->afterStateUpdated(function (Set $set, Get $get) {
                         static::afterUOMUpdated($set, $get);
                     })
-                    ->visible(fn (ProductSettings $settings): bool => $settings->enable_uom)
+                    ->visible(static::getProductSettings()->enable_uom)
                     ->disabled(fn ($record): bool => in_array($record?->state, [MoveState::DONE, MoveState::CANCELED])),
                 Toggle::make('is_picked')
                     ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.picked'))
@@ -828,7 +828,7 @@ class OperationResource extends Resource
         $columns = 2;
 
         if (
-            app(TraceabilitySettings::class)->enable_lots_serial_numbers
+            static::getTraceabilitySettings()->enable_lots_serial_numbers
             && (
                 $move->product->tracking == ProductTracking::LOT
                 || $move->product->tracking == ProductTracking::SERIAL
@@ -846,7 +846,7 @@ class OperationResource extends Resource
             $columns--;
         }
 
-        if (app(OperationSettings::class)->enable_packages) {
+        if (static::getOperationSettings()->enable_packages) {
             $columns++;
         }
 
@@ -854,7 +854,7 @@ class OperationResource extends Resource
             ->icon('heroicon-m-bars-4')
             ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.lines.modal-heading'))
             ->modalSubmitActionLabel('Save')
-            ->visible(app(WarehouseSettings::class)->enable_locations)
+            ->visible(static::getWarehouseSettings()->enable_locations)
             ->schema([
                 Repeater::make('lines')
                     ->hiddenLabel()
@@ -952,7 +952,7 @@ class OperationResource extends Resource
                                     });
                             })
                             ->visible(
-                                fn (TraceabilitySettings $settings): bool => $settings->enable_lots_serial_numbers
+                                static::getTraceabilitySettings()->enable_lots_serial_numbers
                                     && (
                                         $move->product->tracking == ProductTracking::LOT
                                         || $move->product->tracking == ProductTracking::SERIAL
@@ -1008,7 +1008,7 @@ class OperationResource extends Resource
                                 });
                             })
                             ->disabled(fn (): bool => in_array($move->state, [MoveState::DONE, MoveState::CANCELED]))
-                            ->visible(fn (OperationSettings $settings) => $settings->enable_packages),
+                            ->visible(static::getOperationSettings()->enable_packages),
                         TextInput::make('qty')
                             ->label(__('inventories::filament/clusters/operations/resources/operation.form.tabs.operations.fields.lines.fields.quantity'))
                             ->numeric()
@@ -1017,7 +1017,7 @@ class OperationResource extends Resource
                             ->maxValue(fn () => $move->product->tracking == ProductTracking::SERIAL ? 1 : 999999999)
                             ->required()
                             ->suffix(function () use ($move) {
-                                if (! app(ProductSettings::class)->enable_uom) {
+                                if (! static::getProductSettings()->enable_uom) {
                                     return false;
                                 }
 
@@ -1213,5 +1213,25 @@ class OperationResource extends Resource
         }
 
         return null;
+    }
+
+    static public function getOperationSettings(): OperationSettings
+    {
+        return once(fn () => app(OperationSettings::class));
+    }
+
+    static public function getProductSettings(): ProductSettings
+    {
+        return once(fn () => app(ProductSettings::class));
+    }
+
+    static public function getTraceabilitySettings(): TraceabilitySettings
+    {
+        return once(fn () => app(TraceabilitySettings::class));
+    }
+
+    static public function getWarehouseSettings(): WarehouseSettings
+    {
+        return once(fn () => app(WarehouseSettings::class));
     }
 }
