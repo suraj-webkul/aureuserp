@@ -11,6 +11,7 @@
 * #762 [fixed] - Updated Readme.md.
 * #763 [fixed] - enhance ERP installation command with admin user options.
 * #764 [fixed] - updated permissions for various resources in filament-shield.
+* #767 [fixed] - time-off bug fix.
 * #770 [fixed] - Optimized role performance issue.
 * #771 [fixed] - Refactor TableView plugin.
 * #772 [fixed] - Refactored IconPicker.
@@ -19,9 +20,13 @@
 * #781 [fixed] - Update accept invitation translations.
 * #783 [fixed] - Added 'buy' action placeholder text in RuleResource.
 * #784 [fixed] - Fixed dashboard issue.
+* #785 [fixed] - fix double notification on Quotation mailing.
 * #786 [fixed] - remove the unused imports.
 * #787 [fixed] - fix label translation key.
 * #789 [fixed] - Navigation refactor.
+* #794 [fixed] - made dashboard form responsive.
+* #795 [fixed] - Fixed logout issue.
+* #796 [fixed] - Fixed website login route issue.
 
 
 
