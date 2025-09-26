@@ -24,7 +24,7 @@ use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
-use Webkul\Support\Models\Bank;
+use Webkul\Partner\Models\Bank;
 
 class BankResource extends Resource
 {

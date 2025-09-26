@@ -39,7 +39,8 @@ class ProjectPlugin implements Plugin
                             ->label(fn () => __('projects::app.navigation.settings.label'))
                             ->url(fn () => ManageTasks::getUrl())
                             ->group('Project')
-                            ->sort(3),
+                            ->sort(3)
+                            ->visible(fn() => ManageTasks::canAccess()),
                     ]);
             });
     }
@@ -53,6 +54,6 @@ class ProjectPlugin implements Plugin
     {
         $reflector = new ReflectionClass(get_class($this));
 
-        return dirname($reflector->getFileName()).($path ?? '');
+        return dirname($reflector->getFileName()) . ($path ?? '');
     }
 }

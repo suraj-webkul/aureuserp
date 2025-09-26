@@ -2,6 +2,7 @@
 
 namespace Webkul\TimeOff\Filament\Widgets;
 
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
@@ -14,6 +15,7 @@ use Webkul\TimeOff\Models\LeaveType;
 
 class MyTimeOffWidget extends BaseWidget
 {
+     use HasWidgetShield;
     protected function getHeading(): ?string
     {
         return __('time-off::filament/widgets/my-time-off-widget.heading.title');
