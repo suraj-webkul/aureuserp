@@ -7,6 +7,7 @@ use Filament\Actions\ViewAction;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\ManageRelatedRecords;
 use Filament\Tables\Table;
+use Livewire\Livewire;
 use Webkul\Account\Filament\Resources\InvoiceResource;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource;
 
@@ -26,6 +27,11 @@ class ManageInvoices extends ManageRelatedRecords
     public static function getNavigationLabel(): string
     {
         return __('Invoices');
+    }
+
+    public static function getNavigationBadge($parameters = []): ?string
+    {
+        return Livewire::current()->getRecord()->accountMoves()->count();
     }
 
     public function table(Table $table): Table
