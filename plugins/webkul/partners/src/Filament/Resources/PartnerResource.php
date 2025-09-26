@@ -57,8 +57,6 @@ class PartnerResource extends Resource
 {
     protected static ?string $model = Partner::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
-
     protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Schema $schema): Schema

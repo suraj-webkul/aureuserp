@@ -2,6 +2,8 @@
 
 namespace Webkul\Recruitment\Filament\Pages;
 
+use BackedEnum;
+use Illuminate\Contracts\Support\Htmlable;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Pages\Dashboard as BaseDashboard;
@@ -14,7 +16,6 @@ use Webkul\Employee\Models\EmployeeJobPosition;
 use Webkul\Recruitment\Filament\Widgets\ApplicantChartWidget;
 use Webkul\Recruitment\Filament\Widgets\JobPositionStatsWidget;
 use Webkul\Recruitment\Models\Stage;
-use Webkul\Support\Filament\Clusters\Dashboard as DashboardCluster;
 use Webkul\Support\Models\Company;
 
 class Recruitments extends BaseDashboard
@@ -23,13 +24,19 @@ class Recruitments extends BaseDashboard
 
     protected static string $routePath = 'recruitment';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-folder';
-
-    protected static ?string $cluster = DashboardCluster::class;
-
     public static function getNavigationLabel(): string
     {
         return __('recruitments::filament/pages/recruitment.navigation.title');
+    }
+
+    public static function getNavigationGroup(): string
+    {
+        return __('recruitments::filament/pages/recruitment.navigation.group');
+    }
+
+    public static function getNavigationIcon(): string | BackedEnum | Htmlable | null
+    {
+        return null;
     }
 
     public function filtersForm(Schema $schema): Schema

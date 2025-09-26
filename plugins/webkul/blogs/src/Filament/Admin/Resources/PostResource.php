@@ -50,8 +50,6 @@ class PostResource extends Resource
 
     protected static ?string $slug = 'website/posts';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-newspaper';
-
     protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     protected static ?string $recordTitleAttribute = 'title';
