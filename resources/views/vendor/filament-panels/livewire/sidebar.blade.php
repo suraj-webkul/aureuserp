@@ -62,14 +62,61 @@
                         }
                     @endphp
 
-                    <x-filament-panels::sidebar.group
+                    {{-- <x-filament-panels::sidebar.group
                         :active="$isGroupActive"
                         :collapsible="$isGroupCollapsible"
                         :icon="$groupIcon"
                         :items="$groupItems"
                         :label="$groupLabel"
                         :attributes="\Filament\Support\prepare_inherited_attributes($groupExtraSidebarAttributeBag)"
-                    />
+                    /> --}}
+                    <ul class="fi-sidebar-group-items">
+                        @foreach ($groupItems as $item)
+                            @php
+                                $isItemActive = $item->isActive();
+                                $isItemChildItemsActive = $item->isChildItemsActive();
+                                $itemActiveIcon = $item->getActiveIcon();
+                                $itemBadge = $item->getBadge();
+                                $itemBadgeColor = $item->getBadgeColor();
+                                $itemBadgeTooltip = $item->getBadgeTooltip();
+                                $itemChildItems = $item->getChildItems();
+                                $itemIcon = $item->getIcon();
+                                $shouldItemOpenUrlInNewTab = $item->shouldOpenUrlInNewTab();
+                                $itemUrl = $item->getUrl();
+                            @endphp
+
+                            <x-filament-panels::sidebar.item
+                                :active="$isItemActive"
+                                :active-child-items="$isItemChildItemsActive"
+                                :active-icon="$itemActiveIcon"
+                                :badge="$itemBadge"
+                                :badge-color="$itemBadgeColor"
+                                :badge-tooltip="$itemBadgeTooltip"
+                                :child-items="$itemChildItems"
+                                :first="$loop->first"
+                                :grouped="false"
+                                :icon="$itemIcon"
+                                :last="$loop->last"
+                                :should-open-url-in-new-tab="$shouldItemOpenUrlInNewTab"
+                                sidebar-collapsible="true"
+                                :url="$itemUrl"
+                            >
+                                {{ $item->getLabel() }}
+
+                                @if ($itemIcon instanceof \Illuminate\Contracts\Support\Htmlable)
+                                    <x-slot name="icon">
+                                        {{ $itemIcon }}
+                                    </x-slot>
+                                @endif
+
+                                @if ($itemActiveIcon instanceof \Illuminate\Contracts\Support\Htmlable)
+                                    <x-slot name="activeIcon">
+                                        {{ $itemActiveIcon }}
+                                    </x-slot>
+                                @endif
+                            </x-filament-panels::sidebar.item>
+                        @endforeach
+                    </ul>
                 @endforeach
             </ul>
 
