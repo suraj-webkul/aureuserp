@@ -28,15 +28,7 @@ class SupportPlugin implements Plugin
                     ->discoverResources(in: $this->getPluginBasePath('/Filament/Resources'), for: 'Webkul\\Support\\Filament\\Resources')
                     ->discoverPages(in: $this->getPluginBasePath('/Filament/Pages'), for: 'Webkul\\Support\\Filament\\Pages')
                     ->discoverClusters(in: $this->getPluginBasePath('/Filament/Clusters'), for: 'Webkul\\Support\\Filament\\Clusters')
-                    ->discoverClusters(in: $this->getPluginBasePath('/Filament/Widgets'), for: 'Webkul\\Support\\Filament\\Widgets')
-                    ->navigationGroups([
-                        \Filament\Navigation\NavigationGroup::make()
-                            ->label('Dashboard')
-                            ->icon('icon-dashboard'),
-                        \Filament\Navigation\NavigationGroup::make()
-                            ->label('Settings')
-                            ->icon('icon-settings'),
-                    ]);
+                    ->discoverClusters(in: $this->getPluginBasePath('/Filament/Widgets'), for: 'Webkul\\Support\\Filament\\Widgets');
             });
     }
 

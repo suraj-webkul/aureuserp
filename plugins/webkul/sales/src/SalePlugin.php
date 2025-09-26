@@ -33,11 +33,6 @@ class SalePlugin implements Plugin
                     ->discoverPages(in: $this->getPluginBasePath('/Filament/Pages'), for: 'Webkul\\Sale\\Filament\\Pages')
                     ->discoverClusters(in: $this->getPluginBasePath('/Filament/Clusters'), for: 'Webkul\\Sale\\Filament\\Clusters')
                     ->discoverWidgets(in: $this->getPluginBasePath('/Filament/Widgets'), for: 'Webkul\\Sale\\Filament\\Widgets')
-                    ->navigationGroups([
-                        \Filament\Navigation\NavigationGroup::make()
-                            ->label('Sales')
-                            ->icon('icon-sales'),
-                    ])
                     ->navigationItems([
                         NavigationItem::make('settings')
                             ->label(fn () => __('sales::app.navigation.settings.label'))

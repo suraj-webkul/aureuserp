@@ -30,12 +30,7 @@ class RecruitmentPlugin implements Plugin
                 $panel->discoverResources(in: $this->getPluginBasePath('/Filament/Resources'), for: 'Webkul\\Recruitment\\Filament\\Resources')
                     ->discoverPages(in: $this->getPluginBasePath('/Filament/Pages'), for: 'Webkul\\Recruitment\\Filament\\Pages')
                     ->discoverClusters(in: $this->getPluginBasePath('/Filament/Clusters'), for: 'Webkul\\Recruitment\\Filament\\Clusters')
-                    ->discoverWidgets(in: $this->getPluginBasePath('/Filament/Widgets'), for: 'Webkul\\Recruitment\\Filament\\Widgets')
-                    ->navigationGroups([
-                        \Filament\Navigation\NavigationGroup::make()
-                            ->label('Recruitments')
-                            ->icon('icon-recruitments'),
-                    ]);
+                    ->discoverWidgets(in: $this->getPluginBasePath('/Filament/Widgets'), for: 'Webkul\\Recruitment\\Filament\\Widgets');
             });
     }
 

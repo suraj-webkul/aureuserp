@@ -54,7 +54,42 @@ class AdminPanelProvider extends PanelProvider
                     ->url(fn (): string => Profile::getUrl()),
             ])
             ->navigationGroups([
-                
+                NavigationGroup::make()
+                    ->label('Dashboard')
+                    ->icon('icon-dashboard'),
+                NavigationGroup::make()
+                    ->label('Contact')
+                    ->icon('icon-contacts'),
+                NavigationGroup::make()
+                    ->label('Sales')
+                    ->icon('icon-sales'),
+                NavigationGroup::make()
+                    ->label('Purchase')
+                    ->icon('icon-purchases'),
+                NavigationGroup::make()
+                    ->label('Invoices')
+                    ->icon('icon-invoices'),
+                NavigationGroup::make()
+                    ->label('Inventory')
+                    ->icon('icon-inventories'),
+                NavigationGroup::make()
+                    ->label('Project')
+                    ->icon('icon-projects'),
+                NavigationGroup::make()
+                    ->label('Employees')
+                    ->icon('icon-employees'),
+                NavigationGroup::make()
+                    ->label('Time Off')
+                    ->icon('icon-time-offs'),
+                NavigationGroup::make()
+                    ->label('Recruitments')
+                    ->icon('icon-recruitments'),
+                NavigationGroup::make()
+                    ->label('Website')
+                    ->icon('icon-website'),
+                NavigationGroup::make()
+                    ->label('Settings')
+                    ->icon('icon-settings'),
             ])
             ->plugins([
                 FilamentShieldPlugin::make()
