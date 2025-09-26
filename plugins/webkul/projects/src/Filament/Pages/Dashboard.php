@@ -9,6 +9,7 @@ use Filament\Pages\Dashboard as BaseDashboard;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
+use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Partner\Models\Partner;
 use Webkul\Project\Filament\Widgets\StatsOverviewWidget;
 use Webkul\Project\Filament\Widgets\TaskByStageChart;
@@ -18,7 +19,6 @@ use Webkul\Project\Filament\Widgets\TopProjectsWidget;
 use Webkul\Project\Models\Project;
 use Webkul\Project\Models\Tag;
 use Webkul\Security\Models\User;
-use Illuminate\Contracts\Support\Htmlable;
 
 class Dashboard extends BaseDashboard
 {
@@ -36,7 +36,7 @@ class Dashboard extends BaseDashboard
         return __('projects::filament/pages/dashboard.navigation.group');
     }
 
-    public static function getNavigationIcon(): string | BackedEnum | Htmlable | null
+    public static function getNavigationIcon(): string|BackedEnum|Htmlable|null
     {
         return null;
     }
@@ -49,7 +49,13 @@ class Dashboard extends BaseDashboard
                     ->columnSpanFull()
                     ->schema([
                         Section::make()
-                            ->columns(3)
+                            ->columns([
+                                'default' => 1,
+                                'sm'      => 2,
+                                'md'      => 3,
+                                'xl'      => 6,
+                            ])
+
                             ->schema([
                                 Select::make('selectedProjects')
                                     ->label(__('projects::filament/pages/dashboard.filters-form.project'))
