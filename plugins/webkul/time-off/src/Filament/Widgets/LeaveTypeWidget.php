@@ -2,6 +2,7 @@
 
 namespace Webkul\TimeOff\Filament\Widgets;
 
+use Carbon\Carbon;
 use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Contracts\Support\Htmlable;

@@ -36,9 +36,8 @@ class ProjectPlugin implements Plugin
                     ->discoverWidgets(in: $this->getPluginBasePath('/Filament/Widgets'), for: 'Webkul\\Project\\Filament\\Widgets')
                     ->navigationItems([
                         NavigationItem::make('settings')
-                            ->label(fn() => __('projects::app.navigation.settings.label'))
-                            ->url(fn() => ManageTasks::getUrl())
-                            ->icon('heroicon-o-wrench')
+                            ->label(fn () => __('projects::app.navigation.settings.label'))
+                            ->url(fn () => ManageTasks::getUrl())
                             ->group('Project')
                             ->sort(3)
                             ->visible(fn() => ManageTasks::canAccess()),

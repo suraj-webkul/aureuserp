@@ -10,7 +10,6 @@ use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Project\Filament\Clusters\Configurations\Resources\MilestoneResource;
 use Webkul\Project\Filament\Resources\ProjectResource;
-use Webkul\Project\Settings\TaskSettings;
 
 class ManageMilestones extends ManageRelatedRecords
 {
@@ -31,7 +30,7 @@ class ManageMilestones extends ManageRelatedRecords
             return false;
         }
 
-        if (! app(TaskSettings::class)->enable_milestones) {
+        if (! static::$resource::getTaskSettings()->enable_milestones) {
             return false;
         }
 

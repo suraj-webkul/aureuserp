@@ -186,7 +186,7 @@ class OrderResource extends Resource
                                                 return __('purchases::filament/customer/clusters/account/resources/order.infolist.general.entries.purchase-order', ['id' => $record->name]);
                                             }),
                                         TextEntry::make('ordered_at')
-                                            ->label(__('purchases::filament/customer/clusters/account/resources/order.infolist.general.entries.quotation')),
+                                            ->label(__('purchases::filament/customer/clusters/account/resources/order.infolist.general.entries.order-date')),
                                         ViewEntry::make('company')
                                             ->label(__('purchases::filament/customer/clusters/account/resources/order.infolist.general.entries.from'))
                                             ->view('purchases::filament.customer.clusters.account.order.pages.view-record.from'),

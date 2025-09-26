@@ -57,8 +57,6 @@ class PartnerResource extends Resource
 {
     protected static ?string $model = Partner::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
-
     protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Schema $schema): Schema
@@ -374,7 +372,7 @@ class PartnerResource extends Resource
                                 ->color(fn ($state) => Color::generateV3Palette($state['color']))
                                 ->weight(FontWeight::Bold),
                         ])
-                            ->visible(fn ($record): bool => (bool) $record->tags()->get()?->count()),
+                            ->visible(fn ($record): bool => (bool) $record->tags?->count()),
                     ])->space(1),
                 ])->space(4),
             ])
@@ -577,7 +575,7 @@ class PartnerResource extends Resource
                 ]),
             ])
             ->modifyQueryUsing(function (Builder $query) {
-                $query->where('account_type', '!=', AccountType::ADDRESS);
+                $query->with(['tags'])->where('account_type', '!=', AccountType::ADDRESS);
             })
             ->contentGrid([
                 'sm'  => 1,
