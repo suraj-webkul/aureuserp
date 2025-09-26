@@ -27,7 +27,7 @@ class CreateInvoiceAction extends Action
 
         $this
             ->color(function (Order $record): string {
-                if ($record->qty_to_invoice == 0) {
+                if ($record->invoice_status != InvoiceStatus::TO_INVOICE) {
                     return 'gray';
                 }
 
@@ -64,15 +64,6 @@ class CreateInvoiceAction extends Action
             ])
             ->hidden(fn ($record) => $record->invoice_status != InvoiceStatus::TO_INVOICE)
             ->action(function (Order $record, $data) {
-                if ($record->qty_to_invoice == 0) {
-                    Notification::make()
-                        ->title(__('sales::filament/clusters/orders/resources/quotation/actions/create-invoice.notification.no-invoiceable-lines.title'))
-                        ->body(__('sales::filament/clusters/orders/resources/quotation/actions/create-invoice.notification.no-invoiceable-lines.body'))
-                        ->warning()
-                        ->send();
-
-                    return;
-                }
 
                 SalesFacade::createInvoice($record, $data);
 
