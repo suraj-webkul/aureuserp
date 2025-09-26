@@ -27,18 +27,28 @@ use Webkul\Security\Filament\Resources\RoleResource\Pages\CreateRole;
 use Webkul\Security\Filament\Resources\RoleResource\Pages\EditRole;
 use Webkul\Security\Filament\Resources\RoleResource\Pages\ListRoles;
 use Webkul\Security\Filament\Resources\RoleResource\Pages\ViewRole;
+use BackedEnum;
+use Illuminate\Contracts\Support\Htmlable;
 
 class RoleResource extends RolesRoleResource
 {
     protected static ?string $recordTitleAttribute = 'name';
-
-    protected static string|\BackedEnum|null $navigationIcon = null;
 
     protected static ?int $navigationSort = 1;
 
     protected static $permissionsCollection;
 
     public static $permissions = null;
+
+    public static function getNavigationIcon(): string | BackedEnum | Htmlable | null
+    {
+        return null;
+    }
+
+    public static function getActiveNavigationIcon(): BackedEnum | Htmlable | null | string
+    {
+        return null;
+    }
 
     public static function getPermissionPrefixes(): array
     {

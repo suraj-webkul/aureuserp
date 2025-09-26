@@ -31,8 +31,11 @@ class SupportPlugin implements Plugin
                     ->discoverClusters(in: $this->getPluginBasePath('/Filament/Widgets'), for: 'Webkul\\Support\\Filament\\Widgets')
                     ->navigationGroups([
                         \Filament\Navigation\NavigationGroup::make()
+                            ->label('Dashboard')
+                            ->icon('icon-dashboard'),
+                        \Filament\Navigation\NavigationGroup::make()
                             ->label('Settings')
-                            // ->icon('icon-settings'),
+                            ->icon('icon-settings'),
                     ]);
             });
     }

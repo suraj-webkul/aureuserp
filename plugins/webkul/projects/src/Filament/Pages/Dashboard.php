@@ -18,7 +18,7 @@ use Webkul\Project\Filament\Widgets\TopProjectsWidget;
 use Webkul\Project\Models\Project;
 use Webkul\Project\Models\Tag;
 use Webkul\Security\Models\User;
-use Webkul\Support\Filament\Clusters\Dashboard as DashboardCluster;
+use Illuminate\Contracts\Support\Htmlable;
 
 class Dashboard extends BaseDashboard
 {
@@ -26,11 +26,19 @@ class Dashboard extends BaseDashboard
 
     protected static string $routePath = 'project';
 
-    protected static ?string $cluster = DashboardCluster::class;
-
     public static function getNavigationLabel(): string
     {
         return __('projects::filament/pages/dashboard.navigation.title');
+    }
+
+    public static function getNavigationGroup(): string
+    {
+        return __('projects::filament/pages/dashboard.navigation.group');
+    }
+
+    public static function getNavigationIcon(): string | BackedEnum | Htmlable | null
+    {
+        return null;
     }
 
     public function filtersForm(Schema $schema): Schema

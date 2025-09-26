@@ -48,10 +48,6 @@ class AdminPanelProvider extends PanelProvider
             // ->sidebarCollapsibleOnDesktop()
             ->topNavigation()
             ->maxContentWidth(Width::Full)
-            ->navigationGroups([
-                NavigationGroup::make()
-                    ->label('Dashboard'),
-            ])
             ->userMenuItems([
                 'profile' => Action::make('profile')
                     ->label(fn () => filament()->auth()->user()?->name)

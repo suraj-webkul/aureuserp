@@ -38,6 +38,35 @@
                 x-show="$store.sidebar.isOpen"
                 class="fi-topbar-close-sidebar-btn"
             />
+
+            <x-filament::dropdown placement="bottom-start"  width="sm">
+                <x-slot name="trigger">  
+                    <x-filament::icon-button
+                        icon="icon-menu"
+                    />
+                </x-slot>
+
+                <div class="grid grid-cols-3 gap-1 p-4" style="grid-template-columns: repeat(3, minmax(0, 1fr));">
+                    @foreach ($navigation as $group)
+                        @php
+                            $itemUrl = $group->getItems()->first()->getUrl();
+                            // dd($group)
+                        @endphp
+                        
+                        <a
+                            href="{{ $itemUrl }}"
+                            class="fi-topbar-item-btn flex flex-col items-center justify-center gap-2 rounded-lg p-4"
+                        >
+                            <x-filament::icon
+                                :icon="$group->getIcon()"
+                                style="height: 64px; width: 64px"
+                            />
+
+                            {{ $group->getLabel() }}
+                        </a>
+                    @endforeach
+                </div>
+            </x-filament::dropdown>
         @endif
 
         <div class="fi-topbar-start" style="margin-right:0">
@@ -87,27 +116,6 @@
                 />
             @endif
 
-            <x-filament::dropdown placement="bottom-start"  width="sm">
-                <x-slot name="trigger">  
-                    <x-filament::icon-button
-                        icon="icon-menu"
-                    />
-                </x-slot>
-
-                <div class="p-4 gap-1 grid grid-cols-3" style="grid-template-columns: repeat(3, minmax(0, 1fr));">
-                    <div class="p-4">Menu 1</div>
-                    <div class="p-4">Menu 2</div>
-                    <div class="p-4">Menu 3</div>
-                    <div class="p-4">Menu 4</div>
-                    <div class="p-4">Menu 5</div>
-                    <div class="p-4">Menu 6</div>
-                    <div class="p-4">Menu 7</div>
-                    <div class="p-4">Menu 8</div>
-                    <div class="p-4">Menu 9</div>
-                </div>
-            </x-filament::dropdown>
-              
-
             {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::TOPBAR_LOGO_BEFORE) }}
 
             @if ($homeUrl = filament()->getHomeUrl())
@@ -141,7 +149,7 @@
                         @endphp
 
                         @if ($groupLabel)
-                            <p class="font-bold text-lg">
+                            <p class="text-lg font-bold">
                                 {{ $groupLabel }}
                             </p>
                         @endif
