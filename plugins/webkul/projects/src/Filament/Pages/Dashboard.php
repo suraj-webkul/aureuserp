@@ -47,9 +47,7 @@ class Dashboard extends BaseDashboard
     {
         return $schema
             ->components([
-                Section::make()
-                    ->columnSpanFull()
-                    ->schema([
+               
                         Section::make()
                             ->columns([
                                 'default' => 1,
@@ -98,8 +96,8 @@ class Dashboard extends BaseDashboard
                                     ->maxDate(now())
                                     ->default(now())
                                     ->native(false),
-                            ]),
-                    ]),
+                            ])->columnSpanFull(),
+                    
             ]);
     }
 
