@@ -48,45 +48,45 @@ class AdminPanelProvider extends PanelProvider
             ->maxContentWidth(Width::Full)
             ->userMenuItems([
                 'profile' => Action::make('profile')
-                    ->label(fn () => filament()->auth()->user()?->name)
-                    ->url(fn (): string => Profile::getUrl()),
+                    ->label(fn() => filament()->auth()->user()?->name)
+                    ->url(fn(): string => Profile::getUrl()),
             ])
             ->navigationGroups([
                 NavigationGroup::make()
-                    ->label('Dashboard')
+                    ->label(__('filament.navigation.dashboard'))
                     ->icon('icon-dashboard'),
                 NavigationGroup::make()
-                    ->label('Contact')
+                    ->label(__('filament.navigation.contact'))
                     ->icon('icon-contacts'),
                 NavigationGroup::make()
-                    ->label('Sales')
+                    ->label(__('filament.navigation.sale'))
                     ->icon('icon-sales'),
                 NavigationGroup::make()
-                    ->label('Purchase')
+                    ->label(__('filament.navigation.purchase'))
                     ->icon('icon-purchases'),
                 NavigationGroup::make()
-                    ->label('Invoices')
+                    ->label(__('filament.navigation.invoice'))
                     ->icon('icon-invoices'),
                 NavigationGroup::make()
-                    ->label('Inventory')
+                    ->label(__('filament.navigation.inventory'))
                     ->icon('icon-inventories'),
                 NavigationGroup::make()
-                    ->label('Project')
+                    ->label(__('filament.navigation.project'))
                     ->icon('icon-projects'),
                 NavigationGroup::make()
-                    ->label('Employees')
+                    ->label(__('filament.navigation.employee'))
                     ->icon('icon-employees'),
                 NavigationGroup::make()
-                    ->label('Time Off')
+                    ->label(__('filament.navigation.time-off'))
                     ->icon('icon-time-offs'),
                 NavigationGroup::make()
-                    ->label('Recruitments')
+                    ->label(__('filament.navigation.recruitment'))
                     ->icon('icon-recruitments'),
                 NavigationGroup::make()
-                    ->label('Website')
+                    ->label(__('filament.navigation.website'))
                     ->icon('icon-website'),
                 NavigationGroup::make()
-                    ->label('Settings')
+                    ->label(__('filament.navigation.setting'))
                     ->icon('icon-settings'),
             ])
             ->plugins([
