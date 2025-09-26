@@ -35,7 +35,6 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -47,9 +46,6 @@ use Webkul\Security\Filament\Resources\CompanyResource\Pages\EditCompany;
 use Webkul\Security\Filament\Resources\CompanyResource\Pages\ListCompanies;
 use Webkul\Security\Filament\Resources\CompanyResource\Pages\ViewCompany;
 use Webkul\Security\Filament\Resources\CompanyResource\RelationManagers\BranchesRelationManager;
-use Webkul\Security\Settings\UserSettings;
-use Webkul\Security\Filament\Resources\CompanyResource\Pages;
-use Webkul\Security\Filament\Resources\CompanyResource\RelationManagers;
 use Webkul\Security\Models\User;
 use Webkul\Support\Models\Company;
 use Webkul\Support\Models\Country;
@@ -284,7 +280,7 @@ class CompanyResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
+            ->columns(static::mergeCustomTableColumns([
                 ImageColumn::make('partner.avatar')
                     ->circular()
                     ->imageSize(50)
@@ -330,7 +326,7 @@ class CompanyResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])
+            ]))
             ->columnManagerColumns(2)
             ->groups([
                 Tables\Grouping\Group::make('name')
@@ -362,7 +358,7 @@ class CompanyResource extends Resource
                     ->date()
                     ->collapsible(),
             ])
-            ->filters([
+            ->filters(static::mergeCustomTableFilters([
                 Tables\Filters\SelectFilter::make('is_active')
                     ->label(__('security::filament/resources/company.table.filters.status'))
                     ->options(CompanyStatus::options()),
@@ -372,7 +368,7 @@ class CompanyResource extends Resource
                     ->options(function () {
                         return Country::pluck('name', 'name');
                     }),
-            ])
+            ]))
             ->filtersFormColumns(2)
             ->recordActions([
                 ActionGroup::make([
@@ -510,6 +506,7 @@ class CompanyResource extends Resource
                                         IconEntry::make('is_active')
                                             ->label(__('security::filament/resources/company.infolist.sections.additional-information.entries.status'))
                                             ->boolean(),
+                                        ...static::getCustomInfolistEntries(),
                                     ])
                                     ->columns(2),
                             ])
