@@ -38,7 +38,8 @@ class InvoicePlugin implements Plugin
                             ->label(fn () => __('invoices::app.navigation.settings.label'))
                             ->url(fn () => Products::getUrl())
                             ->group('Invoices')
-                            ->sort(4),
+                            ->sort(4)
+                            ->visible(fn () => Products::canAccess()),
                     ]);
             });
     }

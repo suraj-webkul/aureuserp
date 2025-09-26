@@ -3,6 +3,7 @@
 namespace Webkul\Recruitment\Filament\Pages;
 
 use BackedEnum;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Pages\Dashboard as BaseDashboard;
@@ -20,6 +21,7 @@ use Webkul\Support\Models\Company;
 
 class Recruitments extends BaseDashboard
 {
+     use HasPageShield;
     use BaseDashboard\Concerns\HasFiltersForm;
 
     protected static string $routePath = 'recruitment';

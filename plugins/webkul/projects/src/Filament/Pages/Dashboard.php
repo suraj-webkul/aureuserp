@@ -3,6 +3,7 @@
 namespace Webkul\Project\Filament\Pages;
 
 use BackedEnum;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Pages\Dashboard as BaseDashboard;
@@ -22,6 +23,7 @@ use Webkul\Security\Models\User;
 
 class Dashboard extends BaseDashboard
 {
+     use HasPageShield;
     use BaseDashboard\Concerns\HasFiltersForm;
 
     protected static string $routePath = 'project';

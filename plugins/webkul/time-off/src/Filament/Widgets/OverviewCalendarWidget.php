@@ -2,6 +2,7 @@
 
 namespace Webkul\TimeOff\Filament\Widgets;
 
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 use Carbon\Carbon;
 use Filament\Actions\Action;
 use Filament\Infolists\Components\TextEntry;
@@ -23,6 +24,7 @@ class OverviewCalendarWidget extends FullCalendarWidget
 {
     use TimeOffHelper;
 
+     use HasWidgetShield;
     public Model|string|null $model = Leave::class;
 
     public function getHeading(): string|Htmlable|null

@@ -1,12 +1,13 @@
 <?php
 
-namespace Webkul\Sale\Policies;
+namespace Webkul\Partner\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Webkul\Sale\Models\Tag;
+use Webkul\Partner\Models\Title;
 use Webkul\Security\Models\User;
 
-class TagPolicy
+
+class TitlePolicy
 {
     use HandlesAuthorization;
 
@@ -15,15 +16,7 @@ class TagPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_sale_tag');
-    }
-
-    /**
-     * Determine whether the user can view the model.
-     */
-    public function view(User $user, Tag $tag): bool
-    {
-        return $user->can('view_sale_tag');
+        return $user->can('view_any_title');
     }
 
     /**
@@ -31,23 +24,23 @@ class TagPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_sale_tag');
+        return $user->can('create_title');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Tag $tag): bool
+    public function update(User $user, Title $title): bool
     {
-        return $user->can('update_sale_tag');
+        return $user->can('update_title');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Tag $tag): bool
+    public function delete(User $user, Title $title): bool
     {
-        return $user->can('delete_sale_tag');
+        return $user->can('delete_title');
     }
 
     /**
@@ -55,6 +48,6 @@ class TagPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_sale_tag');
+        return $user->can('delete_any_title');
     }
 }

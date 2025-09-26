@@ -38,7 +38,8 @@ class SalePlugin implements Plugin
                             ->label(fn () => __('sales::app.navigation.settings.label'))
                             ->url(fn () => ManageProducts::getUrl())
                             ->group('Sales')
-                            ->sort(4),
+                            ->sort(4)
+                            ->visible(fn () => ManageProducts::canAccess()),
                     ]);
             });
     }

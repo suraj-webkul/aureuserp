@@ -39,7 +39,8 @@ class InventoryPlugin implements Plugin
                             ->label(fn () => __('inventories::app.navigation.settings.label'))
                             ->url(fn () => ManageOperations::getUrl())
                             ->group('Inventory')
-                            ->sort(4),
+                            ->sort(4)
+                            ->visible(fn() => ManageOperations::canAccess()),
                     ]);
             });
     }
@@ -53,6 +54,6 @@ class InventoryPlugin implements Plugin
     {
         $reflector = new ReflectionClass(get_class($this));
 
-        return dirname($reflector->getFileName()).($path ?? '');
+        return dirname($reflector->getFileName()) . ($path ?? '');
     }
 }
