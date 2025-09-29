@@ -63,7 +63,7 @@ class EmploymentTypeResource extends Resource
                     ->maxLength(255)
                     ->live(onBlur: true),
                 TextInput::make('code')
-                    ->label(__('employees::filament/clusters/configurations/resources/employment-type.form.fields.name')),
+                    ->label(__('employees::filament/clusters/configurations/resources/employment-type.form.fields.code')),
                 Select::make('country_id')
                     ->searchable()
                     ->preload()
