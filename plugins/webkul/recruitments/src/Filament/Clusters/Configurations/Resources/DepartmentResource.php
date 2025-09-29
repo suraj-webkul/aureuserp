@@ -19,6 +19,8 @@ class DepartmentResource extends BaseDepartmentResource
 
     protected static ?string $cluster = Configurations::class;
 
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-building-office-2';
+
     protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Start;
 
     public static function getNavigationGroup(): string
