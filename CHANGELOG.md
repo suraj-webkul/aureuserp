@@ -30,6 +30,11 @@
 * #795 [fixed] - Fixed logout issue.
 * #796 [fixed] - Fixed website login route issue.
 * #797 [fixed] - Removed double section from project dashboard.
+* #798 [fixed] - Emploment Type Create Modal, Translation need to be updated. #121
+* #799 [fixed] - Fix form submission in CancelQuotationAction to enable email sending.
+* #800 [fixed] - Refactor purchase order form.
+* #801 [fixed] - Added missing navigation icon in DepartmentResource .
+* #802 [fixed] - In Tags, View the tag there color should appear instead of icon. #152
 
 
 
