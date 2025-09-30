@@ -93,7 +93,7 @@ class SupportServiceProvider extends PackageServiceProvider
 
     protected function registerHooks(): void
     {
-        $version = '1.0.0';
+        $version = '1.1.0';
 
         FilamentView::registerRenderHook(
             PanelsRenderHook::USER_MENU_PROFILE_BEFORE,
@@ -107,7 +107,7 @@ class SupportServiceProvider extends PackageServiceProvider
                                 height="24"
                             />
 
-                            Version {{$version}}
+                            {{ __('support::support.version', ['version' => $version]) }} 
                         </div>
                     </x-filament::dropdown.list.item>
                 </x-filament::dropdown.list>
