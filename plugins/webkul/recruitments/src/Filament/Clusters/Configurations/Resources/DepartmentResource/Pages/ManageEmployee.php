@@ -3,10 +3,10 @@
 namespace Webkul\Recruitment\Filament\Clusters\Configurations\Resources\DepartmentResource\Pages;
 
 use Filament\Pages\Enums\SubNavigationPosition;
-use Webkul\Employee\Filament\Resources\DepartmentResource\Pages\ViewDepartment as BaseViewDepartment;
+use Webkul\Employee\Filament\Resources\DepartmentResource\Pages\ManageEmployee as BaseManageEmployee;
 use Webkul\Recruitment\Filament\Clusters\Configurations\Resources\DepartmentResource;
 
-class ViewDepartment extends BaseViewDepartment
+class ManageEmployee extends BaseManageEmployee
 {
     protected static string $resource = DepartmentResource::class;
 
