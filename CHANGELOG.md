@@ -1,4 +1,4 @@
-# 🚀 CHANGELOG — v1.0.1
+# 🚀 CHANGELOG — v1.1.0
 
 ### 🐛 Fixes
 
