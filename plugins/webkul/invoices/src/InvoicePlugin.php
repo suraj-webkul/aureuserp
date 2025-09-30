@@ -37,9 +37,9 @@ class InvoicePlugin implements Plugin
                         NavigationItem::make('settings')
                             ->label(fn () => __('invoices::app.navigation.settings.label'))
                             ->url(fn () => Products::getUrl())
-                            ->icon('heroicon-o-wrench')
                             ->group('Invoices')
-                            ->sort(4),
+                            ->sort(4)
+                            ->visible(fn () => Products::canAccess()),
                     ]);
             });
     }

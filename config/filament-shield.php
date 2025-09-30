@@ -173,7 +173,6 @@ return [
         'subject' => 'model',
         'manage'  => [
             \Webkul\Partner\Filament\Resources\BankAccountResource::class                                                 => ['view_any', 'view', 'create', 'update', 'delete', 'restore', 'delete_any', 'force_delete', 'force_delete_any', 'restore_any'],
-            \Webkul\Account\Filament\Resources\PaymentTermResource::class                                                 => [],
             \Webkul\Account\Filament\Resources\PaymentsResource::class                                                    => ['view_any', 'view', 'create', 'update', 'delete', 'delete_any'],
             \Webkul\Account\Filament\Resources\InvoiceResource::class                                                     => ['view_any', 'view', 'create', 'update', 'delete', 'delete_any'],
             \Webkul\Account\Filament\Resources\CreditNoteResource::class                                                  => ['view_any', 'view', 'create', 'update', 'delete', 'delete_any'],

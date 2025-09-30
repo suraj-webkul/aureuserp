@@ -45,9 +45,9 @@ class PurchasePlugin implements Plugin
                         NavigationItem::make('settings')
                             ->label(fn () => __('purchases::app.navigation.settings.label'))
                             ->url(fn () => ManageProducts::getUrl())
-                            ->icon('heroicon-o-wrench')
                             ->group('Purchase')
-                            ->sort(4),
+                            ->sort(4)
+                            ->visible(fn() => ManageProducts::canAccess()),
                     ]);
             });
     }
@@ -61,6 +61,6 @@ class PurchasePlugin implements Plugin
     {
         $reflector = new ReflectionClass(get_class($this));
 
-        return dirname($reflector->getFileName()).($path ?? '');
+        return dirname($reflector->getFileName()) . ($path ?? '');
     }
 }

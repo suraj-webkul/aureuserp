@@ -9,8 +9,6 @@ class Configurations extends Cluster
 {
     protected static ?string $slug = 'website/configurations';
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-squares-2x2';
-
     protected static ?int $navigationSort = 3;
 
     public static function getNavigationLabel(): string

@@ -8,6 +8,7 @@ use Filament\Tables\Table;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Webkul\Project\Models\Timesheet;
 
@@ -22,6 +23,11 @@ class TopAssigneesWidget extends BaseWidget
     public function getHeading(): string|Htmlable|null
     {
         return __('projects::filament/widgets/top-assignees.heading.title');
+    }
+    
+    public function getTableRecordKey(Model | array $record): string
+    {
+        return 'id';
     }
 
     public function table(Table $table): Table

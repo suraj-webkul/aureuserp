@@ -3,7 +3,6 @@
 namespace Webkul\Sale;
 
 use Exception;
-use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Webkul\Account\Enums as AccountEnums;
@@ -42,13 +41,15 @@ class SaleManager
         protected InvoiceSettings $invoiceSettings,
     ) {}
 
-    public function sendQuotationOrOrderByEmail(Order $record, array $data = []): Order
+    public function sendQuotationOrOrderByEmail(Order $record, array $data = []): array
     {
-        $record = $this->sendByEmail($record, $data);
+        $result = $this->sendByEmail($record, $data);
 
-        $record = $this->computeSaleOrder($record);
+        if (! empty($result['sent'])) {
+            $record = $this->computeSaleOrder($record);
+        }
 
-        return $record;
+        return $result;
     }
 
     public function lockAndUnlock(Order $record): Order
@@ -170,10 +171,6 @@ class SaleManager
         $line = $this->computeQtyInvoiced($line);
 
         $line = $this->computeQtyDelivered($line);
-
-        if ($line->qty_delivered_method == QtyDeliveredMethod::MANUAL) {
-            $line->qty_delivered = $line->qty_delivered ?? 0;
-        }
 
         $line->qty_to_invoice = $line->qty_delivered - $line->qty_invoiced;
 
@@ -354,7 +351,7 @@ class SaleManager
         if ($line->is_expense) {
             $line->qty_delivered_method = 'analytic';
         } else {
-            $line->qty_delivered_method = 'manual';
+            $line->qty_delivered_method = 'stock_move';
         }
 
         return $line;
@@ -368,25 +365,32 @@ class SaleManager
             return $line;
         }
 
+        $policy = $line->product?->invoice_policy ?? $this->invoiceSettings->invoice_policy->value;
+
         if (
             $line->is_downpayment
             && $line->untaxed_amount_to_invoice == 0
         ) {
             $line->invoice_status = InvoiceStatus::INVOICED;
-        } elseif ($line->qty_to_invoice != 0) {
-            $line->invoice_status = InvoiceStatus::TO_INVOICE;
-        } elseif (
-            $line->product->invoice_policy === InvoiceEnums\InvoicePolicy::ORDER->value
-            && $line->product_uom_qty >= 0
-            && $line->qty_delivered > $line->product_uom_qty
-        ) {
-            $line->invoice_status = InvoiceStatus::UP_SELLING;
-        } elseif ($line->qty_invoiced >= $line->product_uom_qty) {
-            $line->invoice_status = InvoiceStatus::INVOICED;
+        } elseif ($policy === InvoiceEnums\InvoicePolicy::ORDER->value) {
+            if ($line->qty_invoiced >= $line->product_uom_qty) {
+                $line->invoice_status = InvoiceStatus::INVOICED;
+            } elseif ($line->qty_delivered > $line->product_uom_qty) {
+                $line->invoice_status = InvoiceStatus::UP_SELLING;
+            } else {
+                $line->invoice_status = InvoiceStatus::TO_INVOICE;
+            }
+        } elseif ($policy === InvoiceEnums\InvoicePolicy::DELIVERY->value) {
+            if ($line->qty_invoiced >= $line->product_uom_qty) {
+                $line->invoice_status = InvoiceStatus::INVOICED;
+            } elseif ($line->qty_to_invoice != 0 || $line->qty_delivered == $line->product_uom_qty) {
+                $line->invoice_status = InvoiceStatus::TO_INVOICE;
+            } else {
+                $line->invoice_status = InvoiceStatus::NO;
+            }
         } else {
             $line->invoice_status = InvoiceStatus::NO;
         }
-
         return $line;
     }
 
@@ -437,56 +441,68 @@ class SaleManager
         return $line;
     }
 
-    public function sendByEmail(Order $record, array $data): Order
+    public function sendByEmail(Order $record, array $data): array
     {
         $partners = Partner::whereIn('id', $data['partners'])->get();
 
-        foreach ($partners as $key => $partner) {
-            if (empty($partner?->email)) {
-                Notification::make()
-                    ->title('Email not sent')
-                    ->body("Partner '{$partner->name}' does not have an email address.")
-                    ->danger()
-                    ->send();
+        $sent = [];
+        $failed = [];
 
-                return $record;
+        foreach ($partners as $partner) {
+            if (empty($partner->email)) {
+                $failed[$partner->name] = 'No email address';
+
+                continue;
             }
-            $payload = [
-                'record_name'    => $record->name,
-                'model_name'     => $record->state->getLabel(),
-                'subject'        => $data['subject'],
-                'description'    => $data['description'],
-                'to'             => [
-                    'address' => $partner?->email,
-                    'name'    => $partner?->name,
-                ],
-            ];
 
-            app(EmailService::class)->send(
-                mailClass: SaleOrderQuotation::class,
-                view: $viewName = 'sales::mails.sale-order-quotation',
-                payload: $payload,
-                attachments: [
-                    [
-                        'path' => $data['file'],
-                        'name' => basename($data['file']),
+            try {
+                $payload = [
+                    'record_name'    => $record->name,
+                    'model_name'     => $record->state->getLabel(),
+                    'subject'        => $data['subject'],
+                    'description'    => $data['description'],
+                    'to'             => [
+                        'address' => $partner->email,
+                        'name'    => $partner->name,
                     ],
-                ]
-            );
+                ];
 
-            $record->addMessage([
-                'from' => [
-                    'company' => Auth::user()->defaultCompany->toArray(),
-                ],
-                'body' => view($viewName, compact('payload'))->render(),
-                'type' => 'comment',
-            ]);
+                app(EmailService::class)->send(
+                    mailClass: SaleOrderQuotation::class,
+                    view: $viewName = 'sales::mails.sale-order-quotation',
+                    payload: $payload,
+                    attachments: [
+                        [
+                            'path' => $data['file'],
+                            'name' => basename($data['file']),
+                        ],
+                    ]
+                );
+
+                $record->addMessage([
+                    'from' => [
+                        'company' => Auth::user()->defaultCompany->toArray(),
+                    ],
+                    'body' => view($viewName, compact('payload'))->render(),
+                    'type' => 'comment',
+                ]);
+
+                $sent[] = $partner->name;
+
+            } catch (\Exception $e) {
+                $failed[$partner->name] = 'Email service error: '.$e->getMessage();
+            }
         }
 
-        $record->state = OrderState::SENT;
-        $record->save();
+        if (! empty($sent) && $record->state === OrderState::DRAFT) {
+            $record->state = OrderState::SENT;
+            $record->save();
+        }
 
-        return $record;
+        return [
+            'sent'   => $sent,
+            'failed' => $failed,
+        ];
     }
 
     public function cancelAndSendEmail(Order $record, array $data)
@@ -550,11 +566,11 @@ class SaleManager
         }
 
         foreach ($moves as $move) {
-            $isOutgoingStrict = $strict && $move->destinationLocation == InventoryEnums\LocationType::CUSTOMER;
+            $isOutgoingStrict = $strict && $move->destinationLocation->type == InventoryEnums\LocationType::CUSTOMER;
 
             $isOutgoingNonStrict = ! $strict
                 && in_array($move->rule_id, $triggeringRuleIds)
-                && ($move->finalLocation ?? $move->destinationLocation) == InventoryEnums\LocationType::CUSTOMER;
+                && ($move->finalLocation ?? $move->destinationLocation->type) == InventoryEnums\LocationType::CUSTOMER;
 
             if ($isOutgoingStrict || $isOutgoingNonStrict) {
                 if (
@@ -604,7 +620,7 @@ class SaleManager
     private function createAccountMoveLine(AccountMove $accountMove, OrderLine $orderLine): void
     {
         $productInvoicePolicy = $orderLine->product?->invoice_policy;
-        $invoiceSetting = $this->invoiceSettings->invoice_policy;
+        $invoiceSetting = $this->invoiceSettings->invoice_policy->value;
 
         $quantity = ($productInvoicePolicy ?? $invoiceSetting) === InvoiceEnums\InvoicePolicy::ORDER->value
             ? $orderLine->product_uom_qty

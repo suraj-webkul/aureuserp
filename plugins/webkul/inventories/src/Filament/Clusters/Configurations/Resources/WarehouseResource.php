@@ -142,7 +142,7 @@ class WarehouseResource extends Resource
                                             ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('inventories::filament/clusters/configurations/resources/warehouse.form.sections.settings.fields.outgoing-shipments-hint-tooltip')),
                                     ])
                                     ->columns(1)
-                                    ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_multi_steps_routes),
+                                    ->visible(static::getWarehouseSettings()->enable_multi_steps_routes),
 
                                 Fieldset::make(__('inventories::filament/clusters/configurations/resources/warehouse.form.sections.settings.fields.resupply-management'))
                                     ->schema([
@@ -154,7 +154,7 @@ class WarehouseResource extends Resource
                             ]),
                     ])
                     ->columnSpan(['lg' => 1])
-                    ->visible(fn (WarehouseSettings $settings): bool => $settings->enable_multi_steps_routes),
+                    ->visible(static::getWarehouseSettings()->enable_multi_steps_routes),
             ])
             ->columns(3);
     }
@@ -370,6 +370,11 @@ class WarehouseResource extends Resource
                     ->columnSpan(['lg' => 1]),
             ])
             ->columns(3);
+    }
+
+    static public function getWarehouseSettings(): WarehouseSettings
+    {
+        return once(fn () => app(WarehouseSettings::class));
     }
 
     public static function getSubNavigationPosition(): SubNavigationPosition

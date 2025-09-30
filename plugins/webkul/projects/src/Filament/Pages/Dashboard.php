@@ -3,12 +3,14 @@
 namespace Webkul\Project\Filament\Pages;
 
 use BackedEnum;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Pages\Dashboard as BaseDashboard;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
+use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Partner\Models\Partner;
 use Webkul\Project\Filament\Widgets\StatsOverviewWidget;
 use Webkul\Project\Filament\Widgets\TaskByStageChart;
@@ -18,32 +20,42 @@ use Webkul\Project\Filament\Widgets\TopProjectsWidget;
 use Webkul\Project\Models\Project;
 use Webkul\Project\Models\Tag;
 use Webkul\Security\Models\User;
-use Webkul\Support\Filament\Clusters\Dashboard as DashboardCluster;
 
 class Dashboard extends BaseDashboard
 {
+     use HasPageShield;
     use BaseDashboard\Concerns\HasFiltersForm;
 
     protected static string $routePath = 'project';
-
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-folder';
-
-    protected static ?string $cluster = DashboardCluster::class;
 
     public static function getNavigationLabel(): string
     {
         return __('projects::filament/pages/dashboard.navigation.title');
     }
 
+    public static function getNavigationGroup(): string
+    {
+        return __('projects::filament/pages/dashboard.navigation.group');
+    }
+
+    public static function getNavigationIcon(): string|BackedEnum|Htmlable|null
+    {
+        return null;
+    }
+
     public function filtersForm(Schema $schema): Schema
     {
         return $schema
             ->components([
-                Section::make()
-                    ->columnSpanFull()
-                    ->schema([
+               
                         Section::make()
-                            ->columns(3)
+                            ->columns([
+                                'default' => 1,
+                                'sm'      => 2,
+                                'md'      => 3,
+                                'xl'      => 6,
+                            ])
+
                             ->schema([
                                 Select::make('selectedProjects')
                                     ->label(__('projects::filament/pages/dashboard.filters-form.project'))
@@ -84,8 +96,8 @@ class Dashboard extends BaseDashboard
                                     ->maxDate(now())
                                     ->default(now())
                                     ->native(false),
-                            ]),
-                    ]),
+                            ])->columnSpanFull(),
+                    
             ]);
     }
 

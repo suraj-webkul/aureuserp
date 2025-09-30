@@ -48,8 +48,6 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-user-group';
-
     protected static ?int $navigationSort = 4;
 
     public static function getNavigationLabel(): string
@@ -240,7 +238,8 @@ class UserResource extends Resource
                     ->sortable(),
                 TextColumn::make('teams.name')
                     ->label(__('security::filament/resources/user.table.columns.teams'))
-                    ->badge(),
+                    ->badge()
+                    ->listWithLineBreaks(),
                 TextColumn::make('roles.name')
                     ->sortable()
                     ->label(__('security::filament/resources/user.table.columns.role')),
@@ -253,7 +252,8 @@ class UserResource extends Resource
                     ->sortable(),
                 TextColumn::make('allowedCompanies.name')
                     ->label(__('security::filament/resources/user.table.columns.allowed-company'))
-                    ->badge(),
+                    ->badge()
+                    ->listWithLineBreaks(),
                 TextColumn::make('created_at')
                     ->label(__('security::filament/resources/user.table.columns.created-at'))
                     ->dateTime()
