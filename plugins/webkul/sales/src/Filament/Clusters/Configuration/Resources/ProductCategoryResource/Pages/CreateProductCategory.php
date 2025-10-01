@@ -8,10 +8,11 @@ use Webkul\Sale\Filament\Clusters\Configuration\Resources\ProductCategoryResourc
 
 class CreateProductCategory extends BaseCreateProductCategory
 {
-   
+    protected static string $resource = ProductCategoryResource::class;
+
     protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Start;
-    
-      public function getSubNavigation(): array
+
+    public function getSubNavigation(): array
     {
         if (filled($cluster = static::getCluster())) {
             return $this->generateNavigationItems($cluster::getClusteredComponents());
