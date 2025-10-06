@@ -13,10 +13,11 @@ use Webkul\Inventory\Filament\Clusters\Operations\Actions as OperationActions;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\ReceiptResource;
 use Webkul\Inventory\Models\Receipt;
 use Webkul\Support\Concerns\HasRepeaterColumnManager;
+use Webkul\Support\Traits\HasRecordNavigationTabs;
 
 class EditReceipt extends EditRecord
 {
-    use HasRepeaterColumnManager;
+    use HasRecordNavigationTabs, HasRepeaterColumnManager;
 
     protected static string $resource = ReceiptResource::class;
 

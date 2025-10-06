@@ -5,7 +5,6 @@ namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
-use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
@@ -38,8 +37,6 @@ class ProductResource extends BaseProductResource
     protected static ?int $navigationSort = 5;
 
     protected static ?string $cluster = Vendors::class;
-
-    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getNavigationLabel(): string
     {

@@ -9,9 +9,12 @@ use Filament\Resources\Pages\ViewRecord;
 use Webkul\Account\Filament\Resources\PaymentsResource;
 use Webkul\Account\Filament\Resources\PaymentsResource\Actions as BaseActions;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
+use Webkul\Support\Traits\HasRecordNavigationTabs;
 
 class ViewPayments extends ViewRecord
 {
+    use HasRecordNavigationTabs;
+
     protected static string $resource = PaymentsResource::class;
 
     protected function getHeaderActions(): array

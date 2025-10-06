@@ -8,19 +8,16 @@ use Filament\Actions\DeleteAction;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
-use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\ViewRecord;
 use Webkul\Chatter\Filament\Actions\ChatterAction;
 use Webkul\Product\Filament\Resources\ProductResource;
+use Webkul\Support\Traits\HasRecordNavigationTabs;
 
 class ViewProduct extends ViewRecord
 {
-    protected static string $resource = ProductResource::class;
+    use HasRecordNavigationTabs;
 
-    public static function getSubNavigationPosition(): SubNavigationPosition
-    {
-        return SubNavigationPosition::Top;
-    }
+    protected static string $resource = ProductResource::class;
 
     protected function getHeaderActions(): array
     {

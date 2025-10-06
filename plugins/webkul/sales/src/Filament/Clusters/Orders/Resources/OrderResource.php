@@ -2,7 +2,6 @@
 
 namespace Webkul\Sale\Filament\Clusters\Orders\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -26,8 +25,6 @@ class OrderResource extends Resource
     protected static ?string $cluster = Orders::class;
 
     protected static ?int $navigationSort = 2;
-
-    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getModelLabel(): string
     {

@@ -2,7 +2,6 @@
 
 namespace Webkul\Invoice\Filament\Clusters\Customer\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Tables\Table;
 use Webkul\Invoice\Filament\Clusters\Customer;
@@ -28,8 +27,6 @@ class PartnerResource extends BasePartnerResource
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     protected static ?string $cluster = Customer::class;
-
-    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getModelLabel(): string
     {

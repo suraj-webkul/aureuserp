@@ -9,9 +9,12 @@ use Filament\Resources\Pages\EditRecord;
 use Illuminate\Contracts\Support\Htmlable;
 use Webkul\Chatter\Filament\Actions\ChatterAction;
 use Webkul\Partner\Filament\Resources\PartnerResource;
+use Webkul\Support\Traits\HasRecordNavigationTabs;
 
 class EditPartner extends EditRecord
 {
+    use HasRecordNavigationTabs;
+
     protected static string $resource = PartnerResource::class;
 
     public function getTitle(): string|Htmlable

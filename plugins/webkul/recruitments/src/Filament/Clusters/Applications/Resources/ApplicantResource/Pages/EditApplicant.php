@@ -26,9 +26,12 @@ use Webkul\Recruitment\Models\Applicant;
 use Webkul\Recruitment\Models\RefuseReason;
 use Webkul\Security\Models\User;
 use Webkul\Support\Services\EmailService;
+use Webkul\Support\Traits\HasRecordNavigationTabs;
 
 class EditApplicant extends EditRecord
 {
+    use HasRecordNavigationTabs;
+
     protected static string $resource = ApplicantResource::class;
 
     protected array $notificationData = [];
