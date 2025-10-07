@@ -10,9 +10,12 @@ use Webkul\Account\Facades\Account;
 use Webkul\Account\Filament\Resources\InvoiceResource\Actions as BaseActions;
 use Webkul\Account\Filament\Resources\RefundResource;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
+use Webkul\Support\Traits\HasRecordNavigationTabs;
 
 class EditRefund extends EditRecord
 {
+    use HasRecordNavigationTabs;
+
     protected static string $resource = RefundResource::class;
 
     protected function getRedirectUrl(): string

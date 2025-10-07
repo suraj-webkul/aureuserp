@@ -2,7 +2,6 @@
 
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\QuotationResource\Pages\CreateQuotation;
@@ -22,8 +21,6 @@ class QuotationResource extends OrderResource
     protected static bool $shouldRegisterNavigation = true;
 
     protected static ?string $recordTitleAttribute = 'name';
-
-    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     protected static ?int $navigationSort = 1;
 

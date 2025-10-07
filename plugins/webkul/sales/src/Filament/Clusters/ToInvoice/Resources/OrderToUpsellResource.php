@@ -2,7 +2,6 @@
 
 namespace Webkul\Sale\Filament\Clusters\ToInvoice\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
 use Illuminate\Database\Eloquent\Builder;
 use Webkul\Sale\Enums\InvoiceStatus;
 use Webkul\Sale\Filament\Clusters\Orders\Resources\QuotationResource;
@@ -18,7 +17,6 @@ class OrderToUpsellResource extends QuotationResource
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document-arrow-up';
 
-    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getModelLabel(): string
     {

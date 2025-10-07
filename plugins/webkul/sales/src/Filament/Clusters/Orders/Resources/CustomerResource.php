@@ -2,7 +2,6 @@
 
 namespace Webkul\Sale\Filament\Clusters\Orders\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Tables\Table;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\PartnerResource as BaseCustomerResource;
@@ -27,8 +26,6 @@ class CustomerResource extends BaseCustomerResource
     protected static ?string $cluster = Orders::class;
 
     protected static ?int $navigationSort = 3;
-
-    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getModelLabel(): string
     {

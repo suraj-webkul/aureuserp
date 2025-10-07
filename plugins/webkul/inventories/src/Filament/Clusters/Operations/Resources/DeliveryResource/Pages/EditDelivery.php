@@ -12,9 +12,12 @@ use Webkul\Inventory\Enums\OperationState;
 use Webkul\Inventory\Filament\Clusters\Operations\Actions as OperationActions;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\DeliveryResource;
 use Webkul\Inventory\Models\Delivery;
+use Webkul\Support\Traits\HasRecordNavigationTabs;
 
 class EditDelivery extends EditRecord
 {
+    use HasRecordNavigationTabs;
+
     protected static string $resource = DeliveryResource::class;
 
     protected function getRedirectUrl(): string

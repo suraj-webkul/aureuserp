@@ -5,7 +5,6 @@ namespace Webkul\Recruitment\Filament\Clusters\Applications\Resources;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\EditAction;
-use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Enums\FontWeight;
@@ -27,8 +26,6 @@ class JobByPositionResource extends Resource
     protected static ?string $cluster = Applications::class;
 
     protected static ?int $navigationSort = 1;
-
-    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getModelLabel(): string
     {

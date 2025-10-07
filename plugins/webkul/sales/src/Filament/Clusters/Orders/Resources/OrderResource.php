@@ -2,7 +2,6 @@
 
 namespace Webkul\Sale\Filament\Clusters\Orders\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Illuminate\Database\Eloquent\Builder;
 use Webkul\Sale\Enums\OrderState;
@@ -21,8 +20,6 @@ class OrderResource extends QuotationResource
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-shopping-bag';
 
     protected static ?int $navigationSort = 2;
-
-    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getModelLabel(): string
     {

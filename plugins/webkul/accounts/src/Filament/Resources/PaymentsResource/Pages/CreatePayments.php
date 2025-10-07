@@ -10,6 +10,15 @@ use Webkul\Account\Filament\Resources\PaymentsResource;
 
 class CreatePayments extends CreateRecord
 {
+    public function getSubNavigation(): array
+    {
+        if (filled($cluster = static::getCluster())) {
+            return $this->generateNavigationItems($cluster::getClusteredComponents());
+        }
+
+        return [];
+    }
+
     protected static string $resource = PaymentsResource::class;
 
     protected function getRedirectUrl(): string

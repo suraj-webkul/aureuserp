@@ -8,10 +8,13 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Auth;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
+use Webkul\Support\Traits\HasRecordNavigationTabs;
 use Webkul\TimeOff\Filament\Clusters\MyTime\Resources\MyAllocationResource;
 
 class EditMyAllocation extends EditRecord
 {
+    use HasRecordNavigationTabs;
+
     protected static string $resource = MyAllocationResource::class;
 
     protected function getRedirectUrl(): string

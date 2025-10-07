@@ -111,6 +111,12 @@ class OrderResource extends Resource
                                             ->where('sub_type', 'supplier')
                                             ->orderBy('id')
                                     )
+                                    ->getOptionLabelFromRecordUsing(function ($record): string {
+                                        return $record->name.($record->trashed() ? ' (Deleted)' : '');
+                                    })
+                                    ->disableOptionWhen(function ($label) {
+                                        return str_contains($label, ' (Deleted)');
+                                    })
                                     ->searchable()
                                     ->required()
                                     ->preload()
@@ -1145,12 +1151,12 @@ class OrderResource extends Resource
         $set($prefix.'price_total', $subTotal + $taxAmount);
     }
 
-    static public function getOrderSettings(): OrderSettings
+    public static function getOrderSettings(): OrderSettings
     {
         return once(fn () => app(OrderSettings::class));
     }
 
-    static public function getProductSettings(): ProductSettings
+    public static function getProductSettings(): ProductSettings
     {
         return once(fn () => app(ProductSettings::class));
     }

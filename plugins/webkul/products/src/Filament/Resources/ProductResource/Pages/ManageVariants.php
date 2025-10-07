@@ -2,7 +2,6 @@
 
 namespace Webkul\Product\Filament\Resources\ProductResource\Pages;
 
-use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\ManageRelatedRecords;
 use Filament\Schemas\Schema;
 use Filament\Support\Enums\Width;
@@ -10,17 +9,15 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Arr;
 use Webkul\Product\Filament\Resources\ProductResource;
+use Webkul\Support\Traits\HasRecordNavigationTabs;
 
 class ManageVariants extends ManageRelatedRecords
 {
+    use HasRecordNavigationTabs;
+
     protected static string $resource = ProductResource::class;
 
     protected static string $relationship = 'variants';
-
-    public static function getSubNavigationPosition(): SubNavigationPosition
-    {
-        return SubNavigationPosition::Top;
-    }
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-list';
 

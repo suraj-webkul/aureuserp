@@ -4,14 +4,14 @@ namespace Webkul\TimeOff\Filament\Pages;
 
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Pages\Dashboard as BaseDashboard;
-use Filament\Pages\Enums\SubNavigationPosition;
 use Webkul\TimeOff\Filament\Clusters\MyTime;
 use Webkul\TimeOff\Filament\Widgets\CalendarWidget;
 use Webkul\TimeOff\Filament\Widgets\MyTimeOffWidget;
 
 class Dashboard extends BaseDashboard
 {
-     use HasPageShield;
+    use HasPageShield;
+
     protected static string $routePath = 'time-off';
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-squares-2x2';
@@ -19,8 +19,6 @@ class Dashboard extends BaseDashboard
     protected static ?string $cluster = MyTime::class;
 
     protected static ?int $navigationSort = 1;
-
-    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getNavigationLabel(): string
     {

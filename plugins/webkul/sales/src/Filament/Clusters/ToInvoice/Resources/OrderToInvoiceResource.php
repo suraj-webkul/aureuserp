@@ -2,7 +2,6 @@
 
 namespace Webkul\Sale\Filament\Clusters\ToInvoice\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Illuminate\Database\Eloquent\Builder;
 use Webkul\Sale\Enums\InvoiceStatus;
@@ -20,8 +19,6 @@ class OrderToInvoiceResource extends QuotationResource
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document-arrow-down';
 
     protected static ?string $cluster = ToInvoice::class;
-
-    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getModelLabel(): string
     {

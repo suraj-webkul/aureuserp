@@ -10,9 +10,12 @@ use Livewire\Livewire;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\OperationResource;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\OrderResource;
 use Webkul\Support\Package;
+use Webkul\Support\Traits\HasRecordNavigationTabs;
 
 class ManageReceipts extends ManageRelatedRecords
 {
+    use HasRecordNavigationTabs;
+
     protected static string $resource = OrderResource::class;
 
     protected static string $relationship = 'operations';

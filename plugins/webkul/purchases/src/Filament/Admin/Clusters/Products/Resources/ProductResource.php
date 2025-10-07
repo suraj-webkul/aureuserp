@@ -2,7 +2,6 @@
 
 namespace Webkul\Purchase\Filament\Admin\Clusters\Products\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Schemas\Schema;
 use Webkul\Field\Filament\Traits\HasCustomFields;
@@ -30,8 +29,6 @@ class ProductResource extends BaseProductResource
     protected static ?string $cluster = Products::class;
 
     protected static ?int $navigationSort = 1;
-
-    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     protected static ?string $recordTitleAttribute = 'name';
 

@@ -8,9 +8,12 @@ use Filament\Resources\Pages\ViewRecord;
 use Webkul\Chatter\Filament\Actions\ChatterAction;
 use Webkul\Purchase\Enums\RequisitionState;
 use Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources\PurchaseAgreementResource;
+use Webkul\Support\Traits\HasRecordNavigationTabs;
 
 class ViewPurchaseAgreement extends ViewRecord
 {
+    use HasRecordNavigationTabs;
+
     protected static string $resource = PurchaseAgreementResource::class;
 
     protected function getHeaderActions(): array

@@ -2,7 +2,6 @@
 
 namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Webkul\Account\Filament\Resources\RefundResource as BaseRefundResource;
 use Webkul\Invoice\Filament\Clusters\Vendors;
@@ -25,7 +24,10 @@ class RefundResource extends BaseRefundResource
 
     protected static ?string $cluster = Vendors::class;
 
-    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    public static function getNavigationGroup(): ?string
+    {
+        return null;
+    }
 
     public static function getModelLabel(): string
     {

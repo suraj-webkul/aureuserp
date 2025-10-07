@@ -20,9 +20,12 @@ use Webkul\Recruitment\Mail\ApplicantRefuseMail;
 use Webkul\Recruitment\Models\Applicant;
 use Webkul\Recruitment\Models\RefuseReason;
 use Webkul\Support\Services\EmailService;
+use Webkul\Support\Traits\HasRecordNavigationTabs;
 
 class ViewApplicant extends ViewRecord
 {
+    use HasRecordNavigationTabs;
+
     protected static string $resource = ApplicantResource::class;
 
     protected function getHeaderActions(): array

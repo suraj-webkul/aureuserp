@@ -2,7 +2,6 @@
 
 namespace Webkul\Purchase\Filament\Admin\Clusters\Orders\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\RelationManagers\RelationGroup;
 use Webkul\Field\Filament\Traits\HasCustomFields;
@@ -33,8 +32,6 @@ class VendorResource extends BaseVendorResource
     protected static ?string $cluster = Orders::class;
 
     protected static ?int $navigationSort = 4;
-
-    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     protected static ?string $recordTitleAttribute = 'name';
 

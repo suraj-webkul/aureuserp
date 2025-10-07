@@ -12,9 +12,12 @@ use Webkul\Inventory\Enums\MoveState;
 use Webkul\Inventory\Enums\ProductTracking;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\OperationResource;
 use Webkul\Inventory\Models\MoveLine;
+use Webkul\Support\Traits\HasRecordNavigationTabs;
 
 class ManageMoves extends ManageRelatedRecords
 {
+    use HasRecordNavigationTabs;
+
     protected static string $resource = OperationResource::class;
 
     protected static string $relationship = 'moveLines';

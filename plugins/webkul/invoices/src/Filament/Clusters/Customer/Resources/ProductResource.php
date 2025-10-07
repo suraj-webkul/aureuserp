@@ -2,7 +2,6 @@
 
 namespace Webkul\Invoice\Filament\Clusters\Customer\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Webkul\Invoice\Filament\Clusters\Customer;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\ProductResource\Pages\CreateProduct;
@@ -19,8 +18,6 @@ class ProductResource extends BaseProductResource
     protected static ?string $model = Product::class;
 
     protected static ?string $cluster = Customer::class;
-
-    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     protected static bool $shouldRegisterNavigation = true;
 
