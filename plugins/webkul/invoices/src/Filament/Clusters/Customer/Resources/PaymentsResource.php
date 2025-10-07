@@ -2,7 +2,6 @@
 
 namespace Webkul\Invoice\Filament\Clusters\Customer\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
 use Webkul\Account\Filament\Resources\PaymentsResource as BasePaymentsResource;
 use Webkul\Invoice\Filament\Clusters\Customer;
 use Webkul\Invoice\Filament\Clusters\Customer\Resources\PaymentsResource\Pages\CreatePayments;
@@ -20,8 +19,6 @@ class PaymentsResource extends BasePaymentsResource
     protected static ?int $navigationSort = 4;
 
     protected static ?string $cluster = Customer::class;
-
-    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getModelLabel(): string
     {

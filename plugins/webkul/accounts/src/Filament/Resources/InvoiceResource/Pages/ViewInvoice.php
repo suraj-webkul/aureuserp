@@ -8,9 +8,12 @@ use Filament\Resources\Pages\ViewRecord;
 use Webkul\Account\Filament\Resources\InvoiceResource;
 use Webkul\Account\Filament\Resources\InvoiceResource\Actions as BaseActions;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
+use Webkul\Support\Traits\HasRecordNavigationTabs;
 
 class ViewInvoice extends ViewRecord
 {
+    use HasRecordNavigationTabs;
+
     protected static string $resource = InvoiceResource::class;
 
     protected function getHeaderActions(): array

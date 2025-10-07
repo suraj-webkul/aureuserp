@@ -9,9 +9,12 @@ use Filament\Resources\Pages\EditRecord;
 use Webkul\Account\Filament\Resources\PaymentsResource;
 use Webkul\Account\Filament\Resources\PaymentsResource\Actions as BaseActions;
 use Webkul\Chatter\Filament\Actions as ChatterActions;
+use Webkul\Support\Traits\HasRecordNavigationTabs;
 
 class EditPayments extends EditRecord
 {
+    use HasRecordNavigationTabs;
+
     protected static string $resource = PaymentsResource::class;
 
     protected function getRedirectUrl(): string

@@ -2,10 +2,8 @@
 
 namespace Webkul\Invoice\Filament\Clusters\Vendors\Resources;
 
-use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Infolists\Infolist;
+use Filament\Schemas\Schema;
 use Webkul\Account\Filament\Resources\PaymentsResource as BasePaymentsResource;
 use Webkul\Invoice\Filament\Clusters\Vendors;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\PaymentsResource\Pages\CreatePayments;
@@ -13,7 +11,6 @@ use Webkul\Invoice\Filament\Clusters\Vendors\Resources\PaymentsResource\Pages\Ed
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\PaymentsResource\Pages\ListPayments;
 use Webkul\Invoice\Filament\Clusters\Vendors\Resources\PaymentsResource\Pages\ViewPayments;
 use Webkul\Invoice\Models\Payment;
-use Filament\Schemas\Schema;
 
 class PaymentsResource extends BasePaymentsResource
 {
@@ -24,8 +21,6 @@ class PaymentsResource extends BasePaymentsResource
     protected static ?int $navigationSort = 3;
 
     protected static ?string $cluster = Vendors::class;
-
-    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function getModelLabel(): string
     {

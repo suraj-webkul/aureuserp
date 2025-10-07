@@ -12,9 +12,12 @@ use Webkul\Inventory\Enums\OperationState;
 use Webkul\Inventory\Filament\Clusters\Operations\Actions as OperationActions;
 use Webkul\Inventory\Filament\Clusters\Operations\Resources\DropshipResource;
 use Webkul\Inventory\Models\Dropship;
+use Webkul\Support\Traits\HasRecordNavigationTabs;
 
 class EditDropship extends EditRecord
 {
+    use HasRecordNavigationTabs;
+
     protected static string $resource = DropshipResource::class;
 
     protected function getRedirectUrl(): string
