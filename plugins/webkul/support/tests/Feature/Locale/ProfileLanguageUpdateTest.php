@@ -1,5 +1,6 @@
 <?php
 
+use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Livewire\Livewire;
@@ -19,19 +20,28 @@ beforeEach(function () {
 
     Session::flush();
     Auth::logout();
+
+    Filament::setCurrentPanel(Filament::getPanel('admin'));
 });
 
+function loginAsUser(array $attributes = []): User
+{
+    $user = User::factory()->create($attributes);
+
+    test()->actingAs($user, 'web');
+
+    return $user->fresh();
+}
+
 it('loads profile form pre-filled with current user language', function () {
-    $user = User::withoutEvents(fn () => User::factory()->create(['language' => 'ar']));
-    Auth::login($user);
+    $user = loginAsUser(['language' => 'ar']);
 
     Livewire::test(Profile::class)
         ->assertFormSet(['language' => 'ar'], 'editProfileForm');
 });
 
 it('persists language change to users table', function () {
-    $user = User::withoutEvents(fn () => User::factory()->create(['language' => 'en']));
-    Auth::login($user);
+    $user = loginAsUser(['language' => 'en']);
 
     Livewire::test(Profile::class)
         ->fillForm([
@@ -45,8 +55,7 @@ it('persists language change to users table', function () {
 });
 
 it('rejects unsupported language values when saving profile', function () {
-    $user = User::withoutEvents(fn () => User::factory()->create(['language' => 'en']));
-    Auth::login($user);
+    $user = loginAsUser(['language' => 'en']);
 
     Livewire::test(Profile::class)
         ->fillForm([
@@ -60,12 +69,11 @@ it('rejects unsupported language values when saving profile', function () {
 });
 
 it('keeps other profile fields unchanged when only language is updated', function () {
-    $user = User::withoutEvents(fn () => User::factory()->create([
+    $user = loginAsUser([
         'name'     => 'Jane Doe',
         'email'    => 'jane@example.com',
         'language' => 'en',
-    ]));
-    Auth::login($user);
+    ]);
 
     Livewire::test(Profile::class)
         ->fillForm([

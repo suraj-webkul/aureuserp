@@ -34,6 +34,7 @@ function runSetLocale(array $query = [], array $sessionData = []): string
 
     $request = Request::create('/admin', 'GET', $query);
     $request->setLaravelSession(app('session.store'));
+    $request->setUserResolver(fn () => Auth::user());
 
     (new SetLocale)->handle($request, fn () => response('ok'));
 
